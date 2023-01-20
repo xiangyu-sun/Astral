@@ -42,10 +42,10 @@ func julianDay(at: DateComponents, calendar: Calendar = .init(identifier: .grego
     month += 12
   }
   
-  let a = year / 100
+  let a = Int(year / 100)
   var b: Double
   if calendar == Calendar(identifier: .gregorian) {
-    b = 2 - a + (a / 4)
+    b = 2 - a.double + Int(a / 4).double
   } else {
     b = 0
   }
