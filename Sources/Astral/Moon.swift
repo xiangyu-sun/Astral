@@ -535,7 +535,12 @@ func azimuth(
   
   let x = -ch * cd * sl + sd * cl
   let y = -sh * cd
-  let azimuth = degrees(atan2(y, x)).truncatingRemainder(dividingBy: 360)
+  var azimuth = degrees(atan2(y, x)).truncatingRemainder(dividingBy: 360)
+  
+  if azimuth.sign == .minus {
+    azimuth += 360
+  }
+  
   return azimuth
 }
 

@@ -9,6 +9,7 @@ import Foundation
 
 
 /// Calculate Greenwich Mean Sidereal Time in degrees
+/// https://lweb.cfa.harvard.edu/~jzhao/times.html
 /// - Parameter dateComponents: <#dateComponents description#>
 /// - Returns: <#description#>
 func gmst(dateComponents: DateComponents) -> Degrees {
@@ -22,7 +23,12 @@ func gmst(dateComponents: DateComponents) -> Degrees {
     + 0.000387933 * pow(t0, 2)
     + pow(t0, 3) / 38710000
   )
-  return value.truncatingRemainder(dividingBy: 360)
+  
+  var r = value.truncatingRemainder(dividingBy: 360)
+  if r.sign == .minus {
+    r += 360
+  }
+  return r
 }
 
 /**

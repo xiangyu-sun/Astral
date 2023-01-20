@@ -26,7 +26,18 @@ final class SideRealTests: XCTestCase {
     XCTAssertEqual(t.hour, 13)
     XCTAssertEqual(t.minute, 10)
     XCTAssertEqual(t.second, 46)
-    XCTAssertEqual(t.nanosecond, 366821000)
+    XCTAssertEqual(t.nanosecond, 1320558504769)
+  }
+  
+  func test_gmst2022() {
+    let dt = DateComponents.datetime(2022, 4, 10, 0, 0, 0)
+    let mean_sidereal_time = gmst(dateComponents: dt)
+    
+    let t = from(hours:mean_sidereal_time / 15)
+    XCTAssertEqual(t.hour, 13)
+    XCTAssertEqual(t.minute, 12)
+    XCTAssertEqual(t.second, 50)
+    XCTAssertEqual(t.nanosecond, 695835024107)
   }
 
 
@@ -37,7 +48,7 @@ final class SideRealTests: XCTestCase {
     XCTAssertEqual(t.hour, 8)
     XCTAssertEqual(t.minute, 34)
     XCTAssertEqual(t.second, 57)
-    XCTAssertEqual(t.nanosecond, 89578000)
+    XCTAssertEqual(t.nanosecond, 322483102981)
   }
 
 
