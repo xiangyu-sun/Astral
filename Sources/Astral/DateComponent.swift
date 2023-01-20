@@ -50,14 +50,17 @@ extension DateComponents {
 /// - Returns: <#description#>
 func from(hours: Double) -> DateComponents {
   var reminder = hours
+  
   let hour = Int(reminder)
-  reminder -= Double(hour)
+  reminder -= hour.double
+  
   reminder *= 60
   let minute = Int(reminder)
-  reminder -= Double(minute)
+  reminder -= minute.double
+  
   reminder *= 60
   let second = Int(reminder)
-  reminder -= Double(second)
+  reminder -= second.double
   
   let nanosecond = Int(reminder * 3.6e+12)
 
