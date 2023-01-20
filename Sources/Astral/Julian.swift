@@ -146,7 +146,7 @@ func julianDayToCompoenent(jd: Double) -> DateComponents {
     year = c - 4715
   }
   
-  return DateComponents(year: year, month: month, day: day, hour: hour,minute: minute, second: seconds)
+  return DateComponents(timeZone: .utc, year: year, month: month, day: day, hour: hour,minute: minute, second: seconds)
 }
 
 

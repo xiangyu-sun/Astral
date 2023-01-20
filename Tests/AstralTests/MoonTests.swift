@@ -120,4 +120,30 @@ final class MoonTests: XCTestCase {
       XCTAssertEqual(calc_time?.extractYearMonthDayHourMinuteSecond(timeZone: Self.tz), settime.extractYearMonthDayHourMinuteSecond(timeZone: Self.tz))
     }
   }
+  
+  static let timeZoneBCN = TimeZone(abbreviation: "CET")!
+  
+  
+  let moonRiseBarcelonanData: [(DateComponents, DateComponents)] = [
+    (.date(2023, 1, 21, timeZoneBCN), .datetime(2023, 1, 21, 8, 15, 0, timeZoneBCN)),
+  ]
+  
+  let moonRiseBarcelonanDataUTC: [(DateComponents, DateComponents)] = [
+    (.date(2023, 1, 21), .datetime(2023, 1, 21, 7, 15, 0)),
+  ]
+  
+
+  func testMoonRiseBarcelona() throws {
+    for (date, risetime) in moonRiseBarcelonanData {
+      let calc_time = try moonrise(observer: .barcelona, dateComponents: date, tzinfo: Self.timeZoneBCN)
+      XCTAssertNotNil(calc_time)
+      XCTAssertEqual(calc_time?.extractYearMonthDayHourMinuteSecond(timeZone: Self.timeZoneBCN), risetime.extractYearMonthDayHourMinuteSecond(timeZone: Self.timeZoneBCN))
+    }
+    
+    for (date, risetime) in moonRiseBarcelonanDataUTC {
+      let calc_time = try moonrise(observer: .barcelona, dateComponents: date)
+      XCTAssertNotNil(calc_time)
+      XCTAssertEqual(calc_time?.extractYearMonthDayHourMinuteSecond(), risetime.extractYearMonthDayHourMinuteSecond())
+    }
+  }
 }

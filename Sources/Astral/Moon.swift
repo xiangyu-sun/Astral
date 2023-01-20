@@ -280,10 +280,11 @@ func riseset(
   on: DateComponents,
   observer: Observer
 ) -> (rise: DateComponents?, set: DateComponents?) {
-  let jd2000 = julianDay2000(at: on)
+  let utcDate = on.astimezone(.utc)
+  let jd2000 = julianDay2000(at: utcDate)
   
   let t0 = lmst(
-    dateComponents: on,
+    dateComponents: utcDate,
     longitude: observer.longitude
   )
   
@@ -333,11 +334,11 @@ func riseset(
     if case let .noTransit(noTransit) = transit_info {
       moon_position_window[2].distance = noTransit.parallax
     } else if case let .transitEvent(transit) = transit_info {
-      let query_time = DateComponents(timeZone: .utc, year: on.year, month: on.month)
+      let query_time = DateComponents(timeZone: .utc, year: utcDate.year, month: utcDate.month)
       
       if transit.event == "rise" {
         let event_time = transit.when
-        let event = DateComponents(timeZone: .utc, year: on.year, month: on.month, day: on.day, hour: event_time.hour, minute: event_time.minute)
+        let event = DateComponents(timeZone: .utc, year: utcDate.year, month: utcDate.month, day: utcDate.day, hour: event_time.hour, minute: event_time.minute)
         
         if rise_time == nil{
           rise_time = event
@@ -365,7 +366,7 @@ func riseset(
       }
       else if transit.event == "set"{
         let event_time = transit.when
-        let event = DateComponents(timeZone: .utc, year: on.year, month: on.month, day: on.day, hour: event_time.hour, minute: event_time.minute)
+        let event = DateComponents(timeZone: .utc, year: utcDate.year, month: utcDate.month, day: utcDate.day, hour: event_time.hour, minute: event_time.minute)
         
         if set_time == nil {
           set_time = event
@@ -427,9 +428,7 @@ func moonrise(
     date = Calendar.current.dateComponents(in: tzinfo, from: Date())
   }
   
-  let UTCDate = date.astimezone(.utc)
-  
-  var info = riseset(on: UTCDate, observer: observer)
+  var info = riseset(on: date, observer: observer)
   
   if let moonRise = info.rise {
     var rise = moonRise.astimezone(tzinfo)
@@ -442,8 +441,8 @@ func moonrise(
       else{
         delta = 1
       }
-      var new_date = UTCDate
-      new_date.day = UTCDate.day! + delta
+      var new_date = date
+      new_date.day = date.day! + delta
       
       info = riseset(on:new_date, observer: observer)
       
@@ -487,9 +486,7 @@ func moonset(
     date = Calendar.current.dateComponents(in: tzinfo, from: Date())
   }
   
-  let UTCDate = date.astimezone(.utc)
-  
-  var info = riseset(on: UTCDate, observer: observer)
+  var info = riseset(on: date, observer: observer)
 
   
   if let moonSet = info.set {
@@ -503,8 +500,8 @@ func moonset(
       else{
         delta = 1
       }
-      var new_date = UTCDate
-      new_date.day = UTCDate.day! + delta
+      var new_date = date
+      new_date.day = date.day! + delta
       
       info = riseset(on:new_date, observer: observer)
       

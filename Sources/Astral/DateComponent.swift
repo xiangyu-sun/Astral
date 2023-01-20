@@ -26,12 +26,16 @@ extension DateComponents {
   }
   
   func extractYearMonthDayHourMinuteSecond(timeZone: TimeZone = .utc) -> DateComponents {
-    return DateComponents(timeZone: timeZone ,year: self.year, month: self.month, day: self.day, hour: self.hour, minute: self.month, second: self.month)
+    return DateComponents(timeZone: timeZone ,year: self.year, month: self.month, day: self.day, hour: self.hour, minute: self.minute, second: self.second)
   }
   
+  
+  
   func astimezone(_ timeZone: TimeZone) -> DateComponents {
-    let date = Calendar.current.date(from: self) ?? Date()
-    return  Calendar.current.dateComponents(in: timeZone, from: date)
+    var calendar = Calendar(identifier: .gregorian)
+    calendar.timeZone = self.timeZone ?? .current
+    let date = calendar.date(from: self) ?? Date()
+    return  calendar.dateComponents(in: timeZone, from: date)
   }
   
   static func > (lhs: DateComponents, rhs: DateComponents) -> Bool {

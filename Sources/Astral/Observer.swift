@@ -34,6 +34,7 @@ struct Observer {
   static let london = Observer(latitude: 51.509865, longitude: -0.118092, elevation: .double(0))
   static let riyadh = Observer(latitude: 25, longitude: 46.7, elevation: .double(620))
   static let welllington = try! Observer(latitude: " 41° 17' 11.256'' S", longitude: "174° 46' 34.4496'' E", elevation: .double(13.000))
+  static let barcelona = try! Observer(latitude: "41° 23' 24.7380'' N", longitude: "2° 9' 14.4252'' E", elevation: .double(0))
   
   init(latitude: Degrees, longitude: Degrees, elevation: Elevetion) {
     self.latitude = latitude.cap(limit: 90)
