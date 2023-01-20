@@ -26,37 +26,25 @@ import CoreLocation
                      in metres above/below the location.
  */
 struct Observer {
-  let coordinate2D: CLLocationCoordinate2D
-  let elevation: Elevation?
-  let elevation2D: Elevation2D?
+
+  let latitude: Degrees
+  let longitude: Degrees
+  let elevation: Elevetion
   
-  init(coordinate2D: CLLocationCoordinate2D, elevation: Elevation) {
-    self.coordinate2D = coordinate2D
+  init(latitude: Degrees, longitude: Degrees, elevation: Elevetion) {
+    self.latitude = latitude.cap(limit: 90)
+    self.longitude = longitude.cap(limit: 180)
     self.elevation = elevation
-    self.elevation2D = nil
   }
   
-  init(coordinate2D: CLLocationCoordinate2D, elevation: Elevation2D) {
-    self.coordinate2D = coordinate2D
-    self.elevation2D = elevation
-    self.elevation = nil
-  }
   
-  init(latitude: String, longitude: String, elevation: Elevation) {
-    let lat = convertDegreesMinutesSecondsToDouble(value: latitude, limit: 90)
-    let long = convertDegreesMinutesSecondsToDouble(value: longitude, limit: 180)
+  init(latitude: String, longitude: String, elevation: Elevetion) throws {
+    let lat = try convertDegreesMinutesSecondsToDouble(value: latitude, limit: 90)
+    let long = try convertDegreesMinutesSecondsToDouble(value: longitude, limit: 180)
     
-    self.coordinate2D = .init(latitude: lat, longitude: long)
+    self.latitude = lat
+    self.longitude = long
     self.elevation = elevation
-    self.elevation2D = nil
   }
-  
-  init(latitude: String, longitude: String, elevation: Elevation2D) {
-    let lat = convertDegreesMinutesSecondsToDouble(value: latitude, limit: 90)
-    let long = convertDegreesMinutesSecondsToDouble(value: longitude, limit: 180)
-    
-    self.coordinate2D = .init(latitude: lat, longitude: long)
-    self.elevation2D = elevation
-    self.elevation = nil
-  }
+
 }

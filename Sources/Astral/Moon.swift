@@ -285,7 +285,7 @@ func riseset(
   let jd2000 = julianDay2000(at: on)
   let t0 = lmst(
     dateComponents: on,
-    longitude: observer.coordinate2D.longitude
+    longitude: observer.longitude
   )
   
   var m: [AstralBodyPosition] = []
@@ -327,7 +327,7 @@ func riseset(
     )
     
     let transit_info = moon_transit_event(
-      hour: hour.double, lmst: t0, latitude: observer.coordinate2D.latitude, distance: m[1].distance, window: moon_position_window
+      hour: hour.double, lmst: t0, latitude: observer.latitude, distance: m[1].distance, window: moon_position_window
     )
     
     if case let .noTransit(noTransit) = transit_info {
@@ -523,15 +523,15 @@ func azimuth(
 ) -> Degrees {
   let jd2000 = julianDay2000(at: at)
   let position = moonPosition(jd2000: jd2000)
-  let lst0: Radians = radians(lmst(dateComponents: at, longitude: observer.coordinate2D.longitude))
+  let lst0: Radians = radians(lmst(dateComponents: at, longitude: observer.longitude))
   let hourangle: Radians = lst0 - position.right_ascension
   
   let sh = sin(hourangle)
   let ch = cos(hourangle)
   let sd = sin(position.declination)
   let cd = cos(position.declination)
-  let sl = sin(radians(observer.coordinate2D.latitude))
-  let cl = cos(radians(observer.coordinate2D.latitude))
+  let sl = sin(radians(observer.latitude))
+  let cl = cos(radians(observer.latitude))
   
   let x = -ch * cd * sl + sd * cl
   let y = -sh * cd
@@ -547,15 +547,15 @@ func elevation(
   
   let jd2000 = julianDay2000(at: at)
   let position = moonPosition(jd2000: jd2000)
-  let lst0: Radians = radians(lmst(dateComponents: at, longitude: observer.coordinate2D.longitude))
+  let lst0: Radians = radians(lmst(dateComponents: at, longitude: observer.longitude))
   let hourangle: Radians = lst0 - position.right_ascension
   
   let sh = sin(hourangle)
   let ch = cos(hourangle)
   let sd = sin(position.declination)
   let cd = cos(position.declination)
-  let sl = sin(radians(observer.coordinate2D.latitude))
-  let cl = cos(radians(observer.coordinate2D.latitude))
+  let sl = sin(radians(observer.latitude))
+  let cl = cos(radians(observer.latitude))
   
   let x = -ch * cd * sl + sd * cl
   let y = -sh * cd

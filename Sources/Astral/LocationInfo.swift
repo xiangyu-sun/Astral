@@ -22,28 +22,37 @@ import CoreLocation
          longitude:  Longitude - Eastern longitudes should be positive
  */
 struct LocationInfo {
+
   let name: String
   let region: String
   let timezone: TimeZone
-  private var coordinate: CLLocationCoordinate2D
+  let latitude: Degrees
+  let longitude: Degrees
   
-  
-  var latitudeStr: String {
-    didSet {
-      let lat = convertDegreesMinutesSecondsToDouble(value: latitudeStr, limit: 90)
-      coordinate.latitude = lat
-    }
+  init(name: String, region: String, timezone: String, latitudeStr: String, longitudeStr: String) throws {
+    
+    let lat = try convertDegreesMinutesSecondsToDouble(value: latitudeStr, limit: 90)
+    
+    let long = try convertDegreesMinutesSecondsToDouble(value: longitudeStr, limit: 180)
+    
+    self.name = name
+    self.region = region
+    self.timezone = TimeZone(identifier: timezone) ?? .current
+    self.latitude = lat
+    self.longitude = long
   }
   
-  var longitudeStr: String {
-    didSet {
-      let lat = convertDegreesMinutesSecondsToDouble(value: longitudeStr, limit: 180)
-      coordinate.longitude = lat
-    }
+  init(name: String, region: String, timezone: TimeZone, latitude: Degrees, longitude: Degrees) {
+    self.name = name
+    self.region = region
+    self.timezone = timezone
+    self.latitude = latitude.cap(limit: 90)
+    self.longitude = longitude.cap(limit: 180)
   }
+  
   
   var observer: Observer {
-    .init(coordinate2D: self.coordinate, elevation: 0)
+    .init(latitude: latitude, longitude: longitude, elevation: .double(0))
   }
   
   var timezoneGroup: String? {

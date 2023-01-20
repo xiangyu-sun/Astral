@@ -12,11 +12,15 @@ import Foundation
  The number of degrees as a float
  */
 
+enum ConvetionError: Error {
+  case invalidInput
+}
+
 func convertDegreesMinutesSecondsToDouble(value: Double, limit: Double?) -> Double  {
   return value.cap(limit: limit)
 }
 
-func convertDegreesMinutesSecondsToDouble(value: String, limit: Double?) -> Double  {
+func convertDegreesMinutesSecondsToDouble(value: String, limit: Double?) throws -> Double  {
   if let value = Double(value) {
     return value.cap(limit: limit)
   }
@@ -42,9 +46,9 @@ func convertDegreesMinutesSecondsToDouble(value: String, limit: Double?) -> Doub
     }
     
     return res.cap(limit: limit)
+  } else {
+    throw ConvetionError.invalidInput
   }
-  
-  return 0
 }
 
 let regex = #/(?P<deg>\d{1,3})[°]((?P<min>\d{1,2})[′'])?((?P<sec>\d{1,2})[″\"])?(?P<dir>[NSEW])?/#
