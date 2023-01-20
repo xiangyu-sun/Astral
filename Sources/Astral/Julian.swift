@@ -7,6 +7,10 @@
 
 import Foundation
 
+//One widely-used epoch is called J2000; it is the Julian Day for 1 Jan, 2000 at 12:00 noon = JD 2451545.0.
+let julianDayEpoch = 2451545.0
+let julianEC = 36525.0
+
 func datFractionToTime(_ fraction: Double) -> DateComponents {
   var s = fraction * (24 * 60 * 60)
   let h = s / (60 * 60)
@@ -50,8 +54,8 @@ func julianDay(at: DateComponents, calendar: Calendar = .init(identifier: .grego
     b = 0
   }
   
-  let jd = (365.25 * (year + 4716)).rounded(.down)
-  + (30.6001 * (month + 1)).rounded(.down)
+  let jd = Int(365.25 * (year + 4716)).double
+  + Int(30.6001 * (month + 1)).double
   + day
   + dayFraction
   + b
@@ -147,11 +151,11 @@ func julianDayToCompoenent(jd: Double) -> DateComponents {
 
 
 func julianDayToCentury(julianDay: Double) -> Double {
-  (julianDay - 2451545.0) / 36525.0
+  (julianDay - julianDayEpoch) / julianEC
 }
 
 func julianDCenturyToDay(julianCentury: Double) -> Double {
-  (julianCentury * 36525.0) + 2451545.0
+  (julianCentury * julianEC) + julianDayEpoch
 }
 
 
@@ -159,6 +163,6 @@ func julianDCenturyToDay(julianCentury: Double) -> Double {
 /// - Parameter dateComponent: <#dateComponent description#>
 /// - Returns: <#description#>
 func julianDay2000(at dateComponent: DateComponents) -> Double {
-  return julianDay(at: dateComponent) - 2451545.0
+  return julianDay(at: dateComponent) - julianDayEpoch
 }
 

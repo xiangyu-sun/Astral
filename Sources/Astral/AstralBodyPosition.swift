@@ -8,7 +8,7 @@
 import Foundation
 
 /// The position of an astral body as seen from earth
-struct AstralBodyPosition {
+struct AstralBodyPosition: Equatable {
   var right_ascension: Radians
   var declination: Radians
   var distance: Radians

@@ -100,4 +100,5 @@ final class JulianTests: XCTestCase {
       XCTAssertEqual(julianDCenturyToDay(julianCentury: jc), jd, accuracy: 0.1)
     }
   }
+  
 }
