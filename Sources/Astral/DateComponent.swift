@@ -111,6 +111,10 @@ extension Optional where Wrapped == Int  {
     }
     return Double(value) * rhs
   }
+  
+  static func + (lhs: Self, rhs: Self) -> Int {
+    return (lhs ?? 0) + (rhs ?? 0)
+  }
 }
 
 

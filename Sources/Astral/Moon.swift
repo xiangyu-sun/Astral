@@ -347,7 +347,7 @@ func riseset(
       
       if transit.event == "rise" {
         let event_time = transit.when
-        let event = DateComponents(timeZone: .utc, year: utcDate.year, month: utcDate.month, day: utcDate.day, hour: event_time.hour, minute: event_time.minute)
+        let event = DateComponents(timeZone: .utc, year: utcDate.year, month: utcDate.month, day: utcDate.day, hour: utcDate.hour! + event_time.hour!, minute: utcDate.minute! + event_time.minute!)
         
         if rise_time == nil{
           rise_time = event
@@ -375,7 +375,7 @@ func riseset(
       }
       else if transit.event == "set"{
         let event_time = transit.when
-        let event = DateComponents(timeZone: .utc, year: utcDate.year, month: utcDate.month, day: utcDate.day, hour: event_time.hour, minute: event_time.minute)
+        let event = DateComponents(timeZone: .utc, year: utcDate.year, month: utcDate.month, day: utcDate.day, hour: utcDate.hour! + event_time.hour!, minute: utcDate.minute + event_time.minute)
         
         if set_time == nil {
           set_time = event
