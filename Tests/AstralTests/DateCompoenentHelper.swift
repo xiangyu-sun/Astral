@@ -9,7 +9,7 @@ import Foundation
 
 extension DateComponents {
   static func date(_ year: Int, _ month: Int, _ day: Int) -> DateComponents {
-    .init(year: year, month: month, day: day)
+    .init(timeZone:.gmt, year: year, month: month, day: day)
   }
   
   static func datetime(_ year: Int, _ month: Int, _ day: Int, _ hour: Int, _ minute: Int = 0, _ second: Int = 0) -> DateComponents  {

@@ -174,24 +174,23 @@ func moon_transit_event(
   lmst: Degrees,
   latitude: Degrees,
   distance: Double,
-  window: [AstralBodyPosition]
+  window: inout [AstralBodyPosition]
 ) -> Transit {
-  var newWindow = window
-  
-  let mst = Angle.deg2rad(lmst)
+
+  let mst = radians(lmst)
   var hour_angle = [0.0, 0.0, 0.0]
   
-  let k1 = Angle.deg2rad(15 * 1.0027379097096138907193594760917)
+  let k1 = radians(15 * 1.0027379097096138907193594760917)
   
-  if newWindow[2].right_ascension < newWindow[0].right_ascension {
-    newWindow[2].right_ascension = newWindow[2].right_ascension + 2 * .pi
+  if window[2].right_ascension < window[0].right_ascension {
+    window[2].right_ascension = window[2].right_ascension + 2 * .pi
   }
   
-  hour_angle[0] = mst - newWindow[0].right_ascension + (hour * k1)
-  hour_angle[2] = mst - newWindow[2].right_ascension + (hour * k1) + k1
+  hour_angle[0] = mst - window[0].right_ascension + (hour * k1)
+  hour_angle[2] = mst - window[2].right_ascension + (hour * k1) + k1
   hour_angle[1] = (hour_angle[2] + hour_angle[0]) / 2
   
-  newWindow[1].declination = (window[2].declination + window[0].declination) / 2
+  window[1].declination = (window[2].declination + window[0].declination) / 2
   
   let sl = sin(radians(latitude))
   let cl = cos(radians(latitude))
@@ -200,36 +199,35 @@ func moon_transit_event(
   let z = cos(radians(90 + moonApparentRadius - (41.685 / distance)))
   
   if hour == 0{
-    newWindow[0].distance = (
+    window[0].distance = (
       sl * sin(window[0].declination)
       + cl * cos(window[0].declination) * cos(hour_angle[0])
       - z
     )
-    newWindow[2].distance = (
-      sl * sin(newWindow[2].declination)
-      + cl * cos(newWindow[2].declination) * cos(hour_angle[2])
-      - z
-    )
   }
   
-  
-  
-  if window[0].distance.sign == newWindow[2].distance.sign{
-    return .noTransit(NoTransit(parallax: newWindow[2].distance))
-  }
-  
-  newWindow[1].distance = (
-    sl * sin(newWindow[1].declination)
-    + cl * cos(newWindow[1].declination) * cos(hour_angle[1])
+  window[2].distance = (
+    sl * sin(window[2].declination)
+    + cl * cos(window[2].declination) * cos(hour_angle[2])
     - z
   )
   
-  let a = 2 * newWindow[2].distance - 4 * newWindow[1].distance + 2 * newWindow[0].distance
-  let b = 4 * newWindow[1].distance - 3 * newWindow[0].distance - newWindow[2].distance
-  var discriminant = b * b - 4 * a * newWindow[0].distance
+  if window[0].distance.sign == window[2].distance.sign{
+    return .noTransit(NoTransit(parallax: window[2].distance))
+  }
+  
+  window[1].distance = (
+    sl * sin(window[1].declination)
+    + cl * cos(window[1].declination) * cos(hour_angle[1])
+    - z
+  )
+  
+  let a = 2 * window[2].distance - 4 * window[1].distance + 2 * window[0].distance
+  let b = 4 * window[1].distance - 3 * window[0].distance - window[2].distance
+  var discriminant = b * b - 4 * a * window[0].distance
   
   if discriminant < 0 {
-    return .noTransit(NoTransit(parallax: newWindow[2].distance))
+    return .noTransit(NoTransit(parallax: window[2].distance))
   }
   
   discriminant = sqrt(discriminant)
@@ -263,13 +261,13 @@ func moon_transit_event(
   }
   
   let event_time = DateComponents(hour: h, minute: m)
-  if newWindow[0].distance < 0 && newWindow[2].distance > 0{
-    return .transitEvent(TransitEvent(event: "rise", when: event_time, azimuth: az, distance: newWindow[2].distance))
+  if window[0].distance < 0 && window[2].distance > 0{
+    return .transitEvent(TransitEvent(event: "rise", when: event_time, azimuth: az, distance: window[2].distance))
   }
-  if newWindow[0].distance > 0 && newWindow[2].distance < 0{
-    return .transitEvent(TransitEvent(event: "set", when: event_time, azimuth: az, distance: newWindow[2].distance))
+  if window[0].distance > 0 && window[2].distance < 0{
+    return .transitEvent(TransitEvent(event: "set", when: event_time, azimuth: az, distance: window[2].distance))
   }
-  return .noTransit(NoTransit(parallax: newWindow[2].distance))
+  return .noTransit(NoTransit(parallax: window[2].distance))
 }
 
 
@@ -283,6 +281,7 @@ func riseset(
   observer: Observer
 ) -> (rise: DateComponents?, set: DateComponents?) {
   let jd2000 = julianDay2000(at: on)
+  
   let t0 = lmst(
     dateComponents: on,
     longitude: observer.longitude
@@ -302,7 +301,7 @@ func riseset(
   }
   
   var moon_position_window: [AstralBodyPosition] = [
-    m[0],  // copy m[0]
+    m[0],
     AstralBodyPosition.zero,
     AstralBodyPosition.zero,
   ]
@@ -312,22 +311,23 @@ func riseset(
   
   // events = []
   for hour in 0..<24{
-    let ph = (hour + 1) / 24
+    let ph: Double = (hour + 1) / 24
+    
     moon_position_window[2].right_ascension = interpolate(
       m[0].right_ascension,
       m[1].right_ascension,
       m[2].right_ascension,
-      ph.double
+      ph
     )
     moon_position_window[2].declination = interpolate(
       m[0].declination,
       m[1].declination,
       m[2].declination,
-      ph.double
+      ph
     )
-    
+    // distance will be calculated inside
     let transit_info = moon_transit_event(
-      hour: hour.double, lmst: t0, latitude: observer.latitude, distance: m[1].distance, window: moon_position_window
+      hour: hour.double, lmst: t0, latitude: observer.latitude, distance: m[1].distance, window: &moon_position_window
     )
     
     if case let .noTransit(noTransit) = transit_info {
@@ -390,14 +390,15 @@ func riseset(
             set_time = event
           }
         }
-        
-        moon_position_window[0].right_ascension = moon_position_window[
-          2
-        ].right_ascension
-        moon_position_window[0].declination = moon_position_window[2].declination
-        moon_position_window[0].distance = moon_position_window[2].distance
       }
     }
+    
+    
+    moon_position_window[0].right_ascension = moon_position_window[
+      2
+    ].right_ascension
+    moon_position_window[0].declination = moon_position_window[2].declination
+    moon_position_window[0].distance = moon_position_window[2].distance
   }
   return (rise_time, set_time)
 }
@@ -623,7 +624,7 @@ func _phase_asfloat(date: DateComponents) -> Double {
      21 .. 27.99   Last quarter
      ============  ==============
  */
-func phase(date: DateComponents = Date.now.components()) -> Double {
+func moonPhase(date: DateComponents = Date.now.components()) -> Double {
   var moon = _phase_asfloat(date: date)
   if moon >= 28.0{
     moon -= 28.0
