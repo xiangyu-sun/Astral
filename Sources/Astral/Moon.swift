@@ -48,6 +48,13 @@ func interpolate(_ f0: Double, _ f1: Double, _ f2: Double, _ p: Double) -> Doubl
   return f
 }
 
+let calendarUTC: Calendar = {
+  var calender = Calendar(identifier: .gregorian)
+  calender.timeZone = .utc
+  
+  return calender
+}()
+  
 
 func moon_mean_longitude(jd2000: Double) -> Revolutions {
   var _mean_longitude = 0.606434 + 0.03660110129 * jd2000
@@ -331,10 +338,12 @@ func riseset(
       hour: hour.double, lmst: t0, latitude: observer.latitude, distance: m[1].distance, window: &moon_position_window
     )
     
+
+    
     if case let .noTransit(noTransit) = transit_info {
       moon_position_window[2].distance = noTransit.parallax
     } else if case let .transitEvent(transit) = transit_info {
-      let query_time = DateComponents(timeZone: .utc, year: utcDate.year, month: utcDate.month)
+      let query_time = DateComponents(timeZone: .utc, year: utcDate.year, month: utcDate.month, day: utcDate.day, hour: hour, minute: 0, second: 0)
       
       if transit.event == "rise" {
         let event_time = transit.when
@@ -345,12 +354,12 @@ func riseset(
         }
         else{
           
-          let rq_diff = query_time.date!.distance(to: rise_time!.date!)
-          let eq_diff = query_time.date!.distance(to: event.date!)
+          let rq_diff = calendarUTC.date(from: query_time)!.distance(to: calendarUTC.date(from: rise_time!)!)
+          let eq_diff = calendarUTC.date(from: query_time)!.distance(to: calendarUTC.date(from: event)!)
           
           var sq_diff: TimeInterval
           if set_time != nil {
-            sq_diff = query_time.date!.distance(to: set_time!.date!)
+            sq_diff = calendarUTC.date(from: query_time)!.distance(to: calendarUTC.date(from: set_time!)!)
           }
           else {
             sq_diff = 0
