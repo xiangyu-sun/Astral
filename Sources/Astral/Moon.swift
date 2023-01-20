@@ -427,10 +427,13 @@ func moonrise(
     date = Calendar.current.dateComponents(in: tzinfo, from: Date())
   }
   
-  var info = riseset(on: date, observer: observer)
+  let UTCDate = date.astimezone(.utc)
+  
+  var info = riseset(on: UTCDate, observer: observer)
+  
   if let moonRise = info.rise {
     var rise = moonRise.astimezone(tzinfo)
-    var rd = rise.extractYearMonthDay()
+    var rd = rise.extractYearMonthDay(timeZone: tzinfo)
     if rd != date{
       var delta: Int
       if rd > date{
@@ -439,14 +442,14 @@ func moonrise(
       else{
         delta = 1
       }
-      var new_date = date
-      new_date.day = date.day! + delta
+      var new_date = UTCDate
+      new_date.day = UTCDate.day! + delta
       
       info = riseset(on:new_date, observer: observer)
       
       if let newRise = info.rise {
         rise = newRise.astimezone(tzinfo)
-        rd = rise.extractYearMonthDay()
+        rd = rise.extractYearMonthDay(timeZone: tzinfo)
         if rd != date {
           return nil
         }
@@ -484,11 +487,14 @@ func moonset(
     date = Calendar.current.dateComponents(in: tzinfo, from: Date())
   }
   
-  var info = riseset(on: date, observer: observer)
+  let UTCDate = date.astimezone(.utc)
+  
+  var info = riseset(on: UTCDate, observer: observer)
+
   
   if let moonSet = info.set {
     var set = moonSet.astimezone(tzinfo)
-    var sd = set.extractYearMonthDay()
+    var sd = set.extractYearMonthDay(timeZone: tzinfo)
     if sd != date{
       var delta: Int
       if sd > date{
@@ -497,14 +503,14 @@ func moonset(
       else{
         delta = 1
       }
-      var new_date = date
-      new_date.day = date.day! + delta
+      var new_date = UTCDate
+      new_date.day = UTCDate.day! + delta
       
       info = riseset(on:new_date, observer: observer)
       
       if let newSet = info.set {
         set = newSet.astimezone(tzinfo)
-        sd = set.extractYearMonthDay()
+        sd = set.extractYearMonthDay(timeZone: tzinfo)
         if sd != date {
           return nil
         }

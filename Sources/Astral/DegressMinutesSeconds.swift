@@ -51,7 +51,7 @@ func convertDegreesMinutesSecondsToDouble(value: String, limit: Double?) throws 
   }
 }
 
-let regex = #/(?i)(?P<deg>\d{1,3})[°]((?P<min>\d{1,2})[′'])?((?P<sec>\d{1,2})[″\"])?(?P<dir>[NSEW])?/#
+let regex = #/(?i)(?P<deg>\d{1,3})[°]\s*((?P<min>\d{1,2})[′'])?\s*((?P<sec>\[0-9]*[.][0-9]+)[″\"])?\s*(?P<dir>[NSEW])?/#
 
 
 

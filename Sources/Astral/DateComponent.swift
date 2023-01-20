@@ -21,13 +21,12 @@ extension Date {
 }
 
 extension DateComponents {
-  func extractYearMonthDay() -> DateComponents {
-    var copy = self
-    copy.hour = 0
-    copy.minute = 0
-    copy.second = 0
-    copy.nanosecond = 0
-    return copy
+  func extractYearMonthDay(timeZone: TimeZone = .utc) -> DateComponents {
+    return DateComponents(timeZone: timeZone ,year: self.year, month: self.month, day: self.day)
+  }
+  
+  func extractYearMonthDayHourMinuteSecond(timeZone: TimeZone = .utc) -> DateComponents {
+    return DateComponents(timeZone: timeZone ,year: self.year, month: self.month, day: self.day, hour: self.hour, minute: self.month, second: self.month)
   }
   
   func astimezone(_ timeZone: TimeZone) -> DateComponents {
