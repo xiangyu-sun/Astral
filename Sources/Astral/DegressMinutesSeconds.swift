@@ -1,50 +1,49 @@
 import Foundation
 
-/**
- Converts as string of the form `degrees°minutes'seconds"[N|S|E|W]`,
- or a float encoded as a string, to a float
- N and E return positive values
- S and W return negative values
- Args:
- dms: string to convert
- limit: Limit the value between ± `limit`
- Returns:
- The number of degrees as a float
- */
+// MARK: - ConvetionError
+
+/// Converts as string of the form `degrees°minutes'seconds"[N|S|E|W]`,
+/// or a float encoded as a string, to a float
+/// N and E return positive values
+/// S and W return negative values
+/// Args:
+/// dms: string to convert
+/// limit: Limit the value between ± `limit`
+/// Returns:
+/// The number of degrees as a float
 
 enum ConvetionError: Error {
   case invalidInput
 }
 
-func convertDegreesMinutesSecondsToDouble(value: Double, limit: Double?) -> Double  {
-  return value.cap(limit: limit)
+func convertDegreesMinutesSecondsToDouble(value: Double, limit: Double?) -> Double {
+  value.cap(limit: limit)
 }
 
-func convertDegreesMinutesSecondsToDouble(value: String, limit: Double?) throws -> Double  {
+func convertDegreesMinutesSecondsToDouble(value: String, limit: Double?) throws -> Double {
   if let value = Double(value) {
     return value.cap(limit: limit)
   }
-  
-  if let match =  value.firstMatch(of: regex){
-    
+
+  if let match = value.firstMatch(of: regex) {
     let deg = Double(match.deg) ?? 0
-    
+
     let dir = match.dir ?? "E"
-    
+
     var res = Double(deg)
-    
-    if let min = Double(match.min ?? "0"){
+
+    if let min = Double(match.min ?? "0") {
       res += min / 60
     }
-    
-    if let sec = Double(match.sec ?? "0"){
+
+    if let sec = Double(match.sec ?? "0") {
       res += sec / 3600
     }
-    
-    if  ["S","W"].contains(dir.uppercased()) {
+
+    if ["S","W"].contains(dir.uppercased()) {
       res = -res
     }
-    
+
     return res.cap(limit: limit)
   } else {
     throw ConvetionError.invalidInput
@@ -53,10 +52,8 @@ func convertDegreesMinutesSecondsToDouble(value: String, limit: Double?) throws 
 
 let regex = #/(?i)(?P<deg>\d{1,3})[°]\s*((?P<min>\d{1,2})[′'])?\s*((?P<sec>\[0-9]*[.][0-9]+)[″\"])?\s*(?P<dir>[NSEW])?/#
 
-
-
 extension Double {
-  
+
   func cap(limit: Double?) -> Double {
     if let limit {
       if self > limit {
@@ -72,5 +69,5 @@ extension Double {
       return self
     }
   }
-  
+
 }

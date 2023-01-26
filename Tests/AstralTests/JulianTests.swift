@@ -1,6 +1,6 @@
 //
 //  JulianTests.swift
-//  
+//
 //
 //  Created by Xiangyu Sun on 20/1/23.
 //
@@ -10,15 +10,7 @@ import XCTest
 
 final class JulianTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-  
-  let data: [(DateComponents, Double)] =  [
+  let data: [(DateComponents, Double)] = [
     (.datetime(1957, 10, 4, 19, 26, 24), 2436116.31),
     (.date(2000, 1, 1), 2451544.5),
     (.date(2012, 1, 1), 2455927.5),
@@ -43,36 +35,17 @@ final class JulianTests: XCTestCase {
     (.date(2013, 6, 1), 2456444.5),
     (.date(1867, 2, 1), 2402998.5),
     (.date(3200, 11, 14), 2890153.5),
-]
+  ]
 
-    func testDefaultCalendar() throws {
-      for (day, jd) in data {
-        XCTAssertEqual(julianDay(at: day), jd)
-      }
-    }
-  
   let julianCalenderData: [(DateComponents, Double)] = [
     (.datetime(837, 4, 10, 7, 12, 0), 2026_871.8),
     (.datetime(333, 1, 27, 12, 0, 0), 1842_713.0),
   ]
 
-  
-  func testJulianCalendar() throws {
-    for (day, jd) in julianCalenderData {
-      XCTAssertEqual(julianDay(at: day, calendar: .init(identifier: .chinese)), jd)
-    }
-  }
-  
   let julianDayToDateTimeCalenderData: [(Double, DateComponents)] = [
     (2026_871.8, .datetime(837, 4, 10, 7, 12, 0)),
     (1842_713.0, .datetime(333, 1, 27, 12, 0, 0)),
   ]
-
-  func testJulianDayToDateTime() throws {
-    for (jd, components) in julianDayToDateTimeCalenderData {
-      XCTAssertEqual(julianDayToCompoenent(jd: jd), components)
-    }
-  }
 
   let julianCenturyData: [(Double, Double)] = [
     (2455927.5, 0.119986311),
@@ -81,25 +54,50 @@ final class JulianTests: XCTestCase {
     (2402998.5, -1.329130732),
     (2890153.5, 12.00844627),
   ]
-  
-  func test_JulianCentury(){
+  let julianCenturyToDayData: [(Double, Double)] = [
+    (0.119986311, 2455927.5),
+    (0.130006845, 2456293.5),
+    (0.134140999, 2456444.5),
+    (-1.329130732, 2402998.5),
+    (12.00844627, 2890153.5),
+  ]
+
+  override func setUpWithError() throws {
+    // Put setup code here. This method is called before the invocation of each test method in the class.
+  }
+
+  override func tearDownWithError() throws {
+    // Put teardown code here. This method is called after the invocation of each test method in the class.
+  }
+
+  func testDefaultCalendar() throws {
+    for (day, jd) in data {
+      XCTAssertEqual(julianDay(at: day), jd)
+    }
+  }
+
+  func testJulianCalendar() throws {
+    for (day, jd) in julianCalenderData {
+      XCTAssertEqual(julianDay(at: day, calendar: .init(identifier: .chinese)), jd)
+    }
+  }
+
+  func testJulianDayToDateTime() throws {
+    for (jd, components) in julianDayToDateTimeCalenderData {
+      XCTAssertEqual(julianDayToCompoenent(jd: jd), components)
+    }
+  }
+
+  func test_JulianCentury() {
     for (jd, jc) in julianCenturyData {
       XCTAssertEqual(julianDayToCentury(julianDay: jd), jc, accuracy: 0.1)
     }
   }
 
-  let julianCenturyToDayData: [(Double, Double)] = [
-    (0.119986311, 2455927.5),
-         (0.130006845, 2456293.5),
-         (0.134140999, 2456444.5),
-         (-1.329130732, 2402998.5),
-         (12.00844627, 2890153.5),
-  ]
-  
-  func test_JulianCenturyToDay(){
+  func test_JulianCenturyToDay() {
     for (jc, jd) in julianCenturyToDayData {
       XCTAssertEqual(julianDCenturyToDay(julianCentury: jc), jd, accuracy: 0.1)
     }
   }
-  
+
 }

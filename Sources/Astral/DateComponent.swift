@@ -1,6 +1,5 @@
 import Foundation
 
-
 extension TimeZone {
   static var utc: TimeZone {
     if #available(macOS 13, iOS 16, watchOS 9, *) {
@@ -11,60 +10,55 @@ extension TimeZone {
   }
 }
 
-
 extension Date {
-  
+
   func components(calendar: Calendar = Calendar(identifier: .gregorian), timezone: TimeZone = .utc) -> DateComponents {
-    return calendar.dateComponents(in: timezone, from: self)
+    calendar.dateComponents(in: timezone, from: self)
   }
-  
+
 }
 
 extension DateComponents {
+
+  static func > (lhs: DateComponents, rhs: DateComponents) -> Bool {
+    let calendar = lhs.calendar ?? .autoupdatingCurrent
+
+    return calendar.compare(calendar.date(from: lhs)!, to: calendar.date(from: rhs)!, toGranularity: .day) == .orderedDescending
+  }
+
   func extractYearMonthDay(timeZone: TimeZone = .utc) -> DateComponents {
-    return DateComponents(timeZone: timeZone ,year: self.year, month: self.month, day: self.day)
+    DateComponents(timeZone: timeZone ,year: year, month: month, day: day)
   }
-  
+
   func extractYearMonthDayHourMinuteSecond(timeZone: TimeZone = .utc) -> DateComponents {
-    return DateComponents(timeZone: timeZone ,year: self.year, month: self.month, day: self.day, hour: self.hour, minute: self.minute, second: self.second)
+    DateComponents(timeZone: timeZone ,year: year, month: month, day: day, hour: hour, minute: minute, second: second)
   }
-  
-  
-  
+
   func astimezone(_ timeZone: TimeZone) -> DateComponents {
     var calendar = Calendar(identifier: .gregorian)
     calendar.timeZone = self.timeZone ?? .current
     let date = calendar.date(from: self) ?? Date()
-    return  calendar.dateComponents(in: timeZone, from: date)
-  }
-  
-  static func > (lhs: DateComponents, rhs: DateComponents) -> Bool {
-
-    let calendar = lhs.calendar ?? .autoupdatingCurrent
-    
-    return calendar.compare(calendar.date(from: lhs)!, to: calendar.date(from: rhs)!, toGranularity: .day) == .orderedDescending
-    
+    return calendar.dateComponents(in: timeZone, from: date)
   }
 }
-
 
 /// Convert a Double number of hours
 /// - Parameter hours: <#hours description#>
 /// - Returns: <#description#>
 func from(hours: Double) -> DateComponents {
   var reminder = hours
-  
+
   let hour = Int(reminder)
   reminder -= hour.double
-  
+
   reminder *= 60
   let minute = Int(reminder)
   reminder -= minute.double
-  
+
   reminder *= 60
   let second = Int(reminder)
   reminder -= second.double
-  
+
   let nanosecond = Int(reminder * 3.6e+12)
 
   return DateComponents(hour: hour, minute: minute, second: second, nanosecond: nanosecond)
@@ -76,7 +70,7 @@ func toHours(_ dateComponent: DateComponents) -> Double {
   result += dateComponent.minute / 60
   result += dateComponent.second / 3600
   result += dateComponent.nanosecond / 3.6e+12
-  
+
   return result
 }
 
@@ -84,7 +78,7 @@ func toHours(_ dateComponent: DateComponents) -> Double {
 /// - Parameter dateComponent: <#dateComponent description#>
 /// - Returns: <#description#>
 func toSeconds(dateComponent: DateComponents) -> Double {
-  return toHours(dateComponent) * 3600
+  toHours(dateComponent) * 3600
 }
 
 func timeToSeconds(dateComponent: DateComponents) -> Double {
@@ -92,34 +86,32 @@ func timeToSeconds(dateComponent: DateComponents) -> Double {
   result += dateComponent.hour * 60 * 60
   result += dateComponent.minute * 60
   result += dateComponent.second
-  
+
   return result
 }
 
-
-extension Optional where Wrapped == Int  {
+extension Int? {
   static func / (lhs: Self, rhs: Double) -> Double {
     guard let value = lhs else {
       return 0
     }
     return Double(value) / rhs
   }
-  
+
   static func * (lhs: Self, rhs: Double) -> Double {
     guard let value = lhs else {
       return 0
     }
     return Double(value) * rhs
   }
-  
+
   static func + (lhs: Self, rhs: Self) -> Int {
-    return (lhs ?? 0) + (rhs ?? 0)
+    (lhs ?? 0) + (rhs ?? 0)
   }
 }
 
-
-extension Optional where Wrapped == Double  {
-  static func += (lhs: inout Double, rhs: Int?){
+extension Double? {
+  static func += (lhs: inout Double, rhs: Int?) {
     lhs += Double(rhs ?? 0)
   }
 }
