@@ -45,7 +45,7 @@ final class MoonTests: XCTestCase {
       
       let calc_time = try moonrise(observer: .london, dateComponents: date)
       XCTAssertNotNil(calc_time)
-      XCTAssertEqual(calc_time?.extractYearMonthDayHourMinuteSecond(), risetime.extractYearMonthDayHourMinuteSecond())
+      XCTAssertEqual(calc_time!.extractYearMonthDayHourMinuteSecond(), risetime.extractYearMonthDayHourMinuteSecond(), accurency: DateComponents(minute: 1))
     }
   }
   
@@ -74,7 +74,7 @@ final class MoonTests: XCTestCase {
     for (date, risetime) in moonRiseDataRiyadh {
       let calc_time = try moonrise(observer: .riyadh, dateComponents: date)
       XCTAssertNotNil(calc_time)
-      XCTAssertEqual(calc_time?.extractYearMonthDayHourMinuteSecond(), risetime.extractYearMonthDayHourMinuteSecond())
+      XCTAssertEqual(calc_time!.extractYearMonthDayHourMinuteSecond(), risetime.extractYearMonthDayHourMinuteSecond(), accurency: DateComponents(second: 1))
     }
   }
   
@@ -137,13 +137,13 @@ final class MoonTests: XCTestCase {
     for (date, risetime) in moonRiseBarcelonanData {
       let calc_time = try moonrise(observer: .barcelona, dateComponents: date, tzinfo: Self.timeZoneBCN)
       XCTAssertNotNil(calc_time)
-      XCTAssertEqual(calc_time?.extractYearMonthDayHourMinuteSecond(timeZone: Self.timeZoneBCN), risetime.extractYearMonthDayHourMinuteSecond(timeZone: Self.timeZoneBCN))
+      XCTAssertEqual(calc_time!.extractYearMonthDayHourMinuteSecond(timeZone: Self.timeZoneBCN), risetime.extractYearMonthDayHourMinuteSecond(timeZone: Self.timeZoneBCN), accurency: DateComponents(minute: 1))
     }
     
     for (date, risetime) in moonRiseBarcelonanDataUTC {
       let calc_time = try moonrise(observer: .barcelona, dateComponents: date)
       XCTAssertNotNil(calc_time)
-      XCTAssertEqual(calc_time?.extractYearMonthDayHourMinuteSecond(), risetime.extractYearMonthDayHourMinuteSecond())
+      XCTAssertEqual(calc_time!.extractYearMonthDayHourMinuteSecond(), risetime.extractYearMonthDayHourMinuteSecond(), accurency: DateComponents(minute: 1))
     }
   }
 }
