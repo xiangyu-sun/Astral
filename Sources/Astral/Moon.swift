@@ -343,10 +343,11 @@ func riseset(
     if case let .noTransit(noTransit) = transit_info {
       moon_position_window[2].distance = noTransit.parallax
     } else if case let .transitEvent(transit) = transit_info {
-      let query_time = DateComponents(timeZone: .utc, year: utcDate.year, month: utcDate.month, day: utcDate.day, hour: hour, minute: 0, second: 0)
+      let query_time = DateComponents(timeZone: .utc, year: utcDate.year, month: utcDate.month, day: utcDate.day, hour: hour, minute: 0)
       
       if transit.event == "rise" {
         let event_time = transit.when
+
         let event = DateComponents(timeZone: .utc, year: utcDate.year, month: utcDate.month, day: utcDate.day, hour: utcDate.hour! + event_time.hour!, minute: utcDate.minute! + event_time.minute!)
         
         if rise_time == nil{
@@ -365,8 +366,8 @@ func riseset(
             sq_diff = 0
           }
           
-          var update_rise_time = rq_diff.sign == eq_diff.sign && fabs(rq_diff) > fabs(eq_diff)
-          update_rise_time = update_rise_time || rq_diff.sign != eq_diff.sign && (set_time != nil && rq_diff.sign == sq_diff.sign)
+          var update_rise_time = (rq_diff.sign == eq_diff.sign) && (fabs(rq_diff) > fabs(eq_diff))
+          update_rise_time = update_rise_time || (rq_diff.sign != eq_diff.sign) && (set_time != nil && rq_diff.sign == sq_diff.sign)
           
           if update_rise_time{
             rise_time = event
@@ -375,7 +376,7 @@ func riseset(
       }
       else if transit.event == "set"{
         let event_time = transit.when
-        let event = DateComponents(timeZone: .utc, year: utcDate.year, month: utcDate.month, day: utcDate.day, hour: utcDate.hour! + event_time.hour!, minute: utcDate.minute + event_time.minute)
+        let event = DateComponents(timeZone: .utc, year: utcDate.year, month: utcDate.month, day: utcDate.day, hour: utcDate.hour! + event_time.hour!, minute: utcDate.minute! + event_time.minute)
         
         if set_time == nil {
           set_time = event

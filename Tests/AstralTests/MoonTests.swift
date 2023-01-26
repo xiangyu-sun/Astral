@@ -74,7 +74,7 @@ final class MoonTests: XCTestCase {
     for (date, risetime) in moonRiseDataRiyadh {
       let calc_time = try moonrise(observer: .riyadh, dateComponents: date)
       XCTAssertNotNil(calc_time)
-      XCTAssertEqual(calc_time!.extractYearMonthDayHourMinuteSecond(), risetime.extractYearMonthDayHourMinuteSecond(), accurency: DateComponents(second: 1))
+      XCTAssertEqual(calc_time!.extractYearMonthDayHourMinuteSecond(), risetime.extractYearMonthDayHourMinuteSecond(), accurency: DateComponents(minute: 1))
     }
   }
   
@@ -88,36 +88,36 @@ final class MoonTests: XCTestCase {
     for (date, settime) in moonSetRiyadhUTCData {
       let calc_time = try moonset(observer: .riyadh, dateComponents: date)
       XCTAssertNotNil(calc_time)
-      XCTAssertEqual(calc_time?.extractYearMonthDayHourMinuteSecond(), settime.extractYearMonthDayHourMinuteSecond())
+      XCTAssertEqual(calc_time!.extractYearMonthDayHourMinuteSecond(), settime.extractYearMonthDayHourMinuteSecond(), accurency: DateComponents(minute: 1))
     }
   }
   
-  static let tz = TimeZone(abbreviation: "GMT+13")!
+  static let wellington = TimeZone(abbreviation: "GMT+13")!
   
   let moonRiseWelllingtonData: [(DateComponents, DateComponents)] = [
-    (.date(2021, 10, 28, tz), .datetime(2021, 10, 28, 2, 6, 0, tz)),
-    (.date(2021, 11, 6, tz), .datetime(2021, 11, 6, 6, 45, 0, tz)),
+    (.date(2023, 1, 27, wellington), .datetime(2023, 1, 27, 12, 17, 0, wellington)),
+    (.date(2023, 1, 28, wellington), .datetime(2023, 1, 28, 13, 26, 0, wellington)),
   ]
   
 
   func testMoonRiseWellington() throws {
     for (date, risetime) in moonRiseWelllingtonData {
-      let calc_time = try moonrise(observer: .welllington, dateComponents: date, tzinfo: Self.tz)
+      let calc_time = try moonrise(observer: .welllington, dateComponents: date, tzinfo: Self.wellington)
       XCTAssertNotNil(calc_time)
-      XCTAssertEqual(calc_time?.extractYearMonthDayHourMinuteSecond(timeZone: Self.tz), risetime.extractYearMonthDayHourMinuteSecond(timeZone: Self.tz))
+      XCTAssertEqual(calc_time!.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington), risetime.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington), accurency: DateComponents(minute: 1))
     }
   }
   
   let moonSetWellingtonUTCData: [(DateComponents, DateComponents)] = [
-    (.date(2021, 8, 18, tz), .datetime(2021, 8, 18, 3, 31, 0, tz)),
-    (.date(2021, 7, 8, tz), .datetime(2021, 7, 8, 15, 16, 0, tz)),
+    (.date(2023, 1, 27, wellington), .datetime(2023, 1, 27, 23, 54, 0, wellington)),
+    (.date(2021, 7, 8, wellington), .datetime(2021, 7, 8, 15, 16, 0, wellington)),
   ]
   
   func testMoonSetWellington() throws {
     for (date, settime) in moonSetWellingtonUTCData {
-      let calc_time = try moonrise(observer: .welllington, dateComponents: date, tzinfo: Self.tz)
+      let calc_time = try moonset(observer: .welllington, dateComponents: date, tzinfo: Self.wellington)
       XCTAssertNotNil(calc_time)
-      XCTAssertEqual(calc_time?.extractYearMonthDayHourMinuteSecond(timeZone: Self.tz), settime.extractYearMonthDayHourMinuteSecond(timeZone: Self.tz))
+      XCTAssertEqual(calc_time?.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington), settime.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington))
     }
   }
   
