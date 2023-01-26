@@ -590,3 +590,61 @@ func zenith_and_azimuth(
 
   return (zenith, azimuth)
 }
+
+
+/**
+ Calculate the zenith angle of the sun.
+ Args:
+     observer:    Observer to calculate the solar zenith for
+     dateandtime: The date and time for which to calculate the angle.
+                  If `dateandtime` is None or is a naive Python datetime
+                  then it is assumed to be in the UTC timezone.
+     with_refraction: If True adjust zenith to take refraction into account
+ Returns:
+     The zenith angle in degrees.
+ */
+func zenith(
+    observer: Observer,
+    dateandtime:DateComponents = Date().components(),
+    with_refraction: Bool = true
+) -> Double {
+  return zenith_and_azimuth(observer: observer, dateandtime:dateandtime, with_refraction: with_refraction).0
+}
+
+/**
+ Calculate the azimuth angle of the sun.
+ Args:
+     observer:    Observer to calculate the solar azimuth for
+     dateandtime: The date and time for which to calculate the angle.
+                  If `dateandtime` is None or is a naive Python datetime
+                  then it is assumed to be in the UTC timezone.
+ Returns:
+     The azimuth angle in degrees clockwise from North.
+ If `dateandtime` is a naive Python datetime then it is assumed to be
+ in the UTC timezone.
+ */
+func azimuth(
+    observer: Observer,
+    dateandtime:DateComponents = Date().components()
+) -> Double {
+  return zenith_and_azimuth(observer: observer, dateandtime:dateandtime).1
+}
+
+/**
+ Calculate the sun's angle of elevation.
+ Args:
+     observer:    Observer to calculate the solar elevation for
+     dateandtime: The date and time for which to calculate the angle.
+                  If `dateandtime` is None or is a naive Python datetime
+                  then it is assumed to be in the UTC timezone.
+     with_refraction: If True adjust elevation to take refraction into account
+ Returns:
+     The elevation angle in degrees above the horizon.
+ */
+func elevation(
+  observer: Observer,
+  dateandtime:DateComponents = Date().components(),
+  with_refraction: Bool = true
+) -> Double {
+  return 90.0 - zenith(observer: observer, dateandtime: dateandtime, with_refraction: with_refraction)
+}
