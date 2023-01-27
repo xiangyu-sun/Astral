@@ -20,11 +20,15 @@ extension Date {
 
 extension DateComponents {
 
-  static func > (lhs: DateComponents, rhs: DateComponents) -> Bool {
+  // MARK: Public
+
+  public static func > (lhs: DateComponents, rhs: DateComponents) -> Bool {
     let calendar = lhs.calendar ?? .autoupdatingCurrent
 
     return calendar.compare(calendar.date(from: lhs)!, to: calendar.date(from: rhs)!, toGranularity: .day) == .orderedDescending
   }
+
+  // MARK: Internal
 
   func extractYearMonthDay(timeZone: TimeZone = .utc) -> DateComponents {
     DateComponents(timeZone: timeZone ,year: year, month: month, day: day)

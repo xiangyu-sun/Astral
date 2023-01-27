@@ -7,6 +7,12 @@
 
 import Foundation
 
+// MARK: - SunError
+
+enum SunError: Error {
+  case valueError(String)
+}
+
 // Using 32 arc minutes as sun's apparent diameter
 let SUN_APPARENT_RADIUS = 32.0 / (60.0 * 2.0)
 
@@ -591,60 +597,517 @@ func zenith_and_azimuth(
   return (zenith, azimuth)
 }
 
-
-/**
- Calculate the zenith angle of the sun.
- Args:
-     observer:    Observer to calculate the solar zenith for
-     dateandtime: The date and time for which to calculate the angle.
-                  If `dateandtime` is None or is a naive Python datetime
-                  then it is assumed to be in the UTC timezone.
-     with_refraction: If True adjust zenith to take refraction into account
- Returns:
-     The zenith angle in degrees.
- */
+/// Calculate the zenith angle of the sun.
+/// Args:
+/// observer:    Observer to calculate the solar zenith for
+/// dateandtime: The date and time for which to calculate the angle.
+/// If `dateandtime` is None or is a naive Python datetime
+/// then it is assumed to be in the UTC timezone.
+/// with_refraction: If True adjust zenith to take refraction into account
+/// Returns:
+/// The zenith angle in degrees.
 func zenith(
-    observer: Observer,
-    dateandtime:DateComponents = Date().components(),
-    with_refraction: Bool = true
-) -> Double {
-  return zenith_and_azimuth(observer: observer, dateandtime:dateandtime, with_refraction: with_refraction).0
+  observer: Observer,
+  dateandtime: DateComponents = Date().components(),
+  with_refraction: Bool = true)
+  -> Double
+{
+  zenith_and_azimuth(observer: observer, dateandtime: dateandtime, with_refraction: with_refraction).0
 }
 
-/**
- Calculate the azimuth angle of the sun.
- Args:
-     observer:    Observer to calculate the solar azimuth for
-     dateandtime: The date and time for which to calculate the angle.
-                  If `dateandtime` is None or is a naive Python datetime
-                  then it is assumed to be in the UTC timezone.
- Returns:
-     The azimuth angle in degrees clockwise from North.
- If `dateandtime` is a naive Python datetime then it is assumed to be
- in the UTC timezone.
- */
+/// Calculate the azimuth angle of the sun.
+/// Args:
+/// observer:    Observer to calculate the solar azimuth for
+/// dateandtime: The date and time for which to calculate the angle.
+/// If `dateandtime` is None or is a naive Python datetime
+/// then it is assumed to be in the UTC timezone.
+/// Returns:
+/// The azimuth angle in degrees clockwise from North.
+/// If `dateandtime` is a naive Python datetime then it is assumed to be
+/// in the UTC timezone.
 func azimuth(
-    observer: Observer,
-    dateandtime:DateComponents = Date().components()
-) -> Double {
-  return zenith_and_azimuth(observer: observer, dateandtime:dateandtime).1
+  observer: Observer,
+  dateandtime: DateComponents = Date().components())
+  -> Double
+{
+  zenith_and_azimuth(observer: observer, dateandtime: dateandtime).1
 }
 
-/**
- Calculate the sun's angle of elevation.
- Args:
-     observer:    Observer to calculate the solar elevation for
-     dateandtime: The date and time for which to calculate the angle.
-                  If `dateandtime` is None or is a naive Python datetime
-                  then it is assumed to be in the UTC timezone.
-     with_refraction: If True adjust elevation to take refraction into account
- Returns:
-     The elevation angle in degrees above the horizon.
- */
+/// Calculate the sun's angle of elevation.
+/// Args:
+/// observer:    Observer to calculate the solar elevation for
+/// dateandtime: The date and time for which to calculate the angle.
+/// If `dateandtime` is None or is a naive Python datetime
+/// then it is assumed to be in the UTC timezone.
+/// with_refraction: If True adjust elevation to take refraction into account
+/// Returns:
+/// The elevation angle in degrees above the horizon.
 func elevation(
   observer: Observer,
-  dateandtime:DateComponents = Date().components(),
-  with_refraction: Bool = true
-) -> Double {
-  return 90.0 - zenith(observer: observer, dateandtime: dateandtime, with_refraction: with_refraction)
+  dateandtime: DateComponents = Date().components(),
+  with_refraction: Bool = true)
+  -> Double
+{
+  90.0 - zenith(observer: observer, dateandtime: dateandtime, with_refraction: with_refraction)
+}
+
+/// Calculate dawn time.
+/// Args:
+/// observer:   Observer to calculate dawn for
+/// date:       Date to calculate for. Default is today's date in the
+/// timezone `tzinfo`.
+/// depression: Number of degrees below the horizon to use to calculate dawn.
+/// Default is for Civil dawn i.e. 6.0
+/// tzinfo:     Timezone to return times in. Default is UTC.
+/// Returns:
+/// Date and time at which dawn occurs.
+/// Raises:
+/// ValueError: if dawn does not occur on the specified date
+func dawn(
+  observer: Observer,
+  date: DateComponents,
+  depression: Depression = Depression.civil,
+  tzinfo: TimeZone = .utc)
+  throws -> DateComponents
+{
+  let dep = depression.rawValue.double
+
+  var tot = time_of_transit(
+    observer: observer, date: date, zenith: 90.0 + dep,
+    direction: SunDirection.rising).astimezone(
+    tzinfo)
+
+  // If the dates don't match search on either the next or previous day.
+  var tot_date = tot
+
+  if tot_date != date {
+    var new_date = date
+
+    if tot_date < date {
+      new_date.setValue(date.day + 1, for: .day)
+    }
+    else {
+      new_date.setValue(date.day! - 1, for: .day)
+    }
+
+    tot = time_of_transit(
+      observer: observer,
+      date: new_date,
+      zenith: 90.0 + dep,
+      direction: SunDirection.rising).astimezone(
+      tzinfo)
+    // Still can't get a time then raise the error
+    tot_date = tot
+    if tot_date != date {
+      throw SunError.valueError("Unable to find a dawn time on the date specified")
+    }
+    return tot
+  }
+  return tot
+}
+
+/// Calculate sunrise time.
+/// Args:
+/// observer: Observer to calculate sunrise for
+/// date:     Date to calculate for. Default is today's date in the
+/// timezone `tzinfo`.
+/// tzinfo:   Timezone to return times in. Default is UTC.
+/// Returns:
+/// Date and time at which sunrise occurs.
+/// Raises:
+/// ValueError: if the sun does not reach the horizon on the specified date
+func sunrise(
+  observer: Observer,
+  date: DateComponents,
+  tzinfo: TimeZone = .utc)
+  throws -> DateComponents
+{
+  var tot = time_of_transit(
+    observer: observer,
+    date: date,
+    zenith: 90.0 + SUN_APPARENT_RADIUS,
+    direction: SunDirection.rising).astimezone(
+    tzinfo)
+
+  var tot_date = tot
+  if tot_date != date {
+    var new_date = date
+
+    if tot_date < date {
+      new_date.setValue(date.day + 1, for: .day)
+    }
+    else {
+      new_date.setValue(date.day! - 1, for: .day)
+    }
+
+    tot = time_of_transit(
+      observer: observer,
+      date: new_date,
+      zenith: 90.0 + SUN_APPARENT_RADIUS,
+      direction: SunDirection.rising).astimezone(
+      tzinfo)
+
+    tot_date = tot
+
+    if tot_date != date {
+      throw SunError.valueError("Unable to find a sunrise time on the date specified")
+    }
+    return tot
+  }
+
+  return tot
+}
+
+/// Calculate sunset time.
+/// Args:
+/// observer: Observer to calculate sunset for
+/// date:     Date to calculate for. Default is today's date in the
+/// timezone `tzinfo`.
+/// tzinfo:   Timezone to return times in. Default is UTC.
+/// Returns:
+/// Date and time at which sunset occurs.
+/// Raises:
+/// ValueError: if the sun does not reach the horizon
+func sunset(
+  observer: Observer,
+  date: DateComponents = Date().components(),
+  tzinfo: TimeZone = .utc)
+  throws -> DateComponents
+{
+  var tot = time_of_transit(
+    observer: observer,
+    date: date,
+    zenith: 90.0 + SUN_APPARENT_RADIUS,
+    direction: SunDirection.setting).astimezone(
+    tzinfo)
+
+  var tot_date = tot
+  if tot_date != date {
+    var new_date = date
+
+    if tot_date < date {
+      new_date.setValue(date.day + 1, for: .day)
+    }
+    else {
+      new_date.setValue(date.day! - 1, for: .day)
+    }
+
+    tot = time_of_transit(
+      observer: observer,
+      date: new_date,
+      zenith: 90.0 + SUN_APPARENT_RADIUS,
+      direction: SunDirection.setting).astimezone(
+      tzinfo)
+
+    tot_date = tot
+
+    if tot_date != date {
+      throw SunError.valueError("Unable to find a sunrise time on the date specified")
+    }
+    return tot
+  }
+
+  return tot
+}
+
+/// Calculate dusk time.
+/// Args:
+/// observer:   Observer to calculate dusk for
+/// date:       Date to calculate for. Default is today's date in the
+/// timezone `tzinfo`.
+/// depression: Number of degrees below the horizon to use to calculate dusk.
+/// Default is for Civil dusk i.e. 6.0
+/// tzinfo:     Timezone to return times in. Default is UTC.
+/// Returns:
+/// Date and time at which dusk occurs.
+/// Raises:
+/// ValueError: if dusk does not occur on the specified date
+func dusk(
+  observer: Observer,
+  date: DateComponents = Date().components(),
+  depression: Depression = .civil,
+  tzinfo: TimeZone = .utc)
+  throws -> DateComponents
+{
+  let dep = depression.rawValue.double
+  var tot = time_of_transit(
+    observer: observer,
+    date: date,
+    zenith: 90.0 + dep,
+    direction: SunDirection.setting).astimezone(
+    tzinfo)
+
+  var tot_date = tot
+  if tot_date != date {
+    var new_date = date
+
+    if tot_date < date {
+      new_date.setValue(date.day + 1, for: .day)
+    }
+    else {
+      new_date.setValue(date.day! - 1, for: .day)
+    }
+
+    tot = time_of_transit(
+      observer: observer,
+      date: new_date,
+      zenith: 90.0 + dep,
+      direction: SunDirection.setting).astimezone(
+      tzinfo)
+
+    tot_date = tot
+
+    if tot_date != date {
+      throw SunError.valueError("Unable to find a sunrise time on the date specified")
+    }
+    return tot
+  }
+  return tot
+}
+
+/// Calculate daylight start and end times.
+/// Args:
+/// observer:   Observer to calculate daylight for
+/// date:       Date to calculate for. Default is today's date in the
+/// timezone `tzinfo`.
+/// tzinfo:     Timezone to return times in. Default is UTC.
+/// Returns:
+/// A tuple of the date and time at which daylight starts and ends.
+/// Raises:
+/// ValueError: if the sun does not rise or does not set
+func daylight(
+  observer: Observer,
+  date: DateComponents = Date().components(),
+  tzinfo: TimeZone = .utc) throws -> (DateComponents, DateComponents)
+{
+  let sr = try sunrise(observer: observer, date: date, tzinfo: tzinfo)
+  let ss = try sunset(observer: observer, date: date, tzinfo: tzinfo)
+
+  return (sr, ss)
+}
+
+/// Calculate night start and end times.
+/// Night is calculated to be between astronomical dusk on the
+/// date specified and astronomical dawn of the next day.
+/// Args:
+/// observer:   Observer to calculate night for
+/// date:       Date to calculate for. Default is today's date for the
+/// specified tzinfo.
+/// tzinfo:     Timezone to return times in. Default is UTC.
+/// Returns:
+/// A tuple of the date and time at which night starts and ends.
+/// Raises:
+/// ValueError: if dawn does not occur on the specified date or
+/// dusk on the following day
+func night(
+  observer: Observer,
+  date: DateComponents = Date().components(),
+  tzinfo: TimeZone = .utc) throws -> (DateComponents, DateComponents)
+{
+  let start = try dusk(observer: observer, date: date, depression: 6, tzinfo: tzinfo)
+
+  var tomorrow = date
+  tomorrow.setValue(date.day! + 1, for: .day)
+
+  let end = try dawn(observer: observer, date: tomorrow, depression: 6, tzinfo: tzinfo)
+
+  return (start, end)
+}
+
+/// Returns the start and end times of Twilight
+/// when the sun is traversing in the specified direction.
+/// This method defines twilight as being between the time
+/// when the sun is at -6 degrees and sunrise/sunset.
+/// Args:
+/// observer:   Observer to calculate twilight for
+/// date:       Date for which to calculate the times.
+/// Default is today's date in the timezone `tzinfo`.
+/// direction:  Determines whether the time is for the sun rising or setting.
+/// Use ``astral.SunDirection.RISING`` or
+/// ``astral.SunDirection.SETTING``.
+/// tzinfo:     Timezone to return times in. Default is UTC.
+/// Returns:
+/// A tuple of the date and time at which twilight starts and ends.
+/// Raises:
+/// ValueError: if the sun does not rise or does not set
+
+func twilight(
+  observer: Observer,
+  date: DateComponents = Date().components(),
+  direction: SunDirection = SunDirection.rising,
+  tzinfo: TimeZone = .utc) throws -> (DateComponents, DateComponents)
+{
+  let start = time_of_transit(observer: observer, date: date, zenith: 90 + 6, direction: direction).astimezone(
+    tzinfo)
+  let end: DateComponents
+  if direction == SunDirection.rising {
+    end = try sunrise(observer: observer, date: date, tzinfo: tzinfo).astimezone(tzinfo)
+  }
+  else {
+    end = try sunset(observer: observer, date: date, tzinfo: tzinfo).astimezone(tzinfo)
+  }
+
+  if direction == SunDirection.rising {
+    return (start, end)
+  }
+  else {
+    return (end, start)
+  }
+}
+
+/// Returns the start and end times of the Golden Hour
+/// when the sun is traversing in the specified direction.
+/// This method uses the definition from PhotoPills i.e. the
+/// golden hour is when the sun is between 4 degrees below the horizon
+/// and 6 degrees above.
+/// Args:
+/// observer:   Observer to calculate the golden hour for
+/// date:       Date for which to calculate the times.
+/// Default is today's date in the timezone `tzinfo`.
+/// direction:  Determines whether the time is for the sun rising or setting.
+/// Use ``SunDirection.RISING`` or ``SunDirection.SETTING``.
+/// tzinfo:     Timezone to return times in. Default is UTC.
+/// Returns:
+/// A tuple of the date and time at which the Golden Hour starts and ends.
+/// Raises:
+/// ValueError: if the sun does not transit the elevations -4 & +6 degrees
+func golden_hour(
+  observer: Observer,
+  date: DateComponents = Date().components(),
+  direction: SunDirection = SunDirection.rising,
+  tzinfo: TimeZone = .utc) throws -> (DateComponents, DateComponents)
+{
+  let start = time_of_transit(observer: observer, date: date, zenith: 90 + 4, direction: direction).astimezone(
+    tzinfo)
+  let end = time_of_transit(observer: observer, date: date, zenith: 90 - 6, direction: direction).astimezone(
+    tzinfo)
+
+  if direction == SunDirection.rising {
+    return (start, end)
+  }
+  else {
+    return (end, start)
+  }
+}
+
+/// Returns the start and end times of the Blue Hour
+/// when the sun is traversing in the specified direction.
+/// This method uses the definition from PhotoPills i.e. the
+/// blue hour is when the sun is between 6 and 4 degrees below the horizon.
+/// Args:
+/// observer:   Observer to calculate the blue hour for
+/// date:       Date for which to calculate the times.
+/// Default is today's date in the timezone `tzinfo`.
+/// direction:  Determines whether the time is for the sun rising or setting.
+/// Use ``SunDirection.RISING`` or ``SunDirection.SETTING``.
+/// tzinfo:     Timezone to return times in. Default is UTC.
+/// Returns:
+/// A tuple of the date and time at which the Blue Hour starts and ends.
+/// Raises:
+/// ValueError: if the sun does not transit the elevations -4 & -6 degrees
+func blue_hour(
+  observer: Observer,
+  date: DateComponents = Date().components(),
+  direction: SunDirection = SunDirection.rising,
+  tzinfo: TimeZone = .utc) throws -> (DateComponents, DateComponents)
+{
+  let start = time_of_transit(observer: observer, date: date, zenith: 90 + 6, direction: direction).astimezone(
+    tzinfo)
+  let end = time_of_transit(observer: observer, date: date, zenith: 90 + 4, direction: direction).astimezone(
+    tzinfo)
+
+  if direction == SunDirection.rising {
+    return (start, end)
+  }
+  else {
+    return (end, start)
+  }
+}
+
+/// Calculate ruhakaalam times.
+/// Args:
+///    observer:   Observer to calculate rahukaalam for
+///    date:       Date to calculate for. Default is today's date in the
+///                timezone `tzinfo`.
+///    daytime:    If True calculate for the day time else calculate for the
+///                night time.
+///    tzinfo:     Timezone to return times in. Default is UTC.
+/// Returns:
+///    Tuple containing the start and end times for Rahukaalam.
+/// Raises:
+///    ValueError: if the sun does not rise or does not set
+func rahukaalam(
+  observer: Observer,
+  date: DateComponents = Date().components(),
+  daytime: Bool = true,
+  tzinfo: TimeZone = .utc) throws -> (DateComponents, DateComponents)
+{
+  var start: DateComponents
+  var end: DateComponents
+
+  if daytime {
+    start = try sunrise(observer: observer, date: date, tzinfo: tzinfo)
+    end = try sunset(observer: observer, date: date, tzinfo: tzinfo)
+  }
+  else {
+    start = try sunset(observer: observer, date: date, tzinfo: tzinfo)
+
+    var oneday = date
+    oneday.setValue(date.day! + 1, for: .day)
+
+    end = try sunrise(observer: observer, date: oneday, tzinfo: tzinfo)
+  }
+
+  var endDate = Calendar(identifier: .gregorian).date(from: end)!
+  var startDate = Calendar(identifier: .gregorian).date(from: start)!
+
+  let diff = Calendar(identifier: .gregorian)
+    .dateComponents([.year,.month,.day,.hour,.minute,.second], from: startDate, to: endDate)
+
+  let octant_duration = diff.second / 8
+
+  // Mo,Sa,Fr,We,Th,Tu,Su
+  let octant_index = [1, 6, 4, 5, 3, 2, 7]
+
+  let weekday = Calendar(identifier: .iso8601).dateComponents([.weekday], from: date.date!).weekday!
+
+  let octant = octant_index[weekday]
+
+  startDate = Calendar(identifier: .gregorian).date(byAdding: .second, value: Int(octant_duration) * octant, to: startDate)!
+
+  endDate = Calendar(identifier: .gregorian).date(byAdding: .second, value: Int(octant_duration), to: startDate)!
+
+  start = Calendar(identifier: .gregorian).dateComponents(in: tzinfo, from: startDate)
+  end = Calendar(identifier: .gregorian).dateComponents(in: tzinfo, from: endDate)
+
+  return (start, end)
+}
+
+/// Calculate all the info for the sun at once.
+/// Args:
+///    observer:             Observer for which to calculate the times of the sun
+///    date:                 Date to calculate for.
+///                          Default is today's date in the timezone `tzinfo`.
+///    dawn_dusk_depression: Depression to use to calculate dawn and dusk.
+///                          Default is for Civil dusk i.e. 6.0
+///    tzinfo:               Timezone to return times in. Default is UTC.
+/// Returns:
+///    Dictionary with keys ``dawn``, ``sunrise``, ``noon``, ``sunset`` and ``dusk``
+///    whose values are the results of the corresponding functions.
+/// Raises:
+///    ValueError: if passed through from any of the functions
+func sun(
+  observer: Observer,
+  date: DateComponents = Date().components(),
+  dawn_dusk_depression: Depression = Depression.civil,
+  daytime _: Bool = true,
+  tzinfo: TimeZone = .utc) -> [String: DateComponents?]
+{
+  [
+    "dawn": try? dawn(observer: observer, date: date, depression: dawn_dusk_depression, tzinfo: tzinfo),
+    "sunrise": try? sunrise(observer: observer, date: date, tzinfo: tzinfo),
+    "noon": noon(observer: observer, date: date, tzinfo: tzinfo),
+    "sunset": try? sunset(observer: observer, date: date, tzinfo: tzinfo),
+    "dusk": try? dusk(observer: observer, date: date, depression: dawn_dusk_depression, tzinfo: tzinfo),
+  ]
 }
