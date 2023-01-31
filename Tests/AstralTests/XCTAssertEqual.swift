@@ -10,7 +10,7 @@ import XCTest
 public func XCTAssertEqual(
   _ expression1: @autoclosure () -> DateComponents,
   _ expression2: @autoclosure () -> DateComponents,
-  accurency: DateComponents,
+  accuracy: DateComponents,
   _ message: @autoclosure () -> String = "",
   file: StaticString = #filePath,
   line: UInt = #line)
@@ -23,7 +23,7 @@ public func XCTAssertEqual(
   } else {
     let diff = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute,.second], from: lhs, to: rhs).absDateComponents()
 
-    XCTAssertLessThanOrEqual(diff, accurency, message(), file: file, line: line)
+    XCTAssertLessThanOrEqual(diff, accuracy, message(), file: file, line: line)
   }
 }
 

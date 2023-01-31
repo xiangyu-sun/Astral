@@ -85,7 +85,7 @@ final class MoonTests: XCTestCase {
       XCTAssertEqual(
         calc_time!.extractYearMonthDayHourMinuteSecond(),
         risetime.extractYearMonthDayHourMinuteSecond(),
-        accurency: DateComponents(minute: 1))
+        accuracy: DateComponents(minute: 1))
     }
   }
 
@@ -104,7 +104,7 @@ final class MoonTests: XCTestCase {
       XCTAssertEqual(
         calc_time!.extractYearMonthDayHourMinuteSecond(),
         risetime.extractYearMonthDayHourMinuteSecond(),
-        accurency: DateComponents(minute: 1))
+        accuracy: DateComponents(minute: 1))
     }
   }
 
@@ -115,7 +115,7 @@ final class MoonTests: XCTestCase {
       XCTAssertEqual(
         calc_time!.extractYearMonthDayHourMinuteSecond(),
         settime.extractYearMonthDayHourMinuteSecond(),
-        accurency: DateComponents(minute: 1))
+        accuracy: DateComponents(minute: 1))
     }
   }
 
@@ -126,7 +126,7 @@ final class MoonTests: XCTestCase {
       XCTAssertEqual(
         calc_time!.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington),
         risetime.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington),
-        accurency: DateComponents(minute: 1))
+        accuracy: DateComponents(minute: 1))
     }
   }
 
@@ -147,7 +147,7 @@ final class MoonTests: XCTestCase {
       XCTAssertEqual(
         calc_time!.extractYearMonthDayHourMinuteSecond(timeZone: Self.timeZoneBCN),
         risetime.extractYearMonthDayHourMinuteSecond(timeZone: Self.timeZoneBCN),
-        accurency: DateComponents(minute: 1))
+        accuracy: DateComponents(minute: 1))
     }
 
     for (date, risetime) in moonRiseBarcelonanDataUTC {
@@ -156,7 +156,7 @@ final class MoonTests: XCTestCase {
       XCTAssertEqual(
         calc_time!.extractYearMonthDayHourMinuteSecond(),
         risetime.extractYearMonthDayHourMinuteSecond(),
-        accurency: DateComponents(minute: 1))
+        accuracy: DateComponents(minute: 1))
     }
   }
 }
