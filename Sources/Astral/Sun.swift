@@ -265,10 +265,10 @@ func time_of_transit(
 
   var adjustment_for_elevation = 0.0
 
-  if case Elevetion.double(let elevetion) = observer.elevation, elevetion > 0 {
-    adjustment_for_elevation = adjust_to_horizon(elevation: elevetion)
-  } else if case Elevetion.tuple(let elevetion) = observer.elevation {
-    adjustment_for_elevation = adjust_to_obscuring_feature(elevation: elevetion)
+  if case Elevation.double(let elevation) = observer.elevation, elevation > 0 {
+    adjustment_for_elevation = adjust_to_horizon(elevation: elevation)
+  } else if case Elevation.tuple(let elevation) = observer.elevation {
+    adjustment_for_elevation = adjust_to_obscuring_feature(elevation: elevation)
   }
 
   var adjustment_for_refraction: Double

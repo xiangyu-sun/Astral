@@ -27,13 +27,13 @@ struct Observer {
 
   // MARK: Lifecycle
 
-  init(latitude: Degrees, longitude: Degrees, elevation: Elevetion) {
+  init(latitude: Degrees, longitude: Degrees, elevation: Elevation) {
     self.latitude = latitude.cap(limit: 90)
     self.longitude = longitude.cap(limit: 180)
     self.elevation = elevation
   }
 
-  init(latitude: String, longitude: String, elevation: Elevetion) throws {
+  init(latitude: String, longitude: String, elevation: Elevation) throws {
     let lat = try convertDegreesMinutesSecondsToDouble(value: latitude, limit: 90)
     let long = try convertDegreesMinutesSecondsToDouble(value: longitude, limit: 180)
 
@@ -55,5 +55,5 @@ struct Observer {
 
   let latitude: Degrees
   let longitude: Degrees
-  let elevation: Elevetion
+  let elevation: Elevation
 }

@@ -4,9 +4,9 @@ public typealias Degrees = Double
 public typealias Radians = Double
 public typealias Minutes = Double
 
-// MARK: - Elevetion
+// MARK: - Elevation
 
-enum Elevetion: Equatable {
+enum Elevation: Equatable {
   case double(Double)
   case tuple(Double, Double)
 }
