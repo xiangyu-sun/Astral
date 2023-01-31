@@ -1073,7 +1073,7 @@ func rahukaalam(
 
   // Mo,Sa,Fr,We,Th,Tu,Su
   let octant_index = [1, 6, 4, 5, 3, 2, 7]
-  
+
   let aDate = Calendar(identifier: .gregorian).date(from: date)!
 
   let weekday = Calendar(identifier: .iso8601).dateComponents([.weekday], from: aDate).weekday!
