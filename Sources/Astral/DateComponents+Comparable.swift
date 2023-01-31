@@ -12,9 +12,7 @@ import Foundation
 extension DateComponents: Comparable {
 
   public static func < (lhs: DateComponents, rhs: DateComponents) -> Bool {
-    let calendar = lhs.calendar ?? .autoupdatingCurrent
-
-    return calendar.compare(calendar.date(from: lhs)!, to: calendar.date(from: rhs)!, toGranularity: .second) == .orderedAscending
+    toSeconds(dateComponent: lhs) < toSeconds(dateComponent: rhs)
   }
 }
 

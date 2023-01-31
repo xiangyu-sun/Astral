@@ -685,7 +685,7 @@ func dawn(
   // If the dates don't match search on either the next or previous day.
   var tot_date = tot
 
-  if tot_date != date {
+  if tot_date.extractYearMonthDay() != date {
     var new_date = date
 
     if tot_date < date {
@@ -703,7 +703,7 @@ func dawn(
       tzinfo)
     // Still can't get a time then raise the error
     tot_date = tot
-    if tot_date != date {
+    if tot_date.extractYearMonthDay() != date {
       throw SunError.valueError("Unable to find a dawn time on the date specified")
     }
     return tot
@@ -735,7 +735,7 @@ func sunrise(
     tzinfo)
 
   var tot_date = tot
-  if tot_date != date {
+  if tot_date.extractYearMonthDay() != date {
     var new_date = date
 
     if tot_date < date {
@@ -754,7 +754,7 @@ func sunrise(
 
     tot_date = tot
 
-    if tot_date != date {
+    if tot_date.extractYearMonthDay() != date {
       throw SunError.valueError("Unable to find a sunrise time on the date specified")
     }
     return tot
@@ -787,7 +787,7 @@ func sunset(
     tzinfo)
 
   var tot_date = tot
-  if tot_date != date {
+  if tot_date.extractYearMonthDay() != date {
     var new_date = date
 
     if tot_date < date {
@@ -806,7 +806,7 @@ func sunset(
 
     tot_date = tot
 
-    if tot_date != date {
+    if tot_date.extractYearMonthDay() != date {
       throw SunError.valueError("Unable to find a sunrise time on the date specified")
     }
     return tot
@@ -843,7 +843,7 @@ func dusk(
     tzinfo)
 
   var tot_date = tot
-  if tot_date != date {
+  if tot_date.extractYearMonthDay() != date {
     var new_date = date
 
     if tot_date < date {
@@ -862,7 +862,7 @@ func dusk(
 
     tot_date = tot
 
-    if tot_date != date {
+    if tot_date.extractYearMonthDay() != date {
       throw SunError.valueError("Unable to find a sunrise time on the date specified")
     }
     return tot
@@ -1073,8 +1073,10 @@ func rahukaalam(
 
   // Mo,Sa,Fr,We,Th,Tu,Su
   let octant_index = [1, 6, 4, 5, 3, 2, 7]
+  
+  let aDate = Calendar(identifier: .gregorian).date(from: date)!
 
-  let weekday = Calendar(identifier: .iso8601).dateComponents([.weekday], from: date.date!).weekday!
+  let weekday = Calendar(identifier: .iso8601).dateComponents([.weekday], from: aDate).weekday!
 
   let octant = octant_index[weekday]
 
@@ -1106,13 +1108,13 @@ func sun(
   date: DateComponents = Date().components(),
   dawn_dusk_depression: Depression = Depression.civil,
   daytime _: Bool = true,
-  tzinfo: TimeZone = .utc) -> [String: DateComponents?]
+  tzinfo: TimeZone = .utc) throws -> [String: DateComponents]
 {
   [
-    "dawn": try? dawn(observer: observer, date: date, depression: dawn_dusk_depression, tzinfo: tzinfo),
-    "sunrise": try? sunrise(observer: observer, date: date, tzinfo: tzinfo),
+    "dawn": try dawn(observer: observer, date: date, depression: dawn_dusk_depression, tzinfo: tzinfo),
+    "sunrise": try sunrise(observer: observer, date: date, tzinfo: tzinfo),
     "noon": noon(observer: observer, date: date, tzinfo: tzinfo),
-    "sunset": try? sunset(observer: observer, date: date, tzinfo: tzinfo),
-    "dusk": try? dusk(observer: observer, date: date, depression: dawn_dusk_depression, tzinfo: tzinfo),
+    "sunset": try sunset(observer: observer, date: date, tzinfo: tzinfo),
+    "dusk": try dusk(observer: observer, date: date, depression: dawn_dusk_depression, tzinfo: tzinfo),
   ]
 }

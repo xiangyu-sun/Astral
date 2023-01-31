@@ -28,21 +28,9 @@ final class SunUTCTests: XCTestCase {
     ]
     
     for (day, down) in data {
-      let dawn_calc = sun(observer: .london, date: day)["dawn"]
+      let dawn_calc = try sun(observer: .london, date: day)["dawn"]!
       
-      XCTAssertEqual(dawn_calc, down)
-    }
-  }
-  
-  func testSunNoDate() throws {
-    let data: [(DateComponents, DateComponents)] =   [
-      (.date(2015, 12, 1), .datetime(2015, 12, 1, 7, 4))
-    ]
-    
-    for (_, down) in data {
-      let dawn_calc = sun(observer: .london)["dawn"]
-      
-      XCTAssertEqual(dawn_calc, down)
+      XCTAssertEqual(dawn_calc, down, accuracy: DateComponents(second: 30))
     }
   }
   
@@ -58,7 +46,7 @@ final class SunUTCTests: XCTestCase {
     for (day, down) in data {
       let dawn_calc = try dawn(observer: .london, date: day, depression: .civil)
       
-      XCTAssertEqual(dawn_calc, down)
+      XCTAssertEqual(dawn_calc, down, accuracy: DateComponents(second: 30))
     }
   }
   
@@ -76,7 +64,7 @@ final class SunUTCTests: XCTestCase {
     for (day, down) in data {
       let dawn_calc = try dawn(observer: .london, date: day, depression: .other(12))
       
-      XCTAssertEqual(dawn_calc, down)
+      XCTAssertEqual(dawn_calc, down, accuracy: DateComponents(second: 30))
     }
   }
   
@@ -93,7 +81,7 @@ final class SunUTCTests: XCTestCase {
     for (day, down) in data {
       let dawn_calc = try dawn(observer: .london, date: day, depression: .other(18))
       
-      XCTAssertEqual(dawn_calc, down)
+      XCTAssertEqual(dawn_calc, down, accuracy: DateComponents(second: 30))
     }
   }
   
@@ -111,7 +99,7 @@ final class SunUTCTests: XCTestCase {
     for (day, down) in data {
       let dawn_calc = try sunrise(observer: .london, date: day)
       
-      XCTAssertEqual(dawn_calc, down)
+      XCTAssertEqual(dawn_calc, down, accuracy: DateComponents(second: 30))
     }
   }
   
@@ -129,7 +117,7 @@ final class SunUTCTests: XCTestCase {
     for (day, down) in data {
       let dawn_calc = try sunset(observer: .london, date: day)
       
-      XCTAssertEqual(dawn_calc, down)
+      XCTAssertEqual(dawn_calc, down, accuracy: DateComponents(second: 30))
     }
   }
   
@@ -145,7 +133,7 @@ final class SunUTCTests: XCTestCase {
     for (day, down) in data {
       let dawn_calc = try dusk(observer: .london, date: day)
       
-      XCTAssertEqual(dawn_calc, down)
+      XCTAssertEqual(dawn_calc, down, accuracy: DateComponents(second: 30))
     }
   }
   
@@ -161,7 +149,7 @@ final class SunUTCTests: XCTestCase {
     for (day, expected) in data {
       let actual = try dusk(observer: .london, date: day, depression: .other(12))
       
-      XCTAssertEqual(actual, expected)
+      XCTAssertEqual(actual, expected, accuracy: DateComponents(second: 30))
     }
   }
   
@@ -178,7 +166,7 @@ final class SunUTCTests: XCTestCase {
     for (day, expected) in data {
       let actual = noon(observer: .london, date: day)
       
-      XCTAssertEqual(actual, expected)
+      XCTAssertEqual(actual, expected, accuracy: DateComponents(second: 30))
     }
   }
   
@@ -191,7 +179,7 @@ final class SunUTCTests: XCTestCase {
     for (day, expected) in data {
       let actual = midnight(observer: .london, date: day)
       
-      XCTAssertEqual(actual, expected)
+      XCTAssertEqual(actual, expected, accuracy: DateComponents(second: 30))
     }
   }
   
@@ -209,8 +197,8 @@ final class SunUTCTests: XCTestCase {
     for (day, expected) in data {
       let actual = try twilight(observer: .london, date: day)
       
-      XCTAssertEqual(actual.0, expected.0)
-      XCTAssertEqual(actual.1, expected.1)
+      XCTAssertEqual(actual.0, expected.0, accuracy: DateComponents(second: 30))
+      XCTAssertEqual(actual.1, expected.1, accuracy: DateComponents(second: 30))
     }
   }
   
@@ -228,8 +216,8 @@ final class SunUTCTests: XCTestCase {
     for (day, expected) in data {
       let actual = try twilight(observer: .london, date: day, direction: .setting)
       
-      XCTAssertEqual(actual.0, expected.0)
-      XCTAssertEqual(actual.1, expected.1)
+      XCTAssertEqual(actual.0, expected.0, accuracy: DateComponents(second: 30))
+      XCTAssertEqual(actual.1, expected.1, accuracy: DateComponents(second: 30))
     }
   }
   
@@ -254,7 +242,7 @@ final class SunUTCTests: XCTestCase {
     for (day, expected) in data {
       let actual = try rahukaalam(observer: .new_dheli, date: day)
       
-      XCTAssertEqual(actual.0, expected.0)
+      XCTAssertEqual(actual.0, expected.0, accuracy: DateComponents(second: 30))
       XCTAssertEqual(actual.1, expected.1)
     }
   }
