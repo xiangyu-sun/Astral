@@ -45,6 +45,7 @@ struct Observer {
   // MARK: Internal
 
   static let london = Observer(latitude: 51.509865, longitude: -0.118092, elevation: .double(0))
+  static let new_dheli = Observer(latitude: 28.6139, longitude: 77.2090, elevation: .double(0))
   static let riyadh = Observer(latitude: 25, longitude: 46.7, elevation: .double(620))
   static let welllington = try! Observer(
     latitude: " 41° 17' 11.256'' S",

@@ -32,7 +32,12 @@ func minutes_to_timedelta(minutes: Double) -> DateComponents {
 /// - Returns: <#description#>
 func geom_mean_long_sun(juliancentury: Double) -> Double {
   let l0 = 280.46646 + juliancentury * (36000.76983 + 0.0003032 * juliancentury)
-  return l0.truncatingRemainder(dividingBy: 360.0)
+
+  var result = l0.truncatingRemainder(dividingBy: 360.0)
+  if result < 0 {
+    result += 360
+  }
+  return result
 }
 
 /// Calculate the geometric mean anomaly of the sun
