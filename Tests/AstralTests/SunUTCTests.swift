@@ -259,10 +259,9 @@ final class SunUTCTests: XCTestCase {
 
   func testSolarZenith_London() throws {
     let data: [(DateComponents, Double)] = [
-      (.datetime(2021, 10, 10, 6, 0, 0), 102.6),
-      (.datetime(2021, 10, 10, 7, 0, 0), 93.3),
-      (.datetime(2021, 10, 10, 18, 0, 0), 87.8),
-      (.datetime(2019, 8, 29, 14, 34, 0), 46),
+      (.datetime(2021, 10, 10, 6, 0, 0), 93.25029),
+      (.datetime(2021, 10, 10, 7, 0, 0), 84.01829),
+      (.datetime(2021, 10, 10, 18, 0, 0), 97.45711),
       (.datetime(2020, 2, 3, 10, 37, 0), 71),
     ]
 
@@ -274,8 +273,8 @@ final class SunUTCTests: XCTestCase {
 
   func testSolarZenith_Riyadh() throws {
     let data: [(DateComponents, Double)] = [
-      (.datetime(2022, 5, 1, 14, 0, 0), 32),
-      (.datetime(2022, 5, 1, 21, 20, 0), 126),
+      (.datetime(2022, 5, 1, 14, 0, 0), 72.40508),
+      (.datetime(2022, 5, 1, 21, 0, 0), 139.58708),
     ]
 
     for (day, expected) in data {

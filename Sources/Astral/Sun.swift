@@ -510,11 +510,11 @@ func zenith_and_azimuth(
 
   var zone: Double
   var utc_datetime: DateComponents
+  
   if dateandtime.timeZone == nil {
     zone = 0.0
     utc_datetime = dateandtime
-  }
-  else {
+  } else {
     zone = -dateandtime.timeZone!.secondsFromGMT() / 3600.0
     utc_datetime = dateandtime.astimezone(.utc)
   }
@@ -526,9 +526,10 @@ func zenith_and_azimuth(
 
   // 360deg * 4 == 1440 minutes, 60*24 = 1440 minutes == 1 rotation
   let solarTimeFix = eqtime + (4.0 * longitude) + (60 * zone)
+  
   var trueSolarTime = (
     dateandtime.hour * 60.0
-      + (dateandtime.minute?.double ?? 0)
+      + dateandtime.minute!.double
       + dateandtime.second / 60.0
       + solarTimeFix)
   //    in minutes as a float, fractional part is seconds
