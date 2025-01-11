@@ -63,3 +63,12 @@ Also like the Sun but for the moon
 Moon Phase
 The phase of the moon for a specified date.
 Astral also comes with a geocoder containing a local database that allows you to look up information for a small set of locations (new locations can be added).
+
+
+https://en.wikipedia.org/wiki/Solar_term
+
+https://en.wikipedia.org/wiki/Ecliptic
+
+https://en.wikipedia.org/wiki/Sidereal_time
+
+https://en.wikipedia.org/wiki/Ecliptic_coordinate_system#Spherical_coordinates
