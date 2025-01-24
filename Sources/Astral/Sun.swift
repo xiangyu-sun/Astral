@@ -15,19 +15,15 @@ enum SunError: Error {
 // MARK: - Constants
 
 /// Using 32 arc minutes as the Sun's apparent diameter
-let SUN_APPARENT_RADIUS = 32.0 / (60.0 * 2.0)
+let SUN_APPARENT_RADIUS = Double(32.0) / (60.0 * 2.0)
 
 // MARK: - Fix for Inaccuracy
 /// By default, the code only handled `offset < -720.0`.
 /// We add a symmetric check for `offset > 720.0` as well.
 func adjustOffsetForDayBoundary(_ offset: inout Double) {
-  // If offset < -720 (i.e., -12 hours), wrap forward one day
-  if offset < -720.0 {
-    offset += 1440.0
-  // If offset > +720, wrap backward one day
-  } else if offset > 720.0 {
-    offset -= 1440.0
-  }
+  let epsilon = 1e-7
+  while offset < -720.0 - epsilon { offset += 1440.0 }
+  while offset >  720.0 + epsilon { offset -= 1440.0 }
 }
 
 // MARK: - Helper: minutes_to_timedelta
@@ -37,9 +33,11 @@ func minutes_to_timedelta(minutes: Double) -> DateComponents {
   let d = Int(minutes / 1440)
   var remainder = minutes - (Double(d) * 1440)
   remainder *= 60
-  let s = Int(remainder)
-  let sfrac = remainder - s.double
-  let ns = Int(sfrac * 3.6e+12)
+  // Round remainder to nearest millisecond or microsecond first:
+  let sRounded = remainder.rounded(.toNearestOrAwayFromZero)
+  let s = Int(sRounded)
+  let sfrac = sRounded - Double(s)
+  let ns = Int((sfrac * 1_000_000_000).rounded()) // nanoseconds
 
   return DateComponents(day: d, second: s, nanosecond: ns)
 }
