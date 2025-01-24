@@ -5,7 +5,7 @@
 //  Created by Xiangyu Sun on 31/1/23.
 //
 
-import Testing
+import XCTest
 @testable import Astral
 
 final class SunLocalTests: XCTestCase {
