@@ -84,7 +84,7 @@ final class JulianTests: XCTestCase {
 
   func testJulianDayToDateTime() throws {
     for (jd, components) in julianDayToDateTimeCalenderData {
-      XCTAssertEqual(julianDayToCompoenent(jd: jd), components)
+      XCTAssertEqual(julianDayToComponent(jd: jd), components)
     }
   }
 
