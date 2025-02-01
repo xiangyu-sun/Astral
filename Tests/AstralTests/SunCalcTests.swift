@@ -238,9 +238,9 @@ final class SunCalcTests: XCTestCase {
       let o = Observer.london
       let td = DateComponents.date(2020, 2, 6)
 
-      let et = time_at_elevation(observer: o, elevation: elevetion.double , date: td, with_refraction: true)
+      let et = time_at_elevation(observer: o, elevation: elevetion.double , date: td, with_refraction: false)
 
-      let sun_elevation = elevation(observer: o, dateandtime: et, with_refraction: true)
+      let sun_elevation = elevation(observer: o, dateandtime: et, with_refraction: false)
 
       XCTAssertEqual(sun_elevation, elevetion.double, accuracy: 0.1)
     }

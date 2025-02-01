@@ -334,7 +334,9 @@ func riseset(
         month: utcDate.month,
         day: utcDate.day,
         hour: hour,
-        minute: 0)
+        minute: 0,
+        second: 0
+      )
 
       if transit.event == "rise" {
         let event_time = transit.when

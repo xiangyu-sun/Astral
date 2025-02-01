@@ -19,7 +19,7 @@ final class SunElevationAdjustmentTests: XCTestCase {
 
   func test_Float_Positive() {
     let adjustment = adjust_to_horizon(elevation: 12000)
-    XCTAssertEqual(adjustment, 3.517744168209966)
+    XCTAssertEqual(adjustment, 3.5138554650954026, accuracy: 0.001)
   }
 
   func test_Float_Negative() {

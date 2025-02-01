@@ -187,17 +187,27 @@ func hour_angle(
 
 // MARK: - Elevation Adjustments
 
-/// Calculate the extra degrees of depression visible due to observer's elevation.
+/// Returns the dip angle (in degrees) from the horizontal to the horizon for an
+/// observer at `elevation` meters above sea level, ignoring atmospheric refraction.
+///
+/// - Parameter elevation: Elevation above (or below) sea level in meters.
+/// - Returns: Dip angle in degrees; 0 if `elevation <= 0`.
 func adjust_to_horizon(elevation: Double) -> Double {
-  // Elevation <= 0 => no adjustment
-  guard elevation > 0 else { return 0 }
-
-  let earthRadius: Double = 6356900 // meters
-  let a1 = earthRadius
-  let h1 = earthRadius + elevation
-  let theta1 = acos(a1 / h1)
-  return degrees(theta1)
+  // Return 0 if elevation is at or below sea level
+    guard elevation > 0 else { return 0.0 }
+    
+    // Use mean Earth radius in meters (roughly 6371 km).
+    // You can tweak to 6378137 (equatorial) or 6356752 (polar) if desired.
+    let earthRadius = 6_371_000.0
+    
+    // Observed distance from Earth's center
+    let observerDistance = earthRadius + elevation
+    
+    // Dip angle = acos(R / (R + h)) in radians; convert to degrees
+    let dipRadians = acos(earthRadius / observerDistance)
+    return dipRadians * (180.0 / .pi)
 }
+
 
 /// Calculate the degrees to adjust for an obscuring feature
 func adjust_to_obscuring_feature(elevation: (Double, Double)) -> Double {
@@ -211,7 +221,6 @@ func adjust_to_obscuring_feature(elevation: (Double, Double)) -> Double {
 }
 
 // MARK: - Transit Calculation (Core of Sunrise/Sunset)
-
 /// Calculate the time in UTC when the sun transits a specific zenith.
 func time_of_transit(
   observer: Observer,
@@ -220,7 +229,7 @@ func time_of_transit(
   direction: SunDirection,
   with_refraction: Bool = true
 ) -> DateComponents {
-  // Clamp lat to ±89.8 to avoid invalid domain for trig
+  // Clamp latitude to ±89.8 to avoid invalid domain for trigonometric functions
   let latitude = max(min(observer.latitude, 89.8), -89.8)
 
   // Elevation-based adjustments
@@ -234,41 +243,49 @@ func time_of_transit(
     break
   }
 
-  // Refraction adjustment
-  let adjustedZenith: Double
-  if with_refraction {
-    adjustedZenith = zenith + horizonAdjustment + refractionAtZenith(zenith + horizonAdjustment)
-  } else {
-    adjustedZenith = zenith + horizonAdjustment
-  }
+  // Refraction adjustment: adjust the zenith angle to account for both horizon dip and refraction.
+  let adjustedZenith: Double = with_refraction
+    ? zenith + horizonAdjustment + refractionAtZenith(zenith + horizonAdjustment)
+    : zenith + horizonAdjustment
 
   // Convert date to Julian day
   let jd = julianDay(at: date)
-  var adjustment = 0.0
-  var timeUTC = 0.0
 
-  // Two-pass iteration for refinement
-  for _ in 0..<2 {
-    let jc = julianDayToCentury(julianDay: jd + adjustment)
+  // Iterative refinement of transit time:
+  // Start with an initial guess of 720 minutes (12:00 UTC) and refine until convergence.
+  var timeUTC = 720.0           // initial guess (in minutes)
+  let tolerance = 0.001         // convergence tolerance (in minutes)
+  var iteration = 0
+
+  while iteration < 10 {
+    // Compute Julian century for the current guess
+    let jc = julianDayToCentury(julianDay: jd + timeUTC / 1440.0)
+    // Calculate the sun's declination at the current time
     let dec = sun_declination(juliancentury: jc)
-
+    // Determine the hour angle for the current state
     let ha = hour_angle(
       latitude: latitude,
       declination: dec,
       zenith: adjustedZenith,
       direction: direction
     )
-
-    let delta = -observer.longitude - degrees(ha)
+    // Calculate the angular difference to transit
+    let deltaAngle = -observer.longitude - degrees(ha)
+    // Get the equation of time (in minutes) for the current time
     let eqtime = eq_of_time(juliancentury: jc)
-
-    var offset = delta * 4.0 - eqtime
-    // Fix #1: Also handle the case offset > +720.0
+    // Compute the offset in minutes
+    var offset = deltaAngle * 4.0 - eqtime
     adjustOffsetForDayBoundary(&offset)
 
-    // 720 minutes = 12:00 UTC
-    timeUTC = 720.0 + offset
-    adjustment = timeUTC / 1440.0
+    let newTimeUTC = 720.0 + offset
+
+    // If the change is within our tolerance, accept the value.
+    if abs(newTimeUTC - timeUTC) < tolerance {
+      timeUTC = newTimeUTC
+      break
+    }
+    timeUTC = newTimeUTC
+    iteration += 1
   }
 
   let td = minutes_to_timedelta(minutes: timeUTC)
@@ -400,8 +417,11 @@ func dawn(
   // If the transit date differs, try next/previous day
   if tot.extractYearMonthDay() != date {
     var newDate = date
-    if tot < date { newDate.setValue((date.day ?? 0) + 1, for: .day) }
-    else         { newDate.setValue((date.day ?? 0) - 1, for: .day) }
+    if tot < date {
+      newDate.setValue((date.day ?? 0) + 1, for: .day)
+    } else {
+      newDate.setValue((date.day ?? 0) - 1, for: .day)
+    }
 
     tot = time_of_transit(
       observer: observer,
