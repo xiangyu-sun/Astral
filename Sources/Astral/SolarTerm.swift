@@ -33,11 +33,11 @@ func currentSolarTerm(for date: Date = Date()) -> Double {
 ///         nextBoundary = 15 * ceil((normalizedLong + 7.5)/15) - 7.5
 ///   - Converting the angular difference to days using an average solar motion of ~0.9856°/day.
 func daysUntilNextSolarTerm(from date: Date = Date()) -> Double {
-  // Ensure we use UTC so that our astronomical calculations remain consistent.
+  // Ensure we use UTC to keep astronomical calculations consistent.
   let utcTimeZone = TimeZone.gmt
   let components = date.components(timezone: utcTimeZone)
   
-  // Compute Julian Day and Julian Century from the date components.
+  // Compute Julian Day and Julian Century.
   let jd = julianDay(at: components)
   let jc = julianDayToCentury(julianDay: jd)
   
@@ -46,30 +46,40 @@ func daysUntilNextSolarTerm(from date: Date = Date()) -> Double {
   
   // Normalize the longitude to [0, 360).
   let normalizedLong = (apparentLong.truncatingRemainder(dividingBy: 360) + 360)
-    .truncatingRemainder(dividingBy: 360)
+                        .truncatingRemainder(dividingBy: 360)
   
-  // The boundaries occur when (normalizedLong + 7.5) is an exact multiple of 15.
-  // Thus, the current (continuous) solar term value is:
-  let currentTermValue = currentSolarTerm()
-  // The next boundary will correspond to the next integer value.
-  let nextTermIndex = ceil(currentTermValue)
+  // Compute an offset value.
+  let offset = normalizedLong + 7.5
+  let epsilon = 1e-7
   
-  // The boundary in “raw” degrees (before normalizing) is:
+  // Compute the remainder when offset is divided by 15.
+  let remainder = offset.truncatingRemainder(dividingBy: 15.0)
+  
+  // Compute the current term value.
+  let currentTermValue = offset / 15.0
+  
+  // Determine the next term index.
+  // If the remainder is nearly 0, we’re exactly at a boundary.
+  let nextTermIndex: Double
+  if abs(remainder) < epsilon {
+    nextTermIndex = currentTermValue + 1.0
+  } else {
+    nextTermIndex = ceil(currentTermValue)
+  }
+  
+  // Compute the next boundary in degrees.
   let nextBoundary = 15.0 * nextTermIndex - 7.5
   // Normalize the boundary to [0, 360).
   let nextBoundaryNormalized = (nextBoundary.truncatingRemainder(dividingBy: 360) + 360)
-    .truncatingRemainder(dividingBy: 360)
+                                .truncatingRemainder(dividingBy: 360)
   
-  // Compute the angular difference from the current longitude to the boundary,
-  // adjusting for wrap-around if necessary.
+  // Calculate the angular difference from the current longitude to the boundary.
   var angleDifference = nextBoundaryNormalized - normalizedLong
   if angleDifference < 0 {
     angleDifference += 360
   }
   
-  // The Sun moves on average about 360° per tropical year.
-  // (Using the mean tropical year 365.2422 days, that’s roughly 0.9856° per day.)
+  // Convert the angular difference to days using the average daily solar motion (~0.9856°/day).
   let dailyMotion = 360.0 / 365.2422
-  let days = angleDifference / dailyMotion
-  return days
+  return angleDifference / dailyMotion
 }
