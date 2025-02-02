@@ -2,7 +2,7 @@ import Foundation
 
 
 /// 根据当前日期（或指定日期）计算太阳的视黄经，并推算对应的二十四节气。
-func currentSolarTerm(for date: Date = Date()) -> Double {
+public func currentSolarTerm(for date: Date = Date()) -> Double {
   // 将当前日期转换为 UTC 下的 DateComponents（确保天文计算的一致性）
   let utcTimeZone = TimeZone.gmt
   let components = date.components(timezone: utcTimeZone)
@@ -32,7 +32,7 @@ func currentSolarTerm(for date: Date = Date()) -> Double {
 ///     so that the next boundary (in degrees) is at:
 ///         nextBoundary = 15 * ceil((normalizedLong + 7.5)/15) - 7.5
 ///   - Converting the angular difference to days using an average solar motion of ~0.9856°/day.
-func daysUntilNextSolarTerm(from date: Date = Date()) -> Double {
+public func daysUntilNextSolarTerm(from date: Date = Date()) -> Double {
   // Ensure we use UTC to keep astronomical calculations consistent.
   let utcTimeZone = TimeZone.gmt
   let components = date.components(timezone: utcTimeZone)
