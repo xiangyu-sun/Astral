@@ -93,17 +93,17 @@ public func preciseNextSolarTermDate(from date: Date = Date(), iterations: Int =
   let apparentLong = sun_apparent_long(juliancentury: jc)
   let normalizedLong = (apparentLong.truncatingRemainder(dividingBy: 360) + 360)
                         .truncatingRemainder(dividingBy: 360)
-  let offset = normalizedLong + 7.5
-  let currentTerm = offset / 15.0
-  let nextTermIndex = floor(currentTerm) + 1.0
-  let targetLongitude = 15.0 * nextTermIndex - 7.5
+  let nextTermIndex = floor(normalizedLong / 15.0) + 1.0
+  let targetLongitude = (nextTermIndex * 15.0).truncatingRemainder(dividingBy: 360)
 
-  // 初步估计时刻
-  let approxDays = daysUntilNextSolarTerm(from: date)
-  var t = date.addingTimeInterval(approxDays * 86400)
-
-  // 更精确的日运动率
+  
+  // Average daily solar motion (degrees per day)
   let dailyMotion = 360.0 / 365.242189
+  
+  // Initial estimate: minimal positive angular difference to target boundary divided by motion
+  let degreesDiff = (targetLongitude - normalizedLong + 360).truncatingRemainder(dividingBy: 360)
+  let approxDays = degreesDiff / dailyMotion
+  var t = date.addingTimeInterval(approxDays * 86400)
 
   // 牛顿迭代求解
   for _ in 0..<iterations {
@@ -114,8 +114,10 @@ public func preciseNextSolarTermDate(from date: Date = Date(), iterations: Int =
     let normLambda = (lambdaT.truncatingRemainder(dividingBy: 360) + 360)
                       .truncatingRemainder(dividingBy: 360)
 
-    var delta = (normLambda - targetLongitude).truncatingRemainder(dividingBy: 360)
-    if delta < 0 { delta += 360 }
+    // Compute minimal signed angular difference (±180°) to avoid huge jumps.
+    var delta = (normLambda - targetLongitude).remainder(dividingBy: 360)
+    if delta > 180 { delta -= 360 }
+    if delta < -180 { delta += 360 }
     let dt = -delta / dailyMotion * 86400
     t = t.addingTimeInterval(dt)
   }

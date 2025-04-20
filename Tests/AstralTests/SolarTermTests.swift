@@ -43,6 +43,51 @@ class SolarTermTests: XCTestCase {
     XCTAssertEqual(term, 2.5, accuracy: 0.5, "Solar term near summer solstice should be approximately 2.5")
   }
   
+  func test2025Guyu15DaysToXiaZhi() {
+    var components = DateComponents()
+    components.year = 2025
+    components.month = 4
+    components.day = 20
+    components.hour = 15
+
+    components.timeZone = TimeZone(secondsFromGMT: 0)
+
+    
+    var calendar = Calendar(identifier: .gregorian)
+    calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+    
+    let result = calendar.dateComponents([.year, .month, .day, .hour], from: preciseNextSolarTermDate(from: calendar.date(from: components)!))
+    
+    
+    var componentsXiazhi = DateComponents()
+    componentsXiazhi.year = 2025
+    componentsXiazhi.month = 5
+    componentsXiazhi.day = 5
+    componentsXiazhi.hour = 5
+    componentsXiazhi.isLeapMonth = false
+  
+    XCTAssertEqual(result, componentsXiazhi)
+  }
+  
+  func test2025XiaZhi() {
+    var components = DateComponents()
+    components.year = 2025
+    components.month = 5
+    components.day = 4
+    components.hour = 15
+    components.minute = 12
+    components.second = 0
+    components.timeZone = TimeZone(secondsFromGMT: 0)
+    guard let date = Calendar(identifier: .gregorian).date(from: components) else {
+      XCTFail("Failed to create date for summer solstice test")
+      return
+    }
+    
+    let term = currentSolarTerm(for: date)
+
+    XCTAssertEqual(term, 3.5, accuracy: 0.5, "Solar term near summer solstice should be approximately 2.5")
+  }
+  
   /// Test that for a date near the summer solstice the computed solar term is close to 6.5.
   func testSummerSolstice() {
     // Example: June 21, 2012 at 11:12 UTC is near the summer solstice.
@@ -189,7 +234,7 @@ class SolarTermTests: XCTestCase {
     let term = currentSolarTerm(for: boundaryDate)
     let fractional = term.truncatingRemainder(dividingBy: 1.0)
     
-    XCTAssertEqual(fractional, 0.0, accuracy: 1e-4,
+    XCTAssertEqual(fractional, 0.5, accuracy: 1e-4,
                    "Expected exact boundary within 1e-4; got fractional part \(fractional)")
   }
 }
