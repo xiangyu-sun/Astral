@@ -80,6 +80,45 @@ public func daysUntilNextSolarTerm(from date: Date = Date()) -> Double {
   }
   
   // Convert the angular difference to days using the average daily solar motion (~0.9856°/day).
-  let dailyMotion = 360.0 / 365.2422
+  let dailyMotion = 360.0 / 365.242189
   return angleDifference / dailyMotion
+}
+
+/// 精确计算下一个节气的具体时刻，使用牛顿迭代法收敛到目标黄经边界。
+public func preciseNextSolarTermDate(from date: Date = Date(), iterations: Int = 5) -> Date {
+  let utcTimeZone = TimeZone.gmt
+  let components = date.components(timezone: utcTimeZone)
+  let jd = julianDay(at: components)
+  let jc = julianDayToCentury(julianDay: jd)
+  let apparentLong = sun_apparent_long(juliancentury: jc)
+  let normalizedLong = (apparentLong.truncatingRemainder(dividingBy: 360) + 360)
+                        .truncatingRemainder(dividingBy: 360)
+  let offset = normalizedLong + 7.5
+  let currentTerm = offset / 15.0
+  let nextTermIndex = floor(currentTerm) + 1.0
+  let targetLongitude = 15.0 * nextTermIndex - 7.5
+
+  // 初步估计时刻
+  let approxDays = daysUntilNextSolarTerm(from: date)
+  var t = date.addingTimeInterval(approxDays * 86400)
+
+  // 更精确的日运动率
+  let dailyMotion = 360.0 / 365.242189
+
+  // 牛顿迭代求解
+  for _ in 0..<iterations {
+    let compT = t.components(timezone: utcTimeZone)
+    let jdT = julianDay(at: compT)
+    let jcT = julianDayToCentury(julianDay: jdT)
+    let lambdaT = sun_apparent_long(juliancentury: jcT)
+    let normLambda = (lambdaT.truncatingRemainder(dividingBy: 360) + 360)
+                      .truncatingRemainder(dividingBy: 360)
+
+    var delta = (normLambda - targetLongitude).truncatingRemainder(dividingBy: 360)
+    if delta < 0 { delta += 360 }
+    let dt = -delta / dailyMotion * 86400
+    t = t.addingTimeInterval(dt)
+  }
+
+  return t
 }

@@ -24,6 +24,25 @@ class SolarTermTests: XCTestCase {
     XCTAssertEqual(term, 0.5, accuracy: 0.5, "Solar term near vernal equinox should be approximately 0.5")
   }
   
+  func test2025Guyu() {
+    var components = DateComponents()
+    components.year = 2025
+    components.month = 4
+    components.day = 20
+    components.hour = 15
+    components.minute = 12
+    components.second = 0
+    components.timeZone = TimeZone(secondsFromGMT: 0)
+    guard let date = Calendar(identifier: .gregorian).date(from: components) else {
+      XCTFail("Failed to create date for summer solstice test")
+      return
+    }
+    
+    let term = currentSolarTerm(for: date)
+
+    XCTAssertEqual(term, 2.5, accuracy: 0.5, "Solar term near summer solstice should be approximately 2.5")
+  }
+  
   /// Test that for a date near the summer solstice the computed solar term is close to 6.5.
   func testSummerSolstice() {
     // Example: June 21, 2012 at 11:12 UTC is near the summer solstice.
@@ -159,5 +178,18 @@ class SolarTermTests: XCTestCase {
     // Because normalizedLong is in [0, 360) then (normalizedLong + 7.5)/15 is in [0.5, 24.5).
     XCTAssertGreaterThanOrEqual(term, 0.5, "Solar term value should be at least 0.5")
     XCTAssertLessThan(term, 24.5, "Solar term value should be less than 24.5")
+  }
+  
+  /// The preciseNextSolarTermDate should land exactly on a 15° boundary.
+  /// Thus (normalizedLong + 7.5)/15 is an integer → fractional part == 0.
+  func testPreciseNextSolarTermDateAlignsWithBoundary() {
+    // Use some arbitrary “now”
+    let baseline = Date(timeIntervalSince1970: 0)
+    let boundaryDate = preciseNextSolarTermDate(from: baseline, iterations: 10)
+    let term = currentSolarTerm(for: boundaryDate)
+    let fractional = term.truncatingRemainder(dividingBy: 1.0)
+    
+    XCTAssertEqual(fractional, 0.0, accuracy: 1e-4,
+                   "Expected exact boundary within 1e-4; got fractional part \(fractional)")
   }
 }
