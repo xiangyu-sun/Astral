@@ -85,7 +85,7 @@ public func daysUntilNextSolarTerm(from date: Date = Date()) -> Double {
 }
 
 /// 精确计算下一个节气的具体时刻，使用牛顿迭代法收敛到目标黄经边界。
-public func preciseNextSolarTermDate(from date: Date = Date(), iterations: Int = 5, keepExtra7_5: Bool = false) -> Date {
+public func preciseNextSolarTermDate(from date: Date = Date(), iterations: Int = 5) -> Date {
   let utcTimeZone = TimeZone.utc
   let components = date.components(timezone: utcTimeZone)
   let jd = julianDay(at: components)
