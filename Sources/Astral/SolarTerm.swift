@@ -99,7 +99,7 @@ public func preciseNextSolarTermDate(from date: Date = Date(), iterations: Int =
   let targetLongitude = 15.0 * nextTermIndex - ( keepExtra7_5 ? 0 : 7.5 )
 
   // 初步估计时刻
-  let approxDays = daysUntilNextSolarTerm(from: date)
+  let approxDays = daysUntilNextSolarTerm(from: date, keepExtra7_5: keepExtra7_5)
   var t = date.addingTimeInterval(approxDays * 86400)
 
   // 更精确的日运动率
