@@ -4,7 +4,7 @@ import Foundation
 /// 根据当前日期（或指定日期）计算太阳的视黄经，并推算对应的二十四节气。
 public func currentSolarTerm(for date: Date = Date()) -> Double {
   // 将当前日期转换为 UTC 下的 DateComponents（确保天文计算的一致性）
-  let utcTimeZone = TimeZone.gmt
+  let utcTimeZone = TimeZone.utc
   let components = date.components(timezone: utcTimeZone)
   
   // 计算 Julian Day 与 Julian Century
@@ -34,7 +34,7 @@ public func currentSolarTerm(for date: Date = Date()) -> Double {
 ///   - Converting the angular difference to days using an average solar motion of ~0.9856°/day.
 public func daysUntilNextSolarTerm(from date: Date = Date()) -> Double {
   // Ensure we use UTC to keep astronomical calculations consistent.
-  let utcTimeZone = TimeZone.gmt
+  let utcTimeZone = TimeZone.utc
   let components = date.components(timezone: utcTimeZone)
   
   // Compute Julian Day and Julian Century.
@@ -86,7 +86,7 @@ public func daysUntilNextSolarTerm(from date: Date = Date()) -> Double {
 
 /// 精确计算下一个节气的具体时刻，使用牛顿迭代法收敛到目标黄经边界。
 public func preciseNextSolarTermDate(from date: Date = Date(), iterations: Int = 5) -> Date {
-  let utcTimeZone = TimeZone.gmt
+  let utcTimeZone = TimeZone.utc
   let components = date.components(timezone: utcTimeZone)
   let jd = julianDay(at: components)
   let jc = julianDayToCentury(julianDay: jd)

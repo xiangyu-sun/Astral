@@ -1,5 +1,11 @@
 import Foundation
 
+private let dmsRegex: NSRegularExpression = {
+    // Matches degrees°minutes′seconds″[N|S|E|W], case-insensitive
+    let pattern = #"(\d{1,3})°\s*(?:(\d{1,2})[′'])?\s*(?:(\d*\.?\d+)[″"])?\s*([NSEW])?"#
+    return try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+}()
+
 // MARK: - ConvetionError
 
 /// Converts as string of the form `degrees°minutes'seconds"[N|S|E|W]`,
@@ -21,36 +27,36 @@ func convertDegreesMinutesSecondsToDouble(value: Double, limit: Double?) -> Doub
 }
 
 func convertDegreesMinutesSecondsToDouble(value: String, limit: Double?) throws -> Double {
-  if let value = Double(value) {
-    return value.cap(limit: limit)
-  }
-
-  if let match = value.firstMatch(of: regex) {
-    let deg = Double(match.deg) ?? 0
-
-    let dir = match.dir ?? "E"
-
-    var res = Double(deg)
-
-    if let min = Double(match.min ?? "0") {
-      res += min / 60
+    // Direct float string
+    if let numeric = Double(value) {
+        return numeric.cap(limit: limit)
     }
 
-    if let sec = Double(match.sec ?? "0") {
-      res += sec / 3600
-    }
+    let nsString = value as NSString
+    let fullRange = NSRange(location: 0, length: nsString.length)
+    if let match = dmsRegex.firstMatch(in: value, options: [], range: fullRange) {
+        let deg = Double(nsString.substring(with: match.range(at: 1))) ?? 0
+        let min = match.range(at: 2).location != NSNotFound
+                ? Double(nsString.substring(with: match.range(at: 2))) ?? 0
+                : 0
+        let sec = match.range(at: 3).location != NSNotFound
+                ? Double(nsString.substring(with: match.range(at: 3))) ?? 0
+                : 0
+        let dir = match.range(at: 4).location != NSNotFound
+                ? nsString.substring(with: match.range(at: 4))
+                : "E"
 
-    if ["S","W"].contains(dir.uppercased()) {
-      res = -res
+        var result = deg
+        result += min / 60
+        result += sec / 3600
+        if ["S","W"].contains(dir.uppercased()) {
+            result = -result
+        }
+        return result.cap(limit: limit)
+    } else {
+        throw ConvetionError.invalidInput
     }
-
-    return res.cap(limit: limit)
-  } else {
-    throw ConvetionError.invalidInput
-  }
 }
-
-let regex = #/(?i)(?P<deg>\d{1,3})[°]\s*((?P<min>\d{1,2})[′'])?\s*((?P<sec>\[0-9]*[.][0-9]+)[″\"])?\s*(?P<dir>[NSEW])?/#
 
 extension Double {
 

@@ -397,12 +397,12 @@ func riseset(
         if rise_time == nil {
           rise_time = event
         } else {
-          let rq_diff = calendarUTC.date(from: query_time)!.distance(to: calendarUTC.date(from: rise_time!)!)
-          let eq_diff = calendarUTC.date(from: query_time)!.distance(to: calendarUTC.date(from: event)!)
+          let rq_diff = calendarUTC.date(from: rise_time!)!.timeIntervalSince(calendarUTC.date(from: query_time)!)
+          let eq_diff = calendarUTC.date(from: event)!.timeIntervalSince(calendarUTC.date(from: query_time)!)
           
           var sq_diff: TimeInterval = 0
           if let set_time = set_time {
-            sq_diff = calendarUTC.date(from: query_time)!.distance(to: calendarUTC.date(from: set_time)!)
+            sq_diff = calendarUTC.date(from: set_time)!.timeIntervalSince(calendarUTC.date(from: query_time)!)
           }
           
           let update_rise_time = (rq_diff.sign == eq_diff.sign && fabs(rq_diff) > fabs(eq_diff)) ||
@@ -426,12 +426,12 @@ func riseset(
         if set_time == nil {
           set_time = event
         } else {
-          let sq_diff = calendarUTC.date(from: query_time)!.distance(to: calendarUTC.date(from: set_time!)!)
-          let eq_diff = calendarUTC.date(from: query_time)!.distance(to: calendarUTC.date(from: event)!)
+          let sq_diff = calendarUTC.date(from: set_time!)!.timeIntervalSince(calendarUTC.date(from: query_time)!)
+          let eq_diff = calendarUTC.date(from: event)!.timeIntervalSince( calendarUTC.date(from: query_time)!)
           
           var rq_diff: TimeInterval = 0
           if let rise_time = rise_time {
-            rq_diff = calendarUTC.date(from: query_time)!.distance(to: calendarUTC.date(from: rise_time)!)
+            rq_diff = calendarUTC.date(from: rise_time)!.timeIntervalSince( calendarUTC.date(from: query_time)!)
           }
           
           let update_set_time = (sq_diff.sign == eq_diff.sign && fabs(sq_diff) > fabs(eq_diff)) ||
@@ -545,7 +545,7 @@ func moonset(
 /// - Returns: The azimuth angle (in degrees).
 func azimuth(
   observer: Observer,
-  at: DateComponents = Date.now.components()
+  at: DateComponents = Date().components()
 ) -> Degrees {
   let jd2000 = julianDay2000(at: at)
   let position = moonPosition(jd2000: jd2000)
@@ -575,7 +575,7 @@ func azimuth(
 /// - Returns: The elevation angle (in degrees).
 func elevation(
   observer: Observer,
-  at: DateComponents = Date.now.components()
+  at: DateComponents = Date().components()
 ) -> Double {
   let jd2000 = julianDay2000(at: at)
   let position = moonPosition(jd2000: jd2000)
@@ -603,7 +603,7 @@ func elevation(
 /// - Returns: The zenith angle (in degrees).
 func zenith(
   observer: Observer,
-  at: DateComponents = Date.now.components()
+  at: DateComponents = Date().components()
 ) -> Double {
   return 90 - elevation(observer: observer, at: at)
 }
