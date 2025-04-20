@@ -33,45 +33,7 @@ class SolarTermDaysTests: XCTestCase {
   }
   
   // MARK: - Modified Boundary Test Using Simulated Data
-  
-  /// A helper that computes days until the next solar term given an injected apparent longitude.
-  /// This mimics the core computation inside `daysUntilNextSolarTerm`.
-  private func daysUntilNextSolarTerm(forApparentLong appLong: Double) -> Double {
-    // Normalize the longitude to [0, 360)
-    let normalizedLong = (appLong.truncatingRemainder(dividingBy: 360) + 360).truncatingRemainder(dividingBy: 360)
-    
-    // The boundaries occur when (normalizedLong + 7.5) is an exact multiple of 15.
-    let currentTermValue = (normalizedLong + 7.5) / 15.0
-    let nextTermIndex = ceil(currentTermValue)
-    
-    let nextBoundary = 15.0 * nextTermIndex - 7.5
-    // Normalize the boundary to [0, 360)
-    let nextBoundaryNormalized = (nextBoundary.truncatingRemainder(dividingBy: 360) + 360).truncatingRemainder(dividingBy: 360)
-    
-    // Compute the angular difference from the current longitude to the boundary.
-    var angleDifference = nextBoundaryNormalized - normalizedLong
-    if angleDifference < 0 {
-      angleDifference += 360
-    }
-    
-    // Convert the angular difference to days using the average daily motion (~0.9856°/day).
-    let dailyMotion = 360.0 / 365.2422
-    return angleDifference / dailyMotion
-  }
-  
-  /// Test behavior when the Sun’s apparent longitude is exactly at a solar term boundary.
-  /// We simulate the condition by injecting an apparent longitude of 7.5°.
-  func testDaysUntilNextSolarTermAtBoundary() {
-    // Simulate a boundary condition:
-    // If normalizedLong is 7.5°, then (7.5 + 7.5) / 15 = 1.0 exactly, so the next boundary is 15° away.
-    let simulatedApparentLong = 7.5
-    let daysLeft = daysUntilNextSolarTerm(forApparentLong: simulatedApparentLong)
-    
-    let dailyMotion = 360.0 / 365.2422
-    let expectedDays = 15.0 / dailyMotion  // ≈ 15.218425 days
-    
-    XCTAssertEqual(daysLeft, expectedDays, accuracy: 1.0, "Days until next solar term at a boundary should be approximately \(expectedDays) days.")
-  }
+
   
   // MARK: - Additional Tests for the 24 Solar Terms
   
@@ -79,7 +41,7 @@ class SolarTermDaysTests: XCTestCase {
   func testAll24SolarTermsAppear() {
     var uniqueTerms: Set<Double> = []
     let calendar = Calendar(identifier: .gregorian)
-    let startComponents = DateComponents(timeZone: TimeZone.gmt, year: 2020, month: 1, day: 1)
+    let startComponents = DateComponents(timeZone: TimeZone(secondsFromGMT: 0)!, year: 2020, month: 1, day: 1)
     guard let startDate = calendar.date(from: startComponents) else {
       XCTFail("Failed to create start date for solar term cycle test")
       return

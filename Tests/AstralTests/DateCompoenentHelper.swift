@@ -8,7 +8,7 @@
 import Foundation
 
 extension DateComponents {
-  static func date(_ year: Int, _ month: Int, _ day: Int, _ timeZone: TimeZone = .gmt) -> DateComponents {
+  static func date(_ year: Int, _ month: Int, _ day: Int, _ timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!) -> DateComponents {
     .init(timeZone: timeZone, year: year, month: month, day: day)
   }
 
@@ -19,7 +19,7 @@ extension DateComponents {
     _ hour: Int,
     _ minute: Int = 0,
     _ second: Int = 0,
-    _ timeZone: TimeZone = .gmt)
+    _ timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!)
     -> DateComponents
   {
     .init(timeZone: timeZone, year: year, month: month, day: day, hour: hour, minute: minute, second: second)
