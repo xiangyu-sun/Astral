@@ -32,7 +32,7 @@ public func currentSolarTerm(for date: Date = Date()) -> Double {
 ///     so that the next boundary (in degrees) is at:
 ///         nextBoundary = 15 * ceil((normalizedLong + 7.5)/15) - 7.5
 ///   - Converting the angular difference to days using an average solar motion of ~0.9856°/day.
-public func daysUntilNextSolarTerm(from date: Date = Date()) -> Double {
+public func daysUntilNextSolarTerm(from date: Date = Date(), keepExtra7_5: Bool = false) -> Double {
   // Ensure we use UTC to keep astronomical calculations consistent.
   let utcTimeZone = TimeZone.utc
   let components = date.components(timezone: utcTimeZone)
@@ -68,7 +68,7 @@ public func daysUntilNextSolarTerm(from date: Date = Date()) -> Double {
   }
   
   // Compute the next boundary in degrees.
-  let nextBoundary = 15.0 * nextTermIndex - 7.5
+  let nextBoundary = 15.0 * nextTermIndex - (keepExtra7_5 ? 0 : 7.5)
   // Normalize the boundary to [0, 360).
   let nextBoundaryNormalized = (nextBoundary.truncatingRemainder(dividingBy: 360) + 360)
                                 .truncatingRemainder(dividingBy: 360)
