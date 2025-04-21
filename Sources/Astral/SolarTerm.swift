@@ -124,3 +124,22 @@ public func preciseNextSolarTermDate(from date: Date = Date(), iterations: Int =
 
   return t
 }
+
+/// Returns the month number (1–12) corresponding to the current solar term.
+/// Each solar term spans half a month, so two terms map to one month.
+/// - Parameter date: The reference date. Defaults to now.
+/// - Returns: The month (1 = January, …, 12 = December).
+public func monthOfCurrentSolarTerm(for date: Date = Date()) -> Int {
+    // Determine the solar term index (0–23).
+    let termValue = currentSolarTerm(for: date)
+    let termIndex = Int(floor(termValue)) % 24
+
+    // Map each solar term index to its Gregorian month.
+    let mapping: [Int] = [
+        3, 4, 4, 5, 5, 6, 6, 7,
+        7, 8, 8, 9, 9, 10, 10, 11,
+        11, 12, 12, 1, 1, 2, 2, 3
+    ]
+
+    return mapping[termIndex]
+}

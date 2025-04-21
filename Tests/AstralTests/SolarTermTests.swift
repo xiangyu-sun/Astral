@@ -237,4 +237,31 @@ class SolarTermTests: XCTestCase {
     XCTAssertEqual(fractional, 0.5, accuracy: 1e-4,
                    "Expected exact boundary within 1e-4; got fractional part \(fractional)")
   }
+  
+
+    private var formatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd"
+        df.timeZone = TimeZone(abbreviation: "UTC")
+        return df
+    }()
+
+    func testMonthOfCurrentSolarTerm_knownDates() {
+        let testCases: [(date: String, expectedMonth: Int)] = [
+            ("2021-12-21", 12), // Winter Solstice → December
+            ("2022-01-05", 1),  // Minor Cold  → January
+            ("2022-03-20", 3),  // Spring Equinox → March
+            ("2022-06-21", 6),  // Summer Solstice → June
+            ("2022-09-23", 9),  // Autumn Equinox → September
+            ("2022-11-07", 11)  // Minor Snow → November
+        ]
+
+        for (dateString, expected) in testCases {
+            let date = formatter.date(from: dateString)!
+            let month = monthOfCurrentSolarTerm(for: date)
+            XCTAssertEqual(month, expected, "Expected month \(expected) for solar term on \(dateString), got \(month)")
+        }
+    }
+
+
 }
