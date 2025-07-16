@@ -20,7 +20,7 @@ enum MoonError: Error {
 let moonApparentRadius = 1896.0 / (60.0 * 60.0)
 
 /// Type alias representing a fractional revolution (0 … 1).
-typealias Revolutions = Double
+public typealias Revolutions = Double
 
 // MARK: - Transit Event Structures
 
@@ -624,7 +624,7 @@ func obliquity_of_ecliptic(jd2000: Double) -> Radians {
 /// Calculates the Moon's true ecliptic longitude (in revolutions) for the given Julian date offset.
 /// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
 /// - Returns: The true ecliptic longitude as a fraction of one full revolution.
-func moon_true_longitude(jd2000: Double) -> Revolutions {
+public func moon_true_longitude(jd2000: Double) -> Revolutions {
   // Compute geocentric position (right ascension and declination)
   let pos = moonPosition(jd2000: jd2000)
   let ε = obliquity_of_ecliptic(jd2000: jd2000)
