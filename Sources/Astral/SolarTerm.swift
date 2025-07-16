@@ -1,24 +1,27 @@
 import Foundation
 
 
-/// 根据当前日期（或指定日期）计算太阳的视黄经，并推算对应的二十四节气。
+/// Calculates the current solar term as a fractional index (0–24).
+///
+/// - Parameter date: The reference date. Defaults to `Date()`.
+/// - Returns: A value between 0 and 24 where each integer boundary marks the
+///   start of the next solar term.
 public func currentSolarTerm(for date: Date = Date()) -> Double {
-  // 将当前日期转换为 UTC 下的 DateComponents（确保天文计算的一致性）
+  // Convert the date to UTC components for consistent astronomical calculations.
   let utcTimeZone = TimeZone.utc
   let components = date.components(timezone: utcTimeZone)
-  
-  // 计算 Julian Day 与 Julian Century
+
+  // Compute Julian Day and Julian Century.
   let jd = julianDay(at: components)
   let jc = julianDayToCentury(julianDay: jd)
-  
-  // 计算太阳的视黄经（单位：度）
+
+  // Calculate the Sun's apparent longitude (degrees).
   let apparentLong = sun_apparent_long(juliancentury: jc)
-  
-  // 归一化到 [0, 360) 度
+
+  // Normalize to [0, 360) degrees.
   let normalizedLong = (apparentLong.truncatingRemainder(dividingBy: 360) + 360).truncatingRemainder(dividingBy: 360)
-  
-  // 每个节气跨越 15°，这里假设 0° 对应某个节气边界（例如“春分”或“冬至”，具体视你采用的体系而定）。
-  // 为了四舍五入到最近的节气边界，这里先加上 7.5°。
+
+  // Each term spans 15°. Adding 7.5° rounds to the nearest term boundary.
   return (normalizedLong + 7.5) / 15
 }
 
@@ -84,7 +87,12 @@ public func daysUntilNextSolarTerm(from date: Date = Date()) -> Double {
   return angleDifference / dailyMotion
 }
 
-/// 精确计算下一个节气的具体时刻，使用牛顿迭代法收敛到目标黄经边界。
+/// Computes the exact date of the next solar term using Newton iteration.
+///
+/// - Parameters:
+///   - date: The starting date. Defaults to `Date()`.
+///   - iterations: Number of Newton iterations to perform. Defaults to `5`.
+/// - Returns: The `Date` at which the next solar term begins.
 public func preciseNextSolarTermDate(from date: Date = Date(), iterations: Int = 5) -> Date {
   let utcTimeZone = TimeZone.utc
   let components = date.components(timezone: utcTimeZone)
