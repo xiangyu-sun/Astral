@@ -607,3 +607,34 @@ func zenith(
 ) -> Double {
   return 90 - elevation(observer: observer, at: at)
 }
+
+// MARK: - Ecliptic Coordinates
+
+/// Calculates the mean obliquity of the ecliptic (in radians) for the given Julian date offset.
+/// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
+/// - Returns: The obliquity of the ecliptic in radians.
+func obliquity_of_ecliptic(jd2000: Double) -> Radians {
+  let T = jd2000 / 36525
+  // IAU 1980 mean obliquity in arc seconds
+  let seconds = 21.448 - 46.8150 * T - 0.00059 * T * T + 0.001813 * T * T * T
+  let e0 = (23.0 + (26.0 / 60.0) + (seconds / 3600.0)) * Double.pi / 180.0
+  return e0
+}
+
+/// Calculates the Moon's true ecliptic longitude (in revolutions) for the given Julian date offset.
+/// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
+/// - Returns: The true ecliptic longitude as a fraction of one full revolution.
+func moon_true_longitude(jd2000: Double) -> Revolutions {
+  // Compute geocentric position (right ascension and declination)
+  let pos = moonPosition(jd2000: jd2000)
+  let ε = obliquity_of_ecliptic(jd2000: jd2000)
+  let α = pos.right_ascension
+  let δ = pos.declination
+  // Ecliptic longitude λ
+  let λ = atan2(sin(α) * cos(ε) + tan(δ) * sin(ε), cos(α))
+  // Normalize to 0…1 revolutions
+  var rev = λ / (2 * .pi)
+  rev = rev - Double(Int(rev))
+  if rev < 0 { rev += 1 }
+  return rev
+}
