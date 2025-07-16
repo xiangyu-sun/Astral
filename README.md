@@ -100,6 +100,20 @@ let customLocation = Location(latitude: 37.7749, longitude: -122.4194, name: "Sa
 
 ---
 
+## 📖 API Reference
+
+The library exposes a handful of helper functions for working with
+astronomical data:
+
+- `currentSolarTerm(for:)` – Returns the current solar term index.
+- `daysUntilNextSolarTerm(from:)` – Days remaining until the next term.
+- `preciseNextSolarTermDate(from:iterations:)` – Exact date of the next term.
+- `moon_true_longitude(jd2000:)` – Moon’s true longitude in revolutions.
+
+Refer to the source code for additional utilities.
+
+---
+
 ## 🛠️ Contributing
 
 We welcome contributions! To contribute:
