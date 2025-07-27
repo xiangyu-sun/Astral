@@ -1,5 +1,5 @@
-import Testing
 import Foundation
+import Testing
 @testable import Astral
 
 @Suite("Astral Library Tests")

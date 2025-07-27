@@ -5,8 +5,8 @@
 //  Created by Xiangyu Sun on 20/1/23.
 //
 
-import Testing
 import Foundation
+import Testing
 @testable import Astral
 
 @Suite("Moon Calculation Tests")
@@ -66,7 +66,6 @@ struct MoonTests {
     (.date(2023, 1, 21), .datetime(2023, 1, 21, 7, 15, 0)),
   ]
 
-
   @Test("Moon phase calculation")
   func testMoonPahse() throws {
     for (date, phase) in moonPhaseData {
@@ -80,7 +79,8 @@ struct MoonTests {
       let calc_time = try moonrise(observer: .london, dateComponents: date)
       #expect(calc_time != nil)
       #expect(
-        calc_time!.extractYearMonthDayHourMinuteSecond().isApproximatelyEqual(to: risetime.extractYearMonthDayHourMinuteSecond(), tolerance: DateComponents(minute: 1)))
+        calc_time!.extractYearMonthDayHourMinuteSecond()
+          .isApproximatelyEqual(to: risetime.extractYearMonthDayHourMinuteSecond(), tolerance: DateComponents(minute: 1)))
     }
   }
 
@@ -99,7 +99,8 @@ struct MoonTests {
       let calc_time = try moonrise(observer: .riyadh, dateComponents: date)
       #expect(calc_time != nil)
       #expect(
-        calc_time!.extractYearMonthDayHourMinuteSecond().isApproximatelyEqual(to: risetime.extractYearMonthDayHourMinuteSecond(), tolerance: DateComponents(minute: 1)))
+        calc_time!.extractYearMonthDayHourMinuteSecond()
+          .isApproximatelyEqual(to: risetime.extractYearMonthDayHourMinuteSecond(), tolerance: DateComponents(minute: 1)))
     }
   }
 
@@ -109,7 +110,8 @@ struct MoonTests {
       let calc_time = try moonset(observer: .riyadh, dateComponents: date)
       #expect(calc_time != nil)
       #expect(
-        calc_time!.extractYearMonthDayHourMinuteSecond().isApproximatelyEqual(to: settime.extractYearMonthDayHourMinuteSecond(), tolerance: DateComponents(minute: 1)))
+        calc_time!.extractYearMonthDayHourMinuteSecond()
+          .isApproximatelyEqual(to: settime.extractYearMonthDayHourMinuteSecond(), tolerance: DateComponents(minute: 1)))
     }
   }
 
@@ -119,7 +121,9 @@ struct MoonTests {
       let calc_time = try moonrise(observer: .welllington, dateComponents: date, tzinfo: Self.wellington)
       #expect(calc_time != nil)
       #expect(
-        calc_time!.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington).isApproximatelyEqual(to: risetime.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington), tolerance: DateComponents(minute: 1)))
+        calc_time!.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington).isApproximatelyEqual(
+          to: risetime.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington),
+          tolerance: DateComponents(minute: 1)))
     }
   }
 
@@ -129,7 +133,8 @@ struct MoonTests {
       let calc_time = try moonset(observer: .welllington, dateComponents: date, tzinfo: Self.wellington)
       #expect(calc_time != nil)
       #expect(
-        calc_time?.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington) == settime.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington))
+        calc_time?.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington) == settime
+          .extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington))
     }
   }
 
@@ -139,14 +144,17 @@ struct MoonTests {
       let calc_time = try moonrise(observer: .barcelona, dateComponents: date, tzinfo: Self.timeZoneBCN)
       #expect(calc_time != nil)
       #expect(
-        calc_time!.extractYearMonthDayHourMinuteSecond(timeZone: Self.timeZoneBCN).isApproximatelyEqual(to: risetime.extractYearMonthDayHourMinuteSecond(timeZone: Self.timeZoneBCN), tolerance: DateComponents(minute: 1)))
+        calc_time!.extractYearMonthDayHourMinuteSecond(timeZone: Self.timeZoneBCN).isApproximatelyEqual(
+          to: risetime.extractYearMonthDayHourMinuteSecond(timeZone: Self.timeZoneBCN),
+          tolerance: DateComponents(minute: 1)))
     }
 
     for (date, risetime) in moonRiseBarcelonanDataUTC {
       let calc_time = try moonrise(observer: .barcelona, dateComponents: date)
       #expect(calc_time != nil)
       #expect(
-        calc_time!.extractYearMonthDayHourMinuteSecond().isApproximatelyEqual(to: risetime.extractYearMonthDayHourMinuteSecond(), tolerance: DateComponents(minute: 1)))
+        calc_time!.extractYearMonthDayHourMinuteSecond()
+          .isApproximatelyEqual(to: risetime.extractYearMonthDayHourMinuteSecond(), tolerance: DateComponents(minute: 1)))
     }
   }
 }

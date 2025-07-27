@@ -23,13 +23,13 @@ import Numerics
 func refractionAtZenith(_ zenith: Double) -> Double {
   // Compute the solar elevation (in degrees); elevation is complementary to the zenith angle.
   let elevation = 90 - zenith
-  
+
   // Calculate the tangent of the elevation angle.
   // Angle.deg2rad(elevation) is assumed to convert degrees to radians.
   let te = Double.tan(Angle.deg2rad(elevation))
-  
-  var refractionCorrection: Double = 0.0
-  
+
+  var refractionCorrection = 0.0
+
   // Use different formulas based on the value of the solar elevation.
   if elevation > 5 {
     // For elevations greater than 5° (i.e. when the Sun is well above the horizon)
@@ -48,9 +48,9 @@ func refractionAtZenith(_ zenith: Double) -> Double {
     // use an alternative approximation.
     refractionCorrection = -20.774 / te
   }
-  
+
   // Convert the refraction correction from arcseconds to degrees.
   refractionCorrection /= 3600.0
-  
+
   return refractionCorrection
 }

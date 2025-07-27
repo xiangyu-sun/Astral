@@ -5,8 +5,8 @@
 //  Created by Xiangyu Sun on 20/1/23.
 //
 
-import Testing
 import Foundation
+import Testing
 @testable import Astral
 
 @Suite("Observer Tests")

@@ -5,8 +5,8 @@
 //  Created by Xiangyu Sun on 20/1/23.
 //
 
-import Testing
 import Foundation
+import Testing
 @testable import Astral
 
 @Suite("Julian Day Tests")
@@ -63,7 +63,6 @@ struct JulianTests {
     (-1.329130732, 2402998.5),
     (12.00844627, 2890153.5),
   ]
-
 
   @Test("Julian day for default calendar")
   func testDefaultCalendar() throws {

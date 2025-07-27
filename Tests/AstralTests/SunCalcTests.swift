@@ -5,8 +5,8 @@
 //  Created by Xiangyu Sun on 31/1/23.
 //
 
-import Testing
 import Foundation
+import Testing
 @testable import Astral
 
 @Suite("Sun Calculation Tests")
@@ -199,7 +199,10 @@ struct SunCalcTests {
       let decl = sun_declination(juliancentury: jc)
 
       #expect(
-        hour_angle(latitude: Observer.london.latitude, declination: decl, zenith: 90.8333, direction: SunDirection.rising).isApproximatelyEqual(to: expected, absoluteTolerance: 0.1))
+        hour_angle(latitude: Observer.london.latitude, declination: decl, zenith: 90.8333, direction: SunDirection.rising)
+          .isApproximatelyEqual(
+            to: expected,
+            absoluteTolerance: 0.1))
     }
   }
 
@@ -224,21 +227,25 @@ struct SunCalcTests {
   @Test("Elevation calculation without refraction")
   func testElevation_without_fraction() {
     let date = DateComponents.datetime(2001, 6, 21, 13, 11, 0)
-    #expect(elevation(observer: .new_dheli ,dateandtime: date, with_refraction: false).isApproximatelyEqual(to: 7.29, absoluteTolerance: 0.1))
+    #expect(
+      elevation(observer: .new_dheli ,dateandtime: date, with_refraction: false)
+        .isApproximatelyEqual(to: 7.29, absoluteTolerance: 0.1))
   }
 
   @Test("Azimuth calculation above 85 degrees")
   func testAzimuthAbove85D() {
     let date = DateComponents.datetime(2001, 6, 21, 13, 11, 0)
     #expect(
-      azimuth(observer: Observer(latitude: 86, longitude: 77.2, elevation: .double(0)) ,dateandtime: date).isApproximatelyEqual(to: 276.21, absoluteTolerance: 0.01))
+      azimuth(observer: Observer(latitude: 86, longitude: 77.2, elevation: .double(0)) ,dateandtime: date)
+        .isApproximatelyEqual(to: 276.21, absoluteTolerance: 0.01))
   }
 
   @Test("Elevation calculation above 85 degrees")
   func testElevationAbove85D() {
     let date = DateComponents.datetime(2001, 6, 21, 13, 11, 0)
     #expect(
-      elevation(observer: Observer(latitude: 86, longitude: 77.2, elevation: .double(0)) ,dateandtime: date).isApproximatelyEqual(to: 23.10250115161950, absoluteTolerance: 0.001))
+      elevation(observer: Observer(latitude: 86, longitude: 77.2, elevation: .double(0)) ,dateandtime: date)
+        .isApproximatelyEqual(to: 23.10250115161950, absoluteTolerance: 0.001))
   }
 
   @Test("Elevation equals time at elevation")

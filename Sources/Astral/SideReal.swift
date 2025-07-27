@@ -17,17 +17,17 @@ import Foundation
 func gmst(dateComponents: DateComponents) -> Degrees {
   // Compute the Julian Day offset from J2000.0.
   let jd2000 = julianDay2000(at: dateComponents)
-  
+
   // Compute the number of Julian centuries since J2000.0.
   let T = jd2000 / 36525.0
   let T2 = T * T
   let T3 = T * T * T
-  
+
   let value = 280.46061837
     + 360.98564736629 * jd2000
     + 0.000387933 * T2
     + T3 / 38710000.0
-  
+
   // Normalize the value to the range [0, 360).
   var r = value.truncatingRemainder(dividingBy: 360.0)
   if r < 0 {

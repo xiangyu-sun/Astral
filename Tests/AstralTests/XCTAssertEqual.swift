@@ -11,9 +11,9 @@ public func XCTAssertEqual(
   _ expression1: @autoclosure () -> DateComponents,
   _ expression2: @autoclosure () -> DateComponents,
   accuracy: DateComponents,
-  _ message: @autoclosure () -> String = "",
-  file: StaticString = #filePath,
-  line: UInt = #line)
+  _: @autoclosure () -> String = "",
+  file _: StaticString = #filePath,
+  line _: UInt = #line)
 {
   let lhs = expression1()
   let rhs = expression2()
@@ -23,7 +23,7 @@ public func XCTAssertEqual(
     #expect(lhs == rhs)
   } else {
     let diff = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute,.second], from: lhs, to: rhs).absDateComponents()
-    
+
     #expect(diff <= accuracy)
   }
 }
@@ -40,13 +40,14 @@ extension DateComponents {
 
     return copy
   }
-  
+
   func isApproximatelyEqual(to other: DateComponents, tolerance: DateComponents) -> Bool {
     if self == other {
       return true
     }
-    
-    let diff = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute,.second], from: self, to: other).absDateComponents()
+
+    let diff = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute,.second], from: self, to: other)
+      .absDateComponents()
     return diff <= tolerance
   }
 }

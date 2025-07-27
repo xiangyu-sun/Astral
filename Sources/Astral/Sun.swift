@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - Error Definitions
+// MARK: - SunError
 
 /// Errors related to Sun (astral) calculations.
 enum SunError: Error {
@@ -56,12 +56,12 @@ func geom_mean_long_sun(juliancentury: Double) -> Double {
 
 /// Returns the geometric mean anomaly of the Sun (in degrees) for a given Julian century.
 func geom_mean_anomaly_sun(juliancentury: Double) -> Double {
-  return 357.52911 + juliancentury * (35999.05029 - 0.0001537 * juliancentury)
+  357.52911 + juliancentury * (35999.05029 - 0.0001537 * juliancentury)
 }
 
 /// Returns the eccentricity of Earth's orbit.
 func eccentric_location_earth_orbit(juliancentury: Double) -> Double {
-  return 0.016708634 - juliancentury * (0.000042037 + 0.0000001267 * juliancentury)
+  0.016708634 - juliancentury * (0.000042037 + 0.0000001267 * juliancentury)
 }
 
 /// Returns the equation of the center of the Sun (in degrees) for a given Julian century.
@@ -72,14 +72,14 @@ func sun_eq_of_center(juliancentury: Double) -> Double {
   let sin2m = sin(mrad * 2)
   let sin3m = sin(mrad * 3)
   return sinm * (1.914602 - juliancentury * (0.004817 + 0.000014 * juliancentury))
-       + sin2m * (0.019993 - 0.000101 * juliancentury)
-       + sin3m * 0.000289
+    + sin2m * (0.019993 - 0.000101 * juliancentury)
+    + sin3m * 0.000289
 }
 
 /// Returns the Sun's true longitude (in degrees).
 func sun_true_long(juliancentury: Double) -> Double {
-  return geom_mean_long_sun(juliancentury: juliancentury)
-       + sun_eq_of_center(juliancentury: juliancentury)
+  geom_mean_long_sun(juliancentury: juliancentury)
+    + sun_eq_of_center(juliancentury: juliancentury)
 }
 
 /// Returns the Sun's true anomaly (in degrees).
@@ -149,13 +149,13 @@ func eq_of_time(juliancentury: Double) -> Double {
   let y = var_y(juliancentury: juliancentury)
 
   let sin2l0 = sin(2.0 * radians(l0))
-  let sinm   = sin(radians(m))
+  let sinm = sin(radians(m))
   let cos2l0 = cos(2.0 * radians(l0))
   let sin4l0 = sin(4.0 * radians(l0))
-  let sin2m  = sin(2.0 * radians(m))
+  let sin2m = sin(2.0 * radians(m))
 
   let Etime = y * sin2l0 - 2.0 * e * sinm + 4.0 * e * y * sinm * cos2l0
-            - 0.5 * y * y * sin4l0 - 1.25 * e * e * sin2m
+    - 0.5 * y * y * sin4l0 - 1.25 * e * e * sin2m
 
   return degrees(Etime) * 4.0
 }
@@ -175,8 +175,9 @@ func hour_angle(
   latitude: Double,
   declination: Double,
   zenith: Double,
-  direction: SunDirection
-) -> Double {
+  direction: SunDirection)
+  -> Double
+{
   let latRad = radians(latitude)
   let decRad = radians(declination)
   let zenRad = radians(zenith)
@@ -197,7 +198,7 @@ func hour_angle(
 /// - Returns: The dip angle in degrees; returns 0 if elevation <= 0.
 func adjust_to_horizon(elevation: Double) -> Double {
   guard elevation > 0 else { return 0.0 }
-  let earthRadius = 6_371_000.0  // Mean Earth radius in meters.
+  let earthRadius = 6_371_000.0 // Mean Earth radius in meters.
   let observerDistance = earthRadius + elevation
   let dipRadians = acos(earthRadius / observerDistance)
   return dipRadians * (180.0 / .pi)
@@ -229,8 +230,9 @@ func time_of_transit(
   date: DateComponents,
   zenith: Double,
   direction: SunDirection,
-  with_refraction: Bool = true
-) -> DateComponents {
+  with_refraction: Bool = true)
+  -> DateComponents
+{
   // Clamp latitude to avoid domain errors.
   let latitude = max(min(observer.latitude, 89.8), -89.8)
 
@@ -254,7 +256,7 @@ func time_of_transit(
   let jd = julianDay(at: date)
 
   // Iteratively refine the transit time.
-  var timeUTC = 720.0  // initial guess in minutes (12:00 UTC)
+  var timeUTC = 720.0 // initial guess in minutes (12:00 UTC)
   let tolerance = 0.001
   var iteration = 0
   while iteration < 10 {
@@ -281,8 +283,7 @@ func time_of_transit(
     month: date.month,
     day: (date.day ?? 0) + (td.day ?? 0),
     second: td.second,
-    nanosecond: td.nanosecond
-  )
+    nanosecond: td.nanosecond)
 }
 
 // MARK: - Solar Angles (Zenith and Azimuth)
@@ -296,8 +297,8 @@ func time_of_transit(
 func zenith_and_azimuth(
   observer: Observer,
   dateandtime: DateComponents,
-  with_refraction: Bool = true
-) -> (Double, Double) {
+  with_refraction: Bool = true) -> (Double, Double)
+{
   let latitude = max(min(observer.latitude, 89.8), -89.8)
   let longitude = observer.longitude
 
@@ -320,7 +321,7 @@ func zenith_and_azimuth(
   // True solar time adjustment.
   let solarTimeFix = eqtime + (4.0 * longitude) + (60.0 * zone)
   let totalMinutes = Double((utcDatetime.hour ?? 0) * 60 + (utcDatetime.minute ?? 0))
-                      + (Double(utcDatetime.second ?? 0) / 60.0)
+    + (Double(utcDatetime.second ?? 0) / 60.0)
   var trueSolarTime = totalMinutes + solarTimeFix
   while trueSolarTime > 1440 { trueSolarTime -= 1440 }
   while trueSolarTime < 0 { trueSolarTime += 1440 }
@@ -362,26 +363,29 @@ func zenith_and_azimuth(
 func zenith(
   observer: Observer,
   dateandtime: DateComponents = Date().components(),
-  with_refraction: Bool = true
-) -> Double {
-  return zenith_and_azimuth(observer: observer, dateandtime: dateandtime, with_refraction: with_refraction).0
+  with_refraction: Bool = true)
+  -> Double
+{
+  zenith_and_azimuth(observer: observer, dateandtime: dateandtime, with_refraction: with_refraction).0
 }
 
 /// Returns the solar azimuth (in degrees) for the given observer and time.
 func azimuth(
   observer: Observer,
-  dateandtime: DateComponents = Date().components()
-) -> Double {
-  return zenith_and_azimuth(observer: observer, dateandtime: dateandtime).1
+  dateandtime: DateComponents = Date().components())
+  -> Double
+{
+  zenith_and_azimuth(observer: observer, dateandtime: dateandtime).1
 }
 
 /// Returns the solar elevation (in degrees) for the given observer and time.
 func elevation(
   observer: Observer,
   dateandtime: DateComponents = Date().components(),
-  with_refraction: Bool = true
-) -> Double {
-  return 90.0 - zenith(observer: observer, dateandtime: dateandtime, with_refraction: with_refraction)
+  with_refraction: Bool = true)
+  -> Double
+{
+  90.0 - zenith(observer: observer, dateandtime: dateandtime, with_refraction: with_refraction)
 }
 
 // MARK: - Core Sunrise/Sunset and Twilight Routines
@@ -398,11 +402,12 @@ func dawn(
   observer: Observer,
   date: DateComponents,
   depression: Depression = .civil,
-  tzinfo: TimeZone = .utc
-) throws -> DateComponents {
+  tzinfo: TimeZone = .utc)
+  throws -> DateComponents
+{
   let dep = depression.rawValue.double
   var tot = time_of_transit(observer: observer, date: date, zenith: 90.0 + dep, direction: .rising)
-            .astimezone(tzinfo)
+    .astimezone(tzinfo)
   if tot.extractYearMonthDay() != date {
     var newDate = date
     if tot < date {
@@ -411,7 +416,7 @@ func dawn(
       newDate.setValue((date.day ?? 0) - 1, for: .day)
     }
     tot = time_of_transit(observer: observer, date: newDate, zenith: 90.0 + dep, direction: .rising)
-          .astimezone(tzinfo)
+      .astimezone(tzinfo)
     if tot.extractYearMonthDay() != date {
       throw SunError.valueError("Unable to find a dawn time on the date specified")
     }
@@ -429,16 +434,17 @@ func dawn(
 func sunrise(
   observer: Observer,
   date: DateComponents,
-  tzinfo: TimeZone = .utc
-) throws -> DateComponents {
+  tzinfo: TimeZone = .utc)
+  throws -> DateComponents
+{
   var tot = time_of_transit(observer: observer, date: date, zenith: 90.0 + SUN_APPARENT_RADIUS, direction: .rising)
-            .astimezone(tzinfo)
+    .astimezone(tzinfo)
   if tot.extractYearMonthDay() != date {
     var newDate = date
     if tot < date { newDate.setValue((date.day ?? 0) + 1, for: .day) }
-    else          { newDate.setValue((date.day ?? 0) - 1, for: .day) }
+    else { newDate.setValue((date.day ?? 0) - 1, for: .day) }
     tot = time_of_transit(observer: observer, date: newDate, zenith: 90.0 + SUN_APPARENT_RADIUS, direction: .rising)
-          .astimezone(tzinfo)
+      .astimezone(tzinfo)
     if tot.extractYearMonthDay() != date {
       throw SunError.valueError("Unable to find a sunrise time on the date specified")
     }
@@ -456,16 +462,17 @@ func sunrise(
 func sunset(
   observer: Observer,
   date: DateComponents = Date().components(),
-  tzinfo: TimeZone = .utc
-) throws -> DateComponents {
+  tzinfo: TimeZone = .utc)
+  throws -> DateComponents
+{
   var tot = time_of_transit(observer: observer, date: date, zenith: 90.0 + SUN_APPARENT_RADIUS, direction: .setting)
-            .astimezone(tzinfo)
+    .astimezone(tzinfo)
   if tot.extractYearMonthDay() != date {
     var newDate = date
     if tot < date { newDate.setValue((date.day ?? 0) + 1, for: .day) }
-    else          { newDate.setValue((date.day ?? 0) - 1, for: .day) }
+    else { newDate.setValue((date.day ?? 0) - 1, for: .day) }
     tot = time_of_transit(observer: observer, date: newDate, zenith: 90.0 + SUN_APPARENT_RADIUS, direction: .setting)
-          .astimezone(tzinfo)
+      .astimezone(tzinfo)
     if tot.extractYearMonthDay() != date {
       throw SunError.valueError("Unable to find a sunset time on the date specified")
     }
@@ -485,17 +492,18 @@ func dusk(
   observer: Observer,
   date: DateComponents = Date().components(),
   depression: Depression = .civil,
-  tzinfo: TimeZone = .utc
-) throws -> DateComponents {
+  tzinfo: TimeZone = .utc)
+  throws -> DateComponents
+{
   let dep = depression.rawValue.double
   var tot = time_of_transit(observer: observer, date: date, zenith: 90.0 + dep, direction: .setting)
-            .astimezone(tzinfo)
+    .astimezone(tzinfo)
   if tot.extractYearMonthDay() != date {
     var newDate = date
     if tot < date { newDate.setValue((date.day ?? 0) + 1, for: .day) }
-    else          { newDate.setValue((date.day ?? 0) - 1, for: .day) }
+    else { newDate.setValue((date.day ?? 0) - 1, for: .day) }
     tot = time_of_transit(observer: observer, date: newDate, zenith: 90.0 + dep, direction: .setting)
-          .astimezone(tzinfo)
+      .astimezone(tzinfo)
     if tot.extractYearMonthDay() != date {
       throw SunError.valueError("Unable to find a dusk time on the date specified")
     }
@@ -514,8 +522,9 @@ func dusk(
 func noon(
   observer: Observer,
   date: DateComponents = Date().components(),
-  tzinfo: TimeZone = .utc
-) -> DateComponents {
+  tzinfo: TimeZone = .utc)
+  -> DateComponents
+{
   let jc = julianDayToCentury(julianDay: julianDay(at: date))
   let eqtime = eq_of_time(juliancentury: jc)
   let timeUTC = (720.0 - (4 * observer.longitude) - eqtime) / 60.0
@@ -556,8 +565,7 @@ func noon(
     day: localDate.day,
     hour: hour,
     minute: minute,
-    second: second
-  )
+    second: second)
   return result.astimezone(tzinfo)
 }
 
@@ -570,8 +578,9 @@ func noon(
 func midnight(
   observer: Observer,
   date: DateComponents = Date().components(),
-  tzinfo: TimeZone = .utc
-) -> DateComponents {
+  tzinfo: TimeZone = .utc)
+  -> DateComponents
+{
   var copyDate = date
   copyDate.setValue(12, for: .hour)
   copyDate.setValue(0, for: .minute)
@@ -617,8 +626,7 @@ func midnight(
     day: copyDate.day,
     hour: hour,
     minute: minute,
-    second: second
-  ).astimezone(tzinfo)
+    second: second).astimezone(tzinfo)
 }
 
 // MARK: - Additional Times (Twilight, Golden Hour, etc.)
@@ -639,8 +647,9 @@ func time_at_elevation(
   date: DateComponents = Date().components(),
   direction: SunDirection = .rising,
   tzinfo: TimeZone = .utc,
-  with_refraction: Bool = true
-) -> DateComponents {
+  with_refraction: Bool = true)
+  -> DateComponents
+{
   var adjustedElevation = elevation
   var adjustedDirection = direction
 
@@ -651,16 +660,21 @@ func time_at_elevation(
   }
 
   let zen = 90.0 - adjustedElevation
-  return time_of_transit(observer: observer, date: date, zenith: zen, direction: adjustedDirection, with_refraction: with_refraction)
-            .astimezone(tzinfo)
+  return time_of_transit(
+    observer: observer,
+    date: date,
+    zenith: zen,
+    direction: adjustedDirection,
+    with_refraction: with_refraction)
+    .astimezone(tzinfo)
 }
 
 /// Returns the daylight interval (sunrise and sunset) for the given observer and date.
 func daylight(
   observer: Observer,
   date: DateComponents = Date().components(),
-  tzinfo: TimeZone = .utc
-) throws -> (DateComponents, DateComponents) {
+  tzinfo: TimeZone = .utc) throws -> (DateComponents, DateComponents)
+{
   let sr = try sunrise(observer: observer, date: date, tzinfo: tzinfo)
   let ss = try sunset(observer: observer, date: date, tzinfo: tzinfo)
   return (sr, ss)
@@ -670,8 +684,8 @@ func daylight(
 func night(
   observer: Observer,
   date: DateComponents = Date().components(),
-  tzinfo: TimeZone = .utc
-) throws -> (DateComponents, DateComponents) {
+  tzinfo: TimeZone = .utc) throws -> (DateComponents, DateComponents)
+{
   // Here, we use a depression angle of 6° for the dusk/dawn calculation.
   let start = try dusk(observer: observer, date: date, depression: 6, tzinfo: tzinfo)
   var tomorrow = date
@@ -688,11 +702,11 @@ func twilight(
   observer: Observer,
   date: DateComponents = Date().components(),
   direction: SunDirection = .rising,
-  tzinfo: TimeZone = .utc
-) throws -> (DateComponents, DateComponents) {
+  tzinfo: TimeZone = .utc) throws -> (DateComponents, DateComponents)
+{
   // Twilight defined at 6° depression from the horizon (i.e., zenith = 96°).
   let start = time_of_transit(observer: observer, date: date, zenith: 96, direction: direction)
-              .astimezone(tzinfo)
+    .astimezone(tzinfo)
   let end: DateComponents
   if direction == .rising {
     end = try sunrise(observer: observer, date: date, tzinfo: tzinfo).astimezone(tzinfo)
@@ -709,12 +723,12 @@ func golden_hour(
   observer: Observer,
   date: DateComponents = Date().components(),
   direction: SunDirection = .rising,
-  tzinfo: TimeZone = .utc
-) throws -> (DateComponents, DateComponents) {
+  tzinfo: TimeZone = .utc) throws -> (DateComponents, DateComponents)
+{
   let start = time_of_transit(observer: observer, date: date, zenith: 94, direction: direction)
-              .astimezone(tzinfo)
+    .astimezone(tzinfo)
   let end = time_of_transit(observer: observer, date: date, zenith: 84, direction: direction)
-            .astimezone(tzinfo)
+    .astimezone(tzinfo)
   return direction == .rising ? (start, end) : (end, start)
 }
 
@@ -724,12 +738,12 @@ func blue_hour(
   observer: Observer,
   date: DateComponents = Date().components(),
   direction: SunDirection = .rising,
-  tzinfo: TimeZone = .utc
-) throws -> (DateComponents, DateComponents) {
+  tzinfo: TimeZone = .utc) throws -> (DateComponents, DateComponents)
+{
   let start = time_of_transit(observer: observer, date: date, zenith: 96, direction: direction)
-              .astimezone(tzinfo)
+    .astimezone(tzinfo)
   let end = time_of_transit(observer: observer, date: date, zenith: 94, direction: direction)
-            .astimezone(tzinfo)
+    .astimezone(tzinfo)
   return direction == .rising ? (start, end) : (end, start)
 }
 
@@ -745,14 +759,14 @@ func rahukaalam(
   observer: Observer,
   date: DateComponents = Date().components(),
   daytime: Bool = true,
-  tzinfo: TimeZone = .utc
-) throws -> (DateComponents, DateComponents) {
+  tzinfo: TimeZone = .utc) throws -> (DateComponents, DateComponents)
+{
   let start: DateComponents
   let end: DateComponents
 
   if daytime {
     start = try sunrise(observer: observer, date: date, tzinfo: tzinfo)
-    end   = try sunset(observer: observer, date: date, tzinfo: tzinfo)
+    end = try sunset(observer: observer, date: date, tzinfo: tzinfo)
   } else {
     start = try sunset(observer: observer, date: date, tzinfo: tzinfo)
     var nextDay = date
@@ -761,8 +775,10 @@ func rahukaalam(
   }
 
   let calendar = Calendar(identifier: .gregorian)
-  guard let startDate = calendar.date(from: start),
-        let endDate = calendar.date(from: end) else {
+  guard
+    let startDate = calendar.date(from: start),
+    let endDate = calendar.date(from: end) else
+  {
     throw SunError.valueError("Unable to compute Rahukaalam dates")
   }
   let totalSeconds = calendar.dateComponents([.second], from: startDate, to: endDate).second ?? 0
@@ -778,7 +794,7 @@ func rahukaalam(
   let rahuEndDate = calendar.date(byAdding: .second, value: octantDuration, to: newStartDate)!
 
   let newStart = calendar.dateComponents(in: tzinfo, from: newStartDate)
-  let newEnd   = calendar.dateComponents(in: tzinfo, from: rahuEndDate)
+  let newEnd = calendar.dateComponents(in: tzinfo, from: rahuEndDate)
   return (newStart, newEnd)
 }
 
@@ -796,13 +812,13 @@ func sun(
   date: DateComponents = Date().components(),
   dawn_dusk_depression: Depression = .civil,
   daytime _: Bool = true,
-  tzinfo: TimeZone = .utc
-) throws -> [String: DateComponents] {
-  return [
-    "dawn":    try dawn(observer: observer, date: date, depression: dawn_dusk_depression, tzinfo: tzinfo),
+  tzinfo: TimeZone = .utc) throws -> [String: DateComponents]
+{
+  [
+    "dawn": try dawn(observer: observer, date: date, depression: dawn_dusk_depression, tzinfo: tzinfo),
     "sunrise": try sunrise(observer: observer, date: date, tzinfo: tzinfo),
-    "noon":    noon(observer: observer, date: date, tzinfo: tzinfo),
-    "sunset":  try sunset(observer: observer, date: date, tzinfo: tzinfo),
-    "dusk":    try dusk(observer: observer, date: date, depression: dawn_dusk_depression, tzinfo: tzinfo)
+    "noon": noon(observer: observer, date: date, tzinfo: tzinfo),
+    "sunset": try sunset(observer: observer, date: date, tzinfo: tzinfo),
+    "dusk": try dusk(observer: observer, date: date, depression: dawn_dusk_depression, tzinfo: tzinfo),
   ]
 }
