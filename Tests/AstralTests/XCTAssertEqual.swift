@@ -1,11 +1,11 @@
 //
-//  File.swift
+//  DateComponentsTestHelpers.swift
 //
 //
 //  Created by Xiangyu Sun on 26/1/23.
 //
 import Foundation
-import XCTest
+import Testing
 
 public func XCTAssertEqual(
   _ expression1: @autoclosure () -> DateComponents,
@@ -19,11 +19,12 @@ public func XCTAssertEqual(
   let rhs = expression2()
 
   if lhs == rhs {
-    XCTAssertEqual(lhs, rhs, message(), file: file, line: line)
+    // For backwards compatibility with existing XCTest migration
+    #expect(lhs == rhs)
   } else {
     let diff = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute,.second], from: lhs, to: rhs).absDateComponents()
-
-    XCTAssertLessThanOrEqual(diff, accuracy, message(), file: file, line: line)
+    
+    #expect(diff <= accuracy)
   }
 }
 
@@ -38,5 +39,14 @@ extension DateComponents {
     copy.second = second != nil ? abs(second!) : nil
 
     return copy
+  }
+  
+  func isApproximatelyEqual(to other: DateComponents, tolerance: DateComponents) -> Bool {
+    if self == other {
+      return true
+    }
+    
+    let diff = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute,.second], from: self, to: other).absDateComponents()
+    return diff <= tolerance
   }
 }

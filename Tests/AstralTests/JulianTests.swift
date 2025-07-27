@@ -5,10 +5,12 @@
 //  Created by Xiangyu Sun on 20/1/23.
 //
 
-import XCTest
+import Testing
+import Foundation
 @testable import Astral
 
-final class JulianTests: XCTestCase {
+@Suite("Julian Day Tests")
+struct JulianTests {
 
   let data: [(DateComponents, Double)] = [
     (.datetime(1957, 10, 4, 19, 26, 24), 2436116.31),
@@ -62,41 +64,39 @@ final class JulianTests: XCTestCase {
     (12.00844627, 2890153.5),
   ]
 
-  override func setUpWithError() throws {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-  }
 
-  override func tearDownWithError() throws {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-  }
-
+  @Test("Julian day for default calendar")
   func testDefaultCalendar() throws {
     for (day, jd) in data {
-      XCTAssertEqual(julianDay(at: day), jd)
+      #expect(julianDay(at: day) == jd)
     }
   }
 
+  @Test("Julian day for Julian calendar")
   func testJulianCalendar() throws {
     for (day, jd) in julianCalenderData {
-      XCTAssertEqual(julianDay(at: day, calendar: .init(identifier: .chinese)), jd)
+      #expect(julianDay(at: day, calendar: .init(identifier: .chinese)) == jd)
     }
   }
 
+  @Test("Julian day to date time conversion")
   func testJulianDayToDateTime() throws {
     for (jd, components) in julianDayToDateTimeCalenderData {
-      XCTAssertEqual(julianDayToComponent(jd: jd), components)
+      #expect(julianDayToComponent(jd: jd) == components)
     }
   }
 
+  @Test("Julian day to century conversion")
   func test_JulianCentury() {
     for (jd, jc) in julianCenturyData {
-      XCTAssertEqual(julianDayToCentury(julianDay: jd), jc, accuracy: 0.1)
+      #expect(julianDayToCentury(julianDay: jd).isApproximatelyEqual(to: jc, absoluteTolerance: 0.1))
     }
   }
 
+  @Test("Julian century to day conversion")
   func test_JulianCenturyToDay() {
     for (jc, jd) in julianCenturyToDayData {
-      XCTAssertEqual(julianDCenturyToDay(julianCentury: jc), jd, accuracy: 0.1)
+      #expect(julianDCenturyToDay(julianCentury: jc).isApproximatelyEqual(to: jd, absoluteTolerance: 0.1))
     }
   }
 
