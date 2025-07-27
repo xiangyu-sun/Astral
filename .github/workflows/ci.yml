@@ -63,7 +63,7 @@ jobs:
     
     - name: Check code formatting
       run: |
-        swift package plugin --allow-writing-to-package-directory swift-format format --in-place .
+        swift package plugin --allow-writing-to-package-directory format .
         git diff --exit-code
 
   ios-compatibility:
