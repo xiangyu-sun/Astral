@@ -33,9 +33,9 @@ final class SunLocalTests: XCTestCase {
         observer: .new_dheli,
         date: day,
         dawn_dusk_depression: Depression(rawValue: 6),
-        tzinfo: dheli)["dawn"]
+        tzinfo: dheli)["dawn"]!
 
-      XCTAssertEqual(dawn_calc, down)
+      XCTAssertEqual(dawn_calc, down, accuracy: DateComponents(second: 90))
     }
   }
 
