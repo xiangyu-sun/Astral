@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  DEVELOPER_DIR: /Applications/Xcode.app/Contents/Developer
+
+jobs:
+  test:
+    name: Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, macos-13]
+        
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Select Xcode version
+      run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+      
+    - name: Show Xcode and Swift versions
+      run: |
+        xcodebuild -version
+        swift --version
+        
+    - name: Cache Swift Package Manager
+      uses: actions/cache@v4
+      with:
+        path: .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
+          
+    - name: Build
+      run: swift build -v
+      
+    - name: Run tests
+      run: swift test -v --enable-code-coverage
+      
+    - name: Generate code coverage report
+      run: |
+        xcrun llvm-cov export -format="lcov" \
+          .build/debug/AstralPackageTests.xctest/Contents/MacOS/AstralPackageTests \
+          -instr-profile .build/debug/codecov/default.profdata > coverage.lcov
+      
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./coverage.lcov
+        fail_ci_if_error: false
+
+  lint:
+    name: Swift Format
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Check code formatting
+      run: |
+        swift package plugin --allow-writing-to-package-directory swift-format format --in-place .
+        git diff --exit-code
+
+  ios-compatibility:
+    name: iOS Compatibility Test
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Select Xcode version
+      run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+      
+    - name: Build for iOS Simulator
+      run: |
+        swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" \
+          -Xswiftc "-target" -Xswiftc "x86_64-apple-ios16.0-simulator"
