@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(swift test)",
+      "Bash(git add:*)",
+      "Bash(git checkout:*)",
+      "Bash(git push:*)",
+      "Bash(git reset:*)",
+      "Bash(swift package plugin:*)",
+      "Bash(git commit:*)",
+      "WebFetch(domain:docs.github.com)",
+      "Bash(gh api:*)",
+      "Bash(rm:*)",
+      "Bash(gh pr checkout:*)",
+      "Bash(git merge:*)",
+      "Bash(git stash:*)"
+    ],
+    "deny": []
+  }
+}
