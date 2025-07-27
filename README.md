@@ -1,7 +1,7 @@
 # 🌞 Astral
 
-![Platform](https://img.shields.io/badge/platform-iOS%20%7C%20macOS-blue)  
-![Swift Version](https://img.shields.io/badge/swift-5.0%2B-orange)  
+![Platform](https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20watchOS%20%7C%20tvOS%20%7C%20visionOS-blue)  
+![Swift Version](https://img.shields.io/badge/swift-5.9%2B-orange)  
 ![License](https://img.shields.io/github/license/your-repo/astral)  
 ![Stars](https://img.shields.io/github/stars/your-repo/astral?style=social)
 
@@ -26,6 +26,26 @@ This project is inspired by the original Python package: [Astral](https://sffjun
 - **Other Astronomical Calculations** 🔭  
   - Time at a Specific Solar Elevation  
   - Rahukaalam (Inauspicious Time per Indian Vedic Astrology)  
+
+---
+
+## 🔧 Platform Support
+
+| Platform  | Minimum Version | Notes |
+|-----------|----------------|-------|
+| iOS       | 13.0+          | Full functionality |
+| macOS     | 10.15+         | Full functionality |
+| watchOS   | 6.0+           | Optimized for watch complications |
+| tvOS      | 13.0+          | UI elements excluded |
+| visionOS  | 1.0+           | Spatial computing ready |
+
+### Performance Variants
+
+Choose the optimal library variant for your use case:
+
+- **Astral** (default): Balanced performance and features
+- **AstralPerformance**: Static linking for maximum performance
+- **AstralDynamic**: Dynamic linking for development and testing
 
 ---
 
