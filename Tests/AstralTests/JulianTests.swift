@@ -5,12 +5,10 @@
 //  Created by Xiangyu Sun on 20/1/23.
 //
 
-import Foundation
-import Testing
+import XCTest
 @testable import Astral
 
-@Suite("Julian Day Tests")
-struct JulianTests {
+final class JulianTests: XCTestCase {
 
   let data: [(DateComponents, Double)] = [
     (.datetime(1957, 10, 4, 19, 26, 24), 2436116.31),
@@ -64,38 +62,41 @@ struct JulianTests {
     (12.00844627, 2890153.5),
   ]
 
-  @Test("Julian day for default calendar")
+  override func setUpWithError() throws {
+    // Put setup code here. This method is called before the invocation of each test method in the class.
+  }
+
+  override func tearDownWithError() throws {
+    // Put teardown code here. This method is called after the invocation of each test method in the class.
+  }
+
   func testDefaultCalendar() throws {
     for (day, jd) in data {
-      #expect(julianDay(at: day) == jd)
+      XCTAssertEqual(julianDay(at: day), jd)
     }
   }
 
-  @Test("Julian day for Julian calendar")
   func testJulianCalendar() throws {
     for (day, jd) in julianCalenderData {
-      #expect(julianDay(at: day, calendar: .init(identifier: .chinese)) == jd)
+      XCTAssertEqual(julianDay(at: day, calendar: .init(identifier: .chinese)), jd)
     }
   }
 
-  @Test("Julian day to date time conversion")
   func testJulianDayToDateTime() throws {
     for (jd, components) in julianDayToDateTimeCalenderData {
-      #expect(julianDayToComponent(jd: jd) == components)
+      XCTAssertEqual(julianDayToComponent(jd: jd), components)
     }
   }
 
-  @Test("Julian day to century conversion")
   func test_JulianCentury() {
     for (jd, jc) in julianCenturyData {
-      #expect(julianDayToCentury(julianDay: jd).isApproximatelyEqual(to: jc, absoluteTolerance: 0.1))
+      XCTAssertEqual(julianDayToCentury(julianDay: jd), jc, accuracy: 0.1)
     }
   }
 
-  @Test("Julian century to day conversion")
   func test_JulianCenturyToDay() {
     for (jc, jd) in julianCenturyToDayData {
-      #expect(julianDCenturyToDay(julianCentury: jc).isApproximatelyEqual(to: jd, absoluteTolerance: 0.1))
+      XCTAssertEqual(julianDCenturyToDay(julianCentury: jc), jd, accuracy: 0.1)
     }
   }
 

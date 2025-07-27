@@ -5,12 +5,10 @@
 //  Created by Xiangyu Sun on 20/1/23.
 //
 
-import Foundation
-import Testing
+import XCTest
 @testable import Astral
 
-@Suite("Moon Calculation Tests")
-struct MoonTests {
+final class MoonTests: XCTestCase {
 
   static let wellington = TimeZone(abbreviation: "GMT+13")!
 
@@ -66,95 +64,99 @@ struct MoonTests {
     (.date(2023, 1, 21), .datetime(2023, 1, 21, 7, 15, 0)),
   ]
 
-  @Test("Moon phase calculation")
+  override func setUpWithError() throws {
+    // Put setup code here. This method is called before the invocation of each test method in the class.
+  }
+
+  override func tearDownWithError() throws {
+    // Put teardown code here. This method is called after the invocation of each test method in the class.
+  }
+
   func testMoonPahse() throws {
     for (date, phase) in moonPhaseData {
-      #expect(moonPhase(date: date).isApproximatelyEqual(to: phase, absoluteTolerance: 0.00001))
+      XCTAssertEqual(moonPhase(date: date), phase, accuracy: 0.00001)
     }
   }
 
-  @Test("Moon rise UTC calculation")
   func testMoonRiseUTC() throws {
     for (date, risetime) in moonRiseData {
       let calc_time = try moonrise(observer: .london, dateComponents: date)
-      #expect(calc_time != nil)
-      #expect(
-        calc_time!.extractYearMonthDayHourMinuteSecond()
-          .isApproximatelyEqual(to: risetime.extractYearMonthDayHourMinuteSecond(), tolerance: DateComponents(minute: 1)))
+      XCTAssertNotNil(calc_time)
+      XCTAssertEqual(
+        calc_time!.extractYearMonthDayHourMinuteSecond(),
+        risetime.extractYearMonthDayHourMinuteSecond(),
+        accuracy: DateComponents(minute: 1))
     }
   }
 
-  @Test("Moon set UTC calculation")
   func testMoonSetUTC() throws {
     for (date, settime) in moonSetData {
       let calc_time = try moonset(observer: .london, dateComponents: date)
-      #expect(calc_time != nil)
-      #expect(calc_time?.extractYearMonthDayHourMinuteSecond() == settime.extractYearMonthDayHourMinuteSecond())
+      XCTAssertNotNil(calc_time)
+      XCTAssertEqual(calc_time?.extractYearMonthDayHourMinuteSecond(), settime.extractYearMonthDayHourMinuteSecond())
     }
   }
 
-  @Test("Moon rise Riyadh UTC calculation")
   func testMoonRiseRiyadhUTC() throws {
     for (date, risetime) in moonRiseDataRiyadh {
       let calc_time = try moonrise(observer: .riyadh, dateComponents: date)
-      #expect(calc_time != nil)
-      #expect(
-        calc_time!.extractYearMonthDayHourMinuteSecond()
-          .isApproximatelyEqual(to: risetime.extractYearMonthDayHourMinuteSecond(), tolerance: DateComponents(minute: 1)))
+      XCTAssertNotNil(calc_time)
+      XCTAssertEqual(
+        calc_time!.extractYearMonthDayHourMinuteSecond(),
+        risetime.extractYearMonthDayHourMinuteSecond(),
+        accuracy: DateComponents(minute: 1))
     }
   }
 
-  @Test("Moon set Riyadh UTC calculation")
   func testMoonSetRiyadhUTC() throws {
     for (date, settime) in moonSetRiyadhUTCData {
       let calc_time = try moonset(observer: .riyadh, dateComponents: date)
-      #expect(calc_time != nil)
-      #expect(
-        calc_time!.extractYearMonthDayHourMinuteSecond()
-          .isApproximatelyEqual(to: settime.extractYearMonthDayHourMinuteSecond(), tolerance: DateComponents(minute: 1)))
+      XCTAssertNotNil(calc_time)
+      XCTAssertEqual(
+        calc_time!.extractYearMonthDayHourMinuteSecond(),
+        settime.extractYearMonthDayHourMinuteSecond(),
+        accuracy: DateComponents(minute: 1))
     }
   }
 
-  @Test("Moon rise Wellington calculation")
   func testMoonRiseWellington() throws {
     for (date, risetime) in moonRiseWelllingtonData {
       let calc_time = try moonrise(observer: .welllington, dateComponents: date, tzinfo: Self.wellington)
-      #expect(calc_time != nil)
-      #expect(
-        calc_time!.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington).isApproximatelyEqual(
-          to: risetime.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington),
-          tolerance: DateComponents(minute: 1)))
+      XCTAssertNotNil(calc_time)
+      XCTAssertEqual(
+        calc_time!.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington),
+        risetime.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington),
+        accuracy: DateComponents(minute: 1))
     }
   }
 
-  @Test("Moon set Wellington calculation")
   func testMoonSetWellington() throws {
     for (date, settime) in moonSetWellingtonUTCData {
       let calc_time = try moonset(observer: .welllington, dateComponents: date, tzinfo: Self.wellington)
-      #expect(calc_time != nil)
-      #expect(
-        calc_time?.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington) == settime
-          .extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington))
+      XCTAssertNotNil(calc_time)
+      XCTAssertEqual(
+        calc_time?.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington),
+        settime.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington))
     }
   }
 
-  @Test("Moon rise Barcelona calculation")
   func testMoonRiseBarcelona() throws {
     for (date, risetime) in moonRiseBarcelonanData {
       let calc_time = try moonrise(observer: .barcelona, dateComponents: date, tzinfo: Self.timeZoneBCN)
-      #expect(calc_time != nil)
-      #expect(
-        calc_time!.extractYearMonthDayHourMinuteSecond(timeZone: Self.timeZoneBCN).isApproximatelyEqual(
-          to: risetime.extractYearMonthDayHourMinuteSecond(timeZone: Self.timeZoneBCN),
-          tolerance: DateComponents(minute: 1)))
+      XCTAssertNotNil(calc_time)
+      XCTAssertEqual(
+        calc_time!.extractYearMonthDayHourMinuteSecond(timeZone: Self.timeZoneBCN),
+        risetime.extractYearMonthDayHourMinuteSecond(timeZone: Self.timeZoneBCN),
+        accuracy: DateComponents(minute: 1))
     }
 
     for (date, risetime) in moonRiseBarcelonanDataUTC {
       let calc_time = try moonrise(observer: .barcelona, dateComponents: date)
-      #expect(calc_time != nil)
-      #expect(
-        calc_time!.extractYearMonthDayHourMinuteSecond()
-          .isApproximatelyEqual(to: risetime.extractYearMonthDayHourMinuteSecond(), tolerance: DateComponents(minute: 1)))
+      XCTAssertNotNil(calc_time)
+      XCTAssertEqual(
+        calc_time!.extractYearMonthDayHourMinuteSecond(),
+        risetime.extractYearMonthDayHourMinuteSecond(),
+        accuracy: DateComponents(minute: 1))
     }
   }
 }
