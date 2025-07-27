@@ -2,14 +2,14 @@ import Foundation
 
 /// The depression angle in degrees for the dawn/dusk calculation
 enum Depression: ExpressibleByIntegerLiteral, RawRepresentable {
-  
+
   case civil
   case nautical
-  case astronomical  // Corrected spelling
+  case astronomical // Corrected spelling
   case other(Int)
-  
+
   // MARK: Lifecycle
-  
+
   init(rawValue value: Int) {
     if value == 6 {
       self = .civil
@@ -21,16 +21,16 @@ enum Depression: ExpressibleByIntegerLiteral, RawRepresentable {
       self = .other(value)
     }
   }
-  
+
   init(integerLiteral value: Int) {
     self.init(rawValue: value)
   }
-  
+
   // MARK: Internal
-  
+
   typealias RawValue = Int
   typealias IntegerLiteralType = Int
-  
+
   var rawValue: Int {
     switch self {
     case .civil:

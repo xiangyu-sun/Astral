@@ -8,15 +8,16 @@ import Foundation
 import Numerics
 
 // MARK: - Lunar Argument Constants
-let Gm = 2  // Moon mean anomoly
-let Fm = 3  // Moon argument of latitude
-let D  = 4  // Moon mean elongation from sun
-let Om = 5  // Longitude of the lunar ascending node
-let Ls = 7  // Sun mean longitude
-let Gs = 8  // Sun mean anomoly
+let Gm = 2 // Moon mean anomoly
+let Fm = 3 // Moon argument of latitude
+let D = 4 // Moon mean elongation from sun
+let Om = 5 // Longitude of the lunar ascending node
+let Ls = 7 // Sun mean longitude
+let Gs = 8 // Sun mean anomoly
 let L2 = 12 // Venus mean longitude
 
-// MARK: - Table4Row Structure
+// MARK: - Table4Row
+
 struct Table4Row {
   init(_ coefficient: Double, _ t: Bool, _ sincos: @escaping (Double) -> Double, _ argument_multiplers: [Int: Int]) {
     self.coefficient = coefficient
