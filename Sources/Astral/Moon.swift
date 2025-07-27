@@ -10,14 +10,14 @@ import Foundation
 // MARK: - Error Definition
 
 /// Error types for Moon calculations.
-enum MoonError: Error {
+public enum MoonError: Error {
   case invalidData(String)
 }
 
 // MARK: - Constants and Type Aliases
 
 /// The apparent radius of the Moon in degrees (using 1896″ as the full diameter).
-let moonApparentRadius = 1896.0 / (60.0 * 60.0)
+private let moonApparentRadius = 1896.0 / (60.0 * 60.0)
 
 /// Type alias representing a fractional revolution (0 … 1).
 public typealias Revolutions = Double
@@ -26,8 +26,8 @@ public typealias Revolutions = Double
 
 /// Represents a situation where no transit (rise or set) event occurs.
 /// Contains a parallax value.
-struct NoTransit {
-  let parallax: Double
+public struct NoTransit {
+  public let parallax: Double
 }
 
 /// Represents a transit event (either rise or set) for the Moon.
@@ -36,7 +36,7 @@ struct NoTransit {
 ///   - when: The time of the event as DateComponents.
 ///   - azimuth: The azimuth angle (in degrees) at the event.
 ///   - distance: The geocentric distance value used in the calculation.
-struct TransitEvent {
+public struct TransitEvent {
   let event: String
   let when: DateComponents
   let azimuth: Double
@@ -44,7 +44,7 @@ struct TransitEvent {
 }
 
 /// Enum encapsulating either a transit event or no transit.
-enum Transit {
+public enum Transit {
   case noTransit(NoTransit)
   case transitEvent(TransitEvent)
 }
@@ -79,7 +79,7 @@ let calendarUTC: Calendar = {
 /// Calculates the Moon's mean longitude (in revolutions) for the given jd2000.
 /// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
 /// - Returns: The mean longitude as a fraction of one full revolution.
-func moon_mean_longitude(jd2000: Double) -> Revolutions {
+private func moon_mean_longitude(jd2000: Double) -> Revolutions {
   var _mean_longitude = 0.606434 + 0.03660110129 * jd2000
   _mean_longitude = _mean_longitude - Int(_mean_longitude).double
   return _mean_longitude
@@ -88,7 +88,7 @@ func moon_mean_longitude(jd2000: Double) -> Revolutions {
 /// Calculates the Moon's mean anomoly (in revolutions) for the given jd2000.
 /// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
 /// - Returns: The mean anomoly as a fraction of one full revolution.
-func moon_mean_anomoly(jd2000: Double) -> Revolutions {
+private func moon_mean_anomoly(jd2000: Double) -> Revolutions {
   var _mean_anomoly = 0.374897 + 0.03629164709 * jd2000
   _mean_anomoly = _mean_anomoly - Int(_mean_anomoly).double
   return _mean_anomoly
@@ -97,7 +97,7 @@ func moon_mean_anomoly(jd2000: Double) -> Revolutions {
 /// Calculates the Moon's argument of latitude (in revolutions) for the given jd2000.
 /// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
 /// - Returns: The argument of latitude as a fraction of one full revolution.
-func moon_argument_of_latitude(jd2000: Double) -> Revolutions {
+private func moon_argument_of_latitude(jd2000: Double) -> Revolutions {
   var _argument_of_latitude = 0.259091 + 0.03674819520 * jd2000
   _argument_of_latitude = _argument_of_latitude - Int(_argument_of_latitude).double
   return _argument_of_latitude
@@ -106,7 +106,7 @@ func moon_argument_of_latitude(jd2000: Double) -> Revolutions {
 /// Calculates the Moon's mean elongation from the Sun (in revolutions) for the given jd2000.
 /// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
 /// - Returns: The mean elongation from the Sun as a fraction of one full revolution.
-func moon_mean_elongation_from_sun(jd2000: Double) -> Revolutions {
+private func moon_mean_elongation_from_sun(jd2000: Double) -> Revolutions {
   var _mean_elongation_from_sun = 0.827362 + 0.03386319198 * jd2000
   _mean_elongation_from_sun = _mean_elongation_from_sun - Int(_mean_elongation_from_sun).double
   return _mean_elongation_from_sun
@@ -154,7 +154,7 @@ func venus_mean_longitude(jd2000: Double) -> Revolutions {
 /// - Parameter jd2000: The Julian Day offset from J2000.0 (in days).
 /// - Returns: An `AstralBodyPosition` representing the Moon's right ascension (radians),
 ///            declination (radians), and distance (in Earth radii).
-func moonPosition(jd2000: Double) -> AstralBodyPosition {
+internal func moonPosition(jd2000: Double) -> AstralBodyPosition {
   // Prepare the arguments for the series (indices correspond to positions in the table)
   let argument_values: [Double?] = [
     moon_mean_longitude(jd2000: jd2000),           // 1 = Lm
@@ -459,7 +459,7 @@ func riseset(
 ///   - tzinfo: The desired timezone for the result (default is UTC).
 /// - Returns: The DateComponents representing the moonrise time.
 /// - Throws: `MoonError.invalidData` if the Moon never rises on the given date/location.
-func moonrise(
+public func moonrise(
   observer: Observer,
   dateComponents: DateComponents?,
   tzinfo: TimeZone = .utc
@@ -501,7 +501,7 @@ func moonrise(
 ///   - tzinfo: The desired timezone for the result (default is UTC).
 /// - Returns: The DateComponents representing the moonset time.
 /// - Throws: `MoonError.invalidData` if the Moon never sets on the given date/location.
-func moonset(
+public func moonset(
   observer: Observer,
   dateComponents: DateComponents?,
   tzinfo: TimeZone = .utc

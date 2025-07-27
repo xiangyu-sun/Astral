@@ -5,7 +5,7 @@ import Foundation
 ///
 /// - Parameter date: The date (in UTC) for which to compute the moon phase.
 /// - Returns: The Moon’s age (0 … ~29.53), where 0 is a New Moon.
-func _phase_asfloat(date: DateComponents) -> Double {
+private func _phase_asfloat(date: DateComponents) -> Double {
   // Compute the Julian Day for the specified date.
   let jd = julianDay(at: date)
   
@@ -65,7 +65,7 @@ func _phase_asfloat(date: DateComponents) -> Double {
 /// - Parameter date: The date (in UTC) for which to calculate the phase.
 ///                   If not provided, today's date is used.
 /// - Returns: The Moon's age in days.
-func moonPhase(date: DateComponents = Date().components()) -> Double {
+public func moonPhase(date: DateComponents = Date().components()) -> Double {
   var moon = _phase_asfloat(date: date)
   let synodicMonth = 29.53058867
   moon = moon.truncatingRemainder(dividingBy: synodicMonth)

@@ -9,34 +9,34 @@ import Foundation
 
 // MARK: - Angle
 
-struct Angle: Equatable, Comparable {
+public struct Angle: Equatable, Comparable {
 
   // MARK: Lifecycle
 
-  init(degrees: Double) {
+  public init(degrees: Double) {
     self.degrees = degrees
     radians = Angle.deg2rad(degrees)
   }
 
-  init(radians: Double) {
+  public init(radians: Double) {
     self.radians = radians
     degrees = Angle.rad2deg(radians)
   }
 
   // MARK: Internal
 
-  let degrees: Double
-  let radians: Double
+  public let degrees: Double
+  public let radians: Double
 
-  static func < (lhs: Angle, rhs: Angle) -> Bool {
+  public static func < (lhs: Angle, rhs: Angle) -> Bool {
     lhs.radians < rhs.radians
   }
 
-  static func degrees(_ degrees: Double) -> Angle {
+  public static func degrees(_ degrees: Double) -> Angle {
     .init(degrees: degrees)
   }
 
-  static func radians(_ radians: Double) -> Angle {
+  public static func radians(_ radians: Double) -> Angle {
     .init(radians: radians)
   }
 
@@ -49,10 +49,10 @@ struct Angle: Equatable, Comparable {
   }
 }
 
-func radians(_ number: Double) -> Double {
+public func radians(_ number: Double) -> Double {
   number * .pi / 180
 }
 
-func degrees(_ number: Double) -> Double {
+public func degrees(_ number: Double) -> Double {
   number * 180 / .pi
 }

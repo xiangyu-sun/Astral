@@ -10,7 +10,7 @@ import Foundation
 // MARK: - Error Definitions
 
 /// Errors related to Sun (astral) calculations.
-enum SunError: Error {
+public enum SunError: Error {
   case valueError(String)
 }
 
@@ -20,20 +20,20 @@ enum SunError: Error {
 /// **Note:** Since the apparent radius is required (i.e. half the diameter),
 /// we define SUN_APPARENT_RADIUS as 32 arc minutes divided by 2, then converted to degrees.
 /// (32 arc minutes = 32/60 degrees; divided by 2 gives 16/60 ≈ 0.26667°.)
-let SUN_APPARENT_RADIUS = Double(32.0) / (60.0 * 2.0)
+private let SUN_APPARENT_RADIUS = Double(32.0) / (60.0 * 2.0)
 
 // MARK: - Helper Functions
 
 /// Adjusts an offset (in minutes) so that it lies within ±720 minutes.
 /// This is useful to “wrap” minute offsets within half a day (1440 minutes).
-func adjustOffsetForDayBoundary(_ offset: inout Double) {
+private func adjustOffsetForDayBoundary(_ offset: inout Double) {
   let epsilon = 1e-7
   while offset < -720.0 - epsilon { offset += 1440.0 }
   while offset > 720.0 + epsilon { offset -= 1440.0 }
 }
 
 /// Converts a minutes value into a DateComponents structure containing day, second, and nanosecond components.
-func minutes_to_timedelta(minutes: Double) -> DateComponents {
+private func minutes_to_timedelta(minutes: Double) -> DateComponents {
   let d = Int(minutes / 1440)
   var remainder = minutes - (Double(d) * 1440)
   remainder *= 60 // convert minutes to seconds
@@ -47,7 +47,7 @@ func minutes_to_timedelta(minutes: Double) -> DateComponents {
 // MARK: - Geometric/Orbital Calculations
 
 /// Returns the geometric mean longitude of the Sun (in degrees) for a given Julian century.
-func geom_mean_long_sun(juliancentury: Double) -> Double {
+private func geom_mean_long_sun(juliancentury: Double) -> Double {
   let l0 = 280.46646 + juliancentury * (36000.76983 + 0.0003032 * juliancentury)
   var result = l0.truncatingRemainder(dividingBy: 360.0)
   if result < 0 { result += 360 }
@@ -55,17 +55,17 @@ func geom_mean_long_sun(juliancentury: Double) -> Double {
 }
 
 /// Returns the geometric mean anomaly of the Sun (in degrees) for a given Julian century.
-func geom_mean_anomaly_sun(juliancentury: Double) -> Double {
+private func geom_mean_anomaly_sun(juliancentury: Double) -> Double {
   return 357.52911 + juliancentury * (35999.05029 - 0.0001537 * juliancentury)
 }
 
 /// Returns the eccentricity of Earth's orbit.
-func eccentric_location_earth_orbit(juliancentury: Double) -> Double {
+private func eccentric_location_earth_orbit(juliancentury: Double) -> Double {
   return 0.016708634 - juliancentury * (0.000042037 + 0.0000001267 * juliancentury)
 }
 
 /// Returns the equation of the center of the Sun (in degrees) for a given Julian century.
-func sun_eq_of_center(juliancentury: Double) -> Double {
+private func sun_eq_of_center(juliancentury: Double) -> Double {
   let m = geom_mean_anomaly_sun(juliancentury: juliancentury)
   let mrad = radians(m)
   let sinm = sin(mrad)
@@ -77,27 +77,27 @@ func sun_eq_of_center(juliancentury: Double) -> Double {
 }
 
 /// Returns the Sun's true longitude (in degrees).
-func sun_true_long(juliancentury: Double) -> Double {
+private func sun_true_long(juliancentury: Double) -> Double {
   return geom_mean_long_sun(juliancentury: juliancentury)
        + sun_eq_of_center(juliancentury: juliancentury)
 }
 
 /// Returns the Sun's true anomaly (in degrees).
-func sun_true_anomoly(juliancentury: Double) -> Double {
+private func sun_true_anomoly(juliancentury: Double) -> Double {
   let m = geom_mean_anomaly_sun(juliancentury: juliancentury)
   let c = sun_eq_of_center(juliancentury: juliancentury)
   return m + c
 }
 
 /// Returns the Sun's radial vector (in astronomical units).
-func sun_rad_vector(juliancentury: Double) -> Double {
+private func sun_rad_vector(juliancentury: Double) -> Double {
   let v = sun_true_anomoly(juliancentury: juliancentury)
   let e = eccentric_location_earth_orbit(juliancentury: juliancentury)
   return (1.000001018 * (1 - e * e)) / (1 + e * cos(radians(v)))
 }
 
 /// Returns the Sun's apparent longitude (in degrees) after correcting for nutation and aberration.
-func sun_apparent_long(juliancentury: Double) -> Double {
+internal func sun_apparent_long(juliancentury: Double) -> Double {
   let tLong = sun_true_long(juliancentury: juliancentury)
   let omega = 125.04 - 1934.136 * juliancentury
   return tLong - 0.00569 - 0.00478 * sin(radians(omega))

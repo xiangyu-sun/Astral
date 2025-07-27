@@ -19,11 +19,11 @@ import CoreLocation
 ///                    obtained from `zoneinfo.available_timezones`)
 ///        latitude:   Latitude - Northern latitudes should be positive
 ///        longitude:  Longitude - Eastern longitudes should be positive
-struct LocationInfo {
+public struct LocationInfo {
 
   // MARK: Lifecycle
 
-  init(name: String, region: String, timezone: String, latitudeStr: String, longitudeStr: String) throws {
+  public init(name: String, region: String, timezone: String, latitudeStr: String, longitudeStr: String) throws {
     let lat = try convertDegreesMinutesSecondsToDouble(value: latitudeStr, limit: 90)
 
     let long = try convertDegreesMinutesSecondsToDouble(value: longitudeStr, limit: 180)
@@ -35,7 +35,7 @@ struct LocationInfo {
     longitude = long
   }
 
-  init(name: String, region: String, timezone: TimeZone, latitude: Degrees, longitude: Degrees) {
+  public init(name: String, region: String, timezone: TimeZone, latitude: Degrees, longitude: Degrees) {
     self.name = name
     self.region = region
     self.timezone = timezone
@@ -45,17 +45,17 @@ struct LocationInfo {
 
   // MARK: Internal
 
-  let name: String
-  let region: String
-  let timezone: TimeZone
-  let latitude: Degrees
-  let longitude: Degrees
+  public let name: String
+  public let region: String
+  public let timezone: TimeZone
+  public let latitude: Degrees
+  public let longitude: Degrees
 
-  var observer: Observer {
+  public var observer: Observer {
     .init(latitude: latitude, longitude: longitude, elevation: .double(0))
   }
 
-  var timezoneGroup: String? {
+  public var timezoneGroup: String? {
     String(timezone.identifier.split(separator: "/").first ?? "")
   }
 }

@@ -10,14 +10,14 @@ import Foundation
 // MARK: - Constants
 
 /// J2000.0 epoch: Julian Day for January 1, 2000 at 12:00 UT.
-let julianDayEpoch = 2451545.0
+internal let julianDayEpoch = 2451545.0
 /// Number of days per Julian century.
-let julianEC = 36525.0
+internal let julianEC = 36525.0
 
 // MARK: - Helpers
 
 /// Converts a fractional day (0.0–1.0) into DateComponents representing hours, minutes, and seconds.
-func datFractionToTime(_ fraction: Double) -> DateComponents {
+internal func datFractionToTime(_ fraction: Double) -> DateComponents {
   let totalSeconds = fraction * (24 * 60 * 60)
   let hours = totalSeconds / 3600
   let remainingSecondsAfterHours = totalSeconds - floor(hours) * 3600
@@ -37,7 +37,7 @@ func datFractionToTime(_ fraction: Double) -> DateComponents {
 ///   - at: DateComponents for the date (the time portion is used to compute a day fraction).
 ///   - calendar: The calendar to use (default is Gregorian).
 /// - Returns: The Julian Day as a Double.
-func julianDay(at: DateComponents, calendar: Calendar = .init(identifier: .gregorian)) -> Double {
+internal func julianDay(at: DateComponents, calendar: Calendar = .init(identifier: .gregorian)) -> Double {
   // Ensure we have a valid year, month, and day.
   guard var year = at.year?.double,
         var month = at.month?.double,
@@ -75,14 +75,14 @@ func julianDay(at: DateComponents, calendar: Calendar = .init(identifier: .grego
 /// Standard definition: MJD = JD - 2400000.5
 /// - Parameter at: The date as DateComponents.
 /// - Returns: The Modified Julian Date as a Double.
-func julianDayModified(at: DateComponents) -> Double {
+public func julianDayModified(at: DateComponents) -> Double {
   return julianDay(at: at) - 2400000.5
 }
 
 /// Convert a Julian Day number back into calendar date components.
 /// - Parameter jd: The Julian Day number.
 /// - Returns: A DateComponents representing the date and time (in UTC).
-func julianDayToComponent(jd: Double) -> DateComponents {
+public func julianDayToComponent(jd: Double) -> DateComponents {
   // The algorithm uses the standard inverse method.
   let newJD = jd + 0.5
   let Z = Int(floor(newJD))
@@ -135,20 +135,20 @@ func julianDayToComponent(jd: Double) -> DateComponents {
 /// Convert a Julian Day to a Julian Century.
 /// - Parameter julianDay: The Julian Day number.
 /// - Returns: The Julian Century as a Double.
-func julianDayToCentury(julianDay: Double) -> Double {
+internal func julianDayToCentury(julianDay: Double) -> Double {
   return (julianDay - julianDayEpoch) / julianEC
 }
 
 /// Convert a Julian Century value back to a Julian Day.
 /// - Parameter julianCentury: The number of Julian centuries since J2000.0.
 /// - Returns: The corresponding Julian Day.
-func julianDCenturyToDay(julianCentury: Double) -> Double {
+internal func julianDCenturyToDay(julianCentury: Double) -> Double {
   return (julianCentury * julianEC) + julianDayEpoch
 }
 
 /// Calculate the number of Julian Days since the J2000 epoch for the specified date.
 /// - Parameter at: The date as DateComponents.
 /// - Returns: The number of days (as a Double) since J2000.0.
-func julianDay2000(at dateComponent: DateComponents) -> Double {
+internal func julianDay2000(at dateComponent: DateComponents) -> Double {
   return julianDay(at: dateComponent) - julianDayEpoch
 }
