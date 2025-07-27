@@ -60,10 +60,10 @@ func from(hours: Double) -> DateComponents {
 
 func toHours(_ dateComponent: DateComponents) -> Double {
   var result: Double = 0
-  result += dateComponent.hour
-  result += dateComponent.minute / 60
-  result += dateComponent.second / 3600
-  result += dateComponent.nanosecond / 3.6e+12
+  result += Double(dateComponent.hour ?? 0)
+  result += Double(dateComponent.minute ?? 0) / 60
+  result += Double(dateComponent.second ?? 0) / 3600
+  result += Double(dateComponent.nanosecond ?? 0) / 3.6e+12
 
   return result
 }
@@ -77,9 +77,9 @@ func toSeconds(dateComponent: DateComponents) -> Double {
 
 func timeToSeconds(dateComponent: DateComponents) -> Double {
   var result: Double = 0
-  result += dateComponent.hour * 60 * 60
-  result += dateComponent.minute * 60
-  result += dateComponent.second
+  result += Double(dateComponent.hour ?? 0) * 60 * 60
+  result += Double(dateComponent.minute ?? 0) * 60
+  result += Double(dateComponent.second ?? 0)
 
   return result
 }
