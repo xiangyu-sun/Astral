@@ -13,7 +13,8 @@
       "Bash(rm:*)",
       "Bash(gh pr checkout:*)",
       "Bash(git merge:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(git pull:*)"
     ],
     "deny": []
   }
