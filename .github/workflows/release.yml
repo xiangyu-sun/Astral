@@ -1,0 +1,78 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  create-release:
+    name: Create Release
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Select Xcode version
+      run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+      
+    - name: Build and test before release
+      run: |
+        swift build -c release
+        swift test -c release
+        
+    - name: Extract version from tag
+      id: get_version
+      run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+      
+    - name: Generate changelog
+      id: changelog
+      run: |
+        if git describe --tags --abbrev=0 HEAD^ >/dev/null 2>&1; then
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD^)
+          echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
+          git log --pretty=format:"- %s" $PREVIOUS_TAG..HEAD >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+        else
+          echo "CHANGELOG=Initial release" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: Create Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release v${{ steps.get_version.outputs.VERSION }}
+        body: |
+          ## Changes in v${{ steps.get_version.outputs.VERSION }}
+          
+          ${{ steps.changelog.outputs.CHANGELOG }}
+          
+          ## Installation
+          
+          ### Swift Package Manager
+          Add the following to your `Package.swift` file:
+          
+          ```swift
+          dependencies: [
+              .package(url: "https://github.com/your-username/Astral.git", from: "${{ steps.get_version.outputs.VERSION }}")
+          ]
+          ```
+        draft: false
+        prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
+
+  validate-spm:
+    name: Validate Swift Package
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Validate Package.swift
+      run: swift package validate-package-manifest
+      
+    - name: Test package resolution
+      run: swift package resolve
