@@ -7,7 +7,7 @@ extension Date {
   /// then transforms that value into Julian centuries.
   public var toJC2000: Double {
     let utcTimeZone = TimeZone.utc
-    let components = self.components(timezone: utcTimeZone)
+    let components = components(timezone: utcTimeZone)
 
     // Compute Julian Day and Julian Century.
     let jd = julianDay(at: components)

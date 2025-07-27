@@ -1,6 +1,5 @@
 import Foundation
 
-
 /// Calculates the current solar term as a fractional index (0–24).
 ///
 /// - Parameter date: The reference date. Defaults to `Date()`.
@@ -39,28 +38,28 @@ public func daysUntilNextSolarTerm(from date: Date = Date()) -> Double {
   // Ensure we use UTC to keep astronomical calculations consistent.
   let utcTimeZone = TimeZone.utc
   let components = date.components(timezone: utcTimeZone)
-  
+
   // Compute Julian Day and Julian Century.
   let jd = julianDay(at: components)
   let jc = julianDayToCentury(julianDay: jd)
-  
+
   // Compute the Sun’s apparent ecliptic longitude (in degrees).
   let apparentLong = sun_apparent_long(juliancentury: jc)
-  
+
   // Normalize the longitude to [0, 360).
   let normalizedLong = (apparentLong.truncatingRemainder(dividingBy: 360) + 360)
-                        .truncatingRemainder(dividingBy: 360)
-  
+    .truncatingRemainder(dividingBy: 360)
+
   // Compute an offset value.
   let offset = normalizedLong + 7.5
   let epsilon = 1e-7
-  
+
   // Compute the remainder when offset is divided by 15.
   let remainder = offset.truncatingRemainder(dividingBy: 15.0)
-  
+
   // Compute the current term value.
   let currentTermValue = offset / 15.0
-  
+
   // Determine the next term index.
   // If the remainder is nearly 0, we’re exactly at a boundary.
   let nextTermIndex: Double
@@ -69,19 +68,19 @@ public func daysUntilNextSolarTerm(from date: Date = Date()) -> Double {
   } else {
     nextTermIndex = ceil(currentTermValue)
   }
-  
+
   // Compute the next boundary in degrees.
   let nextBoundary = 15.0 * nextTermIndex - 7.5
   // Normalize the boundary to [0, 360).
   let nextBoundaryNormalized = (nextBoundary.truncatingRemainder(dividingBy: 360) + 360)
-                                .truncatingRemainder(dividingBy: 360)
-  
+    .truncatingRemainder(dividingBy: 360)
+
   // Calculate the angular difference from the current longitude to the boundary.
   var angleDifference = nextBoundaryNormalized - normalizedLong
   if angleDifference < 0 {
     angleDifference += 360
   }
-  
+
   // Convert the angular difference to days using the average daily solar motion (~0.9856°/day).
   let dailyMotion = 360.0 / 365.242189
   return angleDifference / dailyMotion
@@ -100,14 +99,13 @@ public func preciseNextSolarTermDate(from date: Date = Date(), iterations: Int =
   let jc = julianDayToCentury(julianDay: jd)
   let apparentLong = sun_apparent_long(juliancentury: jc)
   let normalizedLong = (apparentLong.truncatingRemainder(dividingBy: 360) + 360)
-                        .truncatingRemainder(dividingBy: 360)
+    .truncatingRemainder(dividingBy: 360)
   let nextTermIndex = floor(normalizedLong / 15.0) + 1.0
   let targetLongitude = (nextTermIndex * 15.0).truncatingRemainder(dividingBy: 360)
 
-  
   // Average daily solar motion (degrees per day)
   let dailyMotion = 360.0 / 365.242189
-  
+
   // Initial estimate: minimal positive angular difference to target boundary divided by motion
   let degreesDiff = (targetLongitude - normalizedLong + 360).truncatingRemainder(dividingBy: 360)
   let approxDays = degreesDiff / dailyMotion
@@ -120,7 +118,7 @@ public func preciseNextSolarTermDate(from date: Date = Date(), iterations: Int =
     let jcT = julianDayToCentury(julianDay: jdT)
     let lambdaT = sun_apparent_long(juliancentury: jcT)
     let normLambda = (lambdaT.truncatingRemainder(dividingBy: 360) + 360)
-                      .truncatingRemainder(dividingBy: 360)
+      .truncatingRemainder(dividingBy: 360)
 
     // Compute minimal signed angular difference (±180°) to avoid huge jumps.
     var delta = (normLambda - targetLongitude).remainder(dividingBy: 360)
@@ -138,16 +136,16 @@ public func preciseNextSolarTermDate(from date: Date = Date(), iterations: Int =
 /// - Parameter date: The reference date. Defaults to now.
 /// - Returns: The month (1 = January, …, 12 = December).
 public func monthOfCurrentSolarTerm(for date: Date = Date()) -> Int {
-    // Determine the solar term index (0–23).
-    let termValue = currentSolarTerm(for: date)
-    let termIndex = Int(floor(termValue)) % 24
+  // Determine the solar term index (0–23).
+  let termValue = currentSolarTerm(for: date)
+  let termIndex = Int(floor(termValue)) % 24
 
-    // Map each solar term index to its Gregorian month.
-    let mapping: [Int] = [
-        3, 4, 4, 5, 5, 6, 6, 7,
-        7, 8, 8, 9, 9, 10, 10, 11,
-        11, 12, 12, 1, 1, 2, 2, 3
-    ]
+  // Map each solar term index to its Gregorian month.
+  let mapping: [Int] = [
+    3, 4, 4, 5, 5, 6, 6, 7,
+    7, 8, 8, 9, 9, 10, 10, 11,
+    11, 12, 12, 1, 1, 2, 2, 3,
+  ]
 
-    return mapping[termIndex]
+  return mapping[termIndex]
 }
