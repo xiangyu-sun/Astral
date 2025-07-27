@@ -303,13 +303,10 @@ func zenith_and_azimuth(
   let longitude = observer.longitude
 
   // Determine the UTC time from the provided time zone.
-  let zone: Double
   let utcDatetime: DateComponents
   if let tz = dateandtime.timeZone {
-    zone = -Double(tz.secondsFromGMT()) / 3600.0
     utcDatetime = dateandtime.astimezone(.utc)
   } else {
-    zone = 0.0
     utcDatetime = dateandtime
   }
 
@@ -318,8 +315,8 @@ func zenith_and_azimuth(
   let declination = sun_declination(juliancentury: t)
   let eqtime = eq_of_time(juliancentury: t)
 
-  // True solar time adjustment.
-  let solarTimeFix = eqtime + (4.0 * longitude) + (60.0 * zone)
+  // True solar time adjustment (no timezone offset since we're already in UTC).
+  let solarTimeFix = eqtime + (4.0 * longitude)
   let totalMinutes = Double((utcDatetime.hour ?? 0) * 60 + (utcDatetime.minute ?? 0))
     + (Double(utcDatetime.second ?? 0) / 60.0)
   var trueSolarTime = totalMinutes + solarTimeFix
