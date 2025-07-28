@@ -139,5 +139,3 @@ Astral is available under the **MIT License**. See the [`LICENSE`](LICENSE) file
 - [Ecliptic Coordinate System](https://en.wikipedia.org/wiki/Ecliptic_coordinate_system#Spherical_coordinates)  
 
 ---
-
-This README makes the project **approachable, professional, and well-documented**, ensuring developers can **quickly understand, install, and use** Astral. Let me know if you’d like any refinements! 🚀
