@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
   name: "Astral",
   platforms: [
-    .macOS(.v10_14),
+    .macOS(.v10_13),
     .iOS(.v13),
     .watchOS(.v5),
   ],
