@@ -37,7 +37,7 @@ final class SunGoldenHourTests: XCTestCase {
       let end1 = gh.1
 
       let (start2, end2) = try golden_hour(
-        observer: Observer.new_dheli,
+        observer: Observer.newDelhi,
         date: day,
         direction: SunDirection.rising)
 
@@ -83,7 +83,7 @@ final class SunGoldenHourTests: XCTestCase {
       let end1 = gh.1
 
       let (start2, end2) = try golden_hour(
-        observer: Observer.new_dheli,
+        observer: Observer.newDelhi,
         date: day)
 
       XCTAssertEqual(end1, end2, accuracy: DateComponents(second: 90))

@@ -10,7 +10,7 @@ import Foundation
 // MARK: - SunError
 
 /// Errors related to Sun (astral) calculations.
-enum SunError: Error {
+public enum SunError: Error {
   case valueError(String)
 }
 
@@ -241,8 +241,8 @@ func time_of_transit(
   switch observer.elevation {
   case .double(let elev) where elev > 0:
     horizonAdjustment = adjust_to_horizon(elevation: elev)
-  case .tuple(let elev):
-    horizonAdjustment = adjust_to_obscuring_feature(elevation: elev)
+  case .tuple(let elev, let dist):
+    horizonAdjustment = adjust_to_obscuring_feature(elevation: (elev, dist))
   default:
     break
   }
@@ -304,7 +304,7 @@ func zenith_and_azimuth(
 
   // Determine the UTC time from the provided time zone.
   let utcDatetime: DateComponents
-  if let tz = dateandtime.timeZone {
+  if dateandtime.timeZone != nil {
     utcDatetime = dateandtime.astimezone(.utc)
   } else {
     utcDatetime = dateandtime
@@ -357,7 +357,7 @@ func zenith_and_azimuth(
 // MARK: - Public Solar Time Functions
 
 /// Returns the solar zenith (in degrees) for the given observer and time.
-func zenith(
+public func zenith(
   observer: Observer,
   dateandtime: DateComponents = Date().components(),
   with_refraction: Bool = true)
@@ -367,7 +367,7 @@ func zenith(
 }
 
 /// Returns the solar azimuth (in degrees) for the given observer and time.
-func azimuth(
+public func azimuth(
   observer: Observer,
   dateandtime: DateComponents = Date().components())
   -> Double
@@ -376,7 +376,7 @@ func azimuth(
 }
 
 /// Returns the solar elevation (in degrees) for the given observer and time.
-func elevation(
+public func elevation(
   observer: Observer,
   dateandtime: DateComponents = Date().components(),
   with_refraction: Bool = true)
@@ -395,7 +395,7 @@ func elevation(
 ///   - tzinfo: The desired time zone for the output (default is UTC).
 /// - Returns: A DateComponents representing the dawn time.
 /// - Throws: SunError.valueError if a dawn time cannot be determined.
-func dawn(
+public func dawn(
   observer: Observer,
   date: DateComponents,
   depression: Depression = .civil,
@@ -428,7 +428,7 @@ func dawn(
 ///   - tzinfo: The desired time zone for the result (default is UTC).
 /// - Returns: A DateComponents representing sunrise time.
 /// - Throws: SunError.valueError if a sunrise time cannot be determined.
-func sunrise(
+public func sunrise(
   observer: Observer,
   date: DateComponents,
   tzinfo: TimeZone = .utc)
@@ -456,7 +456,7 @@ func sunrise(
 ///   - tzinfo: The desired time zone for the result (default is UTC).
 /// - Returns: A DateComponents representing sunset time.
 /// - Throws: SunError.valueError if a sunset time cannot be determined.
-func sunset(
+public func sunset(
   observer: Observer,
   date: DateComponents = Date().components(),
   tzinfo: TimeZone = .utc)
@@ -485,7 +485,7 @@ func sunset(
 ///   - tzinfo: The desired time zone for the result (default is UTC).
 /// - Returns: A DateComponents representing dusk time.
 /// - Throws: SunError.valueError if a dusk time cannot be determined.
-func dusk(
+public func dusk(
   observer: Observer,
   date: DateComponents = Date().components(),
   depression: Depression = .civil,
@@ -516,7 +516,7 @@ func dusk(
 ///   - date: The date (in UTC) as DateComponents.
 ///   - tzinfo: The desired time zone for the result (default is UTC).
 /// - Returns: A DateComponents representing solar noon.
-func noon(
+public func noon(
   observer: Observer,
   date: DateComponents = Date().components(),
   tzinfo: TimeZone = .utc)
@@ -572,7 +572,7 @@ func noon(
 ///   - date: The date (in UTC) as DateComponents.
 ///   - tzinfo: The desired time zone for the result (default is UTC).
 /// - Returns: A DateComponents representing solar midnight.
-func midnight(
+public func midnight(
   observer: Observer,
   date: DateComponents = Date().components(),
   tzinfo: TimeZone = .utc)

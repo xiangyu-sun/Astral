@@ -30,7 +30,7 @@ final class SunLocalTests: XCTestCase {
 
     for (day, down) in data {
       let dawn_calc = try sun(
-        observer: .new_dheli,
+        observer: .newDelhi,
         date: day,
         dawn_dusk_depression: Depression(rawValue: 6),
         tzinfo: dheli)["dawn"]!

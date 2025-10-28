@@ -15,7 +15,7 @@ final class Moon2Tests: XCTestCase {
   }
 
   func testMoonMeanAnomalyAtEpoch() {
-    let rev = moon_mean_anomoly(jd2000: 0)
+    let rev = moon_mean_anomaly(jd2000: 0)
     XCTAssertEqual(
       rev,
       0.374897,

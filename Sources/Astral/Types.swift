@@ -11,7 +11,7 @@ public typealias Minutes = Double
 
 // MARK: - Elevation
 
-enum Elevation: Equatable {
+public enum Elevation: Equatable {
   case double(Double)
   case tuple(Double, Double)
 }

@@ -124,7 +124,7 @@ final class MoonTests: XCTestCase {
 
   func testMoonRiseWellington() throws {
     for (date, risetime) in moonRiseWelllingtonData {
-      let calc_time = try moonrise(observer: .welllington, dateComponents: date, tzinfo: Self.wellington)
+      let calc_time = try moonrise(observer: .wellington, dateComponents: date, tzinfo: Self.wellington)
       XCTAssertNotNil(calc_time)
       XCTAssertEqual(
         calc_time!.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington),
@@ -136,7 +136,7 @@ final class MoonTests: XCTestCase {
   func testMoonSetWellington() throws {
     for (date, settime) in moonSetWellingtonUTCData {
       do {
-        let calc_time = try moonset(observer: .welllington, dateComponents: date, tzinfo: Self.wellington)
+        let calc_time = try moonset(observer: .wellington, dateComponents: date, tzinfo: Self.wellington)
         XCTAssertNotNil(calc_time)
         XCTAssertEqual(
           calc_time!.extractYearMonthDayHourMinuteSecond(timeZone: Self.wellington),

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Observer.swift
 //
 //
 //  Created by Xiangyu Sun on 19/1/23.
@@ -23,17 +23,17 @@ import Foundation
 ///        longitude:  Longitude - Eastern longitudes should be positive
 ///        elevation:  Elevation and/or distance to nearest obscuring feature
 ///                    in metres above/below the location.
-struct Observer {
+public struct Observer {
 
   // MARK: Lifecycle
 
-  init(latitude: Degrees, longitude: Degrees, elevation: Elevation) {
+  public init(latitude: Degrees, longitude: Degrees, elevation: Elevation) {
     self.latitude = latitude.cap(limit: 90)
     self.longitude = longitude.cap(limit: 180)
     self.elevation = elevation
   }
 
-  init(latitude: String, longitude: String, elevation: Elevation) throws {
+  public init(latitude: String, longitude: String, elevation: Elevation) throws {
     let lat = try convertDegreesMinutesSecondsToDouble(value: latitude, limit: 90)
     let long = try convertDegreesMinutesSecondsToDouble(value: longitude, limit: 180)
 
@@ -44,16 +44,16 @@ struct Observer {
 
   // MARK: Internal
 
-  static let london = Observer(latitude: 51.4733, longitude: -0.0008333, elevation: .double(0))
-  static let new_dheli = Observer(latitude: 28.6139, longitude: 77.2090, elevation: .double(0))
-  static let riyadh = Observer(latitude: 25, longitude: 46.7, elevation: .double(620))
-  static let welllington = try! Observer(
+  public static let london = Observer(latitude: 51.4733, longitude: -0.0008333, elevation: .double(0))
+  public static let newDelhi = Observer(latitude: 28.6139, longitude: 77.2090, elevation: .double(0))
+  public static let riyadh = Observer(latitude: 25, longitude: 46.7, elevation: .double(620))
+  public static let wellington = try! Observer(
     latitude: " 41° 17' 11.256'' S",
     longitude: "174° 46' 34.4496'' E",
     elevation: .double(13.000))
-  static let barcelona = try! Observer(latitude: "41° 23' 24.7380'' N", longitude: "2° 9' 14.4252'' E", elevation: .double(0))
+  public static let barcelona = try! Observer(latitude: "41° 23' 24.7380'' N", longitude: "2° 9' 14.4252'' E", elevation: .double(0))
 
-  let latitude: Degrees
-  let longitude: Degrees
-  let elevation: Elevation
+  public let latitude: Degrees
+  public let longitude: Degrees
+  public let elevation: Elevation
 }

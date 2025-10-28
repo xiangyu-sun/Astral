@@ -199,22 +199,22 @@ final class SunCalcTests: XCTestCase {
 
   func testAzimuth() {
     let date = DateComponents.datetime(2001, 6, 21, 13, 11, 0)
-    XCTAssertEqual(azimuth(observer: .new_dheli ,dateandtime: date), 292.76, accuracy: 0.01)
+    XCTAssertEqual(azimuth(observer: .newDelhi ,dateandtime: date), 292.76, accuracy: 0.01)
   }
 
   func testElevation() {
     let date = DateComponents.datetime(2001, 6, 21, 13, 11, 0)
-    XCTAssertEqual(elevation(observer: .new_dheli ,dateandtime: date), 7.41, accuracy: 0.1)
+    XCTAssertEqual(elevation(observer: .newDelhi ,dateandtime: date), 7.41, accuracy: 0.1)
   }
 
   func testElevation_Nonnative() {
     let date = DateComponents.datetime(2001, 6, 21, 18, 41, 0, .init(abbreviation: "GMT+5:30")!)
-    XCTAssertEqual(elevation(observer: .new_dheli ,dateandtime: date), 7.41, accuracy: 0.1)
+    XCTAssertEqual(elevation(observer: .newDelhi ,dateandtime: date), 7.41, accuracy: 0.1)
   }
 
   func testElevation_without_fraction() {
     let date = DateComponents.datetime(2001, 6, 21, 13, 11, 0)
-    XCTAssertEqual(elevation(observer: .new_dheli ,dateandtime: date, with_refraction: false), 7.29, accuracy: 0.1)
+    XCTAssertEqual(elevation(observer: .newDelhi ,dateandtime: date, with_refraction: false), 7.29, accuracy: 0.1)
   }
 
   func testAzimuthAbove85D() {

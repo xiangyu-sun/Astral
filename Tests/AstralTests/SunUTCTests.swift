@@ -226,7 +226,7 @@ final class SunUTCTests: XCTestCase {
     ]
 
     for (day, expected) in data {
-      let actual = try rahukaalam(observer: .new_dheli, date: day)
+      let actual = try rahukaalam(observer: .newDelhi, date: day)
 
       XCTAssertEqual(actual.0, expected.0, accuracy: DateComponents(hour: 2))
       XCTAssertEqual(actual.1, expected.1, accuracy: DateComponents(hour: 2))

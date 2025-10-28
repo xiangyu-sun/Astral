@@ -64,7 +64,7 @@ func _phase_asfloat(date: DateComponents) -> Double {
 /// - Parameter date: The date (in UTC) for which to calculate the phase.
 ///                   If not provided, today's date is used.
 /// - Returns: The Moon's age in days.
-func moonPhase(date: DateComponents = Date().components()) -> Double {
+public func moonPhase(date: DateComponents = Date().components()) -> Double {
   var moon = _phase_asfloat(date: date)
   let synodicMonth = 29.53058867
   moon = moon.truncatingRemainder(dividingBy: synodicMonth)

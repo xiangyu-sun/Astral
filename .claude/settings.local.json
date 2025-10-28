@@ -4,7 +4,10 @@
       "Bash(swift test:*)",
       "Bash(swift:*)",
       "WebFetch(domain:stardate.org)",
-      "Bash(git branch:*)"
+      "Bash(git branch:*)",
+      "Bash(git pull:*)",
+      "Bash(git tag:*)",
+      "Bash(gh release:*)"
     ],
     "deny": []
   }

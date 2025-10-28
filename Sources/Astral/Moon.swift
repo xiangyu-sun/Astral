@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Moon.swift
 //
 //  Created by Xiangyu Sun on 19/1/23.
 //
@@ -10,7 +10,7 @@ import Foundation
 // MARK: - MoonError
 
 /// Error types for Moon calculations.
-enum MoonError: Error {
+public enum MoonError: Error {
   case invalidData(String)
 }
 
@@ -89,13 +89,13 @@ func moon_mean_longitude(jd2000: Double) -> Revolutions {
   return _mean_longitude
 }
 
-/// Calculates the Moon's mean anomoly (in revolutions) for the given jd2000.
+/// Calculates the Moon's mean anomaly (in revolutions) for the given jd2000.
 /// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
-/// - Returns: The mean anomoly as a fraction of one full revolution.
-func moon_mean_anomoly(jd2000: Double) -> Revolutions {
-  var _mean_anomoly = 0.374897 + 0.03629164709 * jd2000
-  _mean_anomoly = _mean_anomoly - Int(_mean_anomoly).double
-  return _mean_anomoly
+/// - Returns: The mean anomaly as a fraction of one full revolution.
+func moon_mean_anomaly(jd2000: Double) -> Revolutions {
+  var _mean_anomaly = 0.374897 + 0.03629164709 * jd2000
+  _mean_anomaly = _mean_anomaly - Int(_mean_anomaly).double
+  return _mean_anomaly
 }
 
 /// Calculates the Moon's argument of latitude (in revolutions) for the given jd2000.
@@ -162,7 +162,7 @@ func moonPosition(jd2000: Double) -> AstralBodyPosition {
   // Prepare the arguments for the series (indices correspond to positions in the table)
   let argument_values: [Double?] = [
     moon_mean_longitude(jd2000: jd2000), // 1 = Lm
-    moon_mean_anomoly(jd2000: jd2000), // 2 = Gm
+    moon_mean_anomaly(jd2000: jd2000), // 2 = Gm
     moon_argument_of_latitude(jd2000: jd2000), // 3 = Fm
     moon_mean_elongation_from_sun(jd2000: jd2000), // 4 = D
     longitude_lunar_ascending_node(jd2000: jd2000), // 5 = Om
@@ -463,7 +463,7 @@ func riseset(
 ///   - tzinfo: The desired timezone for the result (default is UTC).
 /// - Returns: The DateComponents representing the moonrise time.
 /// - Throws: `MoonError.invalidData` if the Moon never rises on the given date/location.
-func moonrise(
+public func moonrise(
   observer: Observer,
   dateComponents: DateComponents?,
   tzinfo: TimeZone = .utc)
@@ -506,7 +506,7 @@ func moonrise(
 ///   - tzinfo: The desired timezone for the result (default is UTC).
 /// - Returns: The DateComponents representing the moonset time.
 /// - Throws: `MoonError.invalidData` if the Moon never sets on the given date/location.
-func moonset(
+public func moonset(
   observer: Observer,
   dateComponents: DateComponents?,
   tzinfo: TimeZone = .utc)
