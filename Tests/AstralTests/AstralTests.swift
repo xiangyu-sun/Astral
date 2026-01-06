@@ -1,10 +1,11 @@
-import XCTest
+import Testing
 @testable import Astral
 
-final class AstralTests: XCTestCase {
-  func testExample() throws {
+@Suite("Astral Tests")
+struct AstralTests {
+  @Test("Example test")
+  func example() throws {
     // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct
-    // results.
+    // Placeholder test to verify the test suite is working.
   }
 }
