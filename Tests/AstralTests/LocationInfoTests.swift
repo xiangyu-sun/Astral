@@ -5,40 +5,42 @@
 //  Created by Xiangyu Sun on 20/1/23.
 //
 
-import XCTest
+import Testing
 @testable import Astral
 
-final class LocationInfoTests: XCTestCase {
+@Suite("LocationInfo Tests")
+struct LocationInfoTests {
 
-  override func setUpWithError() throws {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+  @Test("Invalid latitude throws error")
+  func badLatitude() {
+    #expect(throws: (any Error).self) {
+      try LocationInfo(
+        name: "A place",
+        region: "Somewhere",
+        timezone: "Europe/London",
+        latitudeStr: "i",
+        longitudeStr: "2"
+      )
+    }
   }
 
-  override func tearDownWithError() throws {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+  @Test("Invalid longitude throws error")
+  func badLongitude() {
+    #expect(throws: (any Error).self) {
+      try LocationInfo(
+        name: "A place",
+        region: "Somewhere",
+        timezone: "Europe/London",
+        latitudeStr: "2",
+        longitudeStr: "i"
+      )
+    }
   }
 
-  func test_bad_latitude() {
-    XCTAssertThrowsError(try LocationInfo(
-      name: "A place",
-      region: "Somewhere",
-      timezone: "Europe/London",
-      latitudeStr: "i",
-      longitudeStr: "2"))
-  }
-
-  func test_bad_longitude() {
-    XCTAssertThrowsError(try LocationInfo(
-      name: "A place",
-      region: "Somewhere",
-      timezone: "Europe/London",
-      latitudeStr: "2",
-      longitudeStr: "i"))
-  }
-
-  func test_timezone_group() {
+  @Test("Timezone group extraction")
+  func timezoneGroup() {
     let li = LocationInfo(name: "", region: "", timezone: .current, latitude: 0, longitude: 0)
-    XCTAssertEqual(li.timezoneGroup, "Europe")
+    #expect(li.timezoneGroup == "Europe")
   }
 
 }
