@@ -5,245 +5,264 @@
 //  Created by Xiangyu Sun on 31/1/23.
 //
 
-import XCTest
+import Foundation
+import Testing
+import Numerics
 @testable import Astral
 
-final class SunCalcTests: XCTestCase {
+@Suite("Sun Calculation Tests")
+struct SunCalcTests {
 
-  override func setUpWithError() throws {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+  @Test(
+    "Geometric mean longitude of sun",
+    arguments: zip(
+      [-1.329130732, 12.00844627, 0.184134155],
+      [310.7374254, 233.8203529, 69.43779106]
+    )
+  )
+  func geometricMeanLongitudeSun(jc: Double, expected: Double) {
+    let result = geom_mean_long_sun(juliancentury: jc)
+    #expect(abs(result - expected) < 1)
   }
 
-  override func tearDownWithError() throws {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+  @Test(
+    "Geometric mean anomaly of sun",
+    arguments: zip(
+      [0.119986311, 12.00844627, 0.184134155],
+      [4676.922342, 432650.1681, 6986.1838]
+    )
+  )
+  func geometricMeanAnomalySun(jc: Double, expected: Double) {
+    let result = geom_mean_anomaly_sun(juliancentury: jc)
+    #expect(abs(result - expected) < 1)
   }
 
-  func testGeom() throws {
-    let data = [
-      (-1.329130732, 310.7374254),
-      (12.00844627, 233.8203529),
-      (0.184134155, 69.43779106),
-    ]
-
-    for (jc,gmls) in data {
-      XCTAssertEqual(geom_mean_long_sun(juliancentury: jc), gmls, accuracy: 1)
-    }
+  @Test(
+    "Eccentric location of Earth orbit",
+    arguments: zip(
+      [0.119986311, 12.00844627, 0.184134155],
+      [0.016703588, 0.016185564, 0.016700889]
+    )
+  )
+  func eccentricLocationEarthOrbit(jc: Double, expected: Double) {
+    let result = eccentric_location_earth_orbit(juliancentury: jc)
+    #expect(abs(result - expected) < 1e-6)
   }
 
-  func testGmas() throws {
-    let data = [
-      (0.119986311, 4676.922342),
-      (12.00844627, 432650.1681),
-      (0.184134155, 6986.1838),
-    ]
-
-    for (jc,gams) in data {
-      XCTAssertEqual(geom_mean_anomaly_sun(juliancentury: jc), gams, accuracy: 1)
-    }
+  @Test(
+    "Sun equation of center",
+    arguments: zip(
+      [0.119986311, 12.00844627, 0.184134155],
+      [-0.104951648, -1.753028843, 1.046852316]
+    )
+  )
+  func sunEquationOfCenter(jc: Double, expected: Double) {
+    let result = sun_eq_of_center(juliancentury: jc)
+    #expect(abs(result - expected) < 1e-6)
   }
 
-  func testEEO() throws {
-    let data = [
-      (0.119986311, 0.016703588),
-      (12.00844627, 0.016185564),
-      (0.184134155, 0.016700889),
-    ]
-
-    for (jc,eeo) in data {
-      XCTAssertEqual(eccentric_location_earth_orbit(juliancentury: jc), eeo, accuracy: 1e-6)
-    }
+  @Test(
+    "Sun true longitude",
+    arguments: zip(
+      [0.119986311, 12.00844627, 0.184134155],
+      [279.9610686, 232.0673358, 70.48465428]
+    )
+  )
+  func sunTrueLongitude(jc: Double, expected: Double) {
+    let result = sun_true_long(juliancentury: jc)
+    #expect(abs(result - expected) < 0.001)
   }
 
-  func testEOS() throws {
-    let data = [
-      (0.119986311, -0.104951648),
-      (12.00844627, -1.753028843),
-      (0.184134155, 1.046852316),
-    ]
-
-    for (jc,eos) in data {
-      XCTAssertEqual(sun_eq_of_center(juliancentury: jc), eos, accuracy: 1e-6)
-    }
+  @Test(
+    "Sun true anomaly",
+    arguments: zip(
+      [0.119986311, 12.00844627, 0.184134155],
+      [4676.817391, 432648.4151, 6987.230663]
+    )
+  )
+  func sunTrueAnomaly(jc: Double, expected: Double) {
+    let result = sun_true_anomoly(juliancentury: jc)
+    #expect(abs(result - expected) < 0.001)
   }
 
-  func testSTL() throws {
-    let data = [
-      (0.119986311, 279.9610686),
-      (12.00844627, 232.0673358),
-      (0.184134155, 70.48465428),
-    ]
-
-    for (jc,stl) in data {
-      XCTAssertEqual(sun_true_long(juliancentury: jc), stl, accuracy: 0.001)
-    }
+  @Test(
+    "Sun radius vector",
+    arguments: zip(
+      [0.119986311, 12.00844627, 0.184134155],
+      [0.983322329, 0.994653382, 1.013961204]
+    )
+  )
+  func sunRadiusVector(jc: Double, expected: Double) {
+    let result = sun_rad_vector(juliancentury: jc)
+    #expect(abs(result - expected) < 0.001)
   }
 
-  func testSTAL() throws {
-    let data = [
-      (0.119986311, 4676.817391),
-      (12.00844627, 432648.4151),
-      (0.184134155, 6987.230663),
-    ]
-
-    for (jc,sta) in data {
-      XCTAssertEqual(sun_true_anomoly(juliancentury: jc), sta, accuracy: 0.001)
-    }
+  @Test(
+    "Sun apparent longitude",
+    arguments: zip(
+      [0.119986311, 12.00844627, 0.184134155],
+      [279.95995849827, 232.065823531804, 70.475244256027]
+    )
+  )
+  func sunApparentLongitude(jc: Double, expected: Double) {
+    let result = sun_apparent_long(juliancentury: jc)
+    #expect(abs(result - expected) < 0.001)
   }
 
-  func testSRV() throws {
-    let data = [
-      (0.119986311, 0.983322329),
-      (12.00844627, 0.994653382),
-      (0.184134155, 1.013961204),
-    ]
-
-    for (jc,srv) in data {
-      XCTAssertEqual(sun_rad_vector(juliancentury: jc), srv, accuracy: 0.001)
-    }
+  @Test(
+    "Mean obliquity of ecliptic (0.001 accuracy)",
+    arguments: zip(
+      [0.119986311, 12.00844627, 0.184134155],
+      [23.4377307876356, 23.2839797200388, 23.4368965974579]
+    )
+  )
+  func meanObliquityOfEclipticHighPrecision(jc: Double, expected: Double) {
+    let result = mean_obliquity_of_ecliptic(juliancentury: jc)
+    #expect(abs(result - expected) < 0.001)
   }
 
-  func testSAL() throws {
-    let data = [
-      (0.119986311, 279.95995849827),
-      (12.00844627, 232.065823531804),
-      (0.184134155, 70.475244256027),
-    ]
-
-    for (jc,sal) in data {
-      XCTAssertEqual(sun_apparent_long(juliancentury: jc), sal, accuracy: 0.001)
-    }
+  @Test(
+    "Mean obliquity of ecliptic (0.01 accuracy)",
+    arguments: zip(
+      [0.119986311, 12.00844627, 0.184134155],
+      [23.4369810410121, 23.2852236361575, 23.4352890293474]
+    )
+  )
+  func meanObliquityOfEclipticLowPrecision(jc: Double, expected: Double) {
+    let result = mean_obliquity_of_ecliptic(juliancentury: jc)
+    #expect(abs(result - expected) < 0.01)
   }
 
-  func testMOOE() throws {
-    let data = [
-      (0.119986311, 23.4377307876356),
-      (12.00844627, 23.2839797200388),
-      (0.184134155, 23.4368965974579),
-    ]
-
-    for (jc,expected) in data {
-      XCTAssertEqual(mean_obliquity_of_ecliptic(juliancentury: jc), expected, accuracy: 0.001)
-    }
+  @Test(
+    "Sun right ascension",
+    arguments: zip(
+      [0.119986311, 12.00844627, 0.184134155],
+      [-79.16480352 + 360, -130.3163904 + 360, 68.86915896]
+    )
+  )
+  func sunRightAscension(jc: Double, expected: Double) {
+    let result = sun_rt_ascension(juliancentury: jc)
+    #expect(abs(result - expected) < 0.001)
   }
 
-  func testOC() throws {
-    let data = [
-      (0.119986311, 23.4369810410121),
-      (12.00844627, 23.2852236361575),
-      (0.184134155, 23.4352890293474),
-    ]
-
-    for (jc,expected) in data {
-      XCTAssertEqual(mean_obliquity_of_ecliptic(juliancentury: jc), expected, accuracy: 0.01)
-    }
+  @Test(
+    "Sun declination",
+    arguments: zip(
+      [0.119986311, 12.00844627, 0.184134155],
+      [-23.06317068, -18.16694394, 22.01463552]
+    )
+  )
+  func sunDeclination(jc: Double, expected: Double) {
+    let result = sun_declination(juliancentury: jc)
+    #expect(abs(result - expected) < 0.001)
   }
 
-  func testSRA() throws {
-    let data = [
-      (0.119986311, -79.16480352 + 360),
-      (12.00844627, -130.3163904 + 360),
-      (0.184134155, 68.86915896),
-    ]
-
-    for (jc,expected) in data {
-      XCTAssertEqual(sun_rt_ascension(juliancentury: jc), expected, accuracy: 0.001)
-    }
+  @Test(
+    "Equation of time",
+    arguments: zip(
+      [0.119986311, 12.00844627, 0.184134155],
+      [-3.078194825, 16.58348133, 2.232039737]
+    )
+  )
+  func equationOfTime(jc: Double, expected: Double) {
+    let result = eq_of_time(juliancentury: jc)
+    #expect(abs(result - expected) < 0.001)
   }
 
-  func testSD() throws {
-    let data = [
-      (0.119986311, -23.06317068),
-      (12.00844627, -18.16694394),
-      (0.184134155, 22.01463552),
-    ]
+  @Test(
+    "Hour angle calculation",
+    arguments: zip(
+      [
+        DateComponents.date(2012, 1, 1),
+        DateComponents.date(3200, 11, 14),
+        DateComponents.date(2018, 6, 1),
+      ],
+      [1.03555238, 1.172253118, 2.133712555]
+    )
+  )
+  func hourAngleCalculation(d: DateComponents, expected: Double) {
+    var date = d
+    date.setValue(12, for: .hour)
 
-    for (jc,expected) in data {
-      XCTAssertEqual(sun_declination(juliancentury: jc), expected, accuracy: 0.001)
-    }
+    let jd = julianDay(at: date)
+    let jc = Astral.julianDayToCentury(julianDay: jd)
+    let decl = sun_declination(juliancentury: jc)
+
+    let result = hour_angle(
+      latitude: Observer.london.latitude,
+      declination: decl,
+      zenith: 90.8333,
+      direction: SunDirection.rising
+    )
+    #expect(abs(result - expected) < 0.1)
   }
 
-  func testEOT() throws {
-    let data = [
-      (0.119986311, -3.078194825),
-      (12.00844627, 16.58348133),
-      (0.184134155, 2.232039737),
-    ]
-
-    for (jc,expected) in data {
-      XCTAssertEqual(eq_of_time(juliancentury: jc), expected, accuracy: 0.001)
-    }
-  }
-
-  func testHA() throws {
-    let data: [(DateComponents, Double)] = [
-      (.date(2012, 1, 1), 1.03555238),
-      (.date(3200, 11, 14), 1.172253118),
-      (.date(2018, 6, 1), 2.133712555),
-    ]
-
-    for (d,expected) in data {
-      var date = d
-      date.setValue(12, for: .hour)
-
-      let jd = julianDay(at: date)
-
-      let jc = julianDayToCentury(julianDay: jd)
-      let decl = sun_declination(juliancentury: jc)
-
-      XCTAssertEqual(
-        hour_angle(latitude: Observer.london.latitude, declination: decl, zenith: 90.8333, direction: SunDirection.rising),
-        expected,
-        accuracy: 0.1)
-    }
-  }
-
-  func testAzimuth() {
+  @Test("Azimuth at New Delhi")
+  func azimuthNewDelhi() {
     let date = DateComponents.datetime(2001, 6, 21, 13, 11, 0)
-    XCTAssertEqual(azimuth(observer: .newDelhi ,dateandtime: date), 292.76, accuracy: 0.01)
+    let result = azimuth(observer: .newDelhi, dateandtime: date)
+    #expect(abs(result - 292.76) < 0.01)
   }
 
-  func testElevation() {
+  @Test("Elevation at New Delhi")
+  func elevationNewDelhi() {
     let date = DateComponents.datetime(2001, 6, 21, 13, 11, 0)
-    XCTAssertEqual(elevation(observer: .newDelhi ,dateandtime: date), 7.41, accuracy: 0.1)
+    let result = elevation(observer: .newDelhi, dateandtime: date)
+    #expect(abs(result - 7.41) < 0.1)
   }
 
-  func testElevation_Nonnative() {
+  @Test("Elevation at New Delhi with non-native timezone")
+  func elevationNewDelhiNonNativeTimezone() {
     let date = DateComponents.datetime(2001, 6, 21, 18, 41, 0, .init(abbreviation: "GMT+5:30")!)
-    XCTAssertEqual(elevation(observer: .newDelhi ,dateandtime: date), 7.41, accuracy: 0.1)
+    let result = elevation(observer: .newDelhi, dateandtime: date)
+    #expect(abs(result - 7.41) < 0.1)
   }
 
-  func testElevation_without_fraction() {
+  @Test("Elevation without refraction")
+  func elevationWithoutRefraction() {
     let date = DateComponents.datetime(2001, 6, 21, 13, 11, 0)
-    XCTAssertEqual(elevation(observer: .newDelhi ,dateandtime: date, with_refraction: false), 7.29, accuracy: 0.1)
+    let result = elevation(observer: .newDelhi, dateandtime: date, with_refraction: false)
+    #expect(abs(result - 7.29) < 0.1)
   }
 
-  func testAzimuthAbove85D() {
+  @Test("Azimuth above 85 degrees latitude")
+  func azimuthAbove85Degrees() {
     let date = DateComponents.datetime(2001, 6, 21, 13, 11, 0)
-    XCTAssertEqual(
-      azimuth(observer: Observer(latitude: 86, longitude: 77.2, elevation: .double(0)) ,dateandtime: date),
-      276.21,
-      accuracy: 0.01)
+    let observer = Observer(latitude: 86, longitude: 77.2, elevation: .double(0))
+    let result = azimuth(observer: observer, dateandtime: date)
+    #expect(abs(result - 276.21) < 0.01)
   }
 
-  func testElevationAbove85D() {
+  @Test("Elevation above 85 degrees latitude")
+  func elevationAbove85Degrees() {
     let date = DateComponents.datetime(2001, 6, 21, 13, 11, 0)
-    XCTAssertEqual(
-      elevation(observer: Observer(latitude: 86, longitude: 77.2, elevation: .double(0)) ,dateandtime: date),
-      23.10250115161950,
-      accuracy: 0.001)
+    let observer = Observer(latitude: 86, longitude: 77.2, elevation: .double(0))
+    let result = elevation(observer: observer, dateandtime: date)
+    #expect(abs(result - 23.10250115161950) < 0.001)
   }
 
-  func test_ElevationEqualsTimeAtElevation() {
-    for elevetion in 1...20 {
-      let o = Observer.london
-      let td = DateComponents.date(2020, 2, 6)
+  @Test(
+    "Elevation equals time at elevation",
+    arguments: 1...20
+  )
+  func elevationEqualsTimeAtElevation(elevation: Int) {
+    let observer = Observer.london
+    let date = DateComponents.date(2020, 2, 6)
 
-      let et = time_at_elevation(observer: o, elevation: elevetion.double , date: td, with_refraction: false)
+    let et = time_at_elevation(
+      observer: observer,
+      elevation: elevation.double,
+      date: date,
+      with_refraction: false
+    )
 
-      let sun_elevation = elevation(observer: o, dateandtime: et, with_refraction: false)
+    let sunElevation = Astral.elevation(
+      observer: observer,
+      dateandtime: et,
+      with_refraction: false
+    )
 
-      XCTAssertEqual(sun_elevation, elevetion.double, accuracy: 0.1)
-    }
+    #expect(abs(sunElevation - elevation.double) < 0.1)
   }
 
 }
