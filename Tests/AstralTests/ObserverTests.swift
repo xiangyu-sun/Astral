@@ -5,53 +5,56 @@
 //  Created by Xiangyu Sun on 20/1/23.
 //
 
-import XCTest
+import Testing
 @testable import Astral
 
-final class ObserverTests: XCTestCase {
+@Suite("Observer Tests")
+struct ObserverTests {
 
-  override func setUpWithError() throws {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-  }
-
-  override func tearDownWithError() throws {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-  }
-
-  func test_from_string() throws {
+  @Test("Create observer from string coordinates")
+  func fromString() throws {
     let obs = try Observer(latitude: "1", longitude: "2", elevation: .double(0))
-    XCTAssertEqual(obs.latitude, 1.0)
-    XCTAssertEqual(obs.longitude, 2.0)
-    XCTAssertEqual(obs.elevation, .double(0))
+    #expect(obs.latitude == 1.0)
+    #expect(obs.longitude == 2.0)
+    #expect(obs.elevation == .double(0))
   }
 
-  func test_from_dms() throws {
+  @Test("Create observer from DMS coordinates")
+  func fromDMS() throws {
     let obs = try Observer(latitude: "24°N", longitude: "22°30'S", elevation: .double(0))
-    XCTAssertEqual(obs.latitude, 24.0)
-    XCTAssertEqual(obs.longitude, -22.5)
-    XCTAssertEqual(obs.elevation, .double(0))
+    #expect(obs.latitude == 24.0)
+    #expect(obs.longitude == -22.5)
+    #expect(obs.elevation == .double(0))
   }
 
-  func test_bad_latitude() {
-    XCTAssertThrowsError(try Observer(latitude: "o", longitude: "1", elevation: .double(0)))
+  @Test("Invalid latitude throws error")
+  func badLatitude() {
+    #expect(throws: (any Error).self) {
+      try Observer(latitude: "o", longitude: "1", elevation: .double(0))
+    }
   }
 
-  func test_bad_longitude() {
-    XCTAssertThrowsError(try Observer(latitude: "1", longitude: "o", elevation: .double(0)))
+  @Test("Invalid longitude throws error")
+  func badLongitude() {
+    #expect(throws: (any Error).self) {
+      try Observer(latitude: "1", longitude: "o", elevation: .double(0))
+    }
   }
 
-  func test_latitude_outside_limits() {
+  @Test("Latitude is clamped to valid range")
+  func latitudeOutsideLimits() {
     var obs = Observer(latitude: 90.1, longitude: 0, elevation: .double(0))
-    XCTAssertEqual(obs.latitude, 90.0)
+    #expect(obs.latitude == 90.0)
     obs = Observer(latitude: -90.1, longitude: 0, elevation: .double(0))
-    XCTAssertEqual(obs.latitude, -90.0)
+    #expect(obs.latitude == -90.0)
   }
 
-  func test_longitude_outside_limits() {
+  @Test("Longitude is clamped to valid range")
+  func longitudeOutsideLimits() {
     var obs = Observer(latitude: 0, longitude: 180.1, elevation: .tuple(0,0))
-    XCTAssertEqual(obs.longitude, 180.0)
+    #expect(obs.longitude == 180.0)
     obs = Observer(latitude: 0, longitude: -180.1, elevation: .double(0))
-    XCTAssertEqual(obs.longitude, -180.0)
+    #expect(obs.longitude == -180.0)
   }
 
 }
