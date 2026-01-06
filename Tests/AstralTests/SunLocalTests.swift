@@ -5,38 +5,44 @@
 //  Created by Xiangyu Sun on 31/1/23.
 //
 
-import XCTest
+import Foundation
+import Testing
 @testable import Astral
 
-final class SunLocalTests: XCTestCase {
+@Suite("Sun Local Timezone Tests")
+struct SunLocalTests {
 
-  override func setUpWithError() throws {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-  }
-
-  override func tearDownWithError() throws {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-  }
-
-  func testSunLocalTimezone() throws {
+  @Test(
+    "Dawn calculation in local timezone",
+    arguments: zip(
+      [
+        DateComponents.date(2015, 12, 1),
+        DateComponents.date(2015, 12, 2),
+        DateComponents.date(2015, 12, 3),
+        DateComponents.date(2015, 12, 12),
+        DateComponents.date(2015, 12, 25),
+      ],
+      [
+        DateComponents.datetime(2015, 12, 1, 6, 30, 0, TimeZone(abbreviation: "GMT+5:30")!),
+        DateComponents.datetime(2015, 12, 2, 6, 31, 0, TimeZone(abbreviation: "GMT+5:30")!),
+        DateComponents.datetime(2015, 12, 3, 6, 31, 0, TimeZone(abbreviation: "GMT+5:30")!),
+        DateComponents.datetime(2015, 12, 12, 6, 38, 0, TimeZone(abbreviation: "GMT+5:30")!),
+        DateComponents.datetime(2015, 12, 25, 6, 45, 0, TimeZone(abbreviation: "GMT+5:30")!),
+      ]
+    )
+  )
+  func dawnCalculationLocalTimezone(day: DateComponents, expectedDawn: DateComponents) throws {
     let dheli = TimeZone(abbreviation: "GMT+5:30")!
-    let data: [(DateComponents, DateComponents)] = [
-      (.date(2015, 12, 1), .datetime(2015, 12, 1, 6, 30, 0, dheli)),
-      (.date(2015, 12, 2), .datetime(2015, 12, 2, 6, 31,0, dheli)),
-      (.date(2015, 12, 3), .datetime(2015, 12, 3, 6, 31,0, dheli)),
-      (.date(2015, 12, 12), .datetime(2015, 12, 12, 6, 38,0, dheli)),
-      (.date(2015, 12, 25), .datetime(2015, 12, 25, 6, 45,0, dheli)),
-    ]
+    let dawnCalc = try sun(
+      observer: .newDelhi,
+      date: day,
+      dawn_dusk_depression: Depression(rawValue: 6),
+      tzinfo: dheli
+    )["dawn"]!
 
-    for (day, down) in data {
-      let dawn_calc = try sun(
-        observer: .newDelhi,
-        date: day,
-        dawn_dusk_depression: Depression(rawValue: 6),
-        tzinfo: dheli)["dawn"]!
-
-      XCTAssertEqual(dawn_calc, down, accuracy: DateComponents(second: 90))
-    }
+    // Compare with 90 second accuracy
+    let accuracy = DateComponents(second: 90)
+    #expect(expectDateComponentsEqual(dawnCalc, expectedDawn, accuracy: accuracy))
   }
 
 }

@@ -5,46 +5,46 @@
 //  Created by Xiangyu Sun on 31/1/23.
 //
 
-import XCTest
+import Testing
 @testable import Astral
-final class SunElevationAdjustmentTests: XCTestCase {
 
-  override func setUpWithError() throws {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-  }
+@Suite("Sun Elevation Adjustment Tests")
+struct SunElevationAdjustmentTests {
 
-  override func tearDownWithError() throws {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-  }
-
-  func test_Float_Positive() {
+  @Test("Adjust to horizon with positive elevation")
+  func floatPositive() {
     let adjustment = adjust_to_horizon(elevation: 12000)
-    XCTAssertEqual(adjustment, 3.5138554650954026, accuracy: 0.001)
+    #expect(abs(adjustment - 3.5138554650954026) < 0.001)
   }
 
-  func test_Float_Negative() {
+  @Test("Adjust to horizon with negative elevation")
+  func floatNegative() {
     let adjustment = adjust_to_horizon(elevation: -1)
-    XCTAssertEqual(adjustment, 0)
+    #expect(adjustment == 0)
   }
 
-  func test_Tuple_0() {
+  @Test("Adjust to obscuring feature with zero distance")
+  func tupleZero() {
     let adjustment = adjust_to_obscuring_feature(elevation: (0.0, 100.0))
-    XCTAssertEqual(adjustment, 0)
+    #expect(adjustment == 0)
   }
 
-  func test_Tuple_45deg() {
+  @Test("Adjust to obscuring feature - 45 degree angle")
+  func tuple45Degrees() {
     let adjustment = adjust_to_obscuring_feature(elevation: (10.0, 10.0))
-    XCTAssertEqual(adjustment, 45.0, accuracy: 0.001)
+    #expect(abs(adjustment - 45.0) < 0.001)
   }
 
-  func test_Tuple_30deg() {
+  @Test("Adjust to obscuring feature - 30 degree angle")
+  func tuple30Degrees() {
     let adjustment = adjust_to_obscuring_feature(elevation: (3.0, 4.0))
-    XCTAssertEqual(adjustment, 53.130102354156, accuracy: 0.001)
+    #expect(abs(adjustment - 53.130102354156) < 0.001)
   }
 
-  func test_Tuple_neg45deg() {
+  @Test("Adjust to obscuring feature - negative 45 degree angle")
+  func tupleNegative45Degrees() {
     let adjustment = adjust_to_obscuring_feature(elevation: (-10.0, 10.0))
-    XCTAssertEqual(adjustment, -45, accuracy: 0.001)
+    #expect(abs(adjustment - (-45)) < 0.001)
   }
 
 }
