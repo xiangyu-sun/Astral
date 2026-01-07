@@ -23,16 +23,12 @@ struct MoonPostionTests {
         AstralBodyPosition(
           right_ascension: -1.9638999378692186,
           declination: -0.4666623303219141,
-          distance: 56.55564052259119
-        ),
+          distance: 56.55564052259119),
         AstralBodyPosition(
           right_ascension: -3.932462849957415,
           declination: 0.24034553813386558,
-          distance: 57.76236323127602
-        ),
-      ]
-    )
-  )
+          distance: 57.76236323127602),
+      ]))
   func moonPositionCalculation(d: DateComponents, expected: AstralBodyPosition) {
     let jd = julianDay(at: d)
     let jd2000 = jd - 2451545 // Julian day relative to Jan 1.5, 2000

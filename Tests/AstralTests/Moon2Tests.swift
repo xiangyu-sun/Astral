@@ -76,9 +76,7 @@ struct Moon2Tests {
     "Moon true longitude with reference data",
     arguments: zip(
       [8765.5, 8845.5, 8937.5, 9031.5, 9120.5],
-      [156.017016, 134.275040, 257.045540, 67.971129, 158.411401]
-    )
-  )
+      [156.017016, 134.275040, 257.045540, 67.971129, 158.411401]))
   func moonTrueLongitudeWithReferenceData(jd2000: Double, expectedDegrees: Double) {
     let calculatedRevolutions = moon_true_longitude(jd2000: jd2000)
     let calculatedDegrees = calculatedRevolutions * 360.0
@@ -100,8 +98,7 @@ struct Moon2Tests {
 
   @Test(
     "Moon true longitude normalization across dates",
-    arguments: [-10000.0, -1000.0, -100.0, 0.0, 100.0, 1000.0, 10000.0]
-  )
+    arguments: [-10000.0, -1000.0, -100.0, 0.0, 100.0, 1000.0, 10000.0])
   func moonTrueLongitudeNormalization(jd2000: Double) {
     let longitude = moon_true_longitude(jd2000: jd2000)
     #expect(longitude >= 0.0)

@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import Testing
 import Numerics
+import Testing
 @testable import Astral
 
 @Suite("Julian Day Calculations")
@@ -67,9 +67,7 @@ struct JulianTests {
         2456444.5,
         2402998.5,
         2890153.5,
-      ]
-    )
-  )
+      ]))
   func defaultCalendar(day: DateComponents, expectedJD: Double) {
     #expect(julianDay(at: day) == expectedJD)
   }
@@ -84,9 +82,7 @@ struct JulianTests {
       [
         2026_871.8,
         1842_713.0,
-      ]
-    )
-  )
+      ]))
   func julianCalendar(day: DateComponents, expectedJD: Double) {
     #expect(julianDay(at: day, calendar: .init(identifier: .chinese)) == expectedJD)
   }
@@ -101,9 +97,7 @@ struct JulianTests {
       [
         DateComponents.datetime(837, 4, 10, 7, 12, 0),
         DateComponents.datetime(333, 1, 27, 12, 0, 0),
-      ]
-    )
-  )
+      ]))
   func julianDayToDateTime(jd: Double, expectedComponents: DateComponents) {
     #expect(julianDayToComponent(jd: jd) == expectedComponents)
   }
@@ -124,9 +118,7 @@ struct JulianTests {
         0.134140999,
         -1.329130732,
         12.00844627,
-      ]
-    )
-  )
+      ]))
   func julianDayToCenturyConversion(jd: Double, expectedJC: Double) {
     let result = Astral.julianDayToCentury(julianDay: jd)
     #expect(abs(result - expectedJC) < 0.1)
@@ -148,9 +140,7 @@ struct JulianTests {
         2456444.5,
         2402998.5,
         2890153.5,
-      ]
-    )
-  )
+      ]))
   func julianCenturyToDayConversion(jc: Double, expectedJD: Double) {
     let result = Astral.julianDCenturyToDay(julianCentury: jc)
     #expect(abs(result - expectedJD) < 0.1)

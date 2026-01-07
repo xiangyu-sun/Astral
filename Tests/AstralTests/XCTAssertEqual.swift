@@ -16,8 +16,9 @@ public func expectDateComponentsEqual(
   _ lhs: DateComponents,
   _ rhs: DateComponents,
   accuracy: DateComponents,
-  sourceLocation: SourceLocation = #_sourceLocation
-) -> Bool {
+  sourceLocation: SourceLocation = #_sourceLocation)
+  -> Bool
+{
   if lhs == rhs {
     return true
   }
@@ -25,16 +26,14 @@ public func expectDateComponentsEqual(
   let diff = Calendar.current.dateComponents(
     [.year, .month, .day, .hour, .minute, .second],
     from: lhs,
-    to: rhs
-  ).absDateComponents()
+    to: rhs).absDateComponents()
 
   let isWithinAccuracy = diff <= accuracy
 
   if !isWithinAccuracy {
     Issue.record(
       "DateComponents not equal within accuracy. Difference: \(diff), Accuracy: \(accuracy)",
-      sourceLocation: sourceLocation
-    )
+      sourceLocation: sourceLocation)
   }
 
   return isWithinAccuracy

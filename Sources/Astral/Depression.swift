@@ -26,7 +26,7 @@ public enum Depression: ExpressibleByIntegerLiteral, RawRepresentable {
     self.init(rawValue: value)
   }
 
-  // MARK: Internal
+  // MARK: Public
 
   public typealias RawValue = Int
   public typealias IntegerLiteralType = Int

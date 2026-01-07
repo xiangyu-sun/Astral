@@ -28,9 +28,7 @@ struct SunUTCTests {
         DateComponents.datetime(2015, 12, 3, 7, 6),
         DateComponents.datetime(2015, 12, 12, 7, 16),
         DateComponents.datetime(2015, 12, 25, 7, 25),
-      ]
-    )
-  )
+      ]))
   func sunDawnTime(day: DateComponents, expected: DateComponents) throws {
     let dawnCalc = try sun(observer: .london, date: day)["dawn"]!
 
@@ -54,9 +52,7 @@ struct SunUTCTests {
         DateComponents.datetime(2015, 12, 3, 7, 6),
         DateComponents.datetime(2015, 12, 12, 7, 16),
         DateComponents.datetime(2015, 12, 25, 7, 25),
-      ]
-    )
-  )
+      ]))
   func dawnCivil(day: DateComponents, expected: DateComponents) throws {
     let dawnCalc = try dawn(observer: .london, date: day, depression: .civil)
 
@@ -80,9 +76,7 @@ struct SunUTCTests {
         DateComponents.datetime(2015, 12, 3, 6, 24),
         DateComponents.datetime(2015, 12, 12, 6, 33),
         DateComponents.datetime(2015, 12, 25, 6, 41),
-      ]
-    )
-  )
+      ]))
   func dawnNautical(day: DateComponents, expected: DateComponents) throws {
     let dawnCalc = try dawn(observer: .london, date: day, depression: .other(12))
 
@@ -106,9 +100,7 @@ struct SunUTCTests {
         DateComponents.datetime(2015, 12, 3, 5, 44),
         DateComponents.datetime(2015, 12, 12, 5, 52),
         DateComponents.datetime(2015, 12, 25, 6, 1),
-      ]
-    )
-  )
+      ]))
   func dawnAstronomical(day: DateComponents, expected: DateComponents) throws {
     let dawnCalc = try dawn(observer: .london, date: day, depression: .other(18))
 
@@ -134,9 +126,7 @@ struct SunUTCTests {
         DateComponents.datetime(2015, 12, 3, 7, 46),
         DateComponents.datetime(2015, 12, 12, 7, 56),
         DateComponents.datetime(2015, 12, 25, 8, 5),
-      ]
-    )
-  )
+      ]))
   func sunriseCalculation(day: DateComponents, expected: DateComponents) throws {
     let sunriseCalc = try sunrise(observer: .london, date: day)
 
@@ -162,9 +152,7 @@ struct SunUTCTests {
         DateComponents.datetime(2015, 12, 3, 15, 54),
         DateComponents.datetime(2015, 12, 12, 15, 51),
         DateComponents.datetime(2015, 12, 25, 15, 55),
-      ]
-    )
-  )
+      ]))
   func sunsetCalculation(day: DateComponents, expected: DateComponents) throws {
     let sunsetCalc = try sunset(observer: .london, date: day)
 
@@ -188,9 +176,7 @@ struct SunUTCTests {
         DateComponents.datetime(2015, 12, 3, 16, 33),
         DateComponents.datetime(2015, 12, 12, 16, 31),
         DateComponents.datetime(2015, 12, 25, 16, 36),
-      ]
-    )
-  )
+      ]))
   func duskCalculation(day: DateComponents, expected: DateComponents) throws {
     let duskCalc = try dusk(observer: .london, date: day)
 
@@ -214,9 +200,7 @@ struct SunUTCTests {
         DateComponents.datetime(2015, 12, 3, 17, 16),
         DateComponents.datetime(2015, 12, 12, 17, 14),
         DateComponents.datetime(2015, 12, 25, 17, 19),
-      ]
-    )
-  )
+      ]))
   func duskNautical(day: DateComponents, expected: DateComponents) throws {
     let actual = try dusk(observer: .london, date: day, depression: .other(12))
 
@@ -240,9 +224,7 @@ struct SunUTCTests {
         DateComponents.datetime(2015, 12, 3, 11, 50),
         DateComponents.datetime(2015, 12, 12, 11, 54),
         DateComponents.datetime(2015, 12, 25, 12, 00),
-      ]
-    )
-  )
+      ]))
   func noonCalculation(day: DateComponents, expected: DateComponents) {
     let actual = noon(observer: .london, date: day)
 
@@ -260,9 +242,7 @@ struct SunUTCTests {
       [
         DateComponents.datetime(2016, 2, 18, 0, 14),
         DateComponents.datetime(2016, 10, 25, 23, 44),
-      ]
-    )
-  )
+      ]))
   func midnightCalculation(day: DateComponents, expected: DateComponents) {
     let actual = midnight(observer: .london, date: day)
 
@@ -306,9 +286,7 @@ struct SunUTCTests {
       [
         (DateComponents.datetime(2015, 12, 1, 9, 17), DateComponents.datetime(2015, 12, 1, 10, 35)),
         (DateComponents.datetime(2015, 12, 2, 6, 40), DateComponents.datetime(2015, 12, 2, 7, 58)),
-      ]
-    )
-  )
+      ]))
   func rahuCalculation(day: DateComponents, expected: (DateComponents, DateComponents)) throws {
     let actual = try rahukaalam(observer: .newDelhi, date: day)
 
@@ -324,9 +302,7 @@ struct SunUTCTests {
         DateComponents.datetime(2015, 12, 14, 11, 0, 0),
         DateComponents.datetime(2015, 12, 14, 20, 1, 0),
       ],
-      [14.381311, -37.3710156]
-    )
-  )
+      [14.381311, -37.3710156]))
   func solarAltitude(day: DateComponents, expected: Double) {
     let actual = elevation(observer: .london, dateandtime: day)
     #expect(abs(expected - actual) < 0.5)
@@ -339,9 +315,7 @@ struct SunUTCTests {
         DateComponents.datetime(2015, 12, 14, 11, 0, 0),
         DateComponents.datetime(2015, 12, 14, 20, 1, 0),
       ],
-      [166.9676, 279.39927311745]
-    )
-  )
+      [166.9676, 279.39927311745]))
   func solarAzimuth(day: DateComponents, expected: Double) {
     let actual = azimuth(observer: .london, dateandtime: day)
     #expect(abs(expected - actual) < 0.5)
@@ -356,9 +330,7 @@ struct SunUTCTests {
         DateComponents.datetime(2021, 10, 10, 18, 0, 0),
         DateComponents.datetime(2020, 2, 3, 10, 37, 0),
       ],
-      [93.25029, 84.01829, 97.45711, 71.0]
-    )
-  )
+      [93.25029, 84.01829, 97.45711, 71.0]))
   func solarZenithLondon(day: DateComponents, expected: Double) {
     let actual = zenith(observer: .london, dateandtime: day)
     #expect(abs(expected - actual) < 0.5)
@@ -371,9 +343,7 @@ struct SunUTCTests {
         DateComponents.datetime(2022, 5, 1, 14, 0, 0),
         DateComponents.datetime(2022, 5, 1, 21, 0, 0),
       ],
-      [72.40508, 139.58708]
-    )
-  )
+      [72.40508, 139.58708]))
   func solarZenithRiyadh(day: DateComponents, expected: Double) {
     let actual = zenith(observer: .riyadh, dateandtime: day)
     #expect(abs(expected - actual) < 0.5)

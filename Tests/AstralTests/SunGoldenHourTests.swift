@@ -24,21 +24,16 @@ struct SunGoldenHourTests {
       [
         (
           DateComponents.datetime(2015, 12, 1, 1, 10, 10),
-          DateComponents.datetime(2015, 12, 1, 2, 0, 43)
-        ),
+          DateComponents.datetime(2015, 12, 1, 2, 0, 43)),
         (
           DateComponents.datetime(2016, 1, 1, 1, 27, 46),
-          DateComponents.datetime(2016, 1, 1, 2, 19, 1)
-        ),
-      ]
-    )
-  )
+          DateComponents.datetime(2016, 1, 1, 2, 19, 1)),
+      ]))
   func goldenHourMorning(day: DateComponents, expected: (DateComponents, DateComponents)) throws {
     let (start, end) = try golden_hour(
       observer: Observer.newDelhi,
       date: day,
-      direction: SunDirection.rising
-    )
+      direction: SunDirection.rising)
 
     let accuracy = DateComponents(second: 90)
     #expect(expectDateComponentsEqual(end, expected.1, accuracy: accuracy))
@@ -54,8 +49,7 @@ struct SunGoldenHourTests {
     let (start, end) = try golden_hour(
       observer: Observer.london,
       date: day,
-      direction: SunDirection.setting
-    )
+      direction: SunDirection.setting)
 
     let accuracy = DateComponents(second: 90)
     #expect(expectDateComponentsEqual(end, expectedEnd, accuracy: accuracy))
@@ -70,8 +64,7 @@ struct SunGoldenHourTests {
 
     let (start, end) = try golden_hour(
       observer: Observer.newDelhi,
-      date: day
-    )
+      date: day)
 
     let accuracy = DateComponents(second: 90)
     #expect(expectDateComponentsEqual(end, expectedEnd, accuracy: accuracy))
@@ -89,8 +82,7 @@ struct SunGoldenHourTests {
     let (start, end) = try blue_hour(
       observer: Observer.london,
       date: day,
-      direction: SunDirection.rising
-    )
+      direction: SunDirection.rising)
 
     let accuracy = DateComponents(minute: 1, second: 30)
     #expect(expectDateComponentsEqual(end, expectedEnd, accuracy: accuracy))
@@ -106,8 +98,7 @@ struct SunGoldenHourTests {
     let (start, end) = try blue_hour(
       observer: Observer.london,
       date: day,
-      direction: SunDirection.setting
-    )
+      direction: SunDirection.setting)
 
     let accuracy = DateComponents(second: 90)
     #expect(expectDateComponentsEqual(end, expectedEnd, accuracy: accuracy))
@@ -123,8 +114,7 @@ struct SunGoldenHourTests {
     let (start, end) = try blue_hour(
       observer: Observer.london,
       date: day,
-      direction: .setting
-    )
+      direction: .setting)
 
     let accuracy = DateComponents(second: 90)
     #expect(expectDateComponentsEqual(end, expectedEnd, accuracy: accuracy))

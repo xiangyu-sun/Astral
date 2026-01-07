@@ -21,9 +21,7 @@ struct AzimuthTests {
         DateComponents.datetime(2022, 10, 10, 6, 43, 0),
         DateComponents.datetime(2022, 10, 10, 3, 0, 0),
       ],
-      [240.0, 115.0, 281.0, 235.0]
-    )
-  )
+      [240.0, 115.0, 281.0, 235.0]))
   func azimuthAtGreenwich(dt: DateComponents, expected: Double) {
     let observer = Observer(latitude: 51.4733, longitude: -0.0008333, elevation: .double(0))
     let result = azimuth(observer: observer, at: dt)

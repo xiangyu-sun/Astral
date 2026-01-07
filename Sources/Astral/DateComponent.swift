@@ -1,7 +1,7 @@
 import Foundation
 
-public extension TimeZone {
-  static var utc: TimeZone {
+extension TimeZone {
+  public static var utc: TimeZone {
     if #available(macOS 13, iOS 16, watchOS 9, *) {
       return .gmt
     } else {
@@ -10,9 +10,9 @@ public extension TimeZone {
   }
 }
 
-public extension Date {
+extension Date {
 
-  func components(calendar: Calendar = Calendar(identifier: .gregorian), timezone: TimeZone = .utc) -> DateComponents {
+  public func components(calendar: Calendar = Calendar(identifier: .gregorian), timezone: TimeZone = .utc) -> DateComponents {
     calendar.dateComponents(in: timezone, from: self)
   }
 

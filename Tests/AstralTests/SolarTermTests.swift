@@ -55,8 +55,7 @@ struct SolarTermTests {
     let date = try #require(calendar.date(from: components))
     let result = calendar.dateComponents(
       [.year, .month, .day, .hour],
-      from: preciseNextSolarTermDate(from: date)
-    )
+      from: preciseNextSolarTermDate(from: date))
 
     var componentsXiazhi = DateComponents()
     componentsXiazhi.year = 2025
@@ -222,9 +221,7 @@ struct SolarTermTests {
     "Month of current solar term for known dates",
     arguments: zip(
       ["2021-12-21", "2022-01-05", "2022-03-20", "2022-06-21", "2022-09-23", "2022-11-07"],
-      [12, 1, 3, 6, 9, 11]
-    )
-  )
+      [12, 1, 3, 6, 9, 11]))
   func monthOfCurrentSolarTermKnownDates(dateString: String, expectedMonth: Int) {
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd"

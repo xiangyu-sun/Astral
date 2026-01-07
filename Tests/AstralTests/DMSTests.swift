@@ -32,19 +32,19 @@ struct DMSTests {
   @Test("Convert DMS south coordinate")
   func south() throws {
     let result = try convertDegreesMinutesSecondsToDouble(value: "37°58'S", limit: 90.0)
-    #expect(abs(result - (-37.966666)) < 0.00001)
+    #expect(abs(result - -37.966666) < 0.00001)
   }
 
   @Test("Convert DMS west coordinate")
   func west() throws {
     let result = try convertDegreesMinutesSecondsToDouble(value: "171°50'W", limit: 180.0)
-    #expect(abs(result - (-171.8333333)) < 0.00001)
+    #expect(abs(result - -171.8333333) < 0.00001)
   }
 
   @Test("Convert DMS west coordinate (lowercase)")
   func westLowercase() throws {
     let result = try convertDegreesMinutesSecondsToDouble(value: "171°50'w", limit: 180.0)
-    #expect(abs(result - (-171.8333333)) < 0.00001)
+    #expect(abs(result - -171.8333333) < 0.00001)
   }
 
   @Test("Convert float string")

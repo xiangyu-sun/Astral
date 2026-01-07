@@ -42,7 +42,7 @@ public struct Observer {
     self.elevation = elevation
   }
 
-  // MARK: Internal
+  // MARK: Public
 
   public static let london = Observer(latitude: 51.4733, longitude: -0.0008333, elevation: .double(0))
   public static let newDelhi = Observer(latitude: 28.6139, longitude: 77.2090, elevation: .double(0))
@@ -51,7 +51,10 @@ public struct Observer {
     latitude: " 41° 17' 11.256'' S",
     longitude: "174° 46' 34.4496'' E",
     elevation: .double(13.000))
-  public static let barcelona = try! Observer(latitude: "41° 23' 24.7380'' N", longitude: "2° 9' 14.4252'' E", elevation: .double(0))
+  public static let barcelona = try! Observer(
+    latitude: "41° 23' 24.7380'' N",
+    longitude: "2° 9' 14.4252'' E",
+    elevation: .double(0))
 
   public let latitude: Degrees
   public let longitude: Degrees

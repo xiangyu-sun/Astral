@@ -44,7 +44,7 @@ struct SunElevationAdjustmentTests {
   @Test("Adjust to obscuring feature - negative 45 degree angle")
   func tupleNegative45Degrees() {
     let adjustment = adjust_to_obscuring_feature(elevation: (-10.0, 10.0))
-    #expect(abs(adjustment - (-45)) < 0.001)
+    #expect(abs(adjustment - -45) < 0.001)
   }
 
 }

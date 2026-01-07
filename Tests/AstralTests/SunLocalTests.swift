@@ -28,17 +28,14 @@ struct SunLocalTests {
         DateComponents.datetime(2015, 12, 3, 6, 31, 0, TimeZone(abbreviation: "GMT+5:30")!),
         DateComponents.datetime(2015, 12, 12, 6, 38, 0, TimeZone(abbreviation: "GMT+5:30")!),
         DateComponents.datetime(2015, 12, 25, 6, 45, 0, TimeZone(abbreviation: "GMT+5:30")!),
-      ]
-    )
-  )
+      ]))
   func dawnCalculationLocalTimezone(day: DateComponents, expectedDawn: DateComponents) throws {
     let dheli = TimeZone(abbreviation: "GMT+5:30")!
     let dawnCalc = try sun(
       observer: .newDelhi,
       date: day,
       dawn_dusk_depression: Depression(rawValue: 6),
-      tzinfo: dheli
-    )["dawn"]!
+      tzinfo: dheli)["dawn"]!
 
     // Compare with 90 second accuracy
     let accuracy = DateComponents(second: 90)

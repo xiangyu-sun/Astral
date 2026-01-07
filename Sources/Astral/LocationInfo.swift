@@ -43,7 +43,7 @@ public struct LocationInfo {
     self.longitude = longitude.cap(limit: 180)
   }
 
-  // MARK: Internal
+  // MARK: Public
 
   public let name: String
   public let region: String
