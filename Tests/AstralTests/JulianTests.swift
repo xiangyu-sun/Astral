@@ -10,11 +10,12 @@ import Numerics
 import Testing
 @testable import Astral
 
-@Suite("Julian Day Calculations")
+@Suite("Julian Day Calculations", .tags(.time, .conversion, .fast))
 struct JulianTests {
 
   @Test(
     "Julian day calculation for default calendar",
+    .tags(.unit, .accuracy),
     arguments: zip(
       [
         DateComponents.datetime(1957, 10, 4, 19, 26, 24),
@@ -74,6 +75,7 @@ struct JulianTests {
 
   @Test(
     "Julian day calculation for Julian calendar",
+    .tags(.unit, .accuracy),
     arguments: zip(
       [
         DateComponents.datetime(837, 4, 10, 7, 12, 0),
@@ -89,6 +91,7 @@ struct JulianTests {
 
   @Test(
     "Julian day to DateComponents conversion",
+    .tags(.unit, .accuracy),
     arguments: zip(
       [
         2026_871.8,
@@ -104,6 +107,7 @@ struct JulianTests {
 
   @Test(
     "Julian day to century conversion",
+    .tags(.unit, .accuracy),
     arguments: zip(
       [
         2455927.5,
@@ -126,6 +130,7 @@ struct JulianTests {
 
   @Test(
     "Julian century to day conversion",
+    .tags(.unit, .accuracy),
     arguments: zip(
       [
         0.119986311,

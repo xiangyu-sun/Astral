@@ -2,10 +2,10 @@ import Foundation
 import Testing
 @testable import Astral
 
-@Suite("Solar Term Calculation Tests")
+@Suite("Solar Term Calculation Tests", .tags(.solarTerm, .solar, .fast))
 struct SolarTermTests {
 
-  @Test("Vernal equinox solar term calculation")
+  @Test("Vernal equinox solar term calculation", .tags(.conversion, .accuracy, .integration))
   func vernalEquinox() throws {
     var components = DateComponents()
     components.year = 2012
@@ -23,7 +23,7 @@ struct SolarTermTests {
     #expect(abs(term - 0.5) < 0.5)
   }
 
-  @Test("Guyu solar term calculation (2025)")
+  @Test("Guyu solar term calculation (2025)", .tags(.conversion, .accuracy, .integration))
   func guyu2025() throws {
     var components = DateComponents()
     components.year = 2025
@@ -40,7 +40,7 @@ struct SolarTermTests {
     #expect(abs(term - 2.5) < 0.5)
   }
 
-  @Test("Guyu to Xiazhi - 15 days calculation")
+  @Test("Guyu to Xiazhi - 15 days calculation", .tags(.conversion, .integration))
   func guyu15DaysToXiazhi() throws {
     var components = DateComponents()
     components.year = 2025
@@ -67,7 +67,7 @@ struct SolarTermTests {
     #expect(result == componentsXiazhi)
   }
 
-  @Test("Xiazhi solar term calculation (2025)")
+  @Test("Xiazhi solar term calculation (2025)", .tags(.conversion, .accuracy, .integration))
   func xiazhi2025() throws {
     var components = DateComponents()
     components.year = 2025
@@ -84,7 +84,7 @@ struct SolarTermTests {
     #expect(abs(term - 3.5) < 0.5)
   }
 
-  @Test("Summer solstice solar term calculation")
+  @Test("Summer solstice solar term calculation", .tags(.conversion, .accuracy, .integration))
   func summerSolstice() throws {
     var components = DateComponents()
     components.year = 2012
@@ -102,7 +102,7 @@ struct SolarTermTests {
     #expect(abs(term - 6.5) < 0.5)
   }
 
-  @Test("Autumn equinox solar term calculation")
+  @Test("Autumn equinox solar term calculation", .tags(.conversion, .accuracy, .integration))
   func autumnEquinox() throws {
     var components = DateComponents()
     components.year = 2012
@@ -120,7 +120,7 @@ struct SolarTermTests {
     #expect(abs(term - 12.5) < 0.5)
   }
 
-  @Test("Winter solstice solar term calculation")
+  @Test("Winter solstice solar term calculation", .tags(.conversion, .accuracy, .integration))
   func winterSolstice() throws {
     var components = DateComponents()
     components.year = 2012
@@ -138,7 +138,7 @@ struct SolarTermTests {
     #expect(abs(term - 18.5) < 0.5)
   }
 
-  @Test("Solar term increases monotonically with time")
+  @Test("Solar term increases monotonically with time", .tags(.validation, .unit))
   func monotonicity() {
     var components1 = DateComponents()
     components1.year = 2020
@@ -166,7 +166,7 @@ struct SolarTermTests {
     #expect(term1 < adjustedTerm2)
   }
 
-  @Test("Solar term calculation is timezone independent")
+  @Test("Solar term calculation is timezone independent", .tags(.time, .validation, .integration))
   func timeZoneIndependence() throws {
     // Create a date in GMT+8 that corresponds to an equivalent UTC date
     var componentsLocal = DateComponents()
@@ -197,7 +197,7 @@ struct SolarTermTests {
     #expect(abs(termLocal - termUTC) < 0.0001)
   }
 
-  @Test("Solar term value is within expected range")
+  @Test("Solar term value is within expected range", .tags(.validation, .unit))
   func resultRange() {
     let now = Date()
     let term = currentSolarTerm(for: now)
@@ -207,7 +207,7 @@ struct SolarTermTests {
     #expect(term < 24.5)
   }
 
-  @Test("Precise next solar term date aligns with boundary")
+  @Test("Precise next solar term date aligns with boundary", .tags(.accuracy, .integration))
   func preciseNextSolarTermDateAlignsWithBoundary() {
     let baseline = Date(timeIntervalSince1970: 0)
     let boundaryDate = preciseNextSolarTermDate(from: baseline, iterations: 10)
@@ -219,6 +219,7 @@ struct SolarTermTests {
 
   @Test(
     "Month of current solar term for known dates",
+    .tags(.conversion, .integration),
     arguments: zip(
       ["2021-12-21", "2022-01-05", "2022-03-20", "2022-06-21", "2022-09-23", "2022-11-07"],
       [12, 1, 3, 6, 9, 11]))

@@ -9,11 +9,12 @@ import Foundation
 import Testing
 @testable import Astral
 
-@Suite("Sun UTC Calculation Tests")
+@Suite("Sun UTC Calculation Tests", .tags(.solar, .transit, .fast))
 struct SunUTCTests {
 
   @Test(
     "Sun function returns correct dawn time",
+    .tags(.integration),
     arguments: zip(
       [
         DateComponents.date(2015, 12, 1),
@@ -38,6 +39,7 @@ struct SunUTCTests {
 
   @Test(
     "Dawn calculation with civil depression",
+    .tags(.integration),
     arguments: zip(
       [
         DateComponents.date(2015, 12, 1),
@@ -62,6 +64,7 @@ struct SunUTCTests {
 
   @Test(
     "Dawn calculation with nautical depression",
+    .tags(.integration),
     arguments: zip(
       [
         DateComponents.date(2015, 12, 1),
@@ -86,6 +89,7 @@ struct SunUTCTests {
 
   @Test(
     "Dawn calculation with astronomical depression",
+    .tags(.integration),
     arguments: zip(
       [
         DateComponents.date(2015, 12, 1),
@@ -110,6 +114,7 @@ struct SunUTCTests {
 
   @Test(
     "Sunrise calculation",
+    .tags(.integration),
     arguments: zip(
       [
         DateComponents.date(2015, 1, 1),
@@ -136,6 +141,7 @@ struct SunUTCTests {
 
   @Test(
     "Sunset calculation",
+    .tags(.integration),
     arguments: zip(
       [
         DateComponents.date(2015, 1, 1),
@@ -162,6 +168,7 @@ struct SunUTCTests {
 
   @Test(
     "Dusk calculation",
+    .tags(.integration),
     arguments: zip(
       [
         DateComponents.date(2015, 12, 1),
@@ -186,6 +193,7 @@ struct SunUTCTests {
 
   @Test(
     "Dusk calculation with nautical depression",
+    .tags(.integration),
     arguments: zip(
       [
         DateComponents.date(2015, 12, 1),
@@ -210,6 +218,7 @@ struct SunUTCTests {
 
   @Test(
     "Solar noon calculation",
+    .tags(.integration),
     arguments: zip(
       [
         DateComponents.date(2015, 12, 1),
@@ -234,6 +243,7 @@ struct SunUTCTests {
 
   @Test(
     "Solar midnight calculation",
+    .tags(.integration),
     arguments: zip(
       [
         DateComponents.date(2016, 2, 18),
@@ -250,7 +260,7 @@ struct SunUTCTests {
     #expect(expectDateComponentsEqual(actual, expected, accuracy: accuracy))
   }
 
-  @Test("Twilight calculation for sun rising")
+  @Test("Twilight calculation for sun rising", .tags(.integration))
   func twilightSunRising() throws {
     let day = DateComponents.date(2019, 8, 29)
     let expected1 = DateComponents.datetime(2019, 8, 29, 4, 32)
@@ -263,7 +273,7 @@ struct SunUTCTests {
     #expect(expectDateComponentsEqual(actual.1, expected2, accuracy: accuracy))
   }
 
-  @Test("Twilight calculation for sun setting")
+  @Test("Twilight calculation for sun setting", .tags(.integration))
   func twilightSunSetting() throws {
     let day = DateComponents.date(2019, 8, 29)
     let expected1 = DateComponents.datetime(2019, 8, 29, 18, 54)
@@ -278,6 +288,7 @@ struct SunUTCTests {
 
   @Test(
     "Rahukaalam calculation",
+    .tags(.integration),
     arguments: zip(
       [
         DateComponents.date(2015, 12, 1),
@@ -297,6 +308,7 @@ struct SunUTCTests {
 
   @Test(
     "Solar altitude calculation",
+    .tags(.position, .integration),
     arguments: zip(
       [
         DateComponents.datetime(2015, 12, 14, 11, 0, 0),
@@ -310,6 +322,7 @@ struct SunUTCTests {
 
   @Test(
     "Solar azimuth calculation",
+    .tags(.position, .integration),
     arguments: zip(
       [
         DateComponents.datetime(2015, 12, 14, 11, 0, 0),
@@ -323,6 +336,7 @@ struct SunUTCTests {
 
   @Test(
     "Solar zenith calculation for London",
+    .tags(.position, .integration),
     arguments: zip(
       [
         DateComponents.datetime(2021, 10, 10, 6, 0, 0),
@@ -338,6 +352,7 @@ struct SunUTCTests {
 
   @Test(
     "Solar zenith calculation for Riyadh",
+    .tags(.position, .integration),
     arguments: zip(
       [
         DateComponents.datetime(2022, 5, 1, 14, 0, 0),
@@ -349,7 +364,7 @@ struct SunUTCTests {
     #expect(abs(expected - actual) < 0.5)
   }
 
-  @Test("Time at elevation for sun rising")
+  @Test("Time at elevation for sun rising", .tags(.integration))
   func timeAtElevationSunRising() {
     let d = DateComponents.date(2016, 1, 4)
     let dt = time_at_elevation(observer: .london, elevation: 6, date: d, direction: SunDirection.rising)
@@ -359,7 +374,7 @@ struct SunUTCTests {
     #expect(expectDateComponentsEqual(dt, cdt, accuracy: accuracy))
   }
 
-  @Test("Time at elevation for sun setting")
+  @Test("Time at elevation for sun setting", .tags(.integration))
   func timeAtElevationSunSetting() {
     let d = DateComponents.date(2016, 1, 4)
     let dt = time_at_elevation(observer: .london, elevation: 6, date: d, direction: SunDirection.setting)
@@ -369,7 +384,7 @@ struct SunUTCTests {
     #expect(expectDateComponentsEqual(dt, cdt, accuracy: accuracy))
   }
 
-  @Test("Time at elevation greater than 90 degrees")
+  @Test("Time at elevation greater than 90 degrees", .tags(.integration, .edge))
   func timeAtElevationGreater90() {
     let d = DateComponents.date(2016, 1, 4)
     let dt = time_at_elevation(observer: .london, elevation: 166, date: d, direction: SunDirection.setting)
@@ -379,7 +394,7 @@ struct SunUTCTests {
     #expect(expectDateComponentsEqual(dt, cdt, accuracy: accuracy))
   }
 
-  @Test("Time at elevation greater than 180 degrees")
+  @Test("Time at elevation greater than 180 degrees", .tags(.integration, .edge))
   func timeAtElevationGreater180() {
     let d = DateComponents.date(2016, 1, 4)
     let dt = time_at_elevation(observer: .london, elevation: 186, date: d, direction: SunDirection.rising)
@@ -389,7 +404,7 @@ struct SunUTCTests {
     #expect(expectDateComponentsEqual(dt, cdt, accuracy: accuracy))
   }
 
-  @Test("Time at elevation for sunrise below horizon")
+  @Test("Time at elevation for sunrise below horizon", .tags(.integration, .edge))
   func timeAtElevationSunriseBelowHorizon() {
     let d = DateComponents.date(2016, 1, 4)
     let dt = time_at_elevation(observer: .london, elevation: -18, date: d, direction: SunDirection.rising)
@@ -399,7 +414,7 @@ struct SunUTCTests {
     #expect(expectDateComponentsEqual(dt, cdt, accuracy: accuracy))
   }
 
-  @Test("Time at elevation with negative elevation")
+  @Test("Time at elevation with negative elevation", .tags(.integration, .edge))
   func timeAtElevationBadElevation() {
     let d = DateComponents.date(2016, 1, 4)
     let dt = time_at_elevation(observer: .london, elevation: -18, date: d, direction: SunDirection.rising)
@@ -409,7 +424,7 @@ struct SunUTCTests {
     #expect(expectDateComponentsEqual(dt, cdt, accuracy: accuracy))
   }
 
-  @Test("Daylight calculation returns start and end times")
+  @Test("Daylight calculation returns start and end times", .tags(.integration))
   func daylightCalculation() throws {
     let d = DateComponents.date(2016, 1, 6)
     let dt = try daylight(observer: .london, date: d)
@@ -421,7 +436,7 @@ struct SunUTCTests {
     #expect(expectDateComponentsEqual(dt.1, cend, accuracy: accuracy))
   }
 
-  @Test("Night time calculation returns start and end times")
+  @Test("Night time calculation returns start and end times", .tags(.integration))
   func nightTimeCalculation() throws {
     let d = DateComponents.date(2016, 1, 6)
     let dt = try night(observer: .london, date: d)

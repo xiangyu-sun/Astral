@@ -9,7 +9,7 @@ import Foundation
 import Testing
 @testable import Astral
 
-@Suite("Moon Rise/Set and Phase Tests")
+@Suite("Moon Rise/Set and Phase Tests", .tags(.lunar, .fast))
 struct MoonTests {
 
   static let wellington = TimeZone(abbreviation: "GMT+13")!
@@ -17,6 +17,7 @@ struct MoonTests {
 
   @Test(
     "Moon phase calculation",
+    .tags(.conversion, .accuracy, .unit),
     arguments: zip(
       [
         DateComponents.date(2015, 12, 1),
@@ -36,6 +37,7 @@ struct MoonTests {
 
   @Test(
     "Moonrise UTC at London",
+    .tags(.transit, .integration),
     arguments: zip(
       [
         DateComponents.date(2022, 11, 30),
@@ -61,6 +63,7 @@ struct MoonTests {
 
   @Test(
     "Moonset UTC at London",
+    .tags(.transit, .integration),
     arguments: zip(
       [
         DateComponents.date(2021, 10, 28),
@@ -86,6 +89,7 @@ struct MoonTests {
 
   @Test(
     "Moonrise UTC at Riyadh",
+    .tags(.transit, .integration),
     arguments: zip(
       [
         DateComponents.date(2022, 5, 1),
@@ -109,6 +113,7 @@ struct MoonTests {
 
   @Test(
     "Moonset UTC at Riyadh",
+    .tags(.transit, .integration),
     arguments: zip(
       [
         DateComponents.date(2021, 10, 28),
@@ -134,6 +139,7 @@ struct MoonTests {
 
   @Test(
     "Moonrise at Wellington with local timezone",
+    .tags(.transit, .integration, .time),
     arguments: zip(
       [
         DateComponents.date(2023, 1, 27, wellington),
@@ -157,6 +163,7 @@ struct MoonTests {
 
   @Test(
     "Moonset at Wellington with local timezone",
+    .tags(.transit, .integration, .time),
     arguments: zip(
       [
         DateComponents.date(2023, 1, 27, wellington),
@@ -184,7 +191,7 @@ struct MoonTests {
     }
   }
 
-  @Test("Moonrise at Barcelona with local and UTC timezones")
+  @Test("Moonrise at Barcelona with local and UTC timezones", .tags(.transit, .integration, .time))
   func moonriseBarcelona() throws {
     // Test with local timezone
     let dateLocal = DateComponents.date(2023, 1, 21, Self.timeZoneBCN)
