@@ -10,11 +10,12 @@ import Numerics
 import Testing
 @testable import Astral
 
-@Suite("Sun Calculation Tests")
+@Suite("Sun Calculation Tests", .tags(.solar, .fast))
 struct SunCalcTests {
 
   @Test(
     "Geometric mean longitude of sun",
+    .tags(.conversion, .accuracy, .unit),
     arguments: zip(
       [-1.329130732, 12.00844627, 0.184134155],
       [310.7374254, 233.8203529, 69.43779106]))
@@ -25,6 +26,7 @@ struct SunCalcTests {
 
   @Test(
     "Geometric mean anomaly of sun",
+    .tags(.conversion, .accuracy, .unit),
     arguments: zip(
       [0.119986311, 12.00844627, 0.184134155],
       [4676.922342, 432650.1681, 6986.1838]))
@@ -35,6 +37,7 @@ struct SunCalcTests {
 
   @Test(
     "Eccentric location of Earth orbit",
+    .tags(.conversion, .accuracy, .unit),
     arguments: zip(
       [0.119986311, 12.00844627, 0.184134155],
       [0.016703588, 0.016185564, 0.016700889]))
@@ -45,6 +48,7 @@ struct SunCalcTests {
 
   @Test(
     "Sun equation of center",
+    .tags(.conversion, .accuracy, .unit),
     arguments: zip(
       [0.119986311, 12.00844627, 0.184134155],
       [-0.104951648, -1.753028843, 1.046852316]))
@@ -55,6 +59,7 @@ struct SunCalcTests {
 
   @Test(
     "Sun true longitude",
+    .tags(.conversion, .accuracy, .unit),
     arguments: zip(
       [0.119986311, 12.00844627, 0.184134155],
       [279.9610686, 232.0673358, 70.48465428]))
@@ -65,6 +70,7 @@ struct SunCalcTests {
 
   @Test(
     "Sun true anomaly",
+    .tags(.conversion, .accuracy, .unit),
     arguments: zip(
       [0.119986311, 12.00844627, 0.184134155],
       [4676.817391, 432648.4151, 6987.230663]))
@@ -75,6 +81,7 @@ struct SunCalcTests {
 
   @Test(
     "Sun radius vector",
+    .tags(.conversion, .accuracy, .unit),
     arguments: zip(
       [0.119986311, 12.00844627, 0.184134155],
       [0.983322329, 0.994653382, 1.013961204]))
@@ -85,6 +92,7 @@ struct SunCalcTests {
 
   @Test(
     "Sun apparent longitude",
+    .tags(.conversion, .accuracy, .unit),
     arguments: zip(
       [0.119986311, 12.00844627, 0.184134155],
       [279.95995849827, 232.065823531804, 70.475244256027]))
@@ -95,6 +103,7 @@ struct SunCalcTests {
 
   @Test(
     "Mean obliquity of ecliptic (0.001 accuracy)",
+    .tags(.conversion, .accuracy, .unit),
     arguments: zip(
       [0.119986311, 12.00844627, 0.184134155],
       [23.4377307876356, 23.2839797200388, 23.4368965974579]))
@@ -105,6 +114,7 @@ struct SunCalcTests {
 
   @Test(
     "Mean obliquity of ecliptic (0.01 accuracy)",
+    .tags(.conversion, .accuracy, .unit),
     arguments: zip(
       [0.119986311, 12.00844627, 0.184134155],
       [23.4369810410121, 23.2852236361575, 23.4352890293474]))
@@ -115,6 +125,7 @@ struct SunCalcTests {
 
   @Test(
     "Sun right ascension",
+    .tags(.conversion, .accuracy, .unit),
     arguments: zip(
       [0.119986311, 12.00844627, 0.184134155],
       [-79.16480352 + 360, -130.3163904 + 360, 68.86915896]))
@@ -125,6 +136,7 @@ struct SunCalcTests {
 
   @Test(
     "Sun declination",
+    .tags(.conversion, .accuracy, .unit),
     arguments: zip(
       [0.119986311, 12.00844627, 0.184134155],
       [-23.06317068, -18.16694394, 22.01463552]))
@@ -135,6 +147,7 @@ struct SunCalcTests {
 
   @Test(
     "Equation of time",
+    .tags(.conversion, .accuracy, .unit),
     arguments: zip(
       [0.119986311, 12.00844627, 0.184134155],
       [-3.078194825, 16.58348133, 2.232039737]))
@@ -145,6 +158,7 @@ struct SunCalcTests {
 
   @Test(
     "Hour angle calculation",
+    .tags(.conversion, .unit),
     arguments: zip(
       [
         DateComponents.date(2012, 1, 1),
@@ -168,35 +182,35 @@ struct SunCalcTests {
     #expect(abs(result - expected) < 0.1)
   }
 
-  @Test("Azimuth at New Delhi")
+  @Test("Azimuth at New Delhi", .tags(.position, .integration))
   func azimuthNewDelhi() {
     let date = DateComponents.datetime(2001, 6, 21, 13, 11, 0)
     let result = azimuth(observer: .newDelhi, dateandtime: date)
     #expect(abs(result - 292.76) < 0.01)
   }
 
-  @Test("Elevation at New Delhi")
+  @Test("Elevation at New Delhi", .tags(.position, .integration))
   func elevationNewDelhi() {
     let date = DateComponents.datetime(2001, 6, 21, 13, 11, 0)
     let result = elevation(observer: .newDelhi, dateandtime: date)
     #expect(abs(result - 7.41) < 0.1)
   }
 
-  @Test("Elevation at New Delhi with non-native timezone")
+  @Test("Elevation at New Delhi with non-native timezone", .tags(.position, .integration, .time))
   func elevationNewDelhiNonNativeTimezone() {
     let date = DateComponents.datetime(2001, 6, 21, 18, 41, 0, .init(abbreviation: "GMT+5:30")!)
     let result = elevation(observer: .newDelhi, dateandtime: date)
     #expect(abs(result - 7.41) < 0.1)
   }
 
-  @Test("Elevation without refraction")
+  @Test("Elevation without refraction", .tags(.position, .integration))
   func elevationWithoutRefraction() {
     let date = DateComponents.datetime(2001, 6, 21, 13, 11, 0)
     let result = elevation(observer: .newDelhi, dateandtime: date, with_refraction: false)
     #expect(abs(result - 7.29) < 0.1)
   }
 
-  @Test("Azimuth above 85 degrees latitude")
+  @Test("Azimuth above 85 degrees latitude", .tags(.position, .integration, .edge))
   func azimuthAbove85Degrees() {
     let date = DateComponents.datetime(2001, 6, 21, 13, 11, 0)
     let observer = Observer(latitude: 86, longitude: 77.2, elevation: .double(0))
@@ -204,7 +218,7 @@ struct SunCalcTests {
     #expect(abs(result - 276.21) < 0.01)
   }
 
-  @Test("Elevation above 85 degrees latitude")
+  @Test("Elevation above 85 degrees latitude", .tags(.position, .integration, .edge))
   func elevationAbove85Degrees() {
     let date = DateComponents.datetime(2001, 6, 21, 13, 11, 0)
     let observer = Observer(latitude: 86, longitude: 77.2, elevation: .double(0))
@@ -214,6 +228,7 @@ struct SunCalcTests {
 
   @Test(
     "Elevation equals time at elevation",
+    .tags(.position, .integration),
     arguments: 1...20)
   func elevationEqualsTimeAtElevation(elevation: Int) {
     let observer = Observer.london
