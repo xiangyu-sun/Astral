@@ -81,9 +81,12 @@ public func daysUntilNextSolarTerm(from date: Date = Date()) -> Double {
     angleDifference += 360
   }
 
-  // Convert the angular difference to days using the average daily solar motion (~0.9856°/day).
-  let dailyMotion = 360.0 / 365.242189
-  return angleDifference / dailyMotion
+  // Numerical derivative for local solar motion instead of constant average
+  let dtSmall = 0.01 // days
+  let jcPlus = julianDayToCentury(julianDay: jd + dtSmall)
+  let lambdaPlus = sun_apparent_long(juliancentury: jcPlus)
+  let localDailyMotion = (lambdaPlus - apparentLong) / dtSmall // degrees per day
+  return angleDifference / localDailyMotion
 }
 
 /// Computes the exact date of the next solar term using Newton iteration.
@@ -111,7 +114,7 @@ public func preciseNextSolarTermDate(from date: Date = Date(), iterations: Int =
   let approxDays = degreesDiff / dailyMotion
   var t = date.addingTimeInterval(approxDays * 86400)
 
-  // 牛顿迭代求解
+  // Newton iteration with numerical derivative for variable solar motion
   for _ in 0..<iterations {
     let compT = t.components(timezone: utcTimeZone)
     let jdT = julianDay(at: compT)
@@ -120,11 +123,17 @@ public func preciseNextSolarTermDate(from date: Date = Date(), iterations: Int =
     let normLambda = (lambdaT.truncatingRemainder(dividingBy: 360) + 360)
       .truncatingRemainder(dividingBy: 360)
 
+    // Numerical derivative: evaluate longitude 0.01 day later
+    let dtSmall = 0.01 // days
+    let jcTplus = julianDayToCentury(julianDay: jdT + dtSmall)
+    let lambdaTplus = sun_apparent_long(juliancentury: jcTplus)
+    let localDailyMotion = (lambdaTplus - lambdaT) / dtSmall // degrees per day
+
     // Compute minimal signed angular difference (±180°) to avoid huge jumps.
     var delta = (normLambda - targetLongitude).remainder(dividingBy: 360)
     if delta > 180 { delta -= 360 }
     if delta < -180 { delta += 360 }
-    let dt = -delta / dailyMotion * 86400
+    let dt = -delta / localDailyMotion * 86400
     t = t.addingTimeInterval(dt)
   }
 

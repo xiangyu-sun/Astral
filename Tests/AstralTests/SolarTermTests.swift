@@ -20,7 +20,7 @@ struct SolarTermTests {
     let term = currentSolarTerm(for: date)
 
     // At exact 0° longitude the formula gives 0.5; we allow a tolerance of ±0.5
-    #expect(abs(term - 0.5) < 0.5)
+    #expect(abs(term - 0.5) < 0.3)
   }
 
   @Test("Guyu solar term calculation (2025)", .tags(.conversion, .accuracy, .integration))
@@ -37,7 +37,7 @@ struct SolarTermTests {
     let date = try #require(Calendar(identifier: .gregorian).date(from: components))
     let term = currentSolarTerm(for: date)
 
-    #expect(abs(term - 2.5) < 0.5)
+    #expect(abs(term - 2.5) < 0.3)
   }
 
   @Test("Guyu to Xiazhi - 15 days calculation", .tags(.conversion, .integration))
@@ -81,7 +81,7 @@ struct SolarTermTests {
     let date = try #require(Calendar(identifier: .gregorian).date(from: components))
     let term = currentSolarTerm(for: date)
 
-    #expect(abs(term - 3.5) < 0.5)
+    #expect(abs(term - 3.5) < 0.3)
   }
 
   @Test("Summer solstice solar term calculation", .tags(.conversion, .accuracy, .integration))
@@ -99,7 +99,7 @@ struct SolarTermTests {
     let term = currentSolarTerm(for: date)
 
     // At 90° the formula gives (90+7.5)/15 = 97.5/15 = 6.5
-    #expect(abs(term - 6.5) < 0.5)
+    #expect(abs(term - 6.5) < 0.3)
   }
 
   @Test("Autumn equinox solar term calculation", .tags(.conversion, .accuracy, .integration))
@@ -117,7 +117,7 @@ struct SolarTermTests {
     let term = currentSolarTerm(for: date)
 
     // At 180° the formula gives (180+7.5)/15 = 187.5/15 = 12.5
-    #expect(abs(term - 12.5) < 0.5)
+    #expect(abs(term - 12.5) < 0.3)
   }
 
   @Test("Winter solstice solar term calculation", .tags(.conversion, .accuracy, .integration))
@@ -135,7 +135,7 @@ struct SolarTermTests {
     let term = currentSolarTerm(for: date)
 
     // At 270° the formula gives (270+7.5)/15 = 277.5/15 = 18.5
-    #expect(abs(term - 18.5) < 0.5)
+    #expect(abs(term - 18.5) < 0.3)
   }
 
   @Test("Solar term increases monotonically with time", .tags(.validation, .unit))

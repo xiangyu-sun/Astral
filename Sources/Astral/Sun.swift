@@ -96,11 +96,81 @@ func sun_rad_vector(juliancentury: Double) -> Double {
   return (1.000001018 * (1 - e * e)) / (1 + e * cos(radians(v)))
 }
 
+// MARK: - Nutation (Meeus Table 22.A, top 20 terms)
+
+/// Computes nutation in longitude (Δψ) and nutation in obliquity (Δε) in arcseconds.
+/// Uses the top 20 terms from Meeus Table 22.A with 5 fundamental arguments: D, M, M', F, Ω.
+/// - Parameter juliancentury: Julian centuries since J2000.0
+/// - Returns: A tuple (nutationLongitude, nutationObliquity) both in arcseconds.
+func nutation(juliancentury T: Double) -> (longitude: Double, obliquity: Double) {
+  let T2 = T * T
+  let T3 = T2 * T
+
+  // Five fundamental arguments (degrees)
+  // D: Mean elongation of the Moon
+  let D = 297.85036 + 445267.111480 * T - 0.0019142 * T2 + T3 / 189474.0
+  // M: Sun's mean anomaly
+  let M = 357.52772 + 35999.050340 * T - 0.0001603 * T2 - T3 / 300000.0
+  // Mprime: Moon's mean anomaly
+  let Mprime = 134.96298 + 477198.867398 * T + 0.0086972 * T2 + T3 / 56250.0
+  // F: Moon's argument of latitude
+  let F = 93.27191 + 483202.017538 * T - 0.0036825 * T2 + T3 / 327270.0
+  // Omega: Longitude of Moon's ascending node
+  let omega = 125.04452 - 1934.136261 * T + 0.0020708 * T2 + T3 / 450000.0
+
+  // Each row: [D_mult, M_mult, Mprime_mult, F_mult, Omega_mult, psi_A, psi_B, eps_C, eps_D]
+  // Δψ = Σ (A + B·T) · sin(arg) in 0.0001"
+  // Δε = Σ (C + D·T) · cos(arg) in 0.0001"
+  let nutationTable: [[Double]] = [
+    [0, 0, 0, 0, 1, -171996, -174.2, 92025, 8.9],
+    [-2, 0, 0, 2, 2, -13187, -1.6, 5736, -3.1],
+    [0, 0, 0, 2, 2, -2274, -0.2, 977, -0.5],
+    [0, 0, 0, 0, 2, 2062, 0.2, -895, 0.5],
+    [0, 1, 0, 0, 0, 1426, -3.4, 54, -0.1],
+    [0, 0, 1, 0, 0, 712, 0.1, -7, 0],
+    [-2, 1, 0, 2, 2, -517, 1.2, 224, -0.6],
+    [0, 0, 0, 2, 1, -386, -0.4, 200, 0],
+    [0, 0, 1, 2, 2, -301, 0, 129, -0.1],
+    [-2, -1, 0, 2, 2, 217, -0.5, -95, 0.3],
+    [-2, 0, 1, 0, 0, -158, 0, 0, 0],
+    [-2, 0, 0, 2, 1, 129, 0.1, -70, 0],
+    [0, 0, -1, 2, 2, 123, 0, -53, 0],
+    [2, 0, 0, 0, 0, 63, 0, 0, 0],
+    [0, 0, 1, 0, 1, 63, 0.1, -33, 0],
+    [2, 0, -1, 2, 2, -59, 0, 26, 0],
+    [0, 0, -1, 0, 1, -58, -0.1, 32, 0],
+    [0, 0, 1, 2, 1, -51, 0, 27, 0],
+    [-2, 0, 2, 0, 0, 48, 0, 0, 0],
+    [0, 0, -2, 2, 1, 46, 0, -24, 0],
+  ]
+
+  var dpsi = 0.0 // in 0.0001 arcseconds
+  var deps = 0.0
+
+  for row in nutationTable {
+    let arg = radians(row[0] * D + row[1] * M + row[2] * Mprime + row[3] * F + row[4] * omega)
+    dpsi += (row[5] + row[6] * T) * sin(arg)
+    deps += (row[7] + row[8] * T) * cos(arg)
+  }
+
+  // Convert from 0.0001 arcseconds to arcseconds
+  return (longitude: dpsi / 10000.0, obliquity: deps / 10000.0)
+}
+
 /// Returns the Sun's apparent longitude (in degrees) after correcting for nutation and aberration.
+/// Uses multi-term nutation and distance-dependent aberration.
 func sun_apparent_long(juliancentury: Double) -> Double {
   let tLong = sun_true_long(juliancentury: juliancentury)
-  let omega = 125.04 - 1934.136 * juliancentury
-  return tLong - 0.00569 - 0.00478 * sin(radians(omega))
+
+  // Multi-term nutation in longitude (arcseconds → degrees)
+  let nut = nutation(juliancentury: juliancentury)
+  let nutationDeg = nut.longitude / 3600.0
+
+  // Distance-dependent aberration: κ = -20.4898" / R
+  let R = sun_rad_vector(juliancentury: juliancentury)
+  let aberration = -20.4898 / (3600.0 * R)
+
+  return tLong + nutationDeg + aberration
 }
 
 /// Returns the mean obliquity of the ecliptic (in degrees).
@@ -110,10 +180,12 @@ func mean_obliquity_of_ecliptic(juliancentury: Double) -> Double {
 }
 
 /// Returns the corrected obliquity of the ecliptic (in degrees).
+/// Uses multi-term nutation in obliquity.
 func obliquity_correction(juliancentury: Double) -> Double {
   let e0 = mean_obliquity_of_ecliptic(juliancentury: juliancentury)
-  let omega = 125.04 - 1934.136 * juliancentury
-  return e0 + 0.00256 * cos(radians(omega))
+  // Multi-term nutation in obliquity (arcseconds → degrees)
+  let nut = nutation(juliancentury: juliancentury)
+  return e0 + nut.obliquity / 3600.0
 }
 
 /// Returns the Sun's right ascension (in degrees).

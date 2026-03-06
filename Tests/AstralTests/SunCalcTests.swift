@@ -226,6 +226,18 @@ struct SunCalcTests {
     #expect(abs(result - 23.10250115161950) < 0.001)
   }
 
+  @Test("Nutation calculation (Meeus Example 22.a)", .tags(.accuracy, .unit))
+  func nutationMeeusExample() {
+    // Meeus Example 22.a: April 10, 1987 at 0h TD
+    // JDE = 2446895.5, T = -0.127296372348
+    let T = -0.127296372348
+    let nut = nutation(juliancentury: T)
+    // Expected: Δψ = -3.788" (Meeus gives -3.788")
+    #expect(abs(nut.longitude - (-3.788)) < 0.5)
+    // Expected: Δε = +9.443" (Meeus gives +9.443")
+    #expect(abs(nut.obliquity - 9.443) < 0.5)
+  }
+
   @Test(
     "Elevation equals time at elevation",
     .tags(.position, .integration),
