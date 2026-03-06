@@ -15,24 +15,49 @@ struct MoonTests {
   static let wellington = TimeZone(abbreviation: "GMT+13")!
   static let timeZoneBCN = TimeZone(abbreviation: "CET")!
 
+  // Known lunar events from USNO data (moon age in days):
+  // New Moon = 0, First Quarter ~ 7.38, Full Moon ~ 14.77, Last Quarter ~ 22.15
   @Test(
     "Moon phase calculation",
     .tags(.conversion, .accuracy, .unit),
     arguments: zip(
       [
-        DateComponents.date(2015, 12, 1),
-        DateComponents.date(2015, 12, 2),
-        DateComponents.date(2015, 12, 3),
-        DateComponents.date(2014, 12, 1),
-        DateComponents.date(2014, 12, 2),
+        // 2015 Dec 11 10:29 UTC = New Moon (age ~ 0)
+        DateComponents.date(2015, 12, 11),
+        // 2015 Dec 25 11:12 UTC = Full Moon (age ~ 14.77)
+        DateComponents.date(2015, 12, 25),
+        // 2014 Jan 1 11:14 UTC = New Moon (age ~ 0)
         DateComponents.date(2014, 1, 1),
+        // 2014 Jan 16 04:52 UTC = Full Moon (age ~ 14.77)
+        DateComponents.date(2014, 1, 16),
+        // 2020 Jan 3 04:45 UTC = First Quarter (age ~ 7.38)
+        DateComponents.date(2020, 1, 3),
+        // 2020 Jan 10 19:21 UTC = Full Moon (age ~ 14.77)
+        DateComponents.date(2020, 1, 10),
+        // 2020 Jan 17 12:59 UTC = Last Quarter (age ~ 22.15)
+        DateComponents.date(2020, 1, 17),
+        // 2020 Jan 24 21:42 UTC = New Moon (age ~ 0)
+        DateComponents.date(2020, 1, 24),
+        // 2022 Jun 14 11:52 UTC = Full Moon (age ~ 14.77)
+        DateComponents.date(2022, 6, 14),
+        // 2022 Jun 29 02:52 UTC = New Moon (age ~ 0)
+        DateComponents.date(2022, 6, 29),
+        // 2023 Mar 7 12:40 UTC = Full Moon (age ~ 14.77)
+        DateComponents.date(2023, 3, 7),
+        // 2023 Mar 21 17:23 UTC = New Moon (age ~ 0)
+        DateComponents.date(2023, 3, 21),
       ],
-      [19.477889, 20.333444, 21.189000, 9.0556666, 10.066777, 27.955666]))
+      [0.0, 14.77, 0.0, 14.77, 7.38, 14.77, 22.15, 0.0, 14.77, 0.0, 14.77, 0.0]))
   func moonPhase(date: DateComponents, expectedPhase: Double) {
     let actual = Astral.moonPhase(date: date)
-    // Moon phase algorithms can vary significantly between implementations
-    // Allow up to 15 days difference to account for different algorithms/epochs
-    #expect(abs(actual - expectedPhase) < 15.0)
+    let synodicMonth = 29.53058867
+    // Compute circular distance on the synodic month cycle
+    var diff = abs(actual - expectedPhase)
+    if diff > synodicMonth / 2 {
+      diff = synodicMonth - diff
+    }
+    // Tightened tolerance: ±1.5 days (was ±15 days)
+    #expect(diff < 1.5)
   }
 
   @Test(
@@ -53,7 +78,7 @@ struct MoonTests {
     let calcTime = try moonrise(observer: .london, dateComponents: date)
     let result = try #require(calcTime)
 
-    let accuracy = DateComponents(minute: 90)
+    let accuracy = DateComponents(minute: 15)
     #expect(
       expectDateComponentsEqual(
         result.extractYearMonthDayHourMinuteSecond(),
@@ -103,7 +128,7 @@ struct MoonTests {
     let calcTime = try moonrise(observer: .riyadh, dateComponents: date)
     let result = try #require(calcTime)
 
-    let accuracy = DateComponents(minute: 90)
+    let accuracy = DateComponents(minute: 15)
     #expect(
       expectDateComponentsEqual(
         result.extractYearMonthDayHourMinuteSecond(),
@@ -129,7 +154,7 @@ struct MoonTests {
     let calcTime = try moonset(observer: .riyadh, dateComponents: date)
     let result = try #require(calcTime)
 
-    let accuracy = DateComponents(minute: 90)
+    let accuracy = DateComponents(minute: 15)
     #expect(
       expectDateComponentsEqual(
         result.extractYearMonthDayHourMinuteSecond(),
@@ -153,6 +178,7 @@ struct MoonTests {
     let calcTime = try moonrise(observer: .wellington, dateComponents: date, tzinfo: Self.wellington)
     let result = try #require(calcTime)
 
+    // Wellington is at high latitude; allow wider tolerance for Southern Hemisphere
     let accuracy = DateComponents(minute: 90)
     #expect(
       expectDateComponentsEqual(
@@ -200,7 +226,7 @@ struct MoonTests {
     let calcTimeLocal = try moonrise(observer: .barcelona, dateComponents: dateLocal, tzinfo: Self.timeZoneBCN)
     let resultLocal = try #require(calcTimeLocal)
 
-    let accuracy = DateComponents(minute: 90)
+    let accuracy = DateComponents(minute: 15)
     #expect(
       expectDateComponentsEqual(
         resultLocal.extractYearMonthDayHourMinuteSecond(timeZone: Self.timeZoneBCN),

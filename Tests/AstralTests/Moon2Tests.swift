@@ -6,29 +6,34 @@ import Testing
 struct Moon2Tests {
 
   // MARK: - Mean Elements at J2000
+  // Meeus Chapter 47 epoch values (degrees converted to revolutions)
 
   @Test("Moon mean longitude at J2000 epoch", .tags(.conversion, .accuracy, .unit))
   func moonMeanLongitudeAtEpoch() {
     let rev = moon_mean_longitude(jd2000: 0)
-    #expect(abs(rev - 0.606434) < 1e-9)
+    // Meeus Eq. 47.1: L' = 218.3164477° → 218.3164477/360 = 0.606434577 rev
+    #expect(abs(rev - 218.3164477 / 360.0) < 1e-6)
   }
 
   @Test("Moon mean anomaly at J2000 epoch", .tags(.conversion, .accuracy, .unit))
   func moonMeanAnomalyAtEpoch() {
     let rev = moon_mean_anomaly(jd2000: 0)
-    #expect(abs(rev - 0.374897) < 1e-9)
+    // Meeus Eq. 47.4: M' = 134.9633964° → 134.9633964/360 rev
+    #expect(abs(rev - 134.9633964 / 360.0) < 1e-6)
   }
 
   @Test("Moon argument of latitude at J2000 epoch", .tags(.conversion, .accuracy, .unit))
   func moonArgumentOfLatitudeAtEpoch() {
     let rev = moon_argument_of_latitude(jd2000: 0)
-    #expect(abs(rev - 0.259091) < 1e-9)
+    // Meeus Eq. 47.5: F = 93.2720950° → 93.2720950/360 rev
+    #expect(abs(rev - 93.2720950 / 360.0) < 1e-6)
   }
 
   @Test("Moon mean elongation from sun at J2000 epoch", .tags(.conversion, .accuracy, .unit))
   func moonMeanElongationFromSunAtEpoch() {
     let rev = moon_mean_elongation_from_sun(jd2000: 0)
-    #expect(abs(rev - 0.827362) < 1e-9)
+    // Meeus Eq. 47.2: D = 297.8501921° → 297.8501921/360 rev
+    #expect(abs(rev - 297.8501921 / 360.0) < 1e-6)
   }
 
   // MARK: - Sun Elements at J2000
@@ -36,13 +41,15 @@ struct Moon2Tests {
   @Test("Sun mean longitude at J2000 epoch", .tags(.conversion, .accuracy, .unit))
   func sunMeanLongitudeAtEpoch() {
     let rev = sun_mean_longitude(jd2000: 0)
-    #expect(abs(rev - 0.779072) < 1e-9)
+    // Meeus Eq. 25.2: L0 = 280.46646° → 280.46646/360 rev
+    #expect(abs(rev - 280.46646 / 360.0) < 1e-6)
   }
 
   @Test("Sun mean anomaly at J2000 epoch", .tags(.conversion, .accuracy, .unit))
   func sunMeanAnomalyAtEpoch() {
     let rev = sun_mean_anomoly(jd2000: 0)
-    #expect(abs(rev - 0.993126) < 1e-9)
+    // Meeus Eq. 47.3: M = 357.5291092° → 357.5291092/360 rev
+    #expect(abs(rev - 357.5291092 / 360.0) < 1e-6)
   }
 
   // MARK: - Obliquity of the Ecliptic
@@ -82,9 +89,8 @@ struct Moon2Tests {
     let calculatedRevolutions = moon_true_longitude(jd2000: jd2000)
     let calculatedDegrees = calculatedRevolutions * 360.0
 
-    // Allow for 3-degree tolerance given the complexity of lunar calculations
-    // Test data for 2024 equinoxes and solstices
-    let tolerance = 3.0
+    // Tightened from 3° to 1° with Meeus higher-order orbital elements
+    let tolerance = 1.0
     #expect(abs(calculatedDegrees - expectedDegrees) < tolerance)
   }
 

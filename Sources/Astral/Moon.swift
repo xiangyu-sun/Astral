@@ -80,75 +80,122 @@ let calendarUTC: Calendar = {
 
 // MARK: - Lunar Orbital Elements
 
+/// Normalizes a value in revolutions to the range [0, 1).
+private func normalizeRevolutions(_ rev: Double) -> Double {
+  var result = rev.truncatingRemainder(dividingBy: 1.0)
+  if result < 0 { result += 1.0 }
+  return result
+}
+
 /// Calculates the Moon's mean longitude (in revolutions) for the given jd2000.
+/// Uses Meeus Eq. 47.1 with T², T³, T⁴ terms for improved accuracy.
 /// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
 /// - Returns: The mean longitude as a fraction of one full revolution.
 func moon_mean_longitude(jd2000: Double) -> Revolutions {
-  var _mean_longitude = 0.606434 + 0.03660110129 * jd2000
-  _mean_longitude = _mean_longitude - Int(_mean_longitude).double
-  return _mean_longitude
+  let T = jd2000 / 36525.0
+  let T2 = T * T
+  let T3 = T2 * T
+  let T4 = T3 * T
+  // Meeus Eq. 47.1: L' in degrees
+  let Ldeg = 218.3164477 + 481267.88123421 * T
+    - 0.0015786 * T2 + T3 / 538841.0 - T4 / 65_194_000.0
+  return normalizeRevolutions(Ldeg / 360.0)
 }
 
 /// Calculates the Moon's mean anomaly (in revolutions) for the given jd2000.
+/// Uses Meeus Eq. 47.4 with higher-order terms.
 /// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
 /// - Returns: The mean anomaly as a fraction of one full revolution.
 func moon_mean_anomaly(jd2000: Double) -> Revolutions {
-  var _mean_anomaly = 0.374897 + 0.03629164709 * jd2000
-  _mean_anomaly = _mean_anomaly - Int(_mean_anomaly).double
-  return _mean_anomaly
+  let T = jd2000 / 36525.0
+  let T2 = T * T
+  let T3 = T2 * T
+  let T4 = T3 * T
+  // Meeus Eq. 47.4: M' in degrees
+  let Mdeg = 134.9633964 + 477198.8675055 * T
+    + 0.0087414 * T2 + T3 / 69699.0 - T4 / 14_712_000.0
+  return normalizeRevolutions(Mdeg / 360.0)
 }
 
 /// Calculates the Moon's argument of latitude (in revolutions) for the given jd2000.
+/// Uses Meeus Eq. 47.5 with higher-order terms.
 /// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
 /// - Returns: The argument of latitude as a fraction of one full revolution.
 func moon_argument_of_latitude(jd2000: Double) -> Revolutions {
-  var _argument_of_latitude = 0.259091 + 0.03674819520 * jd2000
-  _argument_of_latitude = _argument_of_latitude - Int(_argument_of_latitude).double
-  return _argument_of_latitude
+  let T = jd2000 / 36525.0
+  let T2 = T * T
+  let T3 = T2 * T
+  let T4 = T3 * T
+  // Meeus Eq. 47.5: F in degrees
+  let Fdeg = 93.2720950 + 483202.0175233 * T
+    - 0.0036539 * T2 - T3 / 3_526_000.0 + T4 / 863_310_000.0
+  return normalizeRevolutions(Fdeg / 360.0)
 }
 
 /// Calculates the Moon's mean elongation from the Sun (in revolutions) for the given jd2000.
+/// Uses Meeus Eq. 47.2 with higher-order terms.
 /// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
 /// - Returns: The mean elongation from the Sun as a fraction of one full revolution.
 func moon_mean_elongation_from_sun(jd2000: Double) -> Revolutions {
-  var _mean_elongation_from_sun = 0.827362 + 0.03386319198 * jd2000
-  _mean_elongation_from_sun = _mean_elongation_from_sun - Int(_mean_elongation_from_sun).double
-  return _mean_elongation_from_sun
+  let T = jd2000 / 36525.0
+  let T2 = T * T
+  let T3 = T2 * T
+  let T4 = T3 * T
+  // Meeus Eq. 47.2: D in degrees
+  let Ddeg = 297.8501921 + 445267.1114034 * T
+    - 0.0018819 * T2 + T3 / 545868.0 - T4 / 113_065_000.0
+  return normalizeRevolutions(Ddeg / 360.0)
 }
 
 /// Calculates the longitude of the lunar ascending node (in revolutions) for the given jd2000.
+/// Uses Meeus Eq. 47.7 with higher-order terms.
 /// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
 /// - Returns: The lunar ascending node longitude as a fraction of one full revolution.
 func longitude_lunar_ascending_node(jd2000: Double) -> Revolutions {
-  let _longitude_lunar_ascending_node = moon_mean_longitude(jd2000: jd2000) - moon_argument_of_latitude(jd2000: jd2000)
-  return _longitude_lunar_ascending_node
+  let T = jd2000 / 36525.0
+  let T2 = T * T
+  let T3 = T2 * T
+  let T4 = T3 * T
+  // Meeus Eq. 47.7: Ω in degrees
+  let omegaDeg = 125.0445479 - 1934.1362891 * T
+    + 0.0020754 * T2 + T3 / 467_441.0 - T4 / 60_616_000.0
+  return normalizeRevolutions(omegaDeg / 360.0)
 }
 
 /// Calculates the Sun's mean longitude (in revolutions) for the given jd2000.
+/// Uses higher-order polynomial for improved accuracy.
 /// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
 /// - Returns: The Sun's mean longitude as a fraction of one full revolution.
 func sun_mean_longitude(jd2000: Double) -> Revolutions {
-  var _sun_mean_longitude = 0.779072 + 0.00273790931 * jd2000
-  _sun_mean_longitude = _sun_mean_longitude - Int(_sun_mean_longitude).double
-  return _sun_mean_longitude
+  let T = jd2000 / 36525.0
+  let T2 = T * T
+  // Sun mean longitude (Meeus Eq. 25.2)
+  let Ldeg = 280.46646 + 36000.76983 * T + 0.0003032 * T2
+  return normalizeRevolutions(Ldeg / 360.0)
 }
 
-/// Calculates the Sun's mean anomoly (in revolutions) for the given jd2000.
+/// Calculates the Sun's mean anomaly (in revolutions) for the given jd2000.
+/// Uses Meeus Eq. 47.3 with higher-order terms.
 /// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
-/// - Returns: The Sun's mean anomoly as a fraction of one full revolution.
+/// - Returns: The Sun's mean anomaly as a fraction of one full revolution.
 func sun_mean_anomoly(jd2000: Double) -> Revolutions {
-  var _sun_mean_anomoly = 0.993126 + 0.00273777850 * jd2000
-  _sun_mean_anomoly = _sun_mean_anomoly - Int(_sun_mean_anomoly).double
-  return _sun_mean_anomoly
+  let T = jd2000 / 36525.0
+  let T2 = T * T
+  let T3 = T2 * T
+  // Meeus Eq. 47.3: M in degrees
+  let Mdeg = 357.5291092 + 35999.0502909 * T
+    - 0.0001536 * T2 + T3 / 24_490_000.0
+  return normalizeRevolutions(Mdeg / 360.0)
 }
 
 /// Calculates Venus's mean longitude (in revolutions) for the given jd2000.
 /// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
 /// - Returns: Venus's mean longitude as a fraction of one full revolution.
 func venus_mean_longitude(jd2000: Double) -> Revolutions {
-  var _venus_mean_longitude = 0.505498 + 0.00445046867 * jd2000
-  _venus_mean_longitude = _venus_mean_longitude - Int(_venus_mean_longitude).double
-  return _venus_mean_longitude
+  // Venus mean longitude (approximate)
+  let T = jd2000 / 36525.0
+  let Ldeg = 181.9798 + 58517.8157 * T
+  return normalizeRevolutions(Ldeg / 360.0)
 }
 
 // MARK: - Moon Position Calculation
@@ -257,8 +304,18 @@ func moon_transit_event(
   let sl = sin(radians(latitude))
   let cl = cos(radians(latitude))
 
-  // Apply a parallax correction using the Moon's apparent radius.
-  let z = cos(radians(90 + moonApparentRadius - (41.685 / distance)))
+  // USNO-standard correction for moonrise/moonset:
+  // The Moon appears to rise/set when its center is at an altitude of:
+  //   h0 = -(atmospheric_refraction - horizontal_parallax + moon_semi_diameter)
+  // where:
+  //   horizontal_parallax = arcsin(1/distance) in degrees
+  //   atmospheric_refraction = 0.5667° (34 arcmin at horizon)
+  //   moon_semi_diameter = 0.2725 * horizontal_parallax
+  let horizontalParallax = degrees(asin(1.0 / distance))
+  let atmosphericRefraction = 0.5667 // 34 arcmin standard refraction at horizon
+  let moonSemiDiameter = 0.2725 * horizontalParallax
+  let correctedAltitude = -(atmosphericRefraction - horizontalParallax + moonSemiDiameter)
+  let z = sin(radians(correctedAltitude))
 
   if hour == 0 {
     window[0].distance = (
@@ -370,11 +427,15 @@ func riseset(
     moon_position_window[2].right_ascension = interpolate(m[0].right_ascension, m[1].right_ascension, m[2].right_ascension, ph)
     moon_position_window[2].declination = interpolate(m[0].declination, m[1].declination, m[2].declination, ph)
 
+    // Interpolate distance for the current hour for distance-dependent parallax
+    let phMid: Double = (Double(hour) + 0.5) / 24
+    let interpolatedDistance = interpolate(m[0].distance, m[1].distance, m[2].distance, phMid)
+
     let transit_info = moon_transit_event(
       hour: Double(hour),
       lmst: t0,
       latitude: observer.latitude,
-      distance: m[1].distance,
+      distance: interpolatedDistance,
       window: &moon_position_window)
 
     switch transit_info {
@@ -643,7 +704,6 @@ public func moon_true_longitude(jd2000: Double) -> Revolutions {
   let λ = atan2(sin(α) * cos(ε) + tan(δ) * sin(ε), cos(α))
   // Normalize to 0…1 revolutions
   var rev = λ / (2 * .pi)
-  rev = rev - Double(Int(rev))
-  if rev < 0 { rev += 1 }
+  rev = rev - floor(rev)
   return rev
 }
