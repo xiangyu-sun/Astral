@@ -219,8 +219,8 @@ func moonPosition(jd2000: Double) -> AstralBodyPosition {
     nil, nil, nil,
     venus_mean_longitude(jd2000: jd2000), // 12 = L2
   ]
-  // Calculate the time factor T (Note: T is computed as jd2000/36525 + 1)
-  let T = jd2000 / 36525 + 1
+  // Time factor T in Julian centuries from J2000.0
+  let T = jd2000 / 36525.0
 
   /// Internal helper function to compute series values from a given table.
   /// - Parameter table: An array of `Table4Row` entries.

@@ -683,7 +683,10 @@ public func midnight(
     hour -= 1
   }
 
-  if hour < 0 {
+  if hour > 23 {
+    hour -= 24
+    copyDate.day = (copyDate.day ?? 0) + 1
+  } else if hour < 0 {
     hour += 24
     copyDate.day = (copyDate.day ?? 0) - 1
   }
@@ -850,7 +853,7 @@ func rahukaalam(
   {
     throw SunError.valueError("Unable to compute Rahukaalam dates")
   }
-  let totalSeconds = calendar.dateComponents([.second], from: startDate, to: endDate).second ?? 0
+  let totalSeconds = Int(endDate.timeIntervalSince(startDate))
   let octantDuration = totalSeconds / 8
 
   // Weekday-based shift for Rahukaalam (using a preset octant index array).
