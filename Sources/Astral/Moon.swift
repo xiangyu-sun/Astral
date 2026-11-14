@@ -10,7 +10,7 @@ import Foundation
 // MARK: - MoonError
 
 /// Error types for Moon calculations.
-public enum MoonError: Error {
+public enum MoonError: Error, Sendable, Hashable {
   case invalidData(String)
 }
 

@@ -18,7 +18,7 @@ private let dmsRegex: NSRegularExpression = {
 /// Returns:
 /// The number of degrees as a float
 
-enum ConvetionError: Error {
+enum ConvetionError: Error, Sendable, Hashable {
   case invalidInput
 }
 

@@ -41,14 +41,14 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 
 1. Update the README.md or relevant documentation with details of changes
 2. Ensure all tests pass and add new tests for new functionality
-3. Run `swift package plugin format` to format your code
+3. Run `ASTRAL_DEV_TOOLS=1 swift package plugin --allow-writing-to-package-directory format .` to format your code
 4. The PR will be merged once it receives approval from a maintainer
 
 ## Development Setup
 
 ### Prerequisites
 
-- **Xcode 14.0+** or **Swift 5.9+**
+- **Xcode 16.0+** or **Swift 6.0+**
 - **macOS 10.13+**, **iOS 13+**, or **watchOS 5+**
 
 ### Building the Project
@@ -73,8 +73,11 @@ swift test --filter SunCalcTests
 We use the Airbnb Swift style guide. Format your code before committing:
 
 ```bash
-swift package plugin --allow-writing-to-package-directory format .
+ASTRAL_DEV_TOOLS=1 swift package plugin --allow-writing-to-package-directory format .
 ```
+
+The formatter (`airbnb/swift`) is an opt-in development dependency: it is only added to the package graph when
+`ASTRAL_DEV_TOOLS` is set, so it never burdens consumers of the library.
 
 ## Code Style Guidelines
 

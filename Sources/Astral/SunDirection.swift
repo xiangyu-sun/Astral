@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SunDirection: Int {
+public enum SunDirection: Int, Sendable, Hashable {
   case rising = 1
   case setting = -1
 }

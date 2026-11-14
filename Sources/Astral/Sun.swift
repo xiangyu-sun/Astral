@@ -10,7 +10,7 @@ import Foundation
 // MARK: - SunError
 
 /// Errors related to Sun (astral) calculations.
-public enum SunError: Error {
+public enum SunError: Error, Sendable, Hashable {
   case valueError(String)
 }
 
