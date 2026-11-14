@@ -31,6 +31,9 @@ extension Tag {
   /// Tests related to Chinese solar term calculations
   @Tag static var solarTerm: Self
 
+  /// Tests related to the planetary ephemeris (planets, Moon model, orientation)
+  @Tag static var ephemeris: Self
+
   // MARK: - Calculation Type Tags
 
   /// Tests for position calculations (azimuth, elevation, zenith)
