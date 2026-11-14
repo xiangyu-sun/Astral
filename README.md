@@ -1,7 +1,7 @@
 # 🌞 Astral
 
 ![Platform](https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20watchOS-blue)  
-![Swift Version](https://img.shields.io/badge/swift-5.9%2B-orange)  
+![Swift Version](https://img.shields.io/badge/swift-6.0%2B-orange)  
 ![License](https://img.shields.io/github/license/sunxiangyu/astral)  
 ![Build Status](https://img.shields.io/github/workflow/status/sunxiangyu/astral/CI/main)
 
@@ -22,6 +22,11 @@ This project is inspired by the original Python package: [Astral](https://sffjun
   - Moonrise, Moonset  
   - Moon Azimuth, Zenith  
   - Moon Phase  
+
+- **Planetary Positions** 🪐  
+  - Heliocentric positions of Mercury–Neptune, Earth and the Moon (JPL element tables, 1800–2050)  
+  - Geocentric Moon from mean elements, periodic terms, or Astral's lunar series  
+  - Moon phase geometry, body orientation (Earth rotation, tidal lock)  
 
 - **Other Astronomical Calculations** 🔭  
   - Time at a Specific Solar Elevation  
@@ -118,6 +123,45 @@ do {
 
 ---
 
+## 🪐 Planetary positions
+
+`SolarSystem` computes the position of every body as a pure function of the date, in the heliocentric J2000
+ecliptic frame (AU). The planets use JPL's "Approximate Positions of the Planets" element tables (valid
+1800–2050); the Moon can use mean elements, mean elements plus periodic terms (the default), or Astral's lunar
+series (`.series`, accurate to well under an arcminute against JPL Horizons).
+
+```swift
+import Astral
+import simd
+
+let system = SolarSystem()                        // Sun, Mercury–Neptune, Earth and its Moon
+let snapshot = system.snapshot(at: JulianDate(Date()))
+
+if let mars = snapshot.position(of: .mars) {
+    print("Mars is \(simd_length(mars)) AU from the Sun")
+}
+
+// Moon phase from the Sun–Earth–Moon geometry
+let phase = MoonPhase(date: Date())
+print(phase.name, phase.illuminatedFraction)      // e.g. .waxingGibbous 0.83
+
+// Highest-accuracy Moon, and the Moon's geocentric vector in AU
+let precise = SolarSystem(moonModel: .series)
+let moonFromEarth = MoonEphemeris.geocentricPositionSeries(at: JulianDate(Date()))
+```
+
+| Moon model | Longitude error vs JPL Horizons | Distance error |
+|------------|---------------------------------|----------------|
+| `.meanElements` | up to ~1.5° | up to ~1.4 % |
+| `.periodicTerms` (default) | up to ~0.1° | up to ~1.4 % |
+| `.series` | up to ~40″ | up to ~0.006 % |
+
+`JulianDate` is also a bridge to the rest of Astral: `JulianDate(Date)`, `JulianDate(DateComponents)`, and
+`centuriesSinceJ2000`. Note that `MoonPhase` (a type) coexists with the existing `moonPhase(date:)` function, which
+returns the Moon's age in days.
+
+---
+
 ## 🛠️ Locations Support
 
 Astral comes with predefined observer locations:
@@ -147,6 +191,8 @@ let customObserver = Observer(latitude: 37.7749, longitude: -122.4194, elevation
 - `Elevation` - Elevation specification (simple height or tuple for obscuring features)
 - `Depression` - Twilight depression angles (civil, nautical, astronomical)
 - `SunDirection` - Direction for calculations (rising, setting)
+- `JulianDate`, `SolarSystem`, `SystemSnapshot`, `BodyState`, `BodyID`, `Body`, `Catalog`, `OrbitalElements`, `Kepler`,
+  `MoonEphemeris`, `MoonModel`, `MoonPhase`, `BodyOrientation`, `Units` - Planetary ephemeris API
 
 ### Main Functions
 
@@ -239,7 +285,7 @@ Astral is available under the **MIT License**. See the [`LICENSE`](LICENSE) file
 | macOS    | 10.13+         |
 | iOS      | 13.0+          |
 | watchOS  | 5.0+           |
-| Swift    | 5.9+           |
+| Swift    | 6.0+ (Xcode 16+) |
 
 ---
 

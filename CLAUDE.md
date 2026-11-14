@@ -26,11 +26,12 @@ swift test --filter SunCalcTests.testGeom
 
 ### Platform Support
 
-- **Minimum Swift Version**: 5.9
-- **Platforms**: macOS 10.14+, iOS 16+
+- **Swift**: 6.0 tools, Swift 6 language mode (strict concurrency); needs Xcode 16+
+- **Platforms** (declared in `Package.swift`): macOS 10.13+, iOS 13+, watchOS 5+
 - **Dependencies**: 
   - `swift-numerics` for mathematical operations
-  - `airbnb/swift` for code formatting (development dependency)
+  - `airbnb/swift` for code formatting is an opt-in development dependency: it is only added to the package graph
+    when `ASTRAL_DEV_TOOLS` is set (`ASTRAL_DEV_TOOLS=1 swift package plugin --allow-writing-to-package-directory format .`)
 
 ## Architecture Overview
 
@@ -63,8 +64,19 @@ swift test --filter SunCalcTests.testGeom
 - Julian Century calculations for astronomical algorithms
 - Date/time utilities for astronomical computations
 
+**Planetary Ephemeris (`Ephemeris/`)**
+- `SolarSystem` computes heliocentric J2000 ecliptic positions (AU) of the Sun, Mercury–Neptune, Earth and the Moon
+  (plus an unverified Pluto) as a pure function of `JulianDate`; `snapshot(at:)` and `orbitPath(of:at:samples:)`
+- `Catalog` holds the published orbital constants (JPL Table 1, Meeus ch. 47); `Kepler`, `OrbitalElements`,
+  `MoonEphemeris`, `BodyOrientation`, `MoonPhase` (type), `Units`
+- `MoonModel`: `.meanElements`, `.periodicTerms` (default), `.series` (Astral's lunar series via
+  `MoonEphemeris.geocentricPositionSeries`, by far the most accurate)
+- Never adjust a constant in `Catalog` to make a test pass; compare with JPL Horizons and report the discrepancy.
+  Tolerances in the fixture tests are not to be loosened either.
+
 **Additional Modules**
-- `MoonPhase.swift` - Moon phase calculations using Meeus algorithm
+- `MoonPhase.swift` - Moon phase calculations using Meeus algorithm (the free function `moonPhase(date:)` returns the
+  age in days; the `MoonPhase` *type* lives in `Ephemeris/MoonPhaseGeometry.swift`)
 - `SolarTerm.swift` - Chinese solar term calculations (24 solar terms)
 - `Types.swift` - Type aliases and enums (Degrees, Radians, Elevation)
 
@@ -98,6 +110,9 @@ swift test --filter SunCalcTests.testGeom
 - `MoonPostionTests.swift` - Validates lunar position calculations
 - `SolarTermTests.swift` - Tests Chinese solar term calculations
 - `DateCompoenentHelper.swift` - Date/time utility testing
+- `Ephemeris/` - planetary ephemeris tests: unit tests, JPL Horizons fixture tests
+  (`Ephemeris/Fixtures/horizons.json` is a test resource; `make_fixture.py` and `raw/` regenerate it and are excluded
+  from the target), syzygy, Moon model accuracy, and cross-checks against the Moon/Sun functions
 
 ### Running Specific Tests
 ```bash
@@ -151,6 +166,10 @@ swift test --filter JulianTests
 - Julian Day calculations are fundamental - optimize these if needed
 - Lunar calculations involve complex series - Table4Row data is pre-computed
 - Consider caching for repeated calculations at the same location/time
+
+### Concurrency (Swift 6)
+- Public value types must be `Sendable` (and `Hashable` where sensible); no mutable global/static state
+- Table rows hold `@Sendable` closures
 
 ### Dependencies
 - Keep external dependencies minimal
