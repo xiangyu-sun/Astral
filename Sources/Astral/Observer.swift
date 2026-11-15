@@ -23,7 +23,7 @@ import Foundation
 ///        longitude:  Longitude - Eastern longitudes should be positive
 ///        elevation:  Elevation and/or distance to nearest obscuring feature
 ///                    in metres above/below the location.
-public struct Observer {
+public struct Observer: Sendable, Hashable {
 
   // MARK: Lifecycle
 

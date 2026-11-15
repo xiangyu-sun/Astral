@@ -1,7 +1,7 @@
 import Foundation
 
 /// The depression angle in degrees for the dawn/dusk calculation
-public enum Depression: ExpressibleByIntegerLiteral, RawRepresentable {
+public enum Depression: ExpressibleByIntegerLiteral, RawRepresentable, Sendable, Hashable {
 
   case civil
   case nautical

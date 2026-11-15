@@ -19,7 +19,7 @@ import CoreLocation
 ///                    obtained from `zoneinfo.available_timezones`)
 ///        latitude:   Latitude - Northern latitudes should be positive
 ///        longitude:  Longitude - Eastern longitudes should be positive
-public struct LocationInfo {
+public struct LocationInfo: Sendable, Hashable {
 
   // MARK: Lifecycle
 

@@ -18,8 +18,8 @@ let L2 = 12 // Venus mean longitude
 
 // MARK: - Table4Row
 
-struct Table4Row {
-  init(_ coefficient: Double, _ t: Bool, _ sincos: @escaping (Double) -> Double, _ argument_multiplers: [Int: Int]) {
+struct Table4Row: Sendable {
+  init(_ coefficient: Double, _ t: Bool, _ sincos: @escaping @Sendable (Double) -> Double, _ argument_multiplers: [Int: Int]) {
     self.coefficient = coefficient
     self.t = t
     self.sincos = sincos
@@ -28,7 +28,7 @@ struct Table4Row {
 
   let coefficient: Double
   let t: Bool
-  let sincos: (Double) -> Double
+  let sincos: @Sendable (Double) -> Double
   let argument_multiplers: [Int: Int]
 }
 
