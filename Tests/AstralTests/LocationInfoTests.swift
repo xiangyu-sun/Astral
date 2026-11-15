@@ -5,6 +5,7 @@
 //  Created by Xiangyu Sun on 20/1/23.
 //
 
+import Foundation
 import Testing
 @testable import Astral
 
