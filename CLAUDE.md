@@ -82,6 +82,9 @@ swift test --filter SunCalcTests.testGeom
 **Additional Modules**
 - `MoonPhase.swift` - Moon phase calculations using Meeus algorithm (the free function `moonPhase(date:)` returns the
   age in days; the `MoonPhase` *type* lives in `Ephemeris/MoonPhaseGeometry.swift`)
+- `PlanetRiseSet.swift` - `planetRise/planetSet/planetTransit` and `planetElevation/azimuth/zenith` for Mercury–Neptune
+  (and unverified Pluto); throws `PlanetError`; validated against JPL Horizons (`Ephemeris/Fixtures/horizons_rts.json`,
+  regenerate with `make_rts_fixture.py`)
 - `SolarTerm.swift` - Chinese solar term calculations (24 solar terms)
 - `Types.swift` - Type aliases and enums (Degrees, Radians, Elevation)
 
