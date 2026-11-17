@@ -38,7 +38,15 @@ let package = Package(
     .testTarget(
       name: "AstralTests",
       dependencies: ["Astral"],
-      exclude: ["Ephemeris/Fixtures/raw", "Ephemeris/Fixtures/make_fixture.py"],
-      resources: [.copy("Ephemeris/Fixtures/horizons.json")]),
+      exclude: [
+        "Ephemeris/Fixtures/raw",
+        "Ephemeris/Fixtures/make_fixture.py",
+        "Ephemeris/Fixtures/SmallBody/raw",
+        "Ephemeris/Fixtures/SmallBody/make_smallbody_fixture.py",
+      ],
+      resources: [
+        .copy("Ephemeris/Fixtures/horizons.json"),
+        .copy("Ephemeris/Fixtures/SmallBody/smallbodies.json"),
+      ]),
   ],
   swiftLanguageModes: [.v6])
