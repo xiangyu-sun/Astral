@@ -1,0 +1,185 @@
+API VERSION: 1.2
+API SOURCE: NASA/JPL Horizons API
+
+*******************************************************************************
+ Revised: July 31, 2013             Moon / (Earth)                          301
+ 
+ GEOPHYSICAL DATA (updated 2018-Aug-15):
+  Vol. mean radius, km  = 1737.53+-0.03    Mass, x10^22 kg       =    7.349
+  Radius (gravity), km  = 1738.0           Surface emissivity    =    0.92
+  Radius (IAU), km      = 1737.4           GM, km^3/s^2          = 4902.800066
+  Density, g/cm^3       =    3.3437        GM 1-sigma, km^3/s^2  =  +-0.0001  
+  V(1,0)                =   +0.21          Surface accel., m/s^2 =    1.62
+  Earth/Moon mass ratio = 81.3005690769    Farside crust. thick. = ~80 - 90 km
+  Mean crustal density  = 2.97+-.07 g/cm^3 Nearside crust. thick.= 58+-8 km 
+  Heat flow, Apollo 15  = 3.1+-.6 mW/m^2   Mean angular diameter = 31'05.2"
+  Heat flow, Apollo 17  = 2.2+-.5 mW/m^2   Sid. rot. rate, rad/s = 0.0000026617
+  Geometric Albedo      = 0.12             Mean solar day        = 29.5306 d
+  Obliquity to orbit    = 6.67 deg         Orbit period          = 27.321582 d
+  Semi-major axis, a    = 384400 km        Eccentricity          = 0.05490
+  Mean motion, rad/s    = 2.6616995x10^-6  Inclination           = 5.145 deg
+  Apsidal period        = 3231.50 d        Nodal period          = 6798.38 d
+                                 Perihelion  Aphelion    Mean
+  Solar Constant (W/m^2)         1414+-7     1323+-7     1368+-7
+  Maximum Planetary IR (W/m^2)   1314        1226        1268
+  Minimum Planetary IR (W/m^2)      5.2         5.2         5.2
+********************************************************************************
+
+
+*******************************************************************************
+Ephemeris / API_USER Tue Nov 17 12:23:21 2026 Pasadena, USA      / Horizons    
+*******************************************************************************
+Target body name: Moon (301)                      {source: DE441}
+Center body name: Earth (399)                     {source: DE441}
+Center-site name: GEOCENTRIC
+*******************************************************************************
+Start time      : A.D. 2024-Jun-20 00:00:00.0000 UT      
+Stop  time      : A.D. 2026-Sep-23 19:59:59.9997 UT      
+Step-size       : DISCRETE TIME-LIST
+*******************************************************************************
+Target pole/equ : MOON_ME                         {East-longitude positive}
+Target radii    : 1737.4, 1737.4, 1737.4 km       {Equator_a, b, pole_c}       
+Center geodetic : 0.0, 0.0, -6378.137             {E-lon(deg),Lat(deg),Alt(km)}
+Center cylindric: 0.0, 0.0, 0.0                   {E-lon(deg),Dxy(km),Dz(km)}
+Center pole/equ : ITRF93                          {East-longitude positive}
+Center radii    : 6378.137, 6378.137, 6356.752 km {Equator_a, b, pole_c}       
+Target primary  : Earth
+Vis. interferer : MOON (R_eq= 1737.400) km        {source: DE441}
+Rel. light bend : Sun                             {source: DE441}
+Rel. lght bnd GM: 1.3271E+11 km^3/s^2                                          
+Atmos refraction: NO (AIRLESS)
+RA format       : DEG
+Time format     : CAL 
+Calendar mode   : Mixed Julian/Gregorian
+EOP file        : eop.261116.p270212                                           
+EOP coverage    : DATA-BASED 1962-JAN-20 TO 2026-NOV-16. PREDICTS-> 2027-FEB-11
+Units conversion: 1 au= 149597870.700 km, c= 299792.458 km/s, 1 day= 86400.0 s 
+Table cut-offs 1: Elevation (-90.0deg=NO ),Airmass (>38.000=NO), Daylight (NO )
+Table cut-offs 2: Solar elongation (  0.0,180.0=NO ),Local Hour Angle( 0.0=NO )
+Table cut-offs 3: RA/DEC angular rate (     0.0=NO )                           
+***************************************************************************************
+ Date__(UT)__HR:MN:SC.fff     R.A.__(airless-appar)__DEC.             delta      deldot
+***************************************************************************************
+$$SOE
+ 2024-Jun-20 00:00:00.000     241.199603598 -24.811603501  0.00259928045538  -0.0515887
+ 2024-Jun-20 04:00:00.000     243.509904684 -25.322518827  0.00259431056591  -0.0516515
+ 2024-Jun-20 08:00:00.000     245.848590994 -25.798870574  0.00258933966449  -0.0516103
+ 2024-Jun-20 12:00:00.000     248.214986313 -26.239118858  0.00258437770112  -0.0514664
+ 2024-Jun-20 16:00:00.000     250.608213444 -26.641754374  0.00257943447975  -0.0512215
+ 2024-Jun-20 20:00:00.000     253.027191051 -27.005310688  0.00257451962758  -0.0508777
+ 2024-Dec-21 00:00:00.000     160.818914083  10.298722865  0.00265703427485   0.0466005
+ 2024-Dec-21 04:00:00.000     162.664477402   9.377896677  0.00266142914253   0.0447085
+ 2024-Dec-21 08:00:00.000     164.493870005   8.450757501  0.00266563794774   0.0427352
+ 2024-Dec-21 12:00:00.000     166.308450943   7.518226489  0.00266965312299   0.0406859
+ 2024-Dec-21 16:00:00.000     168.109579297   6.581185955  0.00267346761764   0.0385661
+ 2024-Dec-21 20:00:00.000     169.898612184   5.640482515  0.00267707490782   0.0363813
+ 2025-Mar-20 00:00:00.000     238.692922502 -25.208405730  0.00269445585729  -0.0274468
+ 2025-Mar-20 04:00:00.000     240.832423285 -25.682617295  0.00269171067919  -0.0295974
+ 2025-Mar-20 08:00:00.000     242.992419822 -26.126164198  0.00268875823587  -0.0317530
+ 2025-Mar-20 12:00:00.000     245.172655014 -26.538069635  0.00268559825427  -0.0339092
+ 2025-Mar-20 16:00:00.000     247.372762454 -26.917369315  0.00268223089087  -0.0360616
+ 2025-Mar-20 20:00:00.000     249.592264790 -27.263115855  0.00267865674949  -0.0382052
+ 2025-Jun-21 00:00:00.000      25.730478561  13.882025614  0.00244774490860  -0.0295749
+ 2025-Jun-21 04:00:00.000      27.993906208  14.894306341  0.00244498056892  -0.0278498
+ 2025-Jun-21 08:00:00.000      30.284102548  15.886505868  0.00244238692477  -0.0260281
+ 2025-Jun-21 12:00:00.000      32.602102284  16.856519037  0.00243997320501  -0.0241113
+ 2025-Jun-21 16:00:00.000      34.948811067  17.802198837  0.00243774847424  -0.0221013
+ 2025-Jun-21 20:00:00.000      37.324986946  18.721363024  0.00243572158133  -0.0200007
+ 2025-Sep-22 00:00:00.000     180.626777367  -1.549670675  0.00265802594448   0.0348926
+ 2025-Sep-22 04:00:00.000     182.435726295  -2.533302221  0.00266135595772   0.0342887
+ 2025-Sep-22 08:00:00.000     184.242868757  -3.511920987  0.00266462559426   0.0336376
+ 2025-Sep-22 12:00:00.000     186.049294991  -4.484603479  0.00266783021515   0.0329373
+ 2025-Sep-22 16:00:00.000     187.856079573  -5.450438770  0.00267096499947   0.0321861
+ 2025-Sep-22 20:00:00.000     189.664280820  -6.408527244  0.00267402495491   0.0313821
+ 2025-Dec-21 00:00:00.000     280.857769271 -27.505349987  0.00268425852592  -0.0266679
+ 2025-Dec-21 04:00:00.000     283.117688849 -27.252696770  0.00268164869172  -0.0275548
+ 2025-Dec-21 08:00:00.000     285.370739291 -26.963248757  0.00267895404138  -0.0284302
+ 2025-Dec-21 12:00:00.000     287.615714894 -26.637426692  0.00267617560394  -0.0292957
+ 2025-Dec-21 16:00:00.000     289.851497959 -26.275718163  0.00267331425065  -0.0301530
+ 2025-Dec-21 20:00:00.000     292.077067595 -25.878673623  0.00267037070385  -0.0310035
+ 2026-Mar-20 00:00:00.000       9.665676314   7.255308428  0.00247499221905  -0.0319294
+ 2026-Mar-20 04:00:00.000      11.795249901   8.347935682  0.00247202145012  -0.0297887
+ 2026-Mar-20 08:00:00.000      13.941416638   9.431435157  0.00246925821238  -0.0276185
+ 2026-Mar-20 12:00:00.000      16.105368480  10.503940182  0.00246670500831  -0.0254258
+ 2026-Mar-20 16:00:00.000      18.288259032  11.563552546  0.00246436365765  -0.0232178
+ 2026-Mar-20 20:00:00.000      20.491194500  12.608345143  0.00246223530356  -0.0210015
+ 2026-Sep-23 00:00:00.000     318.527799046 -17.338188267  0.00264384750391  -0.0467044
+ 2026-Sep-23 04:00:00.000     320.529748318 -16.536981614  0.00263929957463  -0.0477662
+ 2026-Sep-23 08:00:00.000     322.522519468 -15.713725904  0.00263465447554  -0.0487232
+ 2026-Sep-23 12:00:00.000     324.506752854 -14.869286907  0.00262992238102  -0.0495736
+ 2026-Sep-23 16:00:00.000     326.483141459 -14.004548028  0.00262511360936  -0.0503163
+ 2026-Sep-23 20:00:00.000     328.452428242 -13.120410768  0.00262023859341  -0.0509501
+$$EOE
+***************************************************************************************
+Column meaning:
+ 
+TIME
+
+  Times PRIOR to 1962 are UT1, a mean-solar time closely related to the
+prior but now-deprecated GMT. Times AFTER 1962 are in UTC, the current
+civil or "wall-clock" time-scale. UTC is kept within 0.9 seconds of UT1
+using integer leap-seconds for 1972 and later years.
+
+  Conversion from the internal Barycentric Dynamical Time (TDB) of solar
+system dynamics to the non-uniform civil UT time-scale requested for output
+has not been determined for UTC times after the next July or January 1st.
+Therefore, the last known leap-second is used as a constant over future
+intervals.
+
+  Time tags refer to the UT time-scale conversion from TDB on Earth
+regardless of observer location within the solar system, although clock
+rates may differ due to the local gravity field and no analog to "UT"
+may be defined for that location.
+
+  Any 'b' symbol in the 1st-column denotes a B.C. date. First-column blank
+(" ") denotes an A.D. date.
+ 
+CALENDAR SYSTEM
+
+  Mixed calendar mode was active such that calendar dates after AD 1582-Oct-15
+(if any) are in the modern Gregorian system. Dates prior to 1582-Oct-5 (if any)
+are in the Julian calendar system, which is automatically extended for dates
+prior to its adoption on 45-Jan-1 BC.  The Julian calendar is useful for
+matching historical dates. The Gregorian calendar more accurately corresponds
+to the Earth's orbital motion and seasons. A "Gregorian-only" calendar mode is
+available if such physical events are the primary interest.
+
+  NOTE: "n.a." in output means quantity "not available" at the print-time.
+ 
+ 'R.A.__(airless-appar)__DEC.' =
+  Airless apparent right ascension and declination of the target center
+with respect to an instantaneous reference frame defined by the Earth equator
+of-date (z-axis) and meridian containing the Earth equinox of-date (x-axis,
+EOP-corrected IAU76/80). Compensated for down-leg light-time delay,
+gravitational deflection of light, stellar aberration, precession & nutation.
+Note: equinox (RA origin) is offset -53 mas from the of-date frame defined by
+the IAU06/00a P & N system.
+
+  Units: RA  in decimal degrees, ddd.fffff{ffff}
+         DEC in decimal degrees  sdd.fffff{ffff}
+
+ 
+ 'delta      deldot' =
+   Apparent range ("delta", light-time aberrated) and range-rate ("delta-dot")
+of the target center relative to the observer. A positive "deldot" means the
+target center is moving away from the observer, negative indicates movement
+toward the observer.  Units: AU and KM/S
+
+Computations by ...
+
+    Solar System Dynamics Group, Horizons On-Line Ephemeris System
+    4800 Oak Grove Drive, Jet Propulsion Laboratory
+    Pasadena, CA  91109   USA
+
+    General site: https://ssd.jpl.nasa.gov/
+    Mailing list: https://ssd.jpl.nasa.gov/email_list.html
+    System news : https://ssd.jpl.nasa.gov/horizons/news.html
+    User Guide  : https://ssd.jpl.nasa.gov/horizons/manual.html
+    Connect     : browser        https://ssd.jpl.nasa.gov/horizons/app.html#/x
+                  API            https://ssd-api.jpl.nasa.gov/doc/horizons.html
+                  command-line   telnet ssd.jpl.nasa.gov 6775
+                  e-mail/batch   https://ssd.jpl.nasa.gov/ftp/ssd/horizons_batch.txt
+                  scripts        https://ssd.jpl.nasa.gov/ftp/ssd/SCRIPTS
+    Inquiries   : Jon.D.Giorgini@jpl.nasa.gov
+
+***************************************************************************************
