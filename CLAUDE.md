@@ -71,6 +71,11 @@ swift test --filter SunCalcTests.testGeom
   `MoonEphemeris`, `BodyOrientation`, `MoonPhase` (type), `Units`
 - `MoonModel`: `.meanElements`, `.periodicTerms` (default), `.series` (Astral's lunar series via
   `MoonEphemeris.geocentricPositionSeries`, by far the most accurate)
+- `SPK/`: pure-Swift NAIF SPK (DAF) reader, `SPKFile`, for JPL DE kernels (type 2 and 3 segments). `state(target:center:at:)`
+  chains segments (km, km/s, ET = TDB seconds past J2000; a `JulianDate` is taken as TDB);
+  `heliocentricEclipticPosition(of:at:)` returns what `SolarSystem` does, in AU, and `SolarSystem.snapshot(at:kernel:)`
+  builds a snapshot from a kernel. No kernel is bundled; tests use a 62 KB excerpt of de440s.bsp
+  (`Tests/.../Fixtures/SPK/`, regenerate with `make_tiny_kernel.py` / `make_spk_fixture.py`).
 - Never adjust a constant in `Catalog` to make a test pass; compare with JPL Horizons and report the discrepancy.
   Tolerances in the fixture tests are not to be loosened either.
 

@@ -1,0 +1,101 @@
+API VERSION: 1.2
+API SOURCE: NASA/JPL Horizons API
+
+
+
+*******************************************************************************
+Ephemeris / API_USER Tue Nov 17 12:15:53 2026 Pasadena, USA      / Horizons
+*******************************************************************************
+Target body name: Mercury (199)                   {source: DE441}
+Center body name: Sun (10)                        {source: DE441}
+Center-site name: BODY CENTER
+*******************************************************************************
+Start time      : A.D. 2026-Jul-09 00:00:00.0000 TDB
+Stop  time      : A.D. 2026-Dec-25 12:00:00.0000 TDB
+Step-size       : DISCRETE TIME-LIST
+*******************************************************************************
+Center geodetic : 0.0, 0.0, 0.0                   {E-lon(deg),Lat(deg),Alt(km)}
+Center cylindric: 0.0, 0.0, 0.0                   {E-lon(deg),Dxy(km),Dz(km)}
+Center radii    : 695700.0, 695700.0, 695700.0 km {Equator_a, b, pole_c}
+Output units    : KM-S
+Calendar mode   : Mixed Julian/Gregorian
+Output type     : GEOMETRIC cartesian states
+Output format   : 2 (position and velocity)
+Reference frame : Ecliptic of J2000.0
+*******************************************************************************
+            JDTDB,            Calendar Date (TDB),                      X,                      Y,                      Z,                     VX,                     VY,                     VZ,
+**************************************************************************************************************************************************************************************************
+$$SOE
+2461230.500000000, A.D. 2026-Jul-09 00:00:00.0000,  1.006317218534453E+07, -6.756850976545249E+07, -6.444906871251486E+06,  3.841142249775055E+01,  9.672645330448523E+00, -2.732494773659892E+00,
+2461265.240300000, A.D. 2026-Aug-12 17:46:01.9200,  1.804791688719524E+07,  4.241482131048518E+07,  1.811010777552370E+06, -5.456948711114131E+01,  2.095443020744811E+01,  6.717404472430775E+00,
+2461300.250000000, A.D. 2026-Sep-16 18:00:00.0000, -4.553166947229467E+07, -4.981294894866851E+07,  1.050859113296829E+05,  2.605922970060472E+01, -3.063030860679516E+01, -4.893295425038490E+00,
+2461333.123456000, A.D. 2026-Oct-19 14:57:46.5984,  4.920221248223697E+07, -3.370654048544122E+07, -7.267284256025238E+06,  1.794665393584816E+01,  4.243340568106200E+01,  1.821833992196797E+00,
+2461359.000000000, A.D. 2026-Nov-14 12:00:00.0000, -1.071930656541858E+07,  4.532374722318228E+07,  4.687181863579316E+06, -5.718086584819286E+01, -9.430389725078403E+00,  4.473721413061611E+00,
+2461380.750000000, A.D. 2026-Dec-06 06:00:00.0000, -5.753737482653245E+07, -2.602039311491724E+07,  3.150607528034335E+06,  1.001204235851585E+01, -4.227200789094073E+01, -4.372917127622081E+00,
+2461400.000000000, A.D. 2026-Dec-25 12:00:00.0000, -1.148643471992330E+07, -6.868605532318531E+07, -4.559827140190311E+06,  3.827275675200824E+01, -5.566219934181813E+00, -3.965121014533372E+00,
+$$EOE
+**************************************************************************************************************************************************************************************************
+ 
+TIME
+
+  Barycentric Dynamical Time ("TDB" or T_eph) output was requested. This
+continuous coordinate time is equivalent to the relativistic proper time
+of a clock at rest in a reference frame co-moving with the solar system
+barycenter but outside the system's gravity well. It is the independent
+variable in the solar system relativistic equations of motion.
+
+  TDB runs at a uniform rate of one SI second per second and is independent
+of irregularities in Earth's rotation.
+ 
+CALENDAR SYSTEM
+
+  Mixed calendar mode was active such that calendar dates after AD 1582-Oct-15
+(if any) are in the modern Gregorian system. Dates prior to 1582-Oct-5 (if any)
+are in the Julian calendar system, which is automatically extended for dates
+prior to its adoption on 45-Jan-1 BC.  The Julian calendar is useful for
+matching historical dates. The Gregorian calendar more accurately corresponds
+to the Earth's orbital motion and seasons. A "Gregorian-only" calendar mode is
+available if such physical events are the primary interest.
+
+REFERENCE FRAME AND COORDINATES
+
+  Ecliptic at the standard reference epoch
+
+    Reference epoch: J2000.0
+    X-Y plane: adopted Earth orbital plane at the reference epoch
+               Note: IAU76 obliquity of 84381.448 arcseconds wrt ICRF X-Y plane
+    X-axis   : ICRF
+    Z-axis   : perpendicular to the X-Y plane in the directional (+ or -) sense
+               of Earth's north pole at the reference epoch.
+
+  Symbol meaning:
+
+    JDTDB    Julian Day Number, Barycentric Dynamical Time
+      X      X-component of position vector (km)
+      Y      Y-component of position vector (km)
+      Z      Z-component of position vector (km)
+      VX     X-component of velocity vector (km/sec)                           
+      VY     Y-component of velocity vector (km/sec)                           
+      VZ     Z-component of velocity vector (km/sec)                           
+
+ABERRATIONS AND CORRECTIONS
+
+ Geometric state vectors have NO corrections or aberrations applied.
+
+Computations by ...
+
+    Solar System Dynamics Group, Horizons On-Line Ephemeris System
+    4800 Oak Grove Drive, Jet Propulsion Laboratory
+    Pasadena, CA  91109   USA
+
+    General site: https://ssd.jpl.nasa.gov/
+    Mailing list: https://ssd.jpl.nasa.gov/email_list.html
+    System news : https://ssd.jpl.nasa.gov/horizons/news.html
+    User Guide  : https://ssd.jpl.nasa.gov/horizons/manual.html
+    Connect     : browser        https://ssd.jpl.nasa.gov/horizons/app.html#/x
+                  API            https://ssd-api.jpl.nasa.gov/doc/horizons.html
+                  command-line   telnet ssd.jpl.nasa.gov 6775
+                  e-mail/batch   https://ssd.jpl.nasa.gov/ftp/ssd/horizons_batch.txt
+                  scripts        https://ssd.jpl.nasa.gov/ftp/ssd/SCRIPTS
+    Inquiries   : Jon.D.Giorgini@jpl.nasa.gov
+*******************************************************************************
