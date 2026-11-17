@@ -48,6 +48,8 @@ let package = Package(
         "Ephemeris/Fixtures/SmallBody/raw",
         "Ephemeris/Fixtures/SmallBody/make_smallbody_fixture.py",
         "Ephemeris/Fixtures/make_physical_fixture.py",
+        "Ephemeris/Fixtures/raw_observer",
+        "Ephemeris/Fixtures/make_observer_fixture.py",
       ],
       resources: [
         .copy("Ephemeris/Fixtures/horizons.json"),
@@ -56,6 +58,7 @@ let package = Package(
         .copy("Ephemeris/Fixtures/SPK/horizons_spk.json"),
         .copy("Ephemeris/Fixtures/SmallBody/smallbodies.json"),
         .copy("Ephemeris/Fixtures/physical.json"),
+        .copy("Ephemeris/Fixtures/horizons_observer.json"),
       ]),
   ],
   swiftLanguageModes: [.v6])
