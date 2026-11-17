@@ -45,12 +45,15 @@ let package = Package(
         "Ephemeris/Fixtures/SPK/raw",
         "Ephemeris/Fixtures/SPK/make_tiny_kernel.py",
         "Ephemeris/Fixtures/SPK/make_spk_fixture.py",
+        "Ephemeris/Fixtures/SmallBody/raw",
+        "Ephemeris/Fixtures/SmallBody/make_smallbody_fixture.py",
       ],
       resources: [
         .copy("Ephemeris/Fixtures/horizons.json"),
         .copy("Ephemeris/Fixtures/svs_libration.json"),
         .copy("Ephemeris/Fixtures/SPK/tiny.bsp"),
         .copy("Ephemeris/Fixtures/SPK/horizons_spk.json"),
+        .copy("Ephemeris/Fixtures/SmallBody/smallbodies.json"),
       ]),
   ],
   swiftLanguageModes: [.v6])

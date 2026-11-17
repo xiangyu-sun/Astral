@@ -1,0 +1,1928 @@
+{
+ "bodies": [
+  {
+   "horizonsCommand": "DES=2000001;",
+   "key": "ceres",
+   "name": "1 Ceres (A801 AA)",
+   "rows": [
+    {
+     "date": "A.D. 2025-Jun-09 00:00:00.0000",
+     "jd": 2460835.5,
+     "vx": 0.00188957792467423,
+     "vy": 0.009389637218491583,
+     "vz": -5.092548022863839e-05,
+     "x": 2.856655864714027,
+     "y": -0.6405633919330026,
+     "z": -0.546542299800015
+    },
+    {
+     "date": "A.D. 2026-Apr-10 00:00:00.0000",
+     "jd": 2461140.5,
+     "vx": -0.00771418006834928,
+     "vy": 0.006412041893424572,
+     "vz": 0.001624177871327901,
+     "x": 1.920468979578363,
+     "y": 2.037322459927775,
+     "z": -0.289301060873218
+    },
+    {
+     "date": "A.D. 2026-May-30 00:00:00.0000",
+     "jd": 2461190.5,
+     "vx": -0.008877681251245354,
+     "vy": 0.004929281887439185,
+     "vz": 0.001791582468261539,
+     "x": 1.504707339714412,
+     "y": 2.321927448577343,
+     "z": -0.203695263525058
+    },
+    {
+     "date": "A.D. 2026-Jun-09 00:00:00.0000",
+     "jd": 2461200.5,
+     "vx": -0.00908092698547858,
+     "vy": 0.004602695869284281,
+     "vz": 0.001818684668774817,
+     "x": 1.414905393343522,
+     "y": 2.369595284642237,
+     "z": -0.1856420349175861
+    },
+    {
+     "date": "A.D. 2026-Jun-19 00:00:00.0000",
+     "jd": 2461210.5,
+     "vx": -0.009273249132693898,
+     "vy": 0.00426672230488999,
+     "vz": 0.001843476169488973,
+     "x": 1.323125211830868,
+     "y": 2.41395007115526,
+     "z": -0.1673292725795429
+    },
+    {
+     "date": "A.D. 2026-Aug-08 00:00:00.0000",
+     "jd": 2461260.5,
+     "vx": -0.01005449054304505,
+     "vy": 0.002458053900202095,
+     "vz": 0.001930103434443436,
+     "x": 0.8386223437422637,
+     "y": 2.582918115402057,
+     "z": -0.07272150808856782
+    },
+    {
+     "date": "A.D. 2027-Jun-09 00:00:00.0000",
+     "jd": 2461565.5,
+     "vx": -0.006263681940240605,
+     "vy": -0.009240981454593174,
+     "vz": 0.0008602410013675825,
+     "x": -2.04576456000006,
+     "y": 1.458553929672342,
+     "z": 0.4229275595901737
+    }
+   ],
+   "sbdb": {
+    "object": {
+     "des": "1",
+     "fullname": "1 Ceres (A801 AA)",
+     "kind": "an",
+     "neo": false,
+     "orbit_class": {
+      "code": "MBA",
+      "name": "Main-belt Asteroid"
+     },
+     "orbit_id": "48",
+     "pha": false,
+     "prefix": null,
+     "shortname": "1 Ceres",
+     "spkid": "20000001"
+    },
+    "orbit": {
+     "comment": null,
+     "condition_code": "0",
+     "cov_epoch": "2458849.5",
+     "data_arc": "9520",
+     "elements": [
+      {
+       "label": "e",
+       "name": "e",
+       "sigma": "4.7755E-12",
+       "title": "eccentricity",
+       "units": null,
+       "value": ".07969229514816586"
+      },
+      {
+       "label": "a",
+       "name": "a",
+       "sigma": "1.0134E-11",
+       "title": "semi-major axis",
+       "units": "au",
+       "value": "2.765552595034094"
+      },
+      {
+       "label": "q",
+       "name": "q",
+       "sigma": "1.9113E-11",
+       "title": "perihelion distance",
+       "units": "au",
+       "value": "2.545159361382861"
+      },
+      {
+       "label": "i",
+       "name": "i",
+       "sigma": "4.6124E-9",
+       "title": "inclination; angle with respect to x-y ecliptic plane",
+       "units": "deg",
+       "value": "10.58802780183462"
+      },
+      {
+       "label": "node",
+       "name": "om",
+       "sigma": "6.1807E-8",
+       "title": "longitude of the ascending node",
+       "units": "deg",
+       "value": "80.24862682043221"
+      },
+      {
+       "label": "peri",
+       "name": "w",
+       "sigma": "6.6076E-8",
+       "title": "argument of perihelion",
+       "units": "deg",
+       "value": "73.29421453021587"
+      },
+      {
+       "label": "M",
+       "name": "ma",
+       "sigma": "6.1728E-9",
+       "title": "mean anomaly",
+       "units": "deg",
+       "value": "274.4193463761342"
+      },
+      {
+       "label": "tp",
+       "name": "tp",
+       "sigma": "2.8446E-8",
+       "title": "time of perihelion passage",
+       "units": "TDB",
+       "value": "2461599.841466614066"
+      },
+      {
+       "label": "period",
+       "name": "per",
+       "sigma": "9.2333E-9",
+       "title": "sidereal orbital period",
+       "units": "d",
+       "value": "1679.853119758983"
+      },
+      {
+       "label": "n",
+       "name": "n",
+       "sigma": "1.1779E-12",
+       "title": "mean motion",
+       "units": "deg/d",
+       "value": ".21430445064843"
+      },
+      {
+       "label": "Q",
+       "name": "ad",
+       "sigma": "1.0942E-11",
+       "title": "aphelion distance",
+       "units": "au",
+       "value": "2.985945828685327"
+      }
+     ],
+     "epoch": "2461200.5",
+     "equinox": "J2000",
+     "first_obs": "1995-01-05",
+     "last_obs": "2021-01-28",
+     "model_pars": [],
+     "moid": "1.58107",
+     "moid_jup": "2.0967",
+     "n_del_obs_used": 60,
+     "n_dop_obs_used": 0,
+     "n_obs_used": 1075,
+     "not_valid_after": null,
+     "not_valid_before": null,
+     "orbit_id": "48",
+     "pe_used": "DE441",
+     "producer": "Davide Farnocchia",
+     "rms": ".43153",
+     "sb_used": "SB441-N373",
+     "soln_date": "2021-04-13 11:04:44",
+     "source": "JPL",
+     "t_jup": "3.310",
+     "two_body": null
+    },
+    "signature": {
+     "source": "NASA/JPL Small-Body Database (SBDB) API",
+     "version": "1.3"
+    }
+   }
+  },
+  {
+   "horizonsCommand": "DES=2000004;",
+   "key": "vesta",
+   "name": "4 Vesta (A807 FA)",
+   "rows": [
+    {
+     "date": "A.D. 2025-Jun-09 00:00:00.0000",
+     "jd": 2460835.5,
+     "vx": 0.009973213068074914,
+     "vy": -0.006931819146450207,
+     "vz": -0.001008615154742089,
+     "x": -1.267982930605116,
+     "y": -1.737962097172877,
+     "z": 0.2060006466993085
+    },
+    {
+     "date": "A.D. 2026-Apr-10 00:00:00.0000",
+     "jd": 2461140.5,
+     "vx": 0.006561032839348629,
+     "vy": 0.00944380864050168,
+     "vz": -0.00107930425747116,
+     "x": 1.965578943438023,
+     "y": -1.152228638504196,
+     "z": -0.205139152653894
+    },
+    {
+     "date": "A.D. 2026-May-30 00:00:00.0000",
+     "jd": 2461190.5,
+     "vx": 0.0040390890465879,
+     "vy": 0.0105306570903156,
+     "vz": -0.0008044609175462791,
+     "x": 2.231225146230139,
+     "y": -0.6500671969183075,
+     "z": -0.2523947296913024
+    },
+    {
+     "date": "A.D. 2026-Jun-09 00:00:00.0000",
+     "jd": 2461200.5,
+     "vx": 0.00352118166927101,
+     "vy": 0.01066807890554666,
+     "vz": -0.0007454717132208444,
+     "x": 2.269028147398455,
+     "y": -0.5440517025183874,
+     "z": -0.2601452414717795
+    },
+    {
+     "date": "A.D. 2026-Jun-19 00:00:00.0000",
+     "jd": 2461210.5,
+     "vx": 0.003001935373732122,
+     "vy": 0.01077950715970364,
+     "vz": -0.0006855474810977455,
+     "x": 2.301644323129692,
+     "y": -0.4367922703041544,
+     "z": -0.267301047828236
+    },
+    {
+     "date": "A.D. 2026-Aug-08 00:00:00.0000",
+     "jd": 2461260.5,
+     "vx": 0.0004268241997257491,
+     "vy": 0.01096240938419854,
+     "vz": -0.0003773896998971872,
+     "x": 2.387082571752726,
+     "y": 0.109293838262652,
+     "z": -0.2939156125977772
+    },
+    {
+     "date": "A.D. 2027-Jun-09 00:00:00.0000",
+     "jd": 2461565.5,
+     "vx": -0.009831749706581606,
+     "vy": 0.002579449746600585,
+     "vz": 0.00112068783365241,
+     "x": 0.637710061846121,
+     "y": 2.489252146491852,
+     "z": -0.1515346551590804
+    }
+   ],
+   "sbdb": {
+    "object": {
+     "des": "4",
+     "fullname": "4 Vesta (A807 FA)",
+     "kind": "an",
+     "neo": false,
+     "orbit_class": {
+      "code": "MBA",
+      "name": "Main-belt Asteroid"
+     },
+     "orbit_id": "36",
+     "pha": false,
+     "prefix": null,
+     "shortname": "4 Vesta",
+     "spkid": "20000004"
+    },
+    "orbit": {
+     "comment": null,
+     "condition_code": "0",
+     "cov_epoch": "2458849.5",
+     "data_arc": "25743",
+     "elements": [
+      {
+       "label": "e",
+       "name": "e",
+       "sigma": "2.2909E-10",
+       "title": "eccentricity",
+       "units": null,
+       "value": ".09020374382834395"
+      },
+      {
+       "label": "a",
+       "name": "a",
+       "sigma": "1.5328E-9",
+       "title": "semi-major axis",
+       "units": "au",
+       "value": "2.361365965127599"
+      },
+      {
+       "label": "q",
+       "name": "q",
+       "sigma": "1.9335E-9",
+       "title": "perihelion distance",
+       "units": "au",
+       "value": "2.148361914524259"
+      },
+      {
+       "label": "i",
+       "name": "i",
+       "sigma": "2.1704E-7",
+       "title": "inclination; angle with respect to x-y ecliptic plane",
+       "units": "deg",
+       "value": "7.143925545058711"
+      },
+      {
+       "label": "node",
+       "name": "om",
+       "sigma": "3.8827E-7",
+       "title": "longitude of the ascending node",
+       "units": "deg",
+       "value": "103.701293265032"
+      },
+      {
+       "label": "peri",
+       "name": "w",
+       "sigma": "1.8814E-7",
+       "title": "argument of perihelion",
+       "units": "deg",
+       "value": "151.4686478221564"
+      },
+      {
+       "label": "M",
+       "name": "ma",
+       "sigma": "1.9021E-6",
+       "title": "mean anomaly",
+       "units": "deg",
+       "value": "81.19015607686903"
+      },
+      {
+       "label": "tp",
+       "name": "tp",
+       "sigma": "6.7119E-6",
+       "title": "time of perihelion passage",
+       "units": "TDB",
+       "value": "2460901.587379842988"
+      },
+      {
+       "label": "period",
+       "name": "per",
+       "sigma": "1.2905E-6",
+       "title": "sidereal orbital period",
+       "units": "d",
+       "value": "1325.389042911101"
+      },
+      {
+       "label": "n",
+       "name": "n",
+       "sigma": "2.6447E-10",
+       "title": "mean motion",
+       "units": "deg/d",
+       "value": ".2716183613599909"
+      },
+      {
+       "label": "Q",
+       "name": "ad",
+       "sigma": "1.6711E-9",
+       "title": "aphelion distance",
+       "units": "au",
+       "value": "2.574370015730939"
+      }
+     ],
+     "epoch": "2461200.5",
+     "equinox": "J2000",
+     "first_obs": "1950-09-23",
+     "last_obs": "2021-03-17",
+     "model_pars": [],
+     "moid": "1.13603",
+     "moid_jup": "2.46454",
+     "n_del_obs_used": 2977,
+     "n_dop_obs_used": 0,
+     "n_obs_used": 9451,
+     "not_valid_after": null,
+     "not_valid_before": null,
+     "orbit_id": "36",
+     "pe_used": "DE441",
+     "producer": "Davide Farnocchia",
+     "rms": ".40095",
+     "sb_used": "SB441-N16",
+     "soln_date": "2021-04-13 11:15:57",
+     "source": "JPL",
+     "t_jup": "3.535",
+     "two_body": null
+    },
+    "signature": {
+     "source": "NASA/JPL Small-Body Database (SBDB) API",
+     "version": "1.3"
+    }
+   }
+  },
+  {
+   "horizonsCommand": "DES=2000433;",
+   "key": "eros",
+   "name": "433 Eros (A898 PA)",
+   "rows": [
+    {
+     "date": "A.D. 2025-Jun-09 00:00:00.0000",
+     "jd": 2460835.5,
+     "vx": 0.004751371931644819,
+     "vy": 0.01058354557634284,
+     "vz": 0.001890972580519604,
+     "x": 1.469725842059115,
+     "y": -0.9123166385850973,
+     "z": 0.1340437459269125
+    },
+    {
+     "date": "A.D. 2026-Apr-10 00:00:00.0000",
+     "jd": 2461140.5,
+     "vx": -0.005519527012367695,
+     "vy": -0.01594667303973968,
+     "vz": -0.002589975901083581,
+     "x": -1.15942323001631,
+     "y": 0.2537947869594345,
+     "z": -0.1559399865341555
+    },
+    {
+     "date": "A.D. 2026-May-30 00:00:00.0000",
+     "jd": 2461190.5,
+     "vx": 0.003425265080141105,
+     "vy": -0.01501909426750167,
+     "vz": -0.001076126111906877,
+     "x": -1.200366460633019,
+     "y": -0.5434150064361695,
+     "z": -0.2482724382999608
+    },
+    {
+     "date": "A.D. 2026-Jun-09 00:00:00.0000",
+     "jd": 2461200.5,
+     "vx": 0.004824359618549828,
+     "vy": -0.01428885429392543,
+     "vz": -0.0007763203366782415,
+     "x": -1.158993982497945,
+     "y": -0.6900559091641556,
+     "z": -0.2575259080463166
+    },
+    {
+     "date": "A.D. 2026-Jun-19 00:00:00.0000",
+     "jd": 2461210.5,
+     "vx": 0.006074512382881769,
+     "vy": -0.01345105984262124,
+     "vz": -0.0004884746434293738,
+     "x": -1.104376191279687,
+     "y": -0.828834013318963,
+     "z": -0.2638388300579321
+    },
+    {
+     "date": "A.D. 2026-Aug-08 00:00:00.0000",
+     "jd": 2461260.5,
+     "vx": 0.01026521491268849,
+     "vy": -0.008401969215048075,
+     "vz": 0.0007177544452606653,
+     "x": -0.682435472952442,
+     "y": -1.379037884872097,
+     "z": -0.2563988580645468
+    },
+    {
+     "date": "A.D. 2027-Jun-09 00:00:00.0000",
+     "jd": 2461565.5,
+     "vx": -0.004212425570252548,
+     "vy": 0.01272102482492522,
+     "vz": 0.0007041068698135506,
+     "x": 1.517901492740638,
+     "y": 0.1379763651777729,
+     "z": 0.2547930219664326
+    }
+   ],
+   "sbdb": {
+    "object": {
+     "des": "433",
+     "fullname": "433 Eros (A898 PA)",
+     "kind": "an",
+     "neo": true,
+     "orbit_class": {
+      "code": "AMO",
+      "name": "Amor"
+     },
+     "orbit_id": "659",
+     "pha": false,
+     "prefix": null,
+     "shortname": "433 Eros",
+     "spkid": "20000433"
+    },
+    "orbit": {
+     "comment": null,
+     "condition_code": "0",
+     "cov_epoch": "2453311.5",
+     "data_arc": "46582",
+     "elements": [
+      {
+       "label": "e",
+       "name": "e",
+       "sigma": "9.3902E-9",
+       "title": "eccentricity",
+       "units": null,
+       "value": ".2228779627700761"
+      },
+      {
+       "label": "a",
+       "name": "a",
+       "sigma": "1.5185E-10",
+       "title": "semi-major axis",
+       "units": "au",
+       "value": "1.458243716760167"
+      },
+      {
+       "label": "q",
+       "name": "q",
+       "sigma": "1.3695E-8",
+       "title": "perihelion distance",
+       "units": "au",
+       "value": "1.133233327946397"
+      },
+      {
+       "label": "i",
+       "name": "i",
+       "sigma": "1.158E-6",
+       "title": "inclination; angle with respect to x-y ecliptic plane",
+       "units": "deg",
+       "value": "10.82854410314273"
+      },
+      {
+       "label": "node",
+       "name": "om",
+       "sigma": "3.5792E-6",
+       "title": "longitude of the ascending node",
+       "units": "deg",
+       "value": "304.2679713350896"
+      },
+      {
+       "label": "peri",
+       "name": "w",
+       "sigma": "3.9825E-6",
+       "title": "argument of perihelion",
+       "units": "deg",
+       "value": "178.9181319135911"
+      },
+      {
+       "label": "M",
+       "name": "ma",
+       "sigma": "1.4849E-6",
+       "title": "mean anomaly",
+       "units": "deg",
+       "value": "62.51145501986792"
+      },
+      {
+       "label": "tp",
+       "name": "tp",
+       "sigma": "2.647E-6",
+       "title": "time of perihelion passage",
+       "units": "TDB",
+       "value": "2461088.813494039683"
+      },
+      {
+       "label": "period",
+       "name": "per",
+       "sigma": "1.0047E-7",
+       "title": "sidereal orbital period",
+       "units": "d",
+       "value": "643.1963890927677"
+      },
+      {
+       "label": "n",
+       "name": "n",
+       "sigma": "8.7425E-11",
+       "title": "mean motion",
+       "units": "deg/d",
+       "value": ".5597046347038453"
+      },
+      {
+       "label": "Q",
+       "name": "ad",
+       "sigma": "1.8569E-10",
+       "title": "aphelion distance",
+       "units": "au",
+       "value": "1.783254105573937"
+      }
+     ],
+     "epoch": "2461200.5",
+     "equinox": "J2000",
+     "first_obs": "1893-10-29",
+     "last_obs": "2021-05-13",
+     "model_pars": [],
+     "moid": ".148798",
+     "moid_jup": "3.2952",
+     "n_del_obs_used": 4,
+     "n_dop_obs_used": 2,
+     "n_obs_used": 9130,
+     "not_valid_after": null,
+     "not_valid_before": null,
+     "orbit_id": "659",
+     "pe_used": "DE441",
+     "producer": "Giorgini",
+     "rms": ".29796",
+     "sb_used": "SB441-N16",
+     "soln_date": "2021-05-24 17:55:05",
+     "source": "JPL",
+     "t_jup": "4.582",
+     "two_body": null
+    },
+    "signature": {
+     "source": "NASA/JPL Small-Body Database (SBDB) API",
+     "version": "1.3"
+    }
+   }
+  },
+  {
+   "horizonsCommand": "DES=2099942;",
+   "key": "apophis",
+   "name": "99942 Apophis (2004 MN4)",
+   "rows": [
+    {
+     "date": "A.D. 2025-Jun-09 00:00:00.0000",
+     "jd": 2460835.5,
+     "vx": -0.01490644200793209,
+     "vy": -0.004495879077329398,
+     "vz": -0.0001126263492444574,
+     "x": -0.4329284593634027,
+     "y": 0.955455328813678,
+     "z": -0.06123302174135316
+    },
+    {
+     "date": "A.D. 2026-Apr-10 00:00:00.0000",
+     "jd": 2461140.5,
+     "vx": -0.01634781451248268,
+     "vy": 0.0004590815935433345,
+     "vz": -0.000411115133024662,
+     "x": -0.1408656042548171,
+     "y": 0.9942234001158371,
+     "z": -0.05639500182419665
+    },
+    {
+     "date": "A.D. 2026-May-30 00:00:00.0000",
+     "jd": 2461190.5,
+     "vx": -0.01011375288532262,
+     "vy": -0.01085230564524434,
+     "vz": 0.0003400859233265022,
+     "x": -0.8325821745001284,
+     "y": 0.7072768327955676,
+     "z": -0.05743717221601436
+    },
+    {
+     "date": "A.D. 2026-Jun-09 00:00:00.0000",
+     "jd": 2461200.5,
+     "vx": -0.008138789687781776,
+     "vy": -0.01231260540349406,
+     "vz": 0.0004647358984542194,
+     "x": -0.9239966398806005,
+     "y": 0.5912206763635087,
+     "z": -0.05340428779469323
+    },
+    {
+     "date": "A.D. 2026-Jun-19 00:00:00.0000",
+     "jd": 2461210.5,
+     "vx": -0.005992814388540535,
+     "vy": -0.01349041495346191,
+     "vz": 0.0005783497553934106,
+     "x": -0.9947883128105781,
+     "y": 0.4619659040575794,
+     "z": -0.04817922611039602
+    },
+    {
+     "date": "A.D. 2026-Aug-08 00:00:00.0000",
+     "jd": 2461260.5,
+     "vx": 0.006583841128590243,
+     "vy": -0.01451994923621415,
+     "vz": 0.0009306947033536953,
+     "x": -0.9901558579248745,
+     "y": -0.2751180527904424,
+     "z": -0.008727332357296455
+    },
+    {
+     "date": "A.D. 2027-Jun-09 00:00:00.0000",
+     "jd": 2461565.5,
+     "vx": 0.001651353715635713,
+     "vy": -0.01518704598361808,
+     "vz": 0.0008497340980708249,
+     "x": -1.066180332980567,
+     "y": 0.002357576465296908,
+     "z": -0.02533249764493086
+    }
+   ],
+   "sbdb": {
+    "object": {
+     "des": "99942",
+     "fullname": "99942 Apophis (2004 MN4)",
+     "kind": "an",
+     "neo": true,
+     "orbit_class": {
+      "code": "ATE",
+      "name": "Aten"
+     },
+     "orbit_id": "220",
+     "pha": true,
+     "prefix": null,
+     "shortname": "99942 Apophis",
+     "spkid": "20099942"
+    },
+    "orbit": {
+     "comment": null,
+     "condition_code": "0",
+     "cov_epoch": "2459215.5",
+     "data_arc": "6599",
+     "elements": [
+      {
+       "label": "e",
+       "name": "e",
+       "sigma": "1.8376E-9",
+       "title": "eccentricity",
+       "units": null,
+       "value": ".1911492279663492"
+      },
+      {
+       "label": "a",
+       "name": "a",
+       "sigma": "1.5667E-9",
+       "title": "semi-major axis",
+       "units": "au",
+       "value": ".9223592206975018"
+      },
+      {
+       "label": "q",
+       "name": "q",
+       "sigma": "2.8517E-9",
+       "title": "perihelion distance",
+       "units": "au",
+       "value": ".7460509677535309"
+      },
+      {
+       "label": "i",
+       "name": "i",
+       "sigma": "9.903E-8",
+       "title": "inclination; angle with respect to x-y ecliptic plane",
+       "units": "deg",
+       "value": "3.340996879880978"
+      },
+      {
+       "label": "node",
+       "name": "om",
+       "sigma": "3.0657E-6",
+       "title": "longitude of the ascending node",
+       "units": "deg",
+       "value": "203.8936514240762"
+      },
+      {
+       "label": "peri",
+       "name": "w",
+       "sigma": "3.3086E-6",
+       "title": "argument of perihelion",
+       "units": "deg",
+       "value": "126.6795706895841"
+      },
+      {
+       "label": "M",
+       "name": "ma",
+       "sigma": "5.2809E-7",
+       "title": "mean anomaly",
+       "units": "deg",
+       "value": "175.3304026592739"
+      },
+      {
+       "label": "tp",
+       "name": "tp",
+       "sigma": "7.0729E-7",
+       "title": "time of perihelion passage",
+       "units": "TDB",
+       "value": "2461042.919201488142"
+      },
+      {
+       "label": "period",
+       "name": "per",
+       "sigma": "8.244E-7",
+       "title": "sidereal orbital period",
+       "units": "d",
+       "value": "323.5553366891694"
+      },
+      {
+       "label": "n",
+       "name": "n",
+       "sigma": "2.8349E-9",
+       "title": "mean motion",
+       "units": "deg/d",
+       "value": "1.112638115271892"
+      },
+      {
+       "label": "Q",
+       "name": "ad",
+       "sigma": "1.8662E-9",
+       "title": "aphelion distance",
+       "units": "au",
+       "value": "1.098667473641473"
+      }
+     ],
+     "epoch": "2461200.5",
+     "equinox": "J2000",
+     "first_obs": "2004-03-15",
+     "last_obs": "2022-04-09",
+     "model_pars": [
+      {
+       "desc": "non-gravitational radial acceleration parameter",
+       "kind": "EST",
+       "n": 1,
+       "name": "A1",
+       "sigma": "4.892E-13",
+       "title": "non-grav. radial accel.",
+       "units": "au/d^2",
+       "value": "5.E-13"
+      },
+      {
+       "desc": "non-gravitational transverse acceleration parameter",
+       "kind": "EST",
+       "n": 2,
+       "name": "A2",
+       "sigma": "1.859E-16",
+       "title": "non-grav. transverse accel.",
+       "units": "au/d^2",
+       "value": "-2.901766637153165E-14"
+      },
+      {
+       "desc": "normalizing factor [default 0.1112620426]",
+       "kind": "SET",
+       "n": 0,
+       "name": "ALN",
+       "sigma": null,
+       "title": "normalizing factor",
+       "units": null,
+       "value": "1."
+      },
+      {
+       "desc": "non-grav. model constant, exponent k [default 4.6142]",
+       "kind": "SET",
+       "n": 0,
+       "name": "NK",
+       "sigma": null,
+       "title": "non-grav. model exp. k",
+       "units": null,
+       "value": "0."
+      },
+      {
+       "desc": "non-grav. model constant, exponent m [default 2.15]",
+       "kind": "SET",
+       "n": 0,
+       "name": "NM",
+       "sigma": null,
+       "title": "non-grav. model exp. m",
+       "units": null,
+       "value": "2."
+      },
+      {
+       "desc": "normalizing distance, au [default 2.808 au]",
+       "kind": "SET",
+       "n": 0,
+       "name": "R0",
+       "sigma": null,
+       "title": "normalizing distance",
+       "units": "au",
+       "value": "1."
+      }
+     ],
+     "moid": ".000107917",
+     "moid_jup": "4.12376",
+     "n_del_obs_used": 20,
+     "n_dop_obs_used": 30,
+     "n_obs_used": 7370,
+     "not_valid_after": null,
+     "not_valid_before": null,
+     "orbit_id": "220",
+     "pe_used": "DE441",
+     "producer": "Davide Farnocchia",
+     "rms": ".25657",
+     "sb_used": "SB441-N16",
+     "soln_date": "2024-06-25 10:48:08",
+     "source": "JPL",
+     "t_jup": "6.466",
+     "two_body": null
+    },
+    "signature": {
+     "source": "NASA/JPL Small-Body Database (SBDB) API",
+     "version": "1.3"
+    }
+   }
+  },
+  {
+   "horizonsCommand": "DES=1P;CAP",
+   "key": "halley",
+   "name": "1P/Halley",
+   "rows": [
+    {
+     "date": "A.D. 1967-Jan-20 00:00:00.0000",
+     "jd": 2439510.5,
+     "vx": 0.001357495354512142,
+     "vy": -0.001178517422507333,
+     "vz": 0.0005696936476278712,
+     "x": -13.81690884903833,
+     "y": 24.81479602959771,
+     "z": -7.902716146177902
+    },
+    {
+     "date": "A.D. 1967-Nov-21 00:00:00.0000",
+     "jd": 2439815.5,
+     "vx": 0.001408573566205248,
+     "vy": -0.001270210800924522,
+     "vz": 0.0005980438446296227,
+     "x": -13.39511860741,
+     "y": 24.44143567203672,
+     "z": -7.724660700274531
+    },
+    {
+     "date": "A.D. 1968-Jan-10 00:00:00.0000",
+     "jd": 2439865.5,
+     "vx": 0.001417212832622234,
+     "vy": -0.001285588524746192,
+     "vz": 0.0006027813649541798,
+     "x": -13.32447441511254,
+     "y": 24.37754064576542,
+     "z": -7.694640194290165
+    },
+    {
+     "date": "A.D. 1968-Jan-20 00:00:00.0000",
+     "jd": 2439875.5,
+     "vx": 0.001418949944126011,
+     "vy": -0.001288662739381909,
+     "vz": 0.0006037325788988449,
+     "x": -13.31029360169393,
+     "y": 24.36466938987485,
+     "z": -7.688607625633921
+    },
+    {
+     "date": "A.D. 1968-Jan-30 00:00:00.0000",
+     "jd": 2439885.5,
+     "vx": 0.001420687729970902,
+     "vy": -0.001291738863897723,
+     "vz": 0.0006046849289128536,
+     "x": -13.29609541453342,
+     "y": 24.35176738463821,
+     "z": -7.682565538874869
+    },
+    {
+     "date": "A.D. 1968-Mar-20 00:00:00.0000",
+     "jd": 2439935.5,
+     "vx": 0.001429401570610239,
+     "vy": -0.001307123342393519,
+     "vz": 0.0006094644794013205,
+     "x": -13.22484312446438,
+     "y": 24.28679579568374,
+     "z": -7.652211956408446
+    },
+    {
+     "date": "A.D. 1969-Jan-19 00:00:00.0000",
+     "jd": 2440240.5,
+     "vx": 0.001483153115873374,
+     "vy": -0.001403066807333583,
+     "vz": 0.0006392733049161892,
+     "x": -12.78071476081558,
+     "y": 23.87358684779502,
+     "z": -7.461808447782687
+    }
+   ],
+   "sbdb": {
+    "object": {
+     "des": "1P",
+     "fullname": "1P/Halley",
+     "kind": "cn",
+     "neo": true,
+     "orbit_class": {
+      "code": "HTC",
+      "name": "Halley-type Comet*"
+     },
+     "orbit_id": "75",
+     "pha": false,
+     "prefix": "P",
+     "spkid": "1000036"
+    },
+    "orbit": {
+     "comment": null,
+     "condition_code": "0",
+     "cov_epoch": "2439875.5",
+     "data_arc": "57852",
+     "elements": [
+      {
+       "label": "e",
+       "name": "e",
+       "sigma": "7.5527E-9",
+       "title": "eccentricity",
+       "units": null,
+       "value": ".9679359956953211"
+      },
+      {
+       "label": "a",
+       "name": "a",
+       "sigma": "9.9587E-9",
+       "title": "semi-major axis",
+       "units": "au",
+       "value": "17.92863504856923"
+      },
+      {
+       "label": "q",
+       "name": "q",
+       "sigma": "1.3552E-7",
+       "title": "perihelion distance",
+       "units": "au",
+       "value": ".5748638313743413"
+      },
+      {
+       "label": "i",
+       "name": "i",
+       "sigma": "1.5093E-5",
+       "title": "inclination; angle with respect to x-y ecliptic plane",
+       "units": "deg",
+       "value": "162.1905300439129"
+      },
+      {
+       "label": "node",
+       "name": "om",
+       "sigma": "1.9861E-5",
+       "title": "longitude of the ascending node",
+       "units": "deg",
+       "value": "59.09894720612437"
+      },
+      {
+       "label": "peri",
+       "name": "w",
+       "sigma": "2.0534E-5",
+       "title": "argument of perihelion",
+       "units": "deg",
+       "value": "112.2414314637764"
+      },
+      {
+       "label": "M",
+       "name": "ma",
+       "sigma": "1.2457E-7",
+       "title": "mean anomaly",
+       "units": "deg",
+       "value": "274.3823371366792"
+      },
+      {
+       "label": "tp",
+       "name": "tp",
+       "sigma": "1.2976E-5",
+       "title": "time of perihelion passage",
+       "units": "TDB",
+       "value": "2446469.973616146677"
+      },
+      {
+       "label": "period",
+       "name": "per",
+       "sigma": "2.3103E-5",
+       "title": "sidereal orbital period",
+       "units": "d",
+       "value": "27728.04608790421"
+      },
+      {
+       "label": "n",
+       "name": "n",
+       "sigma": "1.0818E-11",
+       "title": "mean motion",
+       "units": "deg/d",
+       "value": ".01298324443268444"
+      },
+      {
+       "label": "Q",
+       "name": "ad",
+       "sigma": "1.9598E-8",
+       "title": "aphelion distance",
+       "units": "au",
+       "value": "35.28240626576412"
+      }
+     ],
+     "epoch": "2439875.5",
+     "equinox": "J2000",
+     "first_obs": "1835-08-21",
+     "last_obs": "1994-01-11",
+     "model_pars": [
+      {
+       "desc": "non-gravitational radial acceleration parameter",
+       "kind": "EST",
+       "n": 1,
+       "name": "A1",
+       "sigma": "4.E-11",
+       "title": "non-grav. radial accel.",
+       "units": "au/d^2",
+       "value": "4.887055280193953E-10"
+      },
+      {
+       "desc": "non-gravitational transverse acceleration parameter",
+       "kind": "EST",
+       "n": 2,
+       "name": "A2",
+       "sigma": "4.575E-15",
+       "title": "non-grav. transverse accel.",
+       "units": "au/d^2",
+       "value": "1.554720285182461E-10"
+      },
+      {
+       "desc": "offset between the center-of-light and center-of-mass",
+       "kind": "EST",
+       "n": 3,
+       "name": "S0",
+       "sigma": "27.33",
+       "title": "center-of-light/mass offset",
+       "units": "km",
+       "value": "577.878759926215"
+      }
+     ],
+     "moid": ".0745097",
+     "moid_jup": ".782553",
+     "n_del_obs_used": null,
+     "n_dop_obs_used": null,
+     "n_obs_used": 8518,
+     "not_valid_after": null,
+     "not_valid_before": null,
+     "orbit_id": "75",
+     "pe_used": "DE441",
+     "producer": "Davide Farnocchia",
+     "rms": ".61032",
+     "sb_used": "SB441-N16",
+     "soln_date": "2025-11-21 15:57:34",
+     "source": "JPL",
+     "t_jup": "-0.598",
+     "two_body": null
+    },
+    "signature": {
+     "source": "NASA/JPL Small-Body Database (SBDB) API",
+     "version": "1.3"
+    }
+   }
+  },
+  {
+   "horizonsCommand": "DES=2P;CAP",
+   "key": "encke",
+   "name": "2P/Encke",
+   "rows": [
+    {
+     "date": "A.D. 2023-Oct-21 00:00:00.0000",
+     "jd": 2460238.5,
+     "vx": -0.01608055618701885,
+     "vy": -0.0357248147994869,
+     "vz": -0.007850637329461327,
+     "x": -0.2994190383289416,
+     "y": 0.1654823194790851,
+     "z": 0.003526368448178668
+    },
+    {
+     "date": "A.D. 2024-Aug-21 00:00:00.0000",
+     "jd": 2460543.5,
+     "vx": 0.006380501180498704,
+     "vy": 0.0004163587594877385,
+     "vz": 0.0006356303964433701,
+     "x": 2.796193999326302,
+     "y": -1.910659715056779,
+     "z": -0.09872869797287523
+    },
+    {
+     "date": "A.D. 2024-Oct-10 00:00:00.0000",
+     "jd": 2460593.5,
+     "vx": 0.005367079416159663,
+     "vy": 0.001068810288850228,
+     "vz": 0.000664246098531865,
+     "x": 3.08948902128265,
+     "y": -1.872951052640559,
+     "z": -0.06616201160570931
+    },
+    {
+     "date": "A.D. 2024-Oct-20 00:00:00.0000",
+     "jd": 2460603.5,
+     "vx": 0.005174780059090339,
+     "vy": 0.001184000600809025,
+     "vz": 0.0006681252487871381,
+     "x": 3.142195832808369,
+     "y": -1.861683300328684,
+     "z": -0.05949970760806524
+    },
+    {
+     "date": "A.D. 2024-Oct-30 00:00:00.0000",
+     "jd": 2460613.5,
+     "vx": 0.004985349693478085,
+     "vy": 0.001294903484833592,
+     "vz": 0.0006714847375389014,
+     "x": 3.192994184034565,
+     "y": -1.849285328800584,
+     "z": -0.0528012383965835
+    },
+    {
+     "date": "A.D. 2024-Dec-19 00:00:00.0000",
+     "jd": 2460663.5,
+     "vx": 0.004074059319398837,
+     "vy": 0.001794118582559306,
+     "vz": 0.0006814799276289453,
+     "x": 3.419253312841754,
+     "y": -1.77170362883237,
+     "z": -0.01893286074676039
+    },
+    {
+     "date": "A.D. 2025-Oct-20 00:00:00.0000",
+     "jd": 2460968.5,
+     "vx": -0.001121789864962588,
+     "vy": 0.003705254319278603,
+     "vz": 0.0005697025211198051,
+     "x": 3.873038070269084,
+     "y": -0.8963105936167894,
+     "z": 0.1788142565002484
+    }
+   ],
+   "sbdb": {
+    "object": {
+     "des": "2P",
+     "fullname": "2P/Encke",
+     "kind": "cn",
+     "neo": true,
+     "orbit_class": {
+      "code": "ETc",
+      "name": "Encke-type Comet"
+     },
+     "orbit_id": "K273/29",
+     "pha": false,
+     "prefix": "P",
+     "spkid": "1000025"
+    },
+    "orbit": {
+     "comment": null,
+     "condition_code": "1",
+     "cov_epoch": "2460603.5",
+     "data_arc": "2925",
+     "elements": [
+      {
+       "label": "e",
+       "name": "e",
+       "sigma": "1.0848E-7",
+       "title": "eccentricity",
+       "units": null,
+       "value": ".8469969226126325"
+      },
+      {
+       "label": "a",
+       "name": "a",
+       "sigma": "1.2486E-7",
+       "title": "semi-major axis",
+       "units": "au",
+       "value": "2.218337381969662"
+      },
+      {
+       "label": "q",
+       "name": "q",
+       "sigma": "2.4892E-7",
+       "title": "perihelion distance",
+       "units": "au",
+       "value": ".3394124461247944"
+      },
+      {
+       "label": "i",
+       "name": "i",
+       "sigma": "1.4321E-5",
+       "title": "inclination; angle with respect to x-y ecliptic plane",
+       "units": "deg",
+       "value": "11.33961239101644"
+      },
+      {
+       "label": "node",
+       "name": "om",
+       "sigma": "5.4565E-5",
+       "title": "longitude of the ascending node",
+       "units": "deg",
+       "value": "334.0138093662961"
+      },
+      {
+       "label": "peri",
+       "name": "w",
+       "sigma": "5.5488E-5",
+       "title": "argument of perihelion",
+       "units": "deg",
+       "value": "187.2834304669274"
+      },
+      {
+       "label": "M",
+       "name": "ma",
+       "sigma": "1.5218E-5",
+       "title": "mean anomaly",
+       "units": "deg",
+       "value": "108.4240099681548"
+      },
+      {
+       "label": "tp",
+       "name": "tp",
+       "sigma": "4.1798E-5",
+       "title": "time of perihelion passage",
+       "units": "TDB",
+       "value": "2460240.034839930237"
+      },
+      {
+       "label": "period",
+       "name": "per",
+       "sigma": ".00010189",
+       "title": "sidereal orbital period",
+       "units": "d",
+       "value": "1206.812565441416"
+      },
+      {
+       "label": "n",
+       "name": "n",
+       "sigma": "2.5185E-8",
+       "title": "mean motion",
+       "units": "deg/d",
+       "value": ".2983064730257616"
+      },
+      {
+       "label": "Q",
+       "name": "ad",
+       "sigma": "2.3061E-7",
+       "title": "aphelion distance",
+       "units": "au",
+       "value": "4.097262317814529"
+      }
+     ],
+     "epoch": "2460603.5",
+     "equinox": "J2000",
+     "first_obs": "2018-11-05",
+     "last_obs": "2026-11-08",
+     "model_pars": [
+      {
+       "desc": "non-gravitational radial acceleration parameter",
+       "kind": "EST",
+       "n": 1,
+       "name": "A1",
+       "sigma": "3.142E-11",
+       "title": "non-grav. radial accel.",
+       "units": "au/d^2",
+       "value": "5.134472421686407E-11"
+      },
+      {
+       "desc": "non-gravitational transverse acceleration parameter",
+       "kind": "EST",
+       "n": 2,
+       "name": "A2",
+       "sigma": "3.659E-13",
+       "title": "non-grav. transverse accel.",
+       "units": "au/d^2",
+       "value": "3.634246366849142E-12"
+      }
+     ],
+     "moid": ".165876",
+     "moid_jup": ".917279",
+     "n_del_obs_used": null,
+     "n_dop_obs_used": null,
+     "n_obs_used": 1644,
+     "not_valid_after": null,
+     "not_valid_before": null,
+     "orbit_id": "K273/29",
+     "pe_used": "DE441",
+     "producer": "Davide Farnocchia",
+     "rms": ".35485",
+     "sb_used": "SB441-N16",
+     "soln_date": "2026-11-09 15:25:40",
+     "source": "JPL",
+     "t_jup": "3.026",
+     "two_body": null
+    },
+    "signature": {
+     "source": "NASA/JPL Small-Body Database (SBDB) API",
+     "version": "1.3"
+    }
+   }
+  },
+  {
+   "horizonsCommand": "DES=1003667;",
+   "key": "neowise",
+   "name": "C/2020 F3 (NEOWISE)",
+   "rows": [
+    {
+     "date": "A.D. 2019-Jul-07 00:00:00.0000",
+     "jd": 2458671.5,
+     "vx": 0.007703644878475126,
+     "vy": 0.003337751812219478,
+     "vz": 0.006336827239361006,
+     "x": -3.742037928542825,
+     "y": -0.544688587984547,
+     "z": -3.724197131874182
+    },
+    {
+     "date": "A.D. 2020-May-07 00:00:00.0000",
+     "jd": 2458976.5,
+     "vx": 0.0144504035035873,
+     "vy": 0.002097952586480635,
+     "vz": 0.01438526354467283,
+     "x": -0.7519674694141047,
+     "y": 0.4650280599777427,
+     "z": -1.093003591707142
+    },
+    {
+     "date": "A.D. 2020-Jun-26 00:00:00.0000",
+     "jd": 2459026.5,
+     "vx": 0.0183937558582288,
+     "vy": -0.01741259142452246,
+     "vz": 0.03035741369208652,
+     "x": 0.1062761114727441,
+     "y": 0.3504975618686186,
+     "z": -0.09518579845479569
+    },
+    {
+     "date": "A.D. 2020-Jul-06 00:00:00.0000",
+     "jd": 2459036.5,
+     "vx": 0.0007944100705820444,
+     "vy": -0.0374610741085661,
+     "vz": 0.02333029594122695,
+     "x": 0.2200839683613764,
+     "y": 0.06661826607443808,
+     "z": 0.1983003394439131
+    },
+    {
+     "date": "A.D. 2020-Jul-16 00:00:00.0000",
+     "jd": 2459046.5,
+     "vx": -0.01160803015933975,
+     "vy": -0.03263838769243253,
+     "vz": 0.007010760291348843,
+     "x": 0.1491884568835688,
+     "y": -0.2953330913949032,
+     "z": 0.3386590158588478
+    },
+    {
+     "date": "A.D. 2020-Sep-04 00:00:00.0000",
+     "jd": 2459096.5,
+     "vx": -0.01155272704372774,
+     "vy": -0.01594989856993802,
+     "vz": -0.00293988304005347,
+     "x": -0.4769619037412893,
+     "y": -1.37671881476815,
+     "z": 0.3094372663116135
+    },
+    {
+     "date": "A.D. 2021-Jul-06 00:00:00.0000",
+     "jd": 2459401.5,
+     "vx": -0.006969956066075864,
+     "vy": -0.007086298819342659,
+     "vz": -0.003295184739075013,
+     "x": -3.077199936744388,
+     "y": -4.319213122336853,
+     "z": -0.7407794862352581
+    }
+   ],
+   "sbdb": {
+    "object": {
+     "des": "2020 F3",
+     "fullname": "C/2020 F3 (NEOWISE)",
+     "kind": "cu",
+     "neo": false,
+     "orbit_class": {
+      "code": "COM",
+      "name": "Comet"
+     },
+     "orbit_id": "31",
+     "pha": false,
+     "prefix": "C",
+     "spkid": "1003667"
+    },
+    "orbit": {
+     "comment": null,
+     "condition_code": null,
+     "cov_epoch": "2459036.5",
+     "data_arc": "438",
+     "elements": [
+      {
+       "label": "e",
+       "name": "e",
+       "sigma": "8.5203E-7",
+       "title": "eccentricity",
+       "units": null,
+       "value": ".9991780262531292"
+      },
+      {
+       "label": "a",
+       "name": "a",
+       "sigma": ".37136",
+       "title": "semi-major axis",
+       "units": "au",
+       "value": "358.4679565529321"
+      },
+      {
+       "label": "q",
+       "name": "q",
+       "sigma": "2.0919E-7",
+       "title": "perihelion distance",
+       "units": "au",
+       "value": ".2946512493809196"
+      },
+      {
+       "label": "i",
+       "name": "i",
+       "sigma": "2.755E-5",
+       "title": "inclination; angle with respect to x-y ecliptic plane",
+       "units": "deg",
+       "value": "128.9375027594809"
+      },
+      {
+       "label": "node",
+       "name": "om",
+       "sigma": "4.2941E-5",
+       "title": "longitude of the ascending node",
+       "units": "deg",
+       "value": "61.01042818536988"
+      },
+      {
+       "label": "peri",
+       "name": "w",
+       "sigma": "3.0544E-5",
+       "title": "argument of perihelion",
+       "units": "deg",
+       "value": "37.2786584481257"
+      },
+      {
+       "label": "M",
+       "name": "ma",
+       "sigma": "5.2627E-7",
+       "title": "mean anomaly",
+       "units": "deg",
+       "value": ".0003370720801246702"
+      },
+      {
+       "label": "tp",
+       "name": "tp",
+       "sigma": "2.0222E-5",
+       "title": "time of perihelion passage",
+       "units": "TDB",
+       "value": "2459034.178898044365"
+      },
+      {
+       "label": "period",
+       "name": "per",
+       "sigma": "3852.2",
+       "title": "sidereal orbital period",
+       "units": "d",
+       "value": "2478985.217997125"
+      },
+      {
+       "label": "n",
+       "name": "n",
+       "sigma": "2.2566E-7",
+       "title": "mean motion",
+       "units": "deg/d",
+       "value": ".0001452207126474352"
+      },
+      {
+       "label": "Q",
+       "name": "ad",
+       "sigma": ".7424",
+       "title": "aphelion distance",
+       "units": "au",
+       "value": "716.6412618564832"
+      }
+     ],
+     "epoch": "2459036.5",
+     "equinox": "J2000",
+     "first_obs": "2020-03-27",
+     "last_obs": "2021-06-08",
+     "model_pars": [],
+     "moid": ".362514",
+     "moid_jup": ".813419",
+     "n_del_obs_used": null,
+     "n_dop_obs_used": null,
+     "n_obs_used": 1315,
+     "not_valid_after": null,
+     "not_valid_before": null,
+     "orbit_id": "31",
+     "pe_used": "DE441",
+     "producer": "Otto Matic",
+     "rms": ".3899",
+     "sb_used": "SB441-N16",
+     "soln_date": "2024-07-30 14:57:24",
+     "source": "JPL",
+     "t_jup": "-0.408",
+     "two_body": null
+    },
+    "signature": {
+     "source": "NASA/JPL Small-Body Database (SBDB) API",
+     "version": "1.3"
+    }
+   }
+  },
+  {
+   "horizonsCommand": "DES=2017 U1;",
+   "key": "oumuamua",
+   "name": "'Oumuamua (A/2017 U1)",
+   "rows": [
+    {
+     "date": "A.D. 2016-Nov-23 00:00:00.0000",
+     "jd": 2457715.5,
+     "vx": -0.002313227550244528,
+     "vy": 0.00964926079766415,
+     "vz": -0.01514111851114003,
+     "x": 0.1254710782771204,
+     "y": -3.541995450934905,
+     "z": 5.089682019333549
+    },
+    {
+     "date": "A.D. 2017-Sep-24 00:00:00.0000",
+     "jd": 2458020.5,
+     "vx": 0.03358951981966075,
+     "vy": 0.01112543912131931,
+     "vz": 0.006012301805843087,
+     "x": 0.3877852003152325,
+     "y": 0.3362920868276027,
+     "z": -0.2245410103089453
+    },
+    {
+     "date": "A.D. 2017-Nov-13 00:00:00.0000",
+     "jd": 2458070.5,
+     "vx": 0.02181907946064173,
+     "vy": 0.004184174512274809,
+     "vz": 0.008207141683825097,
+     "x": 1.674859686731979,
+     "y": 0.6412105867939736,
+     "z": 0.1774500563778723
+    },
+    {
+     "date": "A.D. 2017-Nov-23 00:00:00.0000",
+     "jd": 2458080.5,
+     "vx": 0.02106502285864551,
+     "vy": 0.003903782164346324,
+     "vz": 0.008115468208135279,
+     "x": 1.88913618653348,
+     "y": 0.681582971621653,
+     "z": 0.2590651707258994
+    },
+    {
+     "date": "A.D. 2017-Dec-03 00:00:00.0000",
+     "jd": 2458090.5,
+     "vx": 0.02045715997384696,
+     "vy": 0.003689811524872513,
+     "vz": 0.00802452374695267,
+     "x": 2.096644850620122,
+     "y": 0.719506023597341,
+     "z": 0.3397624439792258
+    },
+    {
+     "date": "A.D. 2018-Jan-22 00:00:00.0000",
+     "jd": 2458140.5,
+     "vx": 0.01858150365278602,
+     "vy": 0.003096838395337985,
+     "vz": 0.007648889133074212,
+     "x": 3.066735020534921,
+     "y": 0.8868974268958602,
+     "z": 0.7310094181076924
+    },
+    {
+     "date": "A.D. 2018-Nov-23 00:00:00.0000",
+     "jd": 2458445.5,
+     "vx": 0.01573995273046249,
+     "vy": 0.002393828400500573,
+     "vz": 0.006805612981758785,
+     "x": 8.16154832166623,
+     "y": 1.684200117993542,
+     "z": 2.901733642245644
+    }
+   ],
+   "sbdb": {
+    "object": {
+     "des": "2017 U1",
+     "fullname": "'Oumuamua (A/2017 U1)",
+     "kind": "au",
+     "neo": false,
+     "orbit_class": {
+      "code": "HYA",
+      "name": "Hyperbolic Asteroid"
+     },
+     "orbit_id": "16",
+     "pha": false,
+     "prefix": "A",
+     "spkid": "50788063"
+    },
+    "orbit": {
+     "comment": "Sol. 7c, Micheli et al. 2018",
+     "condition_code": null,
+     "cov_epoch": "2458080.5",
+     "data_arc": "80",
+     "elements": [
+      {
+       "label": "e",
+       "name": "e",
+       "sigma": "2.1064E-5",
+       "title": "eccentricity",
+       "units": null,
+       "value": "1.201133796102373"
+      },
+      {
+       "label": "a",
+       "name": "a",
+       "sigma": ".00010015",
+       "title": "semi-major axis",
+       "units": "au",
+       "value": "-1.27234500742808"
+      },
+      {
+       "label": "q",
+       "name": "q",
+       "sigma": "6.6635E-6",
+       "title": "perihelion distance",
+       "units": "au",
+       "value": ".2559115812959116"
+      },
+      {
+       "label": "i",
+       "name": "i",
+       "sigma": ".00028826",
+       "title": "inclination; angle with respect to x-y ecliptic plane",
+       "units": "deg",
+       "value": "122.7417062847286"
+      },
+      {
+       "label": "node",
+       "name": "om",
+       "sigma": ".00025422",
+       "title": "longitude of the ascending node",
+       "units": "deg",
+       "value": "24.59690955523242"
+      },
+      {
+       "label": "peri",
+       "name": "w",
+       "sigma": ".0012495",
+       "title": "argument of perihelion",
+       "units": "deg",
+       "value": "241.8105360304898"
+      },
+      {
+       "label": "M",
+       "name": "ma",
+       "sigma": ".0061155",
+       "title": "mean anomaly",
+       "units": "deg",
+       "value": "51.1576197938249"
+      },
+      {
+       "label": "tp",
+       "name": "tp",
+       "sigma": ".00026424",
+       "title": "time of perihelion passage",
+       "units": "TDB",
+       "value": "2458006.007321375231"
+      },
+      {
+       "label": "period",
+       "name": "per",
+       "sigma": null,
+       "title": "sidereal orbital period",
+       "units": "d",
+       "value": null
+      },
+      {
+       "label": "n",
+       "name": "n",
+       "sigma": "8.1084E-5",
+       "title": "mean motion",
+       "units": "deg/d",
+       "value": ".6867469493413392"
+      },
+      {
+       "label": "Q",
+       "name": "ad",
+       "sigma": null,
+       "title": "aphelion distance",
+       "units": "au",
+       "value": null
+      }
+     ],
+     "epoch": "2458080.5",
+     "equinox": "J2000",
+     "first_obs": "2017-10-14",
+     "last_obs": "2018-01-02",
+     "model_pars": [
+      {
+       "desc": "non-gravitational radial acceleration parameter",
+       "kind": "EST",
+       "n": 1,
+       "name": "A1",
+       "sigma": "3.574E-8",
+       "title": "non-grav. radial accel.",
+       "units": "au/d^2",
+       "value": "2.790193364334668E-7"
+      },
+      {
+       "desc": "non-gravitational transverse acceleration parameter",
+       "kind": "EST",
+       "n": 2,
+       "name": "A2",
+       "sigma": "2.445E-8",
+       "title": "non-grav. transverse accel.",
+       "units": "au/d^2",
+       "value": "1.441264159911234E-8"
+      },
+      {
+       "desc": "non-gravitational normal acceleration parameter",
+       "kind": "EST",
+       "n": 3,
+       "name": "A3",
+       "sigma": "2.249E-8",
+       "title": "non-grav. normal accel.",
+       "units": "au/d^2",
+       "value": "1.57392261588653E-8"
+      },
+      {
+       "desc": "normalizing factor [default 0.1112620426]",
+       "kind": "SET",
+       "n": 0,
+       "name": "ALN",
+       "sigma": null,
+       "title": "normalizing factor",
+       "units": null,
+       "value": ".0408373333128795"
+      },
+      {
+       "desc": "non-grav. model constant, exponent k [default 4.6142]",
+       "kind": "SET",
+       "n": 0,
+       "name": "NK",
+       "sigma": null,
+       "title": "non-grav. model exp. k",
+       "units": null,
+       "value": "2.6"
+      },
+      {
+       "desc": "non-grav. model constant, exponent m [default 2.15]",
+       "kind": "SET",
+       "n": 0,
+       "name": "NM",
+       "sigma": null,
+       "title": "non-grav. model exp. m",
+       "units": null,
+       "value": "2."
+      },
+      {
+       "desc": "non-grav. model constant, exponent n [default 5.093]",
+       "kind": "SET",
+       "n": 0,
+       "name": "NN",
+       "sigma": null,
+       "title": "non-grav. model exp. n",
+       "units": null,
+       "value": "3."
+      },
+      {
+       "desc": "normalizing distance, au [default 2.808 au]",
+       "kind": "SET",
+       "n": 0,
+       "name": "R0",
+       "sigma": null,
+       "title": "normalizing distance",
+       "units": "au",
+       "value": "5."
+      }
+     ],
+     "moid": ".0958212",
+     "moid_jup": "1.45424",
+     "n_del_obs_used": null,
+     "n_dop_obs_used": null,
+     "n_obs_used": 207,
+     "not_valid_after": null,
+     "not_valid_before": null,
+     "orbit_id": "16",
+     "pe_used": "DE431",
+     "producer": "Davide Farnocchia",
+     "rms": ".43612",
+     "sb_used": "SB431-N16",
+     "soln_date": "2018-06-26 12:17:57",
+     "source": "JPL",
+     "t_jup": null,
+     "two_body": null
+    },
+    "signature": {
+     "source": "NASA/JPL Small-Body Database (SBDB) API",
+     "version": "1.3"
+    }
+   }
+  }
+ ],
+ "center": "Sun body centre (500@10)",
+ "frame": "Ecliptic and mean equinox of J2000.0",
+ "offsetsDays": [
+  -365,
+  -60,
+  -10,
+  0,
+  10,
+  60,
+  365
+ ],
+ "source": "JPL SBDB API (full-prec=1) elements; NASA/JPL Horizons API geometric vectors",
+ "timescale": "TDB",
+ "units": "AU, AU/day"
+}
