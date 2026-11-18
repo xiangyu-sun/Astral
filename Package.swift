@@ -34,7 +34,8 @@ let package = Package(
       name: "Astral",
       dependencies: [
         .product(name: "Numerics", package: "swift-numerics"),
-      ]),
+      ],
+      exclude: ["Eclipse/Data"]),
     .testTarget(
       name: "AstralTests",
       dependencies: ["Astral"],
@@ -52,6 +53,8 @@ let package = Package(
         "Ephemeris/Fixtures/make_observer_fixture.py",
         "Ephemeris/Fixtures/make_rts_fixture.py",
         "Ephemeris/Fixtures/__pycache__",
+        "Eclipse/Fixtures/raw",
+        "Eclipse/Fixtures/make_eclipse_fixture.py",
       ],
       resources: [
         .copy("Ephemeris/Fixtures/horizons.json"),
@@ -62,6 +65,10 @@ let package = Package(
         .copy("Ephemeris/Fixtures/physical.json"),
         .copy("Ephemeris/Fixtures/horizons_observer.json"),
         .copy("Ephemeris/Fixtures/horizons_rts.json"),
+        .copy("Eclipse/Fixtures/solar_local.json"),
+        .copy("Eclipse/Fixtures/solar_global.json"),
+        .copy("Eclipse/Fixtures/lunar_eclipses.json"),
+        .copy("Eclipse/Fixtures/transits.json"),
       ]),
   ],
   swiftLanguageModes: [.v6])

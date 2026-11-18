@@ -1,0 +1,71 @@
+# source: https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2031May21Abeselm.html
+
+            Besselian Elements for the Annular Solar Eclipse of  2031 May 21
+            Equatorial Conjunction:     07:13:28.1 TDT     J.D. = 2463007.801020
+              (Sun & Moon in R.A.)    (=07:12:10.5 UT)
+
+             Ecliptic Conjunction:      07:18:22.7 TDT     J.D. = 2463007.804429
+             (Sun & Moon in Ec. Lo.)  (=07:17:05.1 UT)
+
+                  Instant of            07:16:04.1 TDT     J.D. = 2463007.802825
+               Greatest Eclipse:      (=07:14:46.5 UT)
+
+
+            --------------------------------------------------------------------------- 
+                        Gamma = -0.1970            Ephemerides = VSOP87/ELP2000-85
+            Eclipse Magnitude =  0.9589           Lunation No. =     388
+                           ΔT =    77.6 s         Saros Series =  138 (32/70)
+
+            Lunar Radius   k1 = 0.272488 (Penumbra)        Shift in      Δb =  0.00"
+             Constants:    k2 = 0.272281 (Umbra)       Lunar Position:   Δl =  0.00"
+
+            --------------------------------------------------------------------------- 
+            Geocentric Coordinates of Sun & Moon at Greatest Eclipse (VSOP87/ELP2000-85):
+
+            Sun:       R.A. = 03h51m34.6s         Moon:      R.A. = 03h51m39.8s
+                       Dec. =+20°09'39.3"                    Dec. =+19°58'57.6"
+              Semi-Diameter =    15'48.2"           Semi-Diameter =    14'55.8"
+                Eq.Hor.Par. =       08.7"             Eq.Hor.Par. =  0°54'47.5"
+
+            --------------------------------------------------------------------------- 
+            Polynomial Besselian Elements for:   2031 May 21   07:00:00.0 TDT  (=t0)
+
+              n        x          y         d          l1         l2          μ
+
+              0  -0.114762  -0.211215   20.15915   0.562404   0.016185  285.85107
+              1   0.5112374  0.0579329   0.008339  0.0000807  0.0000802  15.000616
+              2   0.0000074 -0.0001182  -0.000005 -0.0000100 -0.0000100
+              3  -0.0000059 -0.0000006
+
+                             Tan ƒ1 = 0.0046208    Tan ƒ2 = 0.0045978
+
+            At time t1 (decimal hours), each Besselian element is evaluated by:
+
+               a = a0 + a1*t + a2*t^2 + a3*t^3    (or a = Σ [an*t^n]; n = 0 to 3)
+
+                  where:    a = x, y, d, l1, l2, or μ
+                            t = t1 - t0  (decimal hours) and t0 =  7.000 TDT
+
+
+            The Besselian elements were derived from a least-squares fit to elements
+            calculated at five uniformly spaced times over a six hour period centered at t0.
+            The Besselian elements are valid over the period  4.00 ≤ t0 ≤ 10.00 TDT.
+
+            Note that all times are expressed in Terrestrial Dynamical Time (TDT).
+
+                   Saros Series 138:  Member 32 of 70 eclipses in series.
+
+
+
+
+   Instant of 
+Greatest Eclipse:       Time =  07:14:46.5 UT       Lat = 08°55.7'N      Long = 071°44.4'E
+      (GE)               Sun Altitude =  78.7°          Path Width = 152.2 km
+                          Sun Azimuth = 353.8°    Central Duration =   05m25.5s
+
+
+   Instant of 
+Greatest Duration:      Time =    07:23:11 UT       Lat =   09°19'N      Long =   073°48'E
+      (GD)               Sun Altitude =  77.9°          Path Width = 152.7 km
+                          Sun Azimuth = 334.7°    Central Duration =   05m26.1s
+

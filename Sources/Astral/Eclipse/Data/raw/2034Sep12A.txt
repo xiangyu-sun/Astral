@@ -1,0 +1,71 @@
+# source: https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2034Sep12Abeselm.html
+
+            Besselian Elements for the Annular Solar Eclipse of  2034 Sep 12
+            Equatorial Conjunction:     16:33:31.0 TDT     J.D. = 2464218.189942
+              (Sun & Moon in R.A.)    (=16:32:11.1 UT)
+
+             Ecliptic Conjunction:      16:14:59.4 TDT     J.D. = 2464218.177077
+             (Sun & Moon in Ec. Lo.)  (=16:13:39.6 UT)
+
+                  Instant of            16:19:27.3 TDT     J.D. = 2464218.180178
+               Greatest Eclipse:      (=16:18:07.5 UT)
+
+
+            --------------------------------------------------------------------------- 
+                        Gamma = -0.3936            Ephemerides = VSOP87/ELP2000-85
+            Eclipse Magnitude =  0.9736           Lunation No. =     429
+                           ΔT =    79.9 s         Saros Series =  135 (40/71)
+
+            Lunar Radius   k1 = 0.272488 (Penumbra)        Shift in      Δb =  0.00"
+             Constants:    k2 = 0.272281 (Umbra)       Lunar Position:   Δl =  0.00"
+
+            --------------------------------------------------------------------------- 
+            Geocentric Coordinates of Sun & Moon at Greatest Eclipse (VSOP87/ELP2000-85):
+
+            Sun:       R.A. = 11h23m10.9s         Moon:      R.A. = 11h22m44.5s
+                       Dec. =+03°57'57.5"                    Dec. =+03°36'59.6"
+              Semi-Diameter =    15'53.5"           Semi-Diameter =    15'15.1"
+                Eq.Hor.Par. =       08.7"             Eq.Hor.Par. =  0°55'58.6"
+
+            --------------------------------------------------------------------------- 
+            Polynomial Besselian Elements for:   2034 Sep 12   16:00:00.0 TDT  (=t0)
+
+              n        x          y         d          l1         l2          μ
+
+              0  -0.280883  -0.324349    3.97191   0.557800   0.011604   60.94970
+              1   0.5028280 -0.1577848  -0.015534  0.0001188  0.0001182  15.004902
+              2  -0.0000115 -0.0000008  -0.000001 -0.0000106 -0.0000105
+              3  -0.0000056  0.0000019
+
+                             Tan ƒ1 = 0.0046461    Tan ƒ2 = 0.0046230
+
+            At time t1 (decimal hours), each Besselian element is evaluated by:
+
+               a = a0 + a1*t + a2*t^2 + a3*t^3    (or a = Σ [an*t^n]; n = 0 to 3)
+
+                  where:    a = x, y, d, l1, l2, or μ
+                            t = t1 - t0  (decimal hours) and t0 = 16.000 TDT
+
+
+            The Besselian elements were derived from a least-squares fit to elements
+            calculated at five uniformly spaced times over a six hour period centered at t0.
+            The Besselian elements are valid over the period 13.00 ≤ t0 ≤ 19.00 TDT.
+
+            Note that all times are expressed in Terrestrial Dynamical Time (TDT).
+
+                   Saros Series 135:  Member 40 of 71 eclipses in series.
+
+
+
+
+   Instant of 
+Greatest Eclipse:       Time =  16:18:07.5 UT       Lat = 18°14.5'S      Long = 072°36.4'W
+      (GE)               Sun Altitude =  66.7°          Path Width = 102.1 km
+                          Sun Azimuth =  18.2°    Central Duration =   02m57.7s
+
+
+   Instant of 
+Greatest Duration:      Time =    16:29:24 UT       Lat =   20°04'S      Long =   069°44'W
+      (GD)               Sun Altitude =  65.9°          Path Width = 101.7 km
+                          Sun Azimuth =   3.5°    Central Duration =   02m57.8s
+
