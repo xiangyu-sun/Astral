@@ -41,7 +41,9 @@ struct PlanetaryTransitTests {
     let ref = try #require(fixture.transits.first { "\($0.planet) \($0.date)" == key })
     let planet = try #require(TransitPlanet(rawValue: ref.planet))
     let midnight = utcMidnight(ref.date)
-    let greatestRef = try #require(Double(ref.greatest.prefix(2))) * 3600 + Double(ref.greatest.suffix(2))! * 60
+    let greatestHours: Double = try #require(Double(ref.greatest.prefix(2)))
+    let greatestMinutes: Double = try #require(Double(ref.greatest.suffix(2)))
+    let greatestRef: Double = greatestHours * 3600 + greatestMinutes * 60
     let window = midnight.addingTimeInterval(-86_400)...midnight.addingTimeInterval(2 * 86_400)
     let found = PlanetaryTransit.transits(of: planet, in: window)
     let transit = try #require(found.first, "no transit found")

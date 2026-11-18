@@ -31,7 +31,7 @@ swift test --filter SunCalcTests.testGeom
 - **Dependencies**: 
   - `swift-numerics` for mathematical operations
   - `airbnb/swift` for code formatting is an opt-in development dependency: it is only added to the package graph
-    when `ASTRAL_DEV_TOOLS` is set (`ASTRAL_DEV_TOOLS=1 swift package plugin --allow-writing-to-package-directory format .`)
+    when `ASTRAL_DEV_TOOLS` is set (`ASTRAL_DEV_TOOLS=1 swift package plugin --allow-writing-to-package-directory format Sources Tests Examples Package.swift`)
 
 ## Architecture Overview
 

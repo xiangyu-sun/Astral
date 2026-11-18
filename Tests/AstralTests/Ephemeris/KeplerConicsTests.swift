@@ -116,7 +116,8 @@ struct KeplerConicsTests {
         var sum = 0.0
         for k in 1..<14 {
           sum += term
-          term *= -x * x / Double((2 * k + 2) * (2 * k + 3))
+          let denominator = Double((2 * k + 2) * (2 * k + 3))
+          term *= -(x * x) / denominator
         }
         return sum
       }
