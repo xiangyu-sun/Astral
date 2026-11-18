@@ -68,7 +68,7 @@ jobs:
         # airbnb/swift (the format plugin) is an opt-in dev dependency; see Package.swift.
         ASTRAL_DEV_TOOLS: "1"
       run: |
-        swift package plugin --allow-writing-to-package-directory format .
+        swift package plugin --allow-writing-to-package-directory format Sources Tests Examples Package.swift
         git diff --exit-code -- Sources Tests Examples
 
   ios-compatibility:

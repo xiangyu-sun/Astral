@@ -51,7 +51,7 @@ struct ObserverTests {
 
   @Test("Longitude is clamped to valid range", .tags(.unit, .edge))
   func longitudeOutsideLimits() {
-    var obs = Observer(latitude: 0, longitude: 180.1, elevation: .tuple(0,0))
+    var obs = Observer(latitude: 0, longitude: 180.1, elevation: .tuple(0, 0))
     #expect(obs.longitude == 180.0)
     obs = Observer(latitude: 0, longitude: -180.1, elevation: .double(0))
     #expect(obs.longitude == -180.0)

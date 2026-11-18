@@ -3,9 +3,9 @@ import Foundation
 extension TimeZone {
   public static var utc: TimeZone {
     if #available(macOS 13, iOS 16, watchOS 9, *) {
-      return .gmt
+      .gmt
     } else {
-      return TimeZone(secondsFromGMT: 0) ?? TimeZone.autoupdatingCurrent
+      TimeZone(secondsFromGMT: 0) ?? TimeZone.autoupdatingCurrent
     }
   }
 }
@@ -21,11 +21,11 @@ extension Date {
 extension DateComponents {
 
   func extractYearMonthDay(timeZone: TimeZone = .utc) -> DateComponents {
-    DateComponents(timeZone: timeZone ,year: year, month: month, day: day)
+    DateComponents(timeZone: timeZone, year: year, month: month, day: day)
   }
 
   func extractYearMonthDayHourMinuteSecond(timeZone: TimeZone = .utc) -> DateComponents {
-    DateComponents(timeZone: timeZone ,year: year, month: month, day: day, hour: hour, minute: minute, second: second)
+    DateComponents(timeZone: timeZone, year: year, month: month, day: day, hour: hour, minute: minute, second: second)
   }
 
   func astimezone(_ timeZone: TimeZone) -> DateComponents {
@@ -85,27 +85,27 @@ func timeToSeconds(dateComponent: DateComponents) -> Double {
 }
 
 extension Int? {
-  static func / (lhs: Self, rhs: Double) -> Double {
+  static func /(lhs: Self, rhs: Double) -> Double {
     guard let value = lhs else {
       return 0
     }
     return Double(value) / rhs
   }
 
-  static func * (lhs: Self, rhs: Double) -> Double {
+  static func *(lhs: Self, rhs: Double) -> Double {
     guard let value = lhs else {
       return 0
     }
     return Double(value) * rhs
   }
 
-  static func + (lhs: Self, rhs: Self) -> Int {
+  static func +(lhs: Self, rhs: Self) -> Int {
     (lhs ?? 0) + (rhs ?? 0)
   }
 }
 
 extension Double? {
-  static func += (lhs: inout Double, rhs: Int?) {
+  static func +=(lhs: inout Double, rhs: Int?) {
     lhs += Double(rhs ?? 0)
   }
 }

@@ -6,8 +6,16 @@ import Foundation
 
 /// A point in time expressed as a Julian date (days).
 ///
-/// The ephemeris API treats UTC as TT: no ΔT correction is applied (about 69 s at present, which moves the Moon by
-/// roughly 0.01°).
+/// The ephemeris API treats the Julian date it is given as TT and, for a `Date`/UTC input, applies no UTC→TT
+/// correction (about 69 s at present, which moves the Moon by roughly 0.01°). This is the default and is kept for
+/// compatibility.
+///
+/// To be rigorous, opt in to the time-scale chain with ``terrestrialTime`` (UTC → TAI → TT using leap seconds from
+/// 1972 on and ΔT before, see ``LeapSeconds`` and ``DeltaT``):
+///
+/// ```swift
+/// let tt = JulianDate(Date()).terrestrialTime   // pass this to SolarSystem for a true TT instant
+/// ```
 ///
 /// ```swift
 /// let jd = JulianDate(Date())
@@ -66,7 +74,7 @@ public struct JulianDate: Sendable, Hashable, Comparable {
     days >= 2_378_496.5 && days < 2_470_172.5
   }
 
-  public static func < (lhs: JulianDate, rhs: JulianDate) -> Bool {
+  public static func <(lhs: JulianDate, rhs: JulianDate) -> Bool {
     lhs.days < rhs.days
   }
 

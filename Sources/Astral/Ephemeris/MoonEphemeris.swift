@@ -13,19 +13,7 @@ import simd
 /// - Astral's lunar series (``geocentricPositionSeries(T:)``).
 public enum MoonEphemeris {
 
-  /// General precession in longitude, degrees per Julian century.
-  ///
-  /// The lunar elements (and the series) are referred to the ecliptic of date; subtracting this moves them to the
-  /// J2000 frame used everywhere else.
-  static let precessionDegPerCentury = 1.3969713
-
-  /// Earth's equatorial radius in km, the unit of the distance returned by Astral's lunar series.
-  static let earthEquatorialRadiusKm = 6378.14
-
-  /// Offset in degrees that moves of-date longitudes to the J2000 frame.
-  static func frameOffsetDeg(T: Double) -> Double {
-    -precessionDegPerCentury * T
-  }
+  // MARK: Public
 
   /// Moon position relative to Earth's centre, J2000 ecliptic, AU, from the mean elements.
   ///
@@ -37,9 +25,8 @@ public enum MoonEphemeris {
   public static func geocentricPosition(
     elements: OrbitalElements,
     T: Double,
-    periodicTerms: Bool)
-    -> SIMD3<Double>
-  {
+    periodicTerms: Bool
+  ) -> SIMD3<Double> {
     let p = Kepler.position(elements: elements, T: T, longitudeOffsetDeg: frameOffsetDeg(T: T))
     guard periodicTerms else { return p }
 
@@ -96,4 +83,21 @@ public enum MoonEphemeris {
   public static func geocentricPositionSeries(at time: JulianDate) -> SIMD3<Double> {
     geocentricPositionSeries(T: time.centuriesSinceJ2000)
   }
+
+  // MARK: Internal
+
+  /// General precession in longitude, degrees per Julian century.
+  ///
+  /// The lunar elements (and the series) are referred to the ecliptic of date; subtracting this moves them to the
+  /// J2000 frame used everywhere else.
+  static let precessionDegPerCentury = 1.3969713
+
+  /// Earth's equatorial radius in km, the unit of the distance returned by Astral's lunar series.
+  static let earthEquatorialRadiusKm = 6378.14
+
+  /// Offset in degrees that moves of-date longitudes to the J2000 frame.
+  static func frameOffsetDeg(T: Double) -> Double {
+    -precessionDegPerCentury * T
+  }
+
 }

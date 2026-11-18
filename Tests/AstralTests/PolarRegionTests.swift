@@ -5,13 +5,13 @@ import Testing
 @Suite("Polar Region Tests", .tags(.solar, .edge))
 struct PolarRegionTests {
 
-  // Tromso, Norway (69.65°N, 18.96°E) - experiences polar night and midnight sun
+  /// Tromso, Norway (69.65°N, 18.96°E) - experiences polar night and midnight sun
   static let tromso = Observer(latitude: 69.65, longitude: 18.96, elevation: .double(0))
 
-  // Longyearbyen, Svalbard (78.22°N, 15.63°E) - deep polar
+  /// Longyearbyen, Svalbard (78.22°N, 15.63°E) - deep polar
   static let longyearbyen = Observer(latitude: 78.22, longitude: 15.63, elevation: .double(0))
 
-  // McMurdo Station, Antarctica (-77.85°S, 166.67°E)
+  /// McMurdo Station, Antarctica (-77.85°S, 166.67°E)
   static let mcmurdo = Observer(latitude: -77.85, longitude: 166.67, elevation: .double(0))
 
   @Test("Tromso midnight sun in June - sunrise throws or returns very early time", .tags(.transit))
@@ -87,8 +87,8 @@ struct PolarRegionTests {
       let ss = try sunset(observer: observer, date: date)
       // At equinox, sunrise should be before sunset
       let calendar = Calendar(identifier: .gregorian)
-      let srDate = calendar.date(from: sr)!
-      let ssDate = calendar.date(from: ss)!
+      let srDate = try #require(calendar.date(from: sr))
+      let ssDate = try #require(calendar.date(from: ss))
       #expect(srDate < ssDate)
     }
   }

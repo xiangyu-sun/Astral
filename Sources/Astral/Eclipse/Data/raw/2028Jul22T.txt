@@ -1,0 +1,71 @@
+# source: https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2028Jul22Tbeselm.html
+
+            Besselian Elements for the Total Solar Eclipse of  2028 Jul 22
+            Equatorial Conjunction:     03:16:59.3 TDT     J.D. = 2461974.636797
+              (Sun & Moon in R.A.)    (=03:15:47.2 UT)
+
+             Ecliptic Conjunction:      03:02:51.7 TDT     J.D. = 2461974.626988
+             (Sun & Moon in Ec. Lo.)  (=03:01:39.7 UT)
+
+                  Instant of            02:56:39.0 TDT     J.D. = 2461974.622673
+               Greatest Eclipse:      (=02:55:26.9 UT)
+
+
+            --------------------------------------------------------------------------- 
+                        Gamma = -0.6055            Ephemerides = VSOP87/ELP2000-85
+            Eclipse Magnitude =  1.0560           Lunation No. =     353
+                           ΔT =    72.1 s         Saros Series =  146 (28/76)
+
+            Lunar Radius   k1 = 0.272488 (Penumbra)        Shift in      Δb =  0.00"
+             Constants:    k2 = 0.272281 (Umbra)       Lunar Position:   Δl =  0.00"
+
+            --------------------------------------------------------------------------- 
+            Geocentric Coordinates of Sun & Moon at Greatest Eclipse (VSOP87/ELP2000-85):
+
+            Sun:       R.A. = 08h08m03.8s         Moon:      R.A. = 08h07m16.7s
+                       Dec. =+20°10'52.9"                    Dec. =+19°36'14.6"
+              Semi-Diameter =    15'44.5"           Semi-Diameter =    16'24.3"
+                Eq.Hor.Par. =       08.7"             Eq.Hor.Par. =  1°00'12.3"
+
+            --------------------------------------------------------------------------- 
+            Polynomial Besselian Elements for:   2028 Jul 22   03:00:00.0 TDT  (=t0)
+
+              n        x          y         d          l1         l2          μ
+
+              0  -0.154300  -0.586380   20.18231   0.535236  -0.010847  223.37866
+              1   0.5449941 -0.1746077  -0.007974 -0.0000859 -0.0000854  15.001018
+              2  -0.0000226 -0.0001022  -0.000005 -0.0000123 -0.0000122
+              3  -0.0000095  0.0000029
+
+                             Tan ƒ1 = 0.0046016    Tan ƒ2 = 0.0045786
+
+            At time t1 (decimal hours), each Besselian element is evaluated by:
+
+               a = a0 + a1*t + a2*t^2 + a3*t^3    (or a = Σ [an*t^n]; n = 0 to 3)
+
+                  where:    a = x, y, d, l1, l2, or μ
+                            t = t1 - t0  (decimal hours) and t0 =  3.000 TDT
+
+
+            The Besselian elements were derived from a least-squares fit to elements
+            calculated at five uniformly spaced times over a six hour period centered at t0.
+            The Besselian elements are valid over the period  0.00 ≤ t0 ≤  6.00 TDT.
+
+            Note that all times are expressed in Terrestrial Dynamical Time (TDT).
+
+                   Saros Series 146:  Member 28 of 76 eclipses in series.
+
+
+
+
+   Instant of 
+Greatest Eclipse:       Time =  02:55:26.9 UT       Lat = 15°34.4'S      Long = 126°42.4'E
+      (GE)               Sun Altitude =  52.6°          Path Width = 230.2 km
+                          Sun Azimuth =  17.2°    Central Duration =   05m09.7s
+
+
+   Instant of 
+Greatest Duration:      Time =    02:52:18 UT       Lat =   15°04'S      Long =   125°47'E
+      (GD)               Sun Altitude =  52.6°          Path Width = 231.3 km
+                          Sun Azimuth =  19.9°    Central Duration =   05m09.9s
+

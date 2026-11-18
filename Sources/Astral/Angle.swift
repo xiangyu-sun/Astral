@@ -28,7 +28,7 @@ struct Angle: Equatable, Comparable {
   let degrees: Double
   let radians: Double
 
-  static func < (lhs: Angle, rhs: Angle) -> Bool {
+  static func <(lhs: Angle, rhs: Angle) -> Bool {
     lhs.radians < rhs.radians
   }
 

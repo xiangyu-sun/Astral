@@ -65,8 +65,7 @@ enum Transit {
 func interpolate(_ f0: Double, _ f1: Double, _ f2: Double, _ p: Double) -> Double {
   let a = f1 - f0
   let b = f2 - f1 - a
-  let f = f0 + p * (2 * a + b * (2 * p - 1))
-  return f
+  return f0 + p * (2 * a + b * (2 * p - 1))
 }
 
 // MARK: - Calendar Utilities
@@ -216,7 +215,9 @@ func moonPosition(jd2000: Double) -> AstralBodyPosition {
     nil, // 6 (unused)
     sun_mean_longitude(jd2000: jd2000), // 7 = Ls
     sun_mean_anomoly(jd2000: jd2000), // 8 = Gs
-    nil, nil, nil,
+    nil,
+    nil,
+    nil,
     venus_mean_longitude(jd2000: jd2000), // 12 = L2
   ]
   // Time factor T in Julian centuries from J2000.0
@@ -280,9 +281,9 @@ func moon_transit_event(
   lmst: Degrees,
   latitude: Degrees,
   distance: Double,
-  window: inout [AstralBodyPosition])
-  -> Transit
-{
+  horizonDip: Degrees = 0,
+  window: inout [AstralBodyPosition]
+) -> Transit {
   let mst = radians(lmst)
   var hour_angle = [0.0, 0.0, 0.0]
 
@@ -314,20 +315,22 @@ func moon_transit_event(
   let horizontalParallax = degrees(asin(1.0 / distance))
   let atmosphericRefraction = 0.5667 // 34 arcmin standard refraction at horizon
   let moonSemiDiameter = 0.2725 * horizontalParallax
-  let correctedAltitude = -(atmosphericRefraction - horizontalParallax + moonSemiDiameter)
+  let correctedAltitude = -(atmosphericRefraction - horizontalParallax + moonSemiDiameter) - horizonDip
   let z = sin(radians(correctedAltitude))
 
   if hour == 0 {
     window[0].distance = (
       sl * sin(window[0].declination) +
         cl * cos(window[0].declination) * cos(hour_angle[0]) -
-        z)
+        z
+    )
   }
 
   window[2].distance = (
     sl * sin(window[2].declination) +
       cl * cos(window[2].declination) * cos(hour_angle[2]) -
-      z)
+      z
+  )
 
   // If no sign change in the distance function, then no transit occurs.
   if window[0].distance.sign == window[2].distance.sign {
@@ -337,7 +340,8 @@ func moon_transit_event(
   window[1].distance = (
     sl * sin(window[1].declination) +
       cl * cos(window[1].declination) * cos(hour_angle[1]) -
-      z)
+      z
+  )
 
   // Quadratic interpolation to determine the precise transit time.
   let a = 2 * window[2].distance - 4 * window[1].distance + 2 * window[0].distance
@@ -391,15 +395,15 @@ func moon_transit_event(
 /// - Returns: A tuple with optional DateComponents for rise and set times.
 func riseset(
   on: DateComponents,
-  observer: Observer) -> (rise: DateComponents?, set: DateComponents?)
-{
+  observer: Observer
+) -> (rise: DateComponents?, set: DateComponents?) {
   let utcDate = on.astimezone(.utc)
   let jd2000 = julianDay2000(at: utcDate)
 
   let t0 = lmst(dateComponents: utcDate, longitude: observer.longitude)
 
   // Sample Moon positions at 0.5-day intervals.
-  var m: [AstralBodyPosition] = []
+  var m = [AstralBodyPosition]()
   for interval in 0..<3 {
     let pos = moonPosition(jd2000: jd2000 + (Double(interval) * 0.5))
     m.append(pos)
@@ -421,6 +425,17 @@ func riseset(
   var rise_time: DateComponents? = nil
   var set_time: DateComponents? = nil
 
+  // An elevated observer sees the horizon below the astronomical one.
+  var horizonDip = 0.0
+  switch observer.elevation {
+  case .double(let elev) where elev > 0:
+    horizonDip = adjust_to_horizon(elevation: elev)
+  case .tuple(let elev, let dist):
+    horizonDip = adjust_to_obscuring_feature(elevation: (elev, dist))
+  default:
+    break
+  }
+
   // Loop over each hour to detect transit events.
   for hour in 0..<24 {
     let ph: Double = (Double(hour) + 1) / 24
@@ -436,7 +451,9 @@ func riseset(
       lmst: t0,
       latitude: observer.latitude,
       distance: interpolatedDistance,
-      window: &moon_position_window)
+      horizonDip: horizonDip,
+      window: &moon_position_window
+    )
 
     switch transit_info {
     case .noTransit(let noTransit):
@@ -449,7 +466,8 @@ func riseset(
         day: utcDate.day,
         hour: hour,
         minute: 0,
-        second: 0)
+        second: 0
+      )
 
       if transit.event == "rise" {
         let event_time = transit.when
@@ -459,7 +477,8 @@ func riseset(
           month: utcDate.month,
           day: utcDate.day,
           hour: utcDate.hour! + event_time.hour!,
-          minute: utcDate.minute! + event_time.minute!)
+          minute: utcDate.minute! + event_time.minute!
+        )
         if rise_time == nil {
           rise_time = event
         } else {
@@ -478,8 +497,7 @@ func riseset(
             rise_time = event
           }
         }
-      }
-      else if transit.event == "set" {
+      } else if transit.event == "set" {
         let event_time = transit.when
         let event = DateComponents(
           timeZone: .utc,
@@ -487,7 +505,8 @@ func riseset(
           month: utcDate.month,
           day: utcDate.day,
           hour: utcDate.hour! + event_time.hour!,
-          minute: utcDate.minute! + event_time.minute!)
+          minute: utcDate.minute! + event_time.minute!
+        )
         if set_time == nil {
           set_time = event
         } else {
@@ -527,15 +546,14 @@ func riseset(
 public func moonrise(
   observer: Observer,
   dateComponents: DateComponents?,
-  tzinfo: TimeZone = .utc)
-  throws -> DateComponents?
-{
-  var date: DateComponents
-  if let dateComponents {
-    date = dateComponents
-  } else {
-    date = Calendar.current.dateComponents(in: tzinfo, from: Date())
-  }
+  tzinfo: TimeZone = .utc
+) throws -> DateComponents? {
+  var date: DateComponents =
+    if let dateComponents {
+      dateComponents
+    } else {
+      Calendar.current.dateComponents(in: tzinfo, from: Date())
+    }
 
   var info = riseset(on: date, observer: observer)
   if let moonRise = info.rise {
@@ -570,15 +588,14 @@ public func moonrise(
 public func moonset(
   observer: Observer,
   dateComponents: DateComponents?,
-  tzinfo: TimeZone = .utc)
-  throws -> DateComponents?
-{
-  var date: DateComponents
-  if let dateComponents {
-    date = dateComponents
-  } else {
-    date = Calendar.current.dateComponents(in: tzinfo, from: Date())
-  }
+  tzinfo: TimeZone = .utc
+) throws -> DateComponents? {
+  var date: DateComponents =
+    if let dateComponents {
+      dateComponents
+    } else {
+      Calendar.current.dateComponents(in: tzinfo, from: Date())
+    }
 
   var info = riseset(on: date, observer: observer)
   if let moonSet = info.set {
@@ -612,9 +629,8 @@ public func moonset(
 /// - Returns: The azimuth angle (in degrees).
 func azimuth(
   observer: Observer,
-  at: DateComponents = Date().components())
-  -> Degrees
-{
+  at: DateComponents = Date().components()
+) -> Degrees {
   let jd2000 = julianDay2000(at: at)
   let position = moonPosition(jd2000: jd2000)
   let lst0: Radians = radians(lmst(dateComponents: at, longitude: observer.longitude))
@@ -643,9 +659,8 @@ func azimuth(
 /// - Returns: The elevation angle (in degrees).
 func elevation(
   observer: Observer,
-  at: DateComponents = Date().components())
-  -> Double
-{
+  at: DateComponents = Date().components()
+) -> Double {
   let jd2000 = julianDay2000(at: at)
   let position = moonPosition(jd2000: jd2000)
   let lst0: Radians = radians(lmst(dateComponents: at, longitude: observer.longitude))
@@ -662,7 +677,9 @@ func elevation(
   let y = -sh * cd
   let z = ch * cd * cl + sd * sl
   let r = sqrt(x * x + y * y)
-  return degrees(atan2(z, r))
+  // Geocentric elevation, then diurnal parallax (distance is in Earth radii) to get the topocentric value.
+  let geocentric = atan2(z, r)
+  return degrees(atan2(sin(geocentric) - 1 / position.distance, cos(geocentric)))
 }
 
 /// Calculates the Moon's zenith angle (in degrees) for the specified time and observer.
@@ -672,9 +689,8 @@ func elevation(
 /// - Returns: The zenith angle (in degrees).
 func zenith(
   observer: Observer,
-  at: DateComponents = Date().components())
-  -> Double
-{
+  at: DateComponents = Date().components()
+) -> Double {
   90 - elevation(observer: observer, at: at)
 }
 
@@ -687,8 +703,7 @@ func obliquity_of_ecliptic(jd2000: Double) -> Radians {
   let T = jd2000 / 36525
   // IAU 1980 mean obliquity in arc seconds
   let seconds = 21.448 - 46.8150 * T - 0.00059 * T * T + 0.001813 * T * T * T
-  let e0 = (23.0 + (26.0 / 60.0) + (seconds / 3600.0)) * Double.pi / 180.0
-  return e0
+  return (23.0 + (26.0 / 60.0) + (seconds / 3600.0)) * Double.pi / 180.0
 }
 
 /// Calculates the Moon's true ecliptic longitude (in revolutions) for the given Julian date offset.

@@ -19,9 +19,8 @@ extension DateComponents {
     _ hour: Int,
     _ minute: Int = 0,
     _ second: Int = 0,
-    _ timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!)
-    -> DateComponents
-  {
+    _ timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!
+  ) -> DateComponents {
     .init(timeZone: timeZone, year: year, month: month, day: day, hour: hour, minute: minute, second: second)
   }
 }

@@ -11,7 +11,7 @@ import Foundation
 import Testing
 @testable import Astral
 
-// MARK: - Bug 1: Moon position T factor
+// MARK: - MoonPositionTFactorTests
 
 @Suite("Regression: Moon position T factor", .tags(.lunar, .regression, .accuracy))
 struct MoonPositionTFactorTests {
@@ -34,8 +34,10 @@ struct MoonPositionTFactorTests {
     let pos = moonPosition(jd2000: jd2000)
 
     // RA should be near 2.350 rad (134.7°). Allow ±0.01 rad (~0.6°).
-    #expect(abs(pos.right_ascension - 2.3507) < 0.01,
-      "RA \(pos.right_ascension) rad should be ~2.3507 rad (Meeus ref)")
+    #expect(
+      abs(pos.right_ascension - 2.3507) < 0.01,
+      "RA \(pos.right_ascension) rad should be ~2.3507 rad (Meeus ref)"
+    )
   }
 
   @Test("1992-04-12 geocentric Dec matches Meeus Table 47.a", .tags(.unit))
@@ -45,8 +47,10 @@ struct MoonPositionTFactorTests {
     let pos = moonPosition(jd2000: jd2000)
 
     // Dec should be near 0.2403 rad (13.77°). Allow ±0.005 rad.
-    #expect(abs(pos.declination - 0.2403) < 0.005,
-      "Dec \(pos.declination) rad should be ~0.2403 rad (Meeus ref)")
+    #expect(
+      abs(pos.declination - 0.2403) < 0.005,
+      "Dec \(pos.declination) rad should be ~0.2403 rad (Meeus ref)"
+    )
   }
 
   @Test("1992-04-12 geocentric distance matches Meeus Table 47.a", .tags(.unit))
@@ -56,8 +60,10 @@ struct MoonPositionTFactorTests {
     let pos = moonPosition(jd2000: jd2000)
 
     // Distance ≈ 57.76 Earth radii. Allow ±0.5 Earth radii.
-    #expect(abs(pos.distance - 57.76) < 0.5,
-      "Distance \(pos.distance) Earth radii should be ~57.76")
+    #expect(
+      abs(pos.distance - 57.76) < 0.5,
+      "Distance \(pos.distance) Earth radii should be ~57.76"
+    )
   }
 
   @Test("T factor at J2000.0 epoch produces valid position", .tags(.unit))
@@ -65,14 +71,18 @@ struct MoonPositionTFactorTests {
     // At J2000.0 exactly (jd2000 = 0), T should be 0.
     // The old bug produced T = 1, amplifying all t-flagged series rows.
     let pos = moonPosition(jd2000: 0.0)
-    #expect(pos.distance > 50 && pos.distance < 70,
-      "Distance at J2000.0 should be 50–70 Earth radii, got \(pos.distance)")
-    #expect(abs(pos.declination) < 0.55,
-      "Declination at J2000.0 should be within ±0.55 rad, got \(pos.declination)")
+    #expect(
+      pos.distance > 50 && pos.distance < 70,
+      "Distance at J2000.0 should be 50–70 Earth radii, got \(pos.distance)"
+    )
+    #expect(
+      abs(pos.declination) < 0.55,
+      "Declination at J2000.0 should be within ±0.55 rad, got \(pos.declination)"
+    )
   }
 }
 
-// MARK: - Bug 2: midnight() hour > 23 rollover
+// MARK: - MidnightDayRolloverTests
 
 @Suite("Regression: midnight() day rollover", .tags(.solar, .regression, .edge))
 struct MidnightDayRolloverTests {
@@ -88,8 +98,10 @@ struct MidnightDayRolloverTests {
     let result = midnight(observer: honolulu, date: date)
 
     let hour = result.hour ?? -1
-    #expect(hour >= 0 && hour <= 23,
-      "midnight() hour should be 0–23 for Honolulu, got \(hour)")
+    #expect(
+      hour >= 0 && hour <= 23,
+      "midnight() hour should be 0–23 for Honolulu, got \(hour)"
+    )
   }
 
   @Test("midnight() hour is always 0–23 for eastern longitude", .tags(.unit))
@@ -99,8 +111,10 @@ struct MidnightDayRolloverTests {
     let result = midnight(observer: wellington, date: date)
 
     let hour = result.hour ?? -1
-    #expect(hour >= 0 && hour <= 23,
-      "midnight() hour should be 0–23 for Wellington, got \(hour)")
+    #expect(
+      hour >= 0 && hour <= 23,
+      "midnight() hour should be 0–23 for Wellington, got \(hour)"
+    )
   }
 
   @Test("midnight() always produces a valid Calendar Date", .tags(.unit))
@@ -110,8 +124,10 @@ struct MidnightDayRolloverTests {
     for month in [1, 6, 12] {
       let date = DateComponents.date(2024, month, 15)
       let result = midnight(observer: honolulu, date: date, tzinfo: .utc)
-      #expect(calendar.date(from: result) != nil,
-        "midnight() for month \(month) should form a valid Date")
+      #expect(
+        calendar.date(from: result) != nil,
+        "midnight() for month \(month) should form a valid Date"
+      )
     }
   }
 
@@ -124,16 +140,18 @@ struct MidnightDayRolloverTests {
     let result = midnight(observer: honolulu, date: date, tzinfo: .utc)
 
     let hour = result.hour ?? -1
-    let day  = result.day  ?? -1
+    let day = result.day ?? -1
     // Hour must be valid regardless of which day it lands on
     #expect(hour >= 0 && hour <= 23)
     // Day must be either 21 (late evening) or 22 (early morning after rollover)
-    #expect(day == 21 || day == 22,
-      "midnight() day for Honolulu June 21 UTC should be 21 or 22, got \(day)")
+    #expect(
+      day == 21 || day == 22,
+      "midnight() day for Honolulu June 21 UTC should be 21 or 22, got \(day)"
+    )
   }
 }
 
-// MARK: - Bug 3: rahukaalam() totalSeconds
+// MARK: - RahukaalamDurationTests
 
 @Suite("Regression: rahukaalam() duration", .tags(.solar, .regression, .accuracy))
 struct RahukaalamDurationTests {
@@ -144,7 +162,7 @@ struct RahukaalamDurationTests {
   // After the fix, octantDuration ≈ daytime / 8 ≈ 90–120 min for mid-latitudes.
 
   static let london = Observer(latitude: 51.5, longitude: -0.12, elevation: .double(0))
-  static let delhi  = Observer(latitude: 28.6, longitude: 77.2, elevation: .double(0))
+  static let delhi = Observer(latitude: 28.6, longitude: 77.2, elevation: .double(0))
 
   @Test("Rahukaalam octant is 90–130 minutes (not seconds)", .tags(.unit))
   func rahukaalamDurationReasonable() throws {
@@ -152,17 +170,14 @@ struct RahukaalamDurationTests {
     let (start, end) = try rahukaalam(observer: Self.london, date: date, tzinfo: .utc)
 
     let calendar = Calendar(identifier: .gregorian)
-    guard
-      let s = calendar.date(from: start),
-      let e = calendar.date(from: end)
-    else {
-      Issue.record("Could not construct Date from rahukaalam result")
-      return
-    }
+    let s = try #require(calendar.date(from: start), "Could not construct Date from rahukaalam result")
+    let e = try #require(calendar.date(from: end), "Could not construct Date from rahukaalam result")
 
     let durationMinutes = e.timeIntervalSince(s) / 60.0
-    #expect(durationMinutes > 90 && durationMinutes < 130,
-      "Rahukaalam octant should be 90–130 min, got \(durationMinutes) min")
+    #expect(
+      durationMinutes > 90 && durationMinutes < 130,
+      "Rahukaalam octant should be 90–130 min, got \(durationMinutes) min"
+    )
   }
 
   @Test("Rahukaalam start is before end", .tags(.unit))
@@ -171,13 +186,8 @@ struct RahukaalamDurationTests {
     let (start, end) = try rahukaalam(observer: Self.delhi, date: date, tzinfo: .utc)
 
     let calendar = Calendar(identifier: .gregorian)
-    guard
-      let s = calendar.date(from: start),
-      let e = calendar.date(from: end)
-    else {
-      Issue.record("Could not construct Date from rahukaalam result")
-      return
-    }
+    let s = try #require(calendar.date(from: start), "Could not construct Date from rahukaalam result")
+    let e = try #require(calendar.date(from: end), "Could not construct Date from rahukaalam result")
     #expect(s < e, "Rahukaalam start must be before end")
   }
 
@@ -186,18 +196,13 @@ struct RahukaalamDurationTests {
     let date = DateComponents.date(2024, 6, 21)
     let (rStart, rEnd) = try rahukaalam(observer: Self.london, date: date, tzinfo: .utc)
     let dayStart = try sunrise(observer: Self.london, date: date, tzinfo: .utc)
-    let dayEnd   = try sunset(observer: Self.london, date: date, tzinfo: .utc)
+    let dayEnd = try sunset(observer: Self.london, date: date, tzinfo: .utc)
 
     let calendar = Calendar(identifier: .gregorian)
-    guard
-      let rs = calendar.date(from: rStart),
-      let re = calendar.date(from: rEnd),
-      let ds = calendar.date(from: dayStart),
-      let de = calendar.date(from: dayEnd)
-    else {
-      Issue.record("Could not construct Date from DateComponents")
-      return
-    }
+    let rs = try #require(calendar.date(from: rStart), "Could not construct Date from DateComponents")
+    let re = try #require(calendar.date(from: rEnd), "Could not construct Date from DateComponents")
+    let ds = try #require(calendar.date(from: dayStart), "Could not construct Date from DateComponents")
+    let de = try #require(calendar.date(from: dayEnd), "Could not construct Date from DateComponents")
     #expect(rs >= ds, "Rahukaalam start should be at or after sunrise")
     #expect(re <= de, "Rahukaalam end should be at or before sunset")
   }
@@ -207,22 +212,19 @@ struct RahukaalamDurationTests {
     let date = DateComponents.date(2024, 9, 23) // autumnal equinox ≈ 12 h day
     let (rStart, rEnd) = try rahukaalam(observer: Self.london, date: date, tzinfo: .utc)
     let dayStart = try sunrise(observer: Self.london, date: date, tzinfo: .utc)
-    let dayEnd   = try sunset(observer: Self.london, date: date, tzinfo: .utc)
+    let dayEnd = try sunset(observer: Self.london, date: date, tzinfo: .utc)
 
     let calendar = Calendar(identifier: .gregorian)
-    guard
-      let rs = calendar.date(from: rStart),
-      let re = calendar.date(from: rEnd),
-      let ds = calendar.date(from: dayStart),
-      let de = calendar.date(from: dayEnd)
-    else {
-      Issue.record("Could not construct Date from DateComponents")
-      return
-    }
-    let octantDuration   = re.timeIntervalSince(rs)
-    let expectedOctant   = de.timeIntervalSince(ds) / 8.0
+    let rs = try #require(calendar.date(from: rStart), "Could not construct Date from DateComponents")
+    let re = try #require(calendar.date(from: rEnd), "Could not construct Date from DateComponents")
+    let ds = try #require(calendar.date(from: dayStart), "Could not construct Date from DateComponents")
+    let de = try #require(calendar.date(from: dayEnd), "Could not construct Date from DateComponents")
+    let octantDuration = re.timeIntervalSince(rs)
+    let expectedOctant = de.timeIntervalSince(ds) / 8.0
     // Allow ±60 s for integer truncation of total seconds
-    #expect(abs(octantDuration - expectedOctant) < 60.0,
-      "Octant \(octantDuration)s should be ~\(expectedOctant)s (daytime/8)")
+    #expect(
+      abs(octantDuration - expectedOctant) < 60.0,
+      "Octant \(octantDuration)s should be ~\(expectedOctant)s (daytime/8)"
+    )
   }
 }

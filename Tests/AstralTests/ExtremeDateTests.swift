@@ -84,14 +84,14 @@ struct ExtremeDateTests {
   }
 
   @Test("Solar term calculation reasonable for year 2050", .tags(.accuracy, .integration))
-  func solarTerm2050() {
+  func solarTerm2050() throws {
     var components = DateComponents()
     components.year = 2050
     components.month = 6
     components.day = 21
     components.hour = 12
     components.timeZone = TimeZone(secondsFromGMT: 0)
-    let date = Calendar(identifier: .gregorian).date(from: components)!
+    let date = try #require(Calendar(identifier: .gregorian).date(from: components))
     let term = currentSolarTerm(for: date)
     // Near summer solstice: term ~ 6.5
     #expect(abs(term - 6.5) < 1.0)
@@ -103,13 +103,13 @@ struct ExtremeDateTests {
     let leapDate = DateComponents.date(2024, 2, 29)
     let sr = try sunrise(observer: .london, date: leapDate)
     #expect(sr.hour != nil)
-    #expect(sr.hour! >= 5 && sr.hour! <= 8) // Reasonable for late Feb London
+    #expect(try #require(sr.hour) >= 5 && sr.hour! <= 8) // Reasonable for late Feb London
 
     // Dec 31
     let newYearsEve = DateComponents.date(2023, 12, 31)
     let sr2 = try sunrise(observer: .london, date: newYearsEve)
     #expect(sr2.hour != nil)
-    #expect(sr2.hour! >= 7 && sr2.hour! <= 9) // Winter in London
+    #expect(try #require(sr2.hour) >= 7 && sr2.hour! <= 9) // Winter in London
   }
 
   @Test("Nutation remains bounded for extreme centuries", .tags(.accuracy, .unit))

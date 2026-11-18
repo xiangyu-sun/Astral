@@ -50,11 +50,13 @@ public struct Observer: Sendable, Hashable {
   public static let wellington = try! Observer(
     latitude: " 41° 17' 11.256'' S",
     longitude: "174° 46' 34.4496'' E",
-    elevation: .double(13.000))
+    elevation: .double(13.000)
+  )
   public static let barcelona = try! Observer(
     latitude: "41° 23' 24.7380'' N",
     longitude: "2° 9' 14.4252'' E",
-    elevation: .double(0))
+    elevation: .double(0)
+  )
 
   public let latitude: Degrees
   public let longitude: Degrees

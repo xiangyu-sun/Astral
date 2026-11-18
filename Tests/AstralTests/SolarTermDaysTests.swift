@@ -33,9 +33,9 @@ struct SolarTermDaysTests {
 
   @Test("All 24 solar terms appear over a full cycle")
   func all24SolarTermsAppear() throws {
-    var uniqueTerms: Set<Double> = []
+    var uniqueTerms = Set<Double>()
     let calendar = Calendar(identifier: .gregorian)
-    let startComponents = DateComponents(timeZone: TimeZone(secondsFromGMT: 0)!, year: 2020, month: 1, day: 1)
+    let startComponents = DateComponents(timeZone: try #require(TimeZone(secondsFromGMT: 0)), year: 2020, month: 1, day: 1)
     let startDate = try #require(calendar.date(from: startComponents))
 
     // Iterate day-by-day over ~370 days to cover a full cycle

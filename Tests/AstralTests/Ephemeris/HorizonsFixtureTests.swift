@@ -1,7 +1,8 @@
-import Foundation
-import Testing
-import simd
+// swiftlint:disable no_direct_standard_out_logs
 import Astral
+import Foundation
+import simd
+import Testing
 
 // Tolerance reading used here: architecture doc section 1 and 7 say planets must be "within
 // twice the JPL nominal error", and the section 7 table is captioned "Source: JPL ... nominal
@@ -16,14 +17,19 @@ import Astral
 
 let toleranceFactor = 2.0
 
+// MARK: - PlanetTolerance
+
 struct PlanetTolerance: Sendable, CustomTestStringConvertible {
   let name: String
-  let id: BodyID?          // nil => EM barycentre
+  let id: BodyID? // nil => EM barycentre
   let fixtureKey: String
   let lonArcsec: Double
   let latArcsec: Double
   let distKkm: Double
-  var testDescription: String { name }
+
+  var testDescription: String {
+    name
+  }
 }
 
 private let planetTable: [PlanetTolerance] = [
@@ -37,17 +43,21 @@ private let planetTable: [PlanetTolerance] = [
   .init(name: "Neptune", id: .neptune, fixtureKey: "neptune", lonArcsec: 10, latArcsec: 1, distKkm: 200),
 ]
 
-struct PositionError {
-  let lonArcsec: Double
-  let latArcsec: Double
-  let distKkm: Double
+// MARK: - PositionError
 
+struct PositionError {
   init(model: SIMD3<Double>, reference: SIMD3<Double>) {
-    let m = Spherical(model), r = Spherical(reference)
+    let m = Spherical(model)
+    let r = Spherical(reference)
     lonArcsec = abs(wrapPi(m.lon - r.lon)) * arcsecPerRad
     latArcsec = abs(m.lat - r.lat) * arcsecPerRad
     distKkm = abs(m.r - r.r) * Units.kmPerAU / 1_000
   }
+
+  let lonArcsec: Double
+  let latArcsec: Double
+  let distKkm: Double
+
 }
 
 private func modelPosition(_ entry: PlanetTolerance, jd: Double) -> SIMD3<Double> {
@@ -56,6 +66,8 @@ private func modelPosition(_ entry: PlanetTolerance, jd: Double) -> SIMD3<Double
   }
   return Kepler.position(elements: Catalog.earth.elements!, T: JulianDate(days: jd).centuriesSinceJ2000)
 }
+
+// MARK: - PlanetFixtureTests
 
 @Suite("Fixture: planets vs JPL Horizons", .tags(.ephemeris, .accuracy, .integration))
 struct PlanetFixtureTests {
@@ -89,11 +101,13 @@ struct PlanetFixtureTests {
   @Test(arguments: [false, true])
   func earthCentreMatchesHorizons(moonTerms: Bool) throws {
     let fixture = try HorizonsFixture.load()
-    let tol = planetTable[2]   // EM Bary row, x toleranceFactor
+    let tol = planetTable[2] // EM Bary row, x toleranceFactor
     for jd in Epoch.main {
       let ref = try fixture.vector("earth", jd: jd)
-      let err = PositionError(model: snapshot(jd, moonTerms: moonTerms).states[.earth]!.position, reference: ref)
-      print("FIXTURE Earth(399, moonTerms \(moonTerms)) JD \(jd): lon \(fmt(err.lonArcsec))\" lat \(fmt(err.latArcsec))\" dist \(fmt(err.distKkm)) x1000km")
+      let err = PositionError(model: try #require(snapshot(jd, moonTerms: moonTerms).states[.earth]?.position), reference: ref)
+      print(
+        "FIXTURE Earth(399, moonTerms \(moonTerms)) JD \(jd): lon \(fmt(err.lonArcsec))\" lat \(fmt(err.latArcsec))\" dist \(fmt(err.distKkm)) x1000km"
+      )
       #expect(err.lonArcsec <= tol.lonArcsec * toleranceFactor, "lon \(err.lonArcsec)")
       #expect(err.latArcsec <= tol.latArcsec * toleranceFactor, "lat \(err.latArcsec)")
       #expect(err.distKkm <= tol.distKkm * toleranceFactor, "dist \(err.distKkm)")
@@ -102,21 +116,28 @@ struct PlanetFixtureTests {
 
   /// Pluto's elements (arch. 4.2) are unverified. This only measures and prints the error and
   /// asserts a deliberately generous bound (2 deg lon, 1 deg lat, 0.67 AU); not an accuracy claim.
-  @Test func plutoRecordedAgainstHorizons() throws {
+  @Test
+  func plutoRecordedAgainstHorizons() throws {
     let fixture = try HorizonsFixture.load()
     let system = SolarSystem(bodies: Catalog.allWithPluto)
-    let lonTol = 7_200.0, latTol = 3_600.0, distTolKkm = 100_000.0   // 2 deg, 1 deg, 0.67 AU
+    let lonTol = 7_200.0
+    let latTol = 3_600.0
+    let distTolKkm = 100_000.0 // 2 deg, 1 deg, 0.67 AU
     for jd in Epoch.main {
       let ref = try fixture.vector("pluto", jd: jd)
       let model = try #require(system.snapshot(at: JulianDate(days: jd)).states[.pluto]).position
       let err = PositionError(model: model, reference: ref)
-      print("FIXTURE Pluto (unverified) JD \(jd): lon \(fmt(err.lonArcsec))\" lat \(fmt(err.latArcsec))\" dist \(fmt(err.distKkm)) x1000km")
+      print(
+        "FIXTURE Pluto (unverified) JD \(jd): lon \(fmt(err.lonArcsec))\" lat \(fmt(err.latArcsec))\" dist \(fmt(err.distKkm)) x1000km"
+      )
       #expect(err.lonArcsec <= lonTol, "Pluto JD \(jd) lon \(err.lonArcsec)\"")
       #expect(err.latArcsec <= latTol, "Pluto JD \(jd) lat \(err.latArcsec)\"")
       #expect(err.distKkm <= distTolKkm, "Pluto JD \(jd) dist \(err.distKkm)")
     }
   }
 }
+
+// MARK: - MoonFixtureTests
 
 @Suite("Fixture: Moon vs JPL Horizons", .tags(.ephemeris, .lunar, .accuracy, .integration))
 struct MoonFixtureTests {
@@ -129,8 +150,9 @@ struct MoonFixtureTests {
     for jd in Epoch.main {
       let ref = try fixture.vector("moon", jd: jd) - fixture.vector("earth", jd: jd)
       let s = snapshot(jd, moonTerms: moonTerms)
-      let model = s.states[.moon]!.position - s.states[.earth]!.position
-      let m = Spherical(model), r = Spherical(ref)
+      let model = try #require(s.states[.moon]?.position) - s.states[.earth]!.position
+      let m = Spherical(model)
+      let r = Spherical(ref)
       let lonErr = abs(wrapPi(m.lon - r.lon)) * degPerRad
       let latErr = abs(m.lat - r.lat) * degPerRad
       let distErr = abs(m.r - r.r) / r.r

@@ -34,13 +34,13 @@ public enum Depression: ExpressibleByIntegerLiteral, RawRepresentable, Sendable,
   public var rawValue: Int {
     switch self {
     case .civil:
-      return 6
+      6
     case .nautical:
-      return 12
+      12
     case .astronomical:
-      return 18
+      18
     case .other(let int):
-      return int
+      int
     }
   }
 }

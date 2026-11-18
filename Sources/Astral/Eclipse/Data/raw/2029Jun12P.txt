@@ -1,0 +1,58 @@
+# source: https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2029Jun12Pbeselm.html
+
+            Besselian Elements for the Partial Solar Eclipse of  2029 Jun 12
+            Non-Central Eclipse
+            Equatorial Conjunction:     04:01:13.6 TDT     J.D. = 2462299.667519
+              (Sun & Moon in R.A.)    (=04:00:01.3 UT)
+
+             Ecliptic Conjunction:      03:51:42.1 TDT     J.D. = 2462299.660904
+             (Sun & Moon in Ec. Lo.)  (=03:50:29.7 UT)
+
+                  Instant of            04:06:12.6 TDT     J.D. = 2462299.670979
+               Greatest Eclipse:      (=04:05:00.3 UT)
+
+
+            --------------------------------------------------------------------------- 
+                        Gamma =  1.2943            Ephemerides = VSOP87/ELP2000-85
+            Eclipse Magnitude =  0.4576           Lunation No. =     364
+                           ΔT =    72.3 s         Saros Series =  118 (69/72)
+
+            Lunar Radius   k1 = 0.272488 (Penumbra)        Shift in      Δb =  0.00"
+             Constants:    k2 = 0.272281 (Umbra)       Lunar Position:   Δl =  0.00"
+
+            --------------------------------------------------------------------------- 
+            Geocentric Coordinates of Sun & Moon at Greatest Eclipse (VSOP87/ELP2000-85):
+
+            Sun:       R.A. = 05h22m58.2s         Moon:      R.A. = 05h23m08.9s
+                       Dec. =+23°09'45.7"                    Dec. =+24°21'37.7"
+              Semi-Diameter =    15'45.0"           Semi-Diameter =    15'10.6"
+                Eq.Hor.Par. =       08.7"             Eq.Hor.Par. =  0°55'42.0"
+
+            --------------------------------------------------------------------------- 
+            Polynomial Besselian Elements for:   2029 Jun 12   04:00:00.0 TDT  (=t0)
+
+              n        x          y         d          l1         l2          μ
+
+              0  -0.010734   1.295406   23.15931   0.556661   0.010471  240.03554
+              1   0.5247594 -0.0176371   0.002590 -0.0001027 -0.0001022  14.999201
+              2   0.0000101 -0.0002058  -0.000005 -0.0000104 -0.0000103
+              3  -0.0000067  0.0000004
+
+                             Tan ƒ1 = 0.0046048    Tan ƒ2 = 0.0045819
+
+            At time t1 (decimal hours), each Besselian element is evaluated by:
+
+               a = a0 + a1*t + a2*t^2 + a3*t^3    (or a = Σ [an*t^n]; n = 0 to 3)
+
+                  where:    a = x, y, d, l1, l2, or μ
+                            t = t1 - t0  (decimal hours) and t0 =  4.000 TDT
+
+
+            The Besselian elements were derived from a least-squares fit to elements
+            calculated at five uniformly spaced times over a six hour period centered at t0.
+            The Besselian elements are valid over the period  1.00 ≤ t0 ≤  7.00 TDT.
+
+            Note that all times are expressed in Terrestrial Dynamical Time (TDT).
+
+                   Saros Series 118:  Member 69 of 72 eclipses in series.
+

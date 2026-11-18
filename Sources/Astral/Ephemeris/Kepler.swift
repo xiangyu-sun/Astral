@@ -33,9 +33,8 @@ public enum Kepler {
   public static func position(
     elements el: OrbitalElements,
     T: Double,
-    longitudeOffsetDeg: Double = 0)
-    -> SIMD3<Double>
-  {
+    longitudeOffsetDeg: Double = 0
+  ) -> SIMD3<Double> {
     let d = Units.degToRad
     let a = el.a + el.aRate * T
     let e = el.e + el.eRate * T
@@ -44,8 +43,13 @@ public enum Kepler {
     let peri = (el.peri + el.periRate * T + longitudeOffsetDeg) * d
     let node = (el.node + el.nodeRate * T + longitudeOffsetDeg) * d
     return position(
-      a: a, e: e, I: I, argPeri: peri - node, node: node,
-      meanAnomaly: wrapPi(L - peri))
+      a: a,
+      e: e,
+      I: I,
+      argPeri: peri - node,
+      node: node,
+      meanAnomaly: wrapPi(L - peri)
+    )
   }
 
   /// Position from resolved elements; all angles in radians.
@@ -55,19 +59,22 @@ public enum Kepler {
     I: Double,
     argPeri w: Double,
     node O: Double,
-    meanAnomaly M: Double)
-    -> SIMD3<Double>
-  {
+    meanAnomaly M: Double
+  ) -> SIMD3<Double> {
     let E = eccentricAnomaly(meanAnomaly: M, eccentricity: e)
     let xp = a * (cos(E) - e)
     let yp = a * sqrt(1 - e * e) * sin(E)
-    let (cw, sw) = (cos(w), sin(w))
-    let (cO, sO) = (cos(O), sin(O))
-    let (cI, sI) = (cos(I), sin(I))
+    let cw = cos(w)
+    let sw = sin(w)
+    let cO = cos(O)
+    let sO = sin(O)
+    let cI = cos(I)
+    let sI = sin(I)
     return SIMD3(
       (cw * cO - sw * sO * cI) * xp + (-sw * cO - cw * sO * cI) * yp,
       (cw * sO + sw * cO * cI) * xp + (-sw * sO + cw * cO * cI) * yp,
-      (sw * sI) * xp + (cw * sI) * yp)
+      (sw * sI) * xp + (cw * sI) * yp
+    )
   }
 
   /// Wraps an angle to [−π, π].

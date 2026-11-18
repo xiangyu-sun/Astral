@@ -7,19 +7,19 @@
 
 import Foundation
 
-// MARK: - DateComponents + Comparable
+// MARK: - DateComponents + @retroactive Comparable
 
 /// Allows `DateComponents` values to be compared using their total seconds.
 extension DateComponents: @retroactive Comparable {
 
   /// Returns `true` if `lhs` occurs before `rhs` when both are interpreted as durations.
-  public static func < (lhs: DateComponents, rhs: DateComponents) -> Bool {
+  public static func <(lhs: DateComponents, rhs: DateComponents) -> Bool {
     toSeconds(dateComponent: lhs) < toSeconds(dateComponent: rhs)
   }
 }
 
 extension Int? {
-  static func < (lhs: Self, rhs: Self) -> Bool {
+  static func <(lhs: Self, rhs: Self) -> Bool {
     (lhs ?? 0) < (rhs ?? 0)
   }
 }

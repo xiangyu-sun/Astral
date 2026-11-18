@@ -5,7 +5,6 @@ import Testing
 @Suite("Moon and Sun Orbital Calculations", .tags(.lunar, .solar, .fast))
 struct Moon2Tests {
 
-  // MARK: - Mean Elements at J2000
   // Meeus Chapter 47 epoch values (degrees converted to revolutions)
 
   @Test("Moon mean longitude at J2000 epoch", .tags(.conversion, .accuracy, .unit))
@@ -36,8 +35,6 @@ struct Moon2Tests {
     #expect(abs(rev - 297.8501921 / 360.0) < 1e-6)
   }
 
-  // MARK: - Sun Elements at J2000
-
   @Test("Sun mean longitude at J2000 epoch", .tags(.conversion, .accuracy, .unit))
   func sunMeanLongitudeAtEpoch() {
     let rev = sun_mean_longitude(jd2000: 0)
@@ -52,8 +49,6 @@ struct Moon2Tests {
     #expect(abs(rev - 357.5291092 / 360.0) < 1e-6)
   }
 
-  // MARK: - Obliquity of the Ecliptic
-
   @Test("Obliquity of ecliptic at J2000 epoch", .tags(.conversion, .accuracy, .unit))
   func obliquityAtEpoch() {
     let ob = obliquity_of_ecliptic(jd2000: 0)
@@ -61,8 +56,6 @@ struct Moon2Tests {
     let expected = (23.0 + 26.0 / 60.0 + 21.448 / 3600.0) * Double.pi / 180.0
     #expect(abs(ob - expected) < 1e-12)
   }
-
-  // MARK: - True Ecliptic Longitude
 
   @Test("Moon true longitude is within valid range", .tags(.validation, .unit))
   func moonTrueLongitudeRange() {
@@ -84,7 +77,9 @@ struct Moon2Tests {
     .tags(.accuracy, .unit),
     arguments: zip(
       [8765.5, 8845.5, 8937.5, 9031.5, 9120.5],
-      [156.017016, 134.275040, 257.045540, 67.971129, 158.411401]))
+      [156.017016, 134.275040, 257.045540, 67.971129, 158.411401]
+    )
+  )
   func moonTrueLongitudeWithReferenceData(jd2000: Double, expectedDegrees: Double) {
     let calculatedRevolutions = moon_true_longitude(jd2000: jd2000)
     let calculatedDegrees = calculatedRevolutions * 360.0
@@ -106,7 +101,8 @@ struct Moon2Tests {
   @Test(
     "Moon true longitude normalization across dates",
     .tags(.validation, .edge, .unit),
-    arguments: [-10000.0, -1000.0, -100.0, 0.0, 100.0, 1000.0, 10000.0])
+    arguments: [-10000.0, -1000.0, -100.0, 0.0, 100.0, 1000.0, 10000.0]
+  )
   func moonTrueLongitudeNormalization(jd2000: Double) {
     let longitude = moon_true_longitude(jd2000: jd2000)
     #expect(longitude >= 0.0)

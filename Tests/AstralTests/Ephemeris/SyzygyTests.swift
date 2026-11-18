@@ -1,7 +1,8 @@
-import Foundation
-import Testing
-import simd
+// swiftlint:disable no_direct_standard_out_logs
 import Astral
+import Foundation
+import simd
+import Testing
 
 // Eclipse times in the architecture doc are "recalled". They are checked here against the
 // Horizons fixture geometry (Sun-Earth-Moon angle from bodies 399 and 301 at the fixture epoch).
@@ -16,15 +17,19 @@ private func horizonsAngle(_ jd: Double) throws -> Double {
   return sunEarthMoonAngleDeg(earth: try f.vector("earth", jd: jd), moon: try f.vector("moon", jd: jd))
 }
 
+// MARK: - SyzygyTests
+
 @Suite("Syzygy sanity", .tags(.ephemeris, .lunar, .integration))
 struct SyzygyTests {
-  @Test func horizonsConfirmsSolarEclipseGeometry() throws {
+  @Test
+  func horizonsConfirmsSolarEclipseGeometry() throws {
     let a = try horizonsAngle(Epoch.solarFixture)
     print("SYZYGY Horizons Sun-Earth-Moon @ solar fixture: \(fmt(a)) deg")
     #expect(a < 3)
   }
 
-  @Test func horizonsConfirmsLunarEclipseGeometry() throws {
+  @Test
+  func horizonsConfirmsLunarEclipseGeometry() throws {
     let a = try horizonsAngle(Epoch.lunarFixture)
     print("SYZYGY Horizons Sun-Earth-Moon @ lunar fixture: \(fmt(a)) deg")
     #expect(a > 177)

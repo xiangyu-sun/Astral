@@ -1,0 +1,993 @@
+{
+ "description": "Local circumstances computed by NASA's SEcirc.js (GSFC eclipse map calculator) on the Besselian elements of the same NASA page; sea-level observers. utSeconds = seconds after 00:00 UT of the label date, unrounded; *Display = strings NASA shows.",
+ "eclipses": [
+  {
+   "label": "2023-10-14",
+   "source": "https://eclipse.gsfc.nasa.gov/SEgoogle/SEgoogle2001/SE2023Oct14Agoogle.html",
+   "elements": {
+    "jd": 2460232.250462,
+    "t0": 18.0,
+    "tmin": -4.0,
+    "tmax": 4.0,
+    "deltaT": 70.5,
+    "x": [
+     0.16975069,
+     0.45854804,
+     2.733e-05,
+     -4.91e-06
+    ],
+    "y": [
+     0.33483735,
+     -0.2413668,
+     2.402e-05,
+     3.04e-06
+    ],
+    "d": [
+     -8.24418831,
+     -0.01488791,
+     1.22e-06
+    ],
+    "mu": [
+     93.50170135,
+     15.00353336,
+     1.97e-06
+    ],
+    "l1": [
+     0.56431091,
+     -8.908e-05,
+     -1.03e-05
+    ],
+    "l2": [
+     0.01808279,
+     -8.864e-05,
+     -1.026e-05
+    ],
+    "tanF1": 0.00468819,
+    "tanF2": 0.00466485
+   },
+   "sites": [
+    {
+     "name": "Albuquerque",
+     "lat": 35.0844,
+     "lon": -106.6504,
+     "jsType": 2,
+     "mid": {
+      "altitudeDeg": 36.147871270178996,
+      "azimuthDeg": 136.85081280273266,
+      "timeDisplay": "16:36:57.1",
+      "altDisplay": "36.1",
+      "aziDisplay": "136.9",
+      "utSeconds": 59817.05196979353
+     },
+     "magnitude": 0.970192671920361,
+     "magnitudeDisplay": 0.97,
+     "obscurationDisplay": "89.59%",
+     "c1": {
+      "altitudeDeg": 22.599661215220852,
+      "azimuthDeg": 118.76666017469057,
+      "timeDisplay": "15:13:14.4",
+      "altDisplay": "22.6",
+      "aziDisplay": "118.8",
+      "utSeconds": 54794.360926567395
+     },
+     "c4": {
+      "altitudeDeg": 45.48621611751328,
+      "azimuthDeg": 164.67700036431518,
+      "timeDisplay": "18:09:26.2",
+      "altDisplay": "45.5",
+      "aziDisplay": "164.7",
+      "utSeconds": 65366.218711725865
+     },
+     "c2": {
+      "altitudeDeg": 35.809093550264265,
+      "azimuthDeg": 136.2439189678497,
+      "timeDisplay": "16:34:32.4",
+      "altDisplay": "35.8",
+      "aziDisplay": "136.2",
+      "utSeconds": 59672.40706486497
+     },
+     "c3": {
+      "altitudeDeg": 36.482702077160965,
+      "azimuthDeg": 137.46336147397653,
+      "timeDisplay": "16:39:21.6",
+      "altDisplay": "36.5",
+      "aziDisplay": "137.5",
+      "utSeconds": 59961.64749381306
+     },
+     "durationDisplay": "4m49.2s",
+     "type": "annular",
+     "obscuration": 0.8959
+    },
+    {
+     "name": "Corpus Christi",
+     "lat": 27.8006,
+     "lon": -97.3964,
+     "jsType": 2,
+     "mid": {
+      "altitudeDeg": 49.407471829738,
+      "azimuthDeg": 149.76858096327896,
+      "timeDisplay": "16:58:16.4",
+      "altDisplay": "49.4",
+      "aziDisplay": "149.8",
+      "utSeconds": 61096.41935787876
+     },
+     "magnitude": 0.9744895721565726,
+     "magnitudeDisplay": 0.974,
+     "obscurationDisplay": "90.10%",
+     "c1": {
+      "altitudeDeg": 35.52595234635282,
+      "azimuthDeg": 125.07995272466042,
+      "timeDisplay": "15:26:27.0",
+      "altDisplay": "35.5",
+      "aziDisplay": "125.1",
+      "utSeconds": 55587.03026054381
+     },
+     "c4": {
+      "altitudeDeg": 53.532595922383344,
+      "azimuthDeg": 189.44478098345613,
+      "timeDisplay": "18:38:11.8",
+      "altDisplay": "53.5",
+      "aziDisplay": "189.4",
+      "utSeconds": 67091.78851762024
+     },
+     "c2": {
+      "altitudeDeg": 49.12401993296921,
+      "azimuthDeg": 148.9180827572145,
+      "timeDisplay": "16:55:45.3",
+      "altDisplay": "49.1",
+      "aziDisplay": "148.9",
+      "utSeconds": 60945.335209023215
+     },
+     "c3": {
+      "altitudeDeg": 49.683720467443685,
+      "azimuthDeg": 150.6294705867159,
+      "timeDisplay": "17:00:47.5",
+      "altDisplay": "49.7",
+      "aziDisplay": "150.6",
+      "utSeconds": 61247.49670412796
+     },
+     "durationDisplay": "5m02.2s",
+     "type": "annular",
+     "obscuration": 0.9009999999999999
+    },
+    {
+     "name": "Los Angeles",
+     "lat": 34.0522,
+     "lon": -118.2437,
+     "jsType": 1,
+     "mid": {
+      "altitudeDeg": 27.515563706950655,
+      "azimuthDeg": 123.13698978128281,
+      "timeDisplay": "16:24:30.5",
+      "altDisplay": "27.5",
+      "aziDisplay": "123.1",
+      "utSeconds": 59070.469022033554
+     },
+     "magnitude": 0.7805503009452451,
+     "magnitudeDisplay": 0.781,
+     "obscurationDisplay": "70.78%",
+     "c1": {
+      "altitudeDeg": 13.321574123666391,
+      "azimuthDeg": 109.69268502399325,
+      "timeDisplay": "15:07:56.8",
+      "altDisplay": "13.3",
+      "aziDisplay": "109.7",
+      "utSeconds": 54476.80792840419
+     },
+     "c4": {
+      "altitudeDeg": 40.45950644805195,
+      "azimuthDeg": 143.49412328836922,
+      "timeDisplay": "17:50:06.2",
+      "altDisplay": "40.5",
+      "aziDisplay": "143.5",
+      "utSeconds": 64206.24468562828
+     },
+     "type": "partial",
+     "obscuration": 0.7078
+    },
+    {
+     "name": "Mexico City",
+     "lat": 19.4326,
+     "lon": -99.1332,
+     "jsType": 1,
+     "mid": {
+      "altitudeDeg": 56.99208928052085,
+      "azimuthDeg": 145.26588366205328,
+      "timeDisplay": "17:09:25.9",
+      "altDisplay": "57.0",
+      "aziDisplay": "145.3",
+      "utSeconds": 61765.90683343278
+     },
+     "magnitude": 0.7702984295026556,
+     "magnitudeDisplay": 0.77,
+     "obscurationDisplay": "69.72%",
+     "c1": {
+      "altitudeDeg": 40.65114829828809,
+      "azimuthDeg": 120.16507304808783,
+      "timeDisplay": "15:36:31.6",
+      "altDisplay": "40.7",
+      "aziDisplay": "120.2",
+      "utSeconds": 56191.56682603611
+     },
+     "c4": {
+      "altitudeDeg": 61.471599841312674,
+      "azimuthDeg": 194.56414669587627,
+      "timeDisplay": "18:50:23.9",
+      "altDisplay": "61.5",
+      "aziDisplay": "194.6",
+      "utSeconds": 67823.90677335943
+     },
+     "type": "partial",
+     "obscuration": 0.6972
+    }
+   ]
+  },
+  {
+   "label": "2024-04-08",
+   "source": "https://eclipse.gsfc.nasa.gov/SEgoogle/SEgoogle2001/SE2024Apr08Tgoogle.html",
+   "elements": {
+    "jd": 2460409.262835,
+    "t0": 18.0,
+    "tmin": -4.0,
+    "tmax": 4.0,
+    "deltaT": 70.6,
+    "x": [
+     -0.31815711,
+     0.51171052,
+     3.265e-05,
+     -8.52e-06
+    ],
+    "y": [
+     0.21974689,
+     0.2709586,
+     -5.943e-05,
+     -4.67e-06
+    ],
+    "d": [
+     7.58619928,
+     0.01484434,
+     -1.68e-06
+    ],
+    "mu": [
+     89.59121704,
+     15.00408363,
+     -1.3e-06
+    ],
+    "l1": [
+     0.53581262,
+     6.179e-05,
+     -1.275e-05
+    ],
+    "l2": [
+     -0.01027351,
+     6.148e-05,
+     -1.269e-05
+    ],
+    "tanF1": 0.00466826,
+    "tanF2": 0.00464501
+   },
+   "sites": [
+    {
+     "name": "Dallas",
+     "lat": 32.7767,
+     "lon": -96.797,
+     "jsType": 3,
+     "mid": {
+      "altitudeDeg": 64.61788366111553,
+      "azimuthDeg": 187.99511983455105,
+      "timeDisplay": "18:42:36.5",
+      "altDisplay": "64.6",
+      "aziDisplay": "188.0",
+      "utSeconds": 67356.4710370151
+     },
+     "magnitude": 1.014649167349968,
+     "magnitudeDisplay": 1.015,
+     "obscurationDisplay": "100.00%",
+     "c1": {
+      "altitudeDeg": 60.57030984620222,
+      "azimuthDeg": 145.29863616538705,
+      "timeDisplay": "17:23:16.3",
+      "altDisplay": "60.6",
+      "aziDisplay": "145.3",
+      "utSeconds": 62596.3008080698
+     },
+     "c4": {
+      "altitudeDeg": 56.74257521850496,
+      "azimuthDeg": 226.02556184845017,
+      "timeDisplay": "20:02:38.9",
+      "altDisplay": "56.7",
+      "aziDisplay": "226.0",
+      "utSeconds": 72158.88127009677
+     },
+     "c2": {
+      "altitudeDeg": 64.66968491125557,
+      "azimuthDeg": 186.89085827260624,
+      "timeDisplay": "18:40:41.3",
+      "altDisplay": "64.7",
+      "aziDisplay": "186.9",
+      "utSeconds": 67241.31944628902
+     },
+     "c3": {
+      "altitudeDeg": 64.55841926505485,
+      "azimuthDeg": 189.09459533384472,
+      "timeDisplay": "18:44:31.6",
+      "altDisplay": "64.6",
+      "aziDisplay": "189.1",
+      "utSeconds": 67471.57887352184
+     },
+     "durationDisplay": "3m50.3s",
+     "type": "total",
+     "obscuration": 1
+    },
+    {
+     "name": "Mazatlan",
+     "lat": 23.2494,
+     "lon": -106.4111,
+     "jsType": 3,
+     "mid": {
+      "altitudeDeg": 69.10044624736977,
+      "azimuthDeg": 136.23379739218615,
+      "timeDisplay": "18:09:37.3",
+      "altDisplay": "69.1",
+      "aziDisplay": "136.2",
+      "utSeconds": 65377.27758534679
+     },
+     "magnitude": 1.020664387717829,
+     "magnitudeDisplay": 1.021,
+     "obscurationDisplay": "100.00%",
+     "c1": {
+      "altitudeDeg": 53.84082700081524,
+      "azimuthDeg": 110.17518309513639,
+      "timeDisplay": "16:51:26.3",
+      "altDisplay": "53.8",
+      "aziDisplay": "110.2",
+      "utSeconds": 60686.30116439613
+     },
+     "c4": {
+      "altitudeDeg": 73.25609091621587,
+      "azimuthDeg": 201.90980784990117,
+      "timeDisplay": "19:32:09.8",
+      "altDisplay": "73.3",
+      "aziDisplay": "201.9",
+      "utSeconds": 70329.76507974579
+     },
+     "c2": {
+      "altitudeDeg": 68.7568550348875,
+      "azimuthDeg": 135.11187838961405,
+      "timeDisplay": "18:07:29.0",
+      "altDisplay": "68.8",
+      "aziDisplay": "135.1",
+      "utSeconds": 65249.02466924767
+     },
+     "c3": {
+      "altitudeDeg": 69.43788320563434,
+      "azimuthDeg": 137.39308923660099,
+      "timeDisplay": "18:11:45.9",
+      "altDisplay": "69.4",
+      "aziDisplay": "137.4",
+      "utSeconds": 65505.87379848197
+     },
+     "durationDisplay": "4m16.8s",
+     "type": "total",
+     "obscuration": 1
+    },
+    {
+     "name": "Indianapolis",
+     "lat": 39.7684,
+     "lon": -86.1581,
+     "jsType": 3,
+     "mid": {
+      "altitudeDeg": 52.999259357021444,
+      "azimuthDeg": 215.07980340336545,
+      "timeDisplay": "19:07:56.6",
+      "altDisplay": "53.0",
+      "aziDisplay": "215.1",
+      "utSeconds": 68876.61971169658
+     },
+     "magnitude": 1.0183497726113038,
+     "magnitudeDisplay": 1.018,
+     "obscurationDisplay": "100.00%",
+     "c1": {
+      "altitudeDeg": 57.801617114453606,
+      "azimuthDeg": 181.9797146732695,
+      "timeDisplay": "17:50:31.8",
+      "altDisplay": "57.8",
+      "aziDisplay": "182.0",
+      "utSeconds": 64231.753822711835
+     },
+     "c4": {
+      "altitudeDeg": 42.44865905889858,
+      "azimuthDeg": 238.17177388051724,
+      "timeDisplay": "20:23:10.6",
+      "altDisplay": "42.4",
+      "aziDisplay": "238.2",
+      "utSeconds": 73390.5558060033
+     },
+     "c2": {
+      "altitudeDeg": 53.20788909541372,
+      "azimuthDeg": 214.37227141215826,
+      "timeDisplay": "19:06:02.1",
+      "altDisplay": "53.2",
+      "aziDisplay": "214.4",
+      "utSeconds": 68762.0642543705
+     },
+     "c3": {
+      "altitudeDeg": 52.78748693701107,
+      "azimuthDeg": 215.77905902999962,
+      "timeDisplay": "19:09:50.9",
+      "altDisplay": "52.8",
+      "aziDisplay": "215.8",
+      "utSeconds": 68990.88053477187
+     },
+     "durationDisplay": "3m48.8s",
+     "type": "total",
+     "obscuration": 1
+    },
+    {
+     "name": "New York",
+     "lat": 40.7128,
+     "lon": -74.006,
+     "jsType": 1,
+     "mid": {
+      "altitudeDeg": 43.35729710341666,
+      "azimuthDeg": 235.08733084497328,
+      "timeDisplay": "19:25:33.3",
+      "altDisplay": "43.4",
+      "aziDisplay": "235.1",
+      "utSeconds": 69933.31673184529
+     },
+     "magnitude": 0.9106803320536804,
+     "magnitudeDisplay": 0.911,
+     "obscurationDisplay": "89.91%",
+     "c1": {
+      "altitudeDeg": 53.11045009815506,
+      "azimuthDeg": 211.09767487173687,
+      "timeDisplay": "18:10:34.0",
+      "altDisplay": "53.1",
+      "aziDisplay": "211.1",
+      "utSeconds": 65434.00125524871
+     },
+     "c4": {
+      "altitudeDeg": 31.387155226294873,
+      "azimuthDeg": 251.34093363143393,
+      "timeDisplay": "20:36:22.2",
+      "altDisplay": "31.4",
+      "aziDisplay": "251.3",
+      "utSeconds": 74182.22348296504
+     },
+     "type": "partial",
+     "obscuration": 0.8991
+    },
+    {
+     "name": "Los Angeles",
+     "lat": 34.0522,
+     "lon": -118.2437,
+     "jsType": 1,
+     "mid": {
+      "altitudeDeg": 54.56202004860465,
+      "azimuthDeg": 132.43313984623137,
+      "timeDisplay": "18:12:18.0",
+      "altDisplay": "54.6",
+      "aziDisplay": "132.4",
+      "utSeconds": 65538.02265906172
+     },
+     "magnitude": 0.5795912291023775,
+     "magnitudeDisplay": 0.58,
+     "obscurationDisplay": "48.84%",
+     "c1": {
+      "altitudeDeg": 43.08021685462545,
+      "azimuthDeg": 114.46989448373392,
+      "timeDisplay": "17:06:09.6",
+      "altDisplay": "43.1",
+      "aziDisplay": "114.5",
+      "utSeconds": 61569.641474337994
+     },
+     "c4": {
+      "altitudeDeg": 62.51456877690874,
+      "azimuthDeg": 162.34363073257066,
+      "timeDisplay": "19:22:06.9",
+      "altDisplay": "62.5",
+      "aziDisplay": "162.3",
+      "utSeconds": 69726.9151137807
+     },
+     "type": "partial",
+     "obscuration": 0.48840000000000006
+    }
+   ]
+  },
+  {
+   "label": "2026-08-12",
+   "source": "https://eclipse.gsfc.nasa.gov/SEgoogle/SEgoogle2001/SE2026Aug12Tgoogle.html",
+   "elements": {
+    "jd": 2461265.241032,
+    "t0": 18.0,
+    "tmin": -4.0,
+    "tmax": 4.0,
+    "deltaT": 71.4,
+    "x": [
+     0.47559288,
+     0.51892877,
+     -7.733e-05,
+     -8.79e-06
+    ],
+    "y": [
+     0.7711609,
+     -0.23016642,
+     -0.00012455,
+     3.72e-06
+    ],
+    "d": [
+     14.79666901,
+     -0.01206477,
+     -2.74e-06
+    ],
+    "mu": [
+     88.74776459,
+     15.00309277,
+     5.19e-06
+    ],
+    "l1": [
+     0.53795421,
+     9.396e-05,
+     -1.209e-05
+    ],
+    "l2": [
+     -0.00814245,
+     9.348e-05,
+     -1.206e-05
+    ],
+    "tanF1": 0.00461406,
+    "tanF2": 0.00459108
+   },
+   "sites": [
+    {
+     "name": "Barcelona",
+     "lat": 41.390205,
+     "lon": 2.154007,
+     "jsType": 1,
+     "mid": {
+      "altitudeDeg": 3.732368240822865,
+      "azimuthDeg": 286.4698719377635,
+      "timeDisplay": "18:29:15.9",
+      "altDisplay": "03.7",
+      "aziDisplay": "286.5",
+      "utSeconds": 66555.92962284737
+     },
+     "magnitude": 0.996651720196795,
+     "magnitudeDisplay": 0.997,
+     "obscurationDisplay": "99.83%",
+     "c1": {
+      "altitudeDeg": 13.67456621353654,
+      "azimuthDeg": 277.8183139486081,
+      "timeDisplay": "17:35:02.6",
+      "altDisplay": "13.7",
+      "aziDisplay": "277.8",
+      "utSeconds": 63302.638275391495
+     },
+     "c4": {
+      "altitudeDeg": -5.22644607538965,
+      "azimuthDeg": 294.9662731771181,
+      "timeDisplay": "19:20:18.9*",
+      "altDisplay": "-05.2",
+      "aziDisplay": "295.0",
+      "utSeconds": 69618.87246205886
+     },
+     "type": "partial",
+     "obscuration": 0.9983
+    },
+    {
+     "name": "Madrid",
+     "lat": 40.4168,
+     "lon": -3.7038,
+     "jsType": 1,
+     "mid": {
+      "altitudeDeg": 7.196560389597393,
+      "azimuthDeg": 283.3223867371595,
+      "timeDisplay": "18:32:21.2",
+      "altDisplay": "07.2",
+      "aziDisplay": "283.3",
+      "utSeconds": 66741.15913584043
+     },
+     "magnitude": 0.9986834769490538,
+     "magnitudeDisplay": 0.999,
+     "obscurationDisplay": "99.96%",
+     "c1": {
+      "altitudeDeg": 17.652769928592342,
+      "azimuthDeg": 274.653226792852,
+      "timeDisplay": "17:36:43.8",
+      "altDisplay": "17.7",
+      "aziDisplay": "274.7",
+      "utSeconds": 63403.805713008514
+     },
+     "c4": {
+      "altitudeDeg": -2.268012668102104,
+      "azimuthDeg": 291.65710603024013,
+      "timeDisplay": "19:24:28.5*",
+      "altDisplay": "-02.3",
+      "aziDisplay": "291.7",
+      "utSeconds": 69868.48417163709
+     },
+     "type": "partial",
+     "obscuration": 0.9995999999999999
+    },
+    {
+     "name": "Reykjavik",
+     "lat": 64.1466,
+     "lon": -21.9426,
+     "jsType": 3,
+     "mid": {
+      "altitudeDeg": 24.501793788072458,
+      "azimuthDeg": 252.73160238727615,
+      "timeDisplay": "17:48:45.5",
+      "altDisplay": "24.5",
+      "aziDisplay": "252.7",
+      "utSeconds": 64125.51403526479
+     },
+     "magnitude": 1.0020004268038545,
+     "magnitudeDisplay": 1.002,
+     "obscurationDisplay": "100.00%",
+     "c1": {
+      "altitudeDeg": 30.58725147541436,
+      "azimuthDeg": 237.39327063476574,
+      "timeDisplay": "16:47:11.6",
+      "altDisplay": "30.6",
+      "aziDisplay": "237.4",
+      "utSeconds": 60431.56492271059
+     },
+     "c4": {
+      "altitudeDeg": 18.192767232623634,
+      "azimuthDeg": 266.43741220372357,
+      "timeDisplay": "18:47:37.0",
+      "altDisplay": "18.2",
+      "aziDisplay": "266.4",
+      "utSeconds": 67657.03453112562
+     },
+     "c2": {
+      "altitudeDeg": 24.55438031136679,
+      "azimuthDeg": 252.610691849218,
+      "timeDisplay": "17:48:15.3",
+      "altDisplay": "24.6",
+      "aziDisplay": "252.6",
+      "utSeconds": 64095.254854441875
+     },
+     "c3": {
+      "altitudeDeg": 24.449438659742075,
+      "azimuthDeg": 252.8518342458751,
+      "timeDisplay": "17:49:15.6",
+      "altDisplay": "24.4",
+      "aziDisplay": "252.9",
+      "utSeconds": 64155.620408011135
+     },
+     "durationDisplay": "1m00.4s",
+     "type": "total",
+     "obscuration": 1
+    },
+    {
+     "name": "London",
+     "lat": 51.5074,
+     "lon": -0.1278,
+     "jsType": 1,
+     "mid": {
+      "altitudeDeg": 10.335139569973576,
+      "azimuthDeg": 280.81764735013775,
+      "timeDisplay": "18:13:18.5",
+      "altDisplay": "10.3",
+      "aziDisplay": "280.8",
+      "utSeconds": 65598.52368959053
+     },
+     "magnitude": 0.9250125065601964,
+     "magnitudeDisplay": 0.925,
+     "obscurationDisplay": "91.35%",
+     "c1": {
+      "altitudeDeg": 19.00826771218667,
+      "azimuthDeg": 270.05891621333,
+      "timeDisplay": "17:17:18.1",
+      "altDisplay": "19.0",
+      "aziDisplay": "270.1",
+      "utSeconds": 62238.06117535087
+     },
+     "c4": {
+      "altitudeDeg": 2.4022113584331497,
+      "azimuthDeg": 290.9504272104032,
+      "timeDisplay": "19:06:18.8",
+      "altDisplay": "02.4",
+      "aziDisplay": "291.0",
+      "utSeconds": 68778.77190293474
+     },
+     "type": "partial",
+     "obscuration": 0.9135
+    },
+    {
+     "name": "Valencia",
+     "lat": 39.4699,
+     "lon": -0.3763,
+     "jsType": 3,
+     "mid": {
+      "altitudeDeg": 4.375721107404334,
+      "azimuthDeg": 285.58331739171354,
+      "timeDisplay": "18:32:58.1",
+      "altDisplay": "04.4",
+      "aziDisplay": "285.6",
+      "utSeconds": 66778.08670358808
+     },
+     "magnitude": 1.003101296486004,
+     "magnitudeDisplay": 1.003,
+     "obscurationDisplay": "100.00%",
+     "c1": {
+      "altitudeDeg": 14.701586108372364,
+      "azimuthDeg": 277.2425664909396,
+      "timeDisplay": "17:38:23.1",
+      "altDisplay": "14.7",
+      "aziDisplay": "277.2",
+      "utSeconds": 63503.13015227585
+     },
+     "c4": {
+      "altitudeDeg": -4.941558094157217,
+      "azimuthDeg": 293.7587938194433,
+      "timeDisplay": "19:24:13.2*",
+      "altDisplay": "-04.9",
+      "aziDisplay": "293.8",
+      "utSeconds": 69853.18000078703
+     },
+     "c2": {
+      "altitudeDeg": 4.467369340363074,
+      "azimuthDeg": 285.50708419912445,
+      "timeDisplay": "18:32:28.5",
+      "altDisplay": "04.5",
+      "aziDisplay": "285.5",
+      "utSeconds": 66748.53814947703
+     },
+     "c3": {
+      "altitudeDeg": 4.284653680291785,
+      "azimuthDeg": 285.659126965012,
+      "timeDisplay": "18:33:27.5",
+      "altDisplay": "04.3",
+      "aziDisplay": "285.7",
+      "utSeconds": 66807.45884662568
+     },
+     "durationDisplay": "0m58.9s",
+     "type": "total",
+     "obscuration": 1
+    }
+   ]
+  },
+  {
+   "label": "2027-08-02",
+   "source": "https://eclipse.gsfc.nasa.gov/SEgoogle/SEgoogle2001/SE2027Aug02Tgoogle.html",
+   "elements": {
+    "jd": 2461619.9221,
+    "t0": 10.0,
+    "tmin": -4.0,
+    "tmax": 4.0,
+    "deltaT": 71.7,
+    "x": [
+     -0.01964458,
+     0.54471046,
+     -4.438e-05,
+     -9.1e-06
+    ],
+    "y": [
+     0.16006303,
+     -0.21115686,
+     -0.00012167,
+     3.69e-06
+    ],
+    "d": [
+     17.76247215,
+     -0.01018139,
+     -3.72e-06
+    ],
+    "mu": [
+     328.42248535,
+     15.00209332,
+     1.343e-05
+    ],
+    "l1": [
+     0.53059578,
+     1.38e-05,
+     -1.281e-05
+    ],
+    "l2": [
+     -0.01546428,
+     1.374e-05,
+     -1.277e-05
+    ],
+    "tanF1": 0.00460638,
+    "tanF2": 0.00458344
+   },
+   "sites": [
+    {
+     "name": "Luxor",
+     "lat": 25.6872,
+     "lon": 32.6396,
+     "jsType": 3,
+     "mid": {
+      "altitudeDeg": 81.7751881593446,
+      "azimuthDeg": 195.96723094210327,
+      "timeDisplay": "10:05:13.6",
+      "altDisplay": "81.8",
+      "aziDisplay": "196.0",
+      "utSeconds": 36313.63587929304
+     },
+     "magnitude": 1.034677716032763,
+     "magnitudeDisplay": 1.035,
+     "obscurationDisplay": "100.00%",
+     "c1": {
+      "altitudeDeg": 70.78201870766065,
+      "azimuthDeg": 110.5260381963177,
+      "timeDisplay": "08:40:12.8",
+      "altDisplay": "70.8",
+      "aziDisplay": "110.5",
+      "utSeconds": 31212.812755996812
+     },
+     "c4": {
+      "altitudeDeg": 67.51577096682055,
+      "azimuthDeg": 253.88063254381186,
+      "timeDisplay": "11:26:30.3",
+      "altDisplay": "67.5",
+      "aziDisplay": "253.9",
+      "utSeconds": 41190.26651333074
+     },
+     "c2": {
+      "altitudeDeg": 81.94106116122495,
+      "azimuthDeg": 190.76278127374692,
+      "timeDisplay": "10:02:03.3",
+      "altDisplay": "81.9",
+      "aziDisplay": "190.8",
+      "utSeconds": 36123.334155106866
+     },
+     "c3": {
+      "altitudeDeg": 81.54882858221464,
+      "azimuthDeg": 200.9263775412709,
+      "timeDisplay": "10:08:23.5",
+      "altDisplay": "81.5",
+      "aziDisplay": "200.9",
+      "utSeconds": 36503.53775750397
+     },
+     "durationDisplay": "6m20.2s",
+     "type": "total",
+     "obscuration": 1
+    },
+    {
+     "name": "Cairo",
+     "lat": 30.0444,
+     "lon": 31.2357,
+     "jsType": 1,
+     "mid": {
+      "altitudeDeg": 77.65334493029366,
+      "azimuthDeg": 173.79465833624715,
+      "timeDisplay": "09:55:48.5",
+      "altDisplay": "77.7",
+      "aziDisplay": "173.8",
+      "utSeconds": 35748.48899393775
+     },
+     "magnitude": 0.9467112594426789,
+     "magnitudeDisplay": 0.947,
+     "obscurationDisplay": "94.81%",
+     "c1": {
+      "altitudeDeg": 66.45994281155424,
+      "azimuthDeg": 116.39445815127863,
+      "timeDisplay": "08:33:06.8",
+      "altDisplay": "66.5",
+      "aziDisplay": "116.4",
+      "utSeconds": 30786.808047335486
+     },
+     "c4": {
+      "altitudeDeg": 68.99131929772904,
+      "azimuthDeg": 238.41674431633191,
+      "timeDisplay": "11:16:10.4",
+      "altDisplay": "69.0",
+      "aziDisplay": "238.4",
+      "utSeconds": 40570.42299837501
+     },
+     "type": "partial",
+     "obscuration": 0.9481
+    },
+    {
+     "name": "Tangier",
+     "lat": 35.7595,
+     "lon": -5.834,
+     "jsType": 3,
+     "mid": {
+      "altitudeDeg": 37.907022352785496,
+      "azimuthDeg": 94.8166496722555,
+      "timeDisplay": "08:47:02.9",
+      "altDisplay": "37.9",
+      "aziDisplay": "094.8",
+      "utSeconds": 31622.86891635017
+     },
+     "magnitude": 1.0337437676995604,
+     "magnitudeDisplay": 1.034,
+     "obscurationDisplay": "100.00%",
+     "c1": {
+      "altitudeDeg": 24.434879227097575,
+      "azimuthDeg": 85.0517377299509,
+      "timeDisplay": "07:40:32.4",
+      "altDisplay": "24.4",
+      "aziDisplay": "085.1",
+      "utSeconds": 27632.360838337503
+     },
+     "c4": {
+      "altitudeDeg": 52.44477492727301,
+      "azimuthDeg": 108.65504504695474,
+      "timeDisplay": "10:00:19.7",
+      "altDisplay": "52.4",
+      "aziDisplay": "108.7",
+      "utSeconds": 36019.66911005159
+     },
+     "c2": {
+      "altitudeDeg": 37.419275930934106,
+      "azimuthDeg": 94.43318596083981,
+      "timeDisplay": "08:44:38.1",
+      "altDisplay": "37.4",
+      "aziDisplay": "094.4",
+      "utSeconds": 31478.098884575233
+     },
+     "c3": {
+      "altitudeDeg": 38.39778232817322,
+      "azimuthDeg": 95.20585166593264,
+      "timeDisplay": "08:49:28.6",
+      "altDisplay": "38.4",
+      "aziDisplay": "095.2",
+      "utSeconds": 31768.616349889842
+     },
+     "durationDisplay": "4m50.5s",
+     "type": "total",
+     "obscuration": 1
+    },
+    {
+     "name": "Jeddah",
+     "lat": 21.4858,
+     "lon": 39.1925,
+     "jsType": 3,
+     "mid": {
+      "altitudeDeg": 76.35135933195643,
+      "azimuthDeg": 256.5876686981907,
+      "timeDisplay": "10:25:19.5",
+      "altDisplay": "76.4",
+      "aziDisplay": "256.6",
+      "utSeconds": 37519.52528600555
+     },
+     "magnitude": 1.0285681710338113,
+     "magnitudeDisplay": 1.029,
+     "obscurationDisplay": "100.00%",
+     "c1": {
+      "altitudeDeg": 82.2047079487646,
+      "azimuthDeg": 117.17957950177373,
+      "timeDisplay": "09:00:26.1",
+      "altDisplay": "82.2",
+      "aziDisplay": "117.2",
+      "utSeconds": 32426.083645245646
+     },
+     "c4": {
+      "altitudeDeg": 58.22933738882315,
+      "azimuthDeg": 269.2264783399938,
+      "timeDisplay": "11:43:45.5",
+      "altDisplay": "58.2",
+      "aziDisplay": "269.2",
+      "utSeconds": 42225.469920279334
+     },
+     "c2": {
+      "altitudeDeg": 77.02863700180401,
+      "azimuthDeg": 255.60673025926383,
+      "timeDisplay": "10:22:19.6",
+      "altDisplay": "77.0",
+      "aziDisplay": "255.6",
+      "utSeconds": 37339.639010376166
+     },
+     "c3": {
+      "altitudeDeg": 75.67446384754594,
+      "azimuthDeg": 257.484459102927,
+      "timeDisplay": "10:28:18.6",
+      "altDisplay": "75.7",
+      "aziDisplay": "257.5",
+      "utSeconds": 37698.61019910023
+     },
+     "durationDisplay": "5m59.0s",
+     "type": "total",
+     "obscuration": 1
+    }
+   ]
+  }
+ ]
+}

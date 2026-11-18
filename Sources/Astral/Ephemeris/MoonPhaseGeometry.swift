@@ -8,6 +8,8 @@
 import Foundation
 import simd
 
+// MARK: - MoonPhase
+
 /// The Moon's illumination as seen from Earth, derived from Sun–Earth–Moon geometry.
 ///
 /// This is a type; the module's free function `moonPhase(date:)` (which returns the Moon's age in days) is
@@ -76,7 +78,9 @@ public struct MoonPhase: Sendable, Equatable {
   public let illuminatedFraction: Double
 
   /// Whether the Moon is waxing (elongation below π).
-  public var isWaxing: Bool { elongation < .pi }
+  public var isWaxing: Bool {
+    elongation < .pi
+  }
 
   /// The conventional phase name.
   public var name: Name {

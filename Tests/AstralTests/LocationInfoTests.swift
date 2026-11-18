@@ -20,7 +20,8 @@ struct LocationInfoTests {
         region: "Somewhere",
         timezone: "Europe/London",
         latitudeStr: "i",
-        longitudeStr: "2")
+        longitudeStr: "2"
+      )
     }
   }
 
@@ -32,7 +33,8 @@ struct LocationInfoTests {
         region: "Somewhere",
         timezone: "Europe/London",
         latitudeStr: "2",
-        longitudeStr: "i")
+        longitudeStr: "i"
+      )
     }
   }
 

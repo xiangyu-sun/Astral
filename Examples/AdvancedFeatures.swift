@@ -1,3 +1,4 @@
+// swiftlint:disable no_direct_standard_out_logs
 //
 //  AdvancedFeatures.swift
 //
@@ -168,8 +169,8 @@ func calculateDuration(from start: DateComponents, to end: DateComponents) -> St
 
   guard
     let startDate = calendar.date(from: start),
-    let endDate = calendar.date(from: end) else
-  {
+    let endDate = calendar.date(from: end)
+  else {
     return "Unable to calculate duration"
   }
 

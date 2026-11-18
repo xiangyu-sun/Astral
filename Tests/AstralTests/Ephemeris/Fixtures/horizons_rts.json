@@ -1,0 +1,5142 @@
+{
+ "source": "NASA/JPL Horizons API, OBSERVER ephemeris",
+ "center": "coord@399 (topocentric, SITE_COORD east-longitude, latitude, altitude km)",
+ "definition": {
+  "rise_set": "refracted apparent elevation crosses 0 deg: level horizon, no dip (JPL default RTS cut-off)",
+  "jplFlags": "JPL's own R_T_S_ONLY flags, 1 minute step; they include the dip of the site altitude",
+  "transit": "local apparent hour angle crosses 0",
+  "times": "seconds after 00:00 UT on `date`, interpolated from a 1 minute table (resolution ~1 s)",
+  "samples": "airless and refracted apparent azimuth/elevation, degrees, at `t` seconds after 00:00 UT"
+ },
+ "observers": {
+  "london": {
+   "lat": 51.4733,
+   "lon": -0.0008333,
+   "elevation_m": 0.0
+  },
+  "wellington": {
+   "lat": -41.28646,
+   "lon": 174.776236,
+   "elevation_m": 13.0
+  },
+  "riyadh": {
+   "lat": 25.0,
+   "lon": 46.7,
+   "elevation_m": 620.0
+  }
+ },
+ "cases": [
+  {
+   "body": "mercury",
+   "observer": "london",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     27602.0
+    ],
+    "transit": [
+     41184.0
+    ],
+    "set": [
+     54755.7
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     27660
+    ],
+    "transit": [
+     41220
+    ],
+    "set": [
+     54780
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 17.205819,
+     "airlessEl": -62.087936,
+     "refractedAz": 17.205819,
+     "refractedEl": -61.441324
+    },
+    {
+     "t": 14400,
+     "airlessAz": 89.834723,
+     "airlessEl": -31.996803,
+     "refractedAz": 89.834723,
+     "refractedEl": -31.35019
+    },
+    {
+     "t": 28800,
+     "airlessAz": 134.524171,
+     "airlessEl": 1.710362,
+     "refractedAz": 134.524171,
+     "refractedEl": 2.012518
+    },
+    {
+     "t": 43200,
+     "airlessAz": 187.855031,
+     "airlessEl": 13.748394,
+     "refractedAz": 187.855031,
+     "refractedEl": 13.815146
+    },
+    {
+     "t": 57600,
+     "airlessAz": 238.344549,
+     "airlessEl": -6.520778,
+     "refractedAz": 238.344549,
+     "refractedEl": -5.874165
+    },
+    {
+     "t": 72000,
+     "airlessAz": 284.271059,
+     "airlessEl": -42.371944,
+     "refractedAz": 284.271059,
+     "refractedEl": -41.725332
+    }
+   ]
+  },
+  {
+   "body": "mercury",
+   "observer": "london",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     14940.3
+    ],
+    "transit": [
+     45500.9
+    ],
+    "set": [
+     76038.0
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     15000
+    ],
+    "transit": [
+     45540
+    ],
+    "set": [
+     76080
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 351.721844,
+     "airlessEl": -13.246867,
+     "refractedAz": 351.721844,
+     "refractedEl": -12.600254
+    },
+    {
+     "t": 14400,
+     "airlessAz": 44.767081,
+     "airlessEl": -1.572611,
+     "refractedAz": 44.767081,
+     "refractedEl": -0.925999
+    },
+    {
+     "t": 28800,
+     "airlessAz": 89.232928,
+     "airlessEl": 31.896738,
+     "refractedAz": 89.232928,
+     "refractedEl": 31.923792
+    },
+    {
+     "t": 43200,
+     "airlessAz": 161.037268,
+     "airlessEl": 62.393936,
+     "refractedAz": 161.037268,
+     "refractedEl": 62.4028
+    },
+    {
+     "t": 57600,
+     "airlessAz": 254.571512,
+     "airlessEl": 43.649636,
+     "refractedAz": 254.571512,
+     "refractedEl": 43.667358
+    },
+    {
+     "t": 72000,
+     "airlessAz": 300.607667,
+     "airlessEl": 7.760234,
+     "refractedAz": 300.607667,
+     "refractedEl": 7.873199
+    }
+   ]
+  },
+  {
+   "body": "mercury",
+   "observer": "london",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     19663.0
+    ],
+    "transit": [
+     37975.4
+    ],
+    "set": [
+     56266.3
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     19680
+    ],
+    "transit": [
+     37980
+    ],
+    "set": [
+     56280
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 31.39266,
+     "airlessEl": -46.158792,
+     "refractedAz": 31.39266,
+     "refractedEl": -45.512179
+    },
+    {
+     "t": 14400,
+     "airlessAz": 90.652163,
+     "airlessEl": -14.018441,
+     "refractedAz": 90.652163,
+     "refractedEl": -13.371828
+    },
+    {
+     "t": 28800,
+     "airlessAz": 140.039584,
+     "airlessEl": 18.992971,
+     "refractedAz": 140.039584,
+     "refractedEl": 19.041223
+    },
+    {
+     "t": 43200,
+     "airlessAz": 203.550336,
+     "airlessEl": 24.370718,
+     "refractedAz": 203.550336,
+     "refractedEl": 24.407677
+    },
+    {
+     "t": 57600,
+     "airlessAz": 256.561315,
+     "airlessEl": -3.912695,
+     "refractedAz": 256.561315,
+     "refractedEl": -3.266082
+    },
+    {
+     "t": 72000,
+     "airlessAz": 308.442889,
+     "airlessEl": -39.46912,
+     "refractedAz": 308.442889,
+     "refractedEl": -38.822507
+    }
+   ]
+  },
+  {
+   "body": "mercury",
+   "observer": "wellington",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     58209.7
+    ],
+    "transit": [
+     85727.4
+    ],
+    "set": [
+     26662.7
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     58200
+    ],
+    "transit": [
+     85740
+    ],
+    "set": [
+     26760
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 349.069623,
+     "airlessEl": 72.83894,
+     "refractedAz": 349.069623,
+     "refractedEl": 72.844179
+    },
+    {
+     "t": 14400,
+     "airlessAz": 267.098806,
+     "airlessEl": 35.372347,
+     "refractedAz": 267.098806,
+     "refractedEl": 35.396101
+    },
+    {
+     "t": 28800,
+     "airlessAz": 229.937637,
+     "airlessEl": -5.905065,
+     "refractedAz": 229.937637,
+     "refractedEl": -5.258452
+    },
+    {
+     "t": 43200,
+     "airlessAz": 176.844427,
+     "airlessEl": -24.230815,
+     "refractedAz": 176.844427,
+     "refractedEl": -23.584202
+    },
+    {
+     "t": 57600,
+     "airlessAz": 125.700995,
+     "airlessEl": -2.137659,
+     "refractedAz": 125.700995,
+     "refractedEl": -1.491046
+    },
+    {
+     "t": 72000,
+     "airlessAz": 88.837033,
+     "airlessEl": 40.147752,
+     "refractedAz": 88.837033,
+     "refractedEl": 40.167777
+    }
+   ]
+  },
+  {
+   "body": "mercury",
+   "observer": "wellington",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     73991.3
+    ],
+    "transit": [
+     3399.1
+    ],
+    "set": [
+     19513.7
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     73980
+    ],
+    "transit": [
+     3420
+    ],
+    "set": [
+     19560
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 13.855109,
+     "airlessEl": 22.547776,
+     "refractedAz": 13.855109,
+     "refractedEl": 22.588013
+    },
+    {
+     "t": 14400,
+     "airlessAz": 318.534687,
+     "airlessEl": 11.46876,
+     "refractedAz": 318.534687,
+     "refractedEl": 11.548158
+    },
+    {
+     "t": 28800,
+     "airlessAz": 280.146317,
+     "airlessEl": -27.324735,
+     "refractedAz": 280.146317,
+     "refractedEl": -26.678123
+    },
+    {
+     "t": 43200,
+     "airlessAz": 221.332586,
+     "airlessEl": -69.489798,
+     "refractedAz": 221.332586,
+     "refractedEl": -68.843185
+    },
+    {
+     "t": 57600,
+     "airlessAz": 99.525357,
+     "airlessEl": -49.405908,
+     "refractedAz": 99.525357,
+     "refractedEl": -48.759295
+    },
+    {
+     "t": 72000,
+     "airlessAz": 61.910163,
+     "airlessEl": -5.91439,
+     "refractedAz": 61.910163,
+     "refractedEl": -5.267778
+    }
+   ]
+  },
+  {
+   "body": "mercury",
+   "observer": "wellington",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     58169.5
+    ],
+    "transit": [
+     82385.7
+    ],
+    "set": [
+     20270.4
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     58140
+    ],
+    "transit": [
+     82440
+    ],
+    "set": [
+     20340
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 329.738363,
+     "airlessEl": 56.748037,
+     "refractedAz": 329.738363,
+     "refractedEl": 56.759145
+    },
+    {
+     "t": 14400,
+     "airlessAz": 270.251283,
+     "airlessEl": 17.595506,
+     "refractedAz": 270.251283,
+     "refractedEl": 17.647706
+    },
+    {
+     "t": 28800,
+     "airlessAz": 227.555195,
+     "airlessEl": -23.86854,
+     "refractedAz": 227.555195,
+     "refractedEl": -23.221927
+    },
+    {
+     "t": 43200,
+     "airlessAz": 160.002728,
+     "airlessEl": -35.165268,
+     "refractedAz": 160.002728,
+     "refractedEl": -34.518655
+    },
+    {
+     "t": 57600,
+     "airlessAz": 107.362068,
+     "airlessEl": -2.285583,
+     "refractedAz": 107.362068,
+     "refractedEl": -1.638971
+    },
+    {
+     "t": 72000,
+     "airlessAz": 64.440441,
+     "airlessEl": 41.813573,
+     "refractedAz": 64.440441,
+     "refractedEl": 41.832464
+    }
+   ]
+  },
+  {
+   "body": "mercury",
+   "observer": "riyadh",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     11074.7
+    ],
+    "transit": [
+     29953.2
+    ],
+    "set": [
+     48827.1
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     10860
+    ],
+    "transit": [
+     30000
+    ],
+    "set": [
+     49080
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 101.729995,
+     "airlessEl": -39.991695,
+     "refractedAz": 101.729995,
+     "refractedEl": -39.345083
+    },
+    {
+     "t": 14400,
+     "airlessAz": 123.211633,
+     "airlessEl": 10.282689,
+     "refractedAz": 123.211633,
+     "refractedEl": 10.370573
+    },
+    {
+     "t": 28800,
+     "airlessAz": 174.264742,
+     "airlessEl": 40.374962,
+     "refractedAz": 174.264742,
+     "refractedEl": 40.394827
+    },
+    {
+     "t": 43200,
+     "airlessAz": 231.451805,
+     "airlessEl": 17.313845,
+     "refractedAz": 231.451805,
+     "refractedEl": 17.366912
+    },
+    {
+     "t": 57600,
+     "airlessAz": 255.565388,
+     "airlessEl": -31.537795,
+     "refractedAz": 255.565388,
+     "refractedEl": -30.891182
+    },
+    {
+     "t": 72000,
+     "airlessAz": 275.699463,
+     "airlessEl": -85.282203,
+     "refractedAz": 275.699463,
+     "refractedEl": -84.63559
+    }
+   ]
+  },
+  {
+   "body": "mercury",
+   "observer": "riyadh",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     9391.4
+    ],
+    "transit": [
+     34251.4
+    ],
+    "set": [
+     59105.6
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     9180
+    ],
+    "transit": [
+     34260
+    ],
+    "set": [
+     59400
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 39.107108,
+     "airlessEl": -28.147284,
+     "refractedAz": 39.107108,
+     "refractedEl": -27.500672
+    },
+    {
+     "t": 14400,
+     "airlessAz": 69.817552,
+     "airlessEl": 16.639492,
+     "refractedAz": 69.817552,
+     "refractedEl": 16.694739
+    },
+    {
+     "t": 28800,
+     "airlessAz": 85.553025,
+     "airlessEl": 69.501213,
+     "refractedAz": 85.553025,
+     "refractedEl": 69.507554
+    },
+    {
+     "t": 43200,
+     "airlessAz": 277.820306,
+     "airlessEl": 56.41895,
+     "refractedAz": 277.820306,
+     "refractedEl": 56.430198
+    },
+    {
+     "t": 57600,
+     "airlessAz": 295.361518,
+     "airlessEl": 4.490485,
+     "refractedAz": 295.361518,
+     "refractedEl": 4.665046
+    },
+    {
+     "t": 72000,
+     "airlessAz": 333.911648,
+     "airlessEl": -35.315704,
+     "refractedAz": 333.911648,
+     "refractedEl": -34.669091
+    }
+   ]
+  },
+  {
+   "body": "mercury",
+   "observer": "riyadh",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     6332.2
+    ],
+    "transit": [
+     26779.3
+    ],
+    "set": [
+     47219.4
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     6120
+    ],
+    "transit": [
+     26820
+    ],
+    "set": [
+     47460
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 91.526589,
+     "airlessEl": -24.305199,
+     "refractedAz": 91.526589,
+     "refractedEl": -23.658586
+    },
+    {
+     "t": 14400,
+     "airlessAz": 119.507631,
+     "airlessEl": 27.937206,
+     "refractedAz": 119.507631,
+     "refractedEl": 27.968878
+    },
+    {
+     "t": 28800,
+     "airlessAz": 193.729168,
+     "airlessEl": 52.731165,
+     "refractedAz": 193.729168,
+     "refractedEl": 52.744049
+    },
+    {
+     "t": 43200,
+     "airlessAz": 250.071948,
+     "airlessEl": 14.023903,
+     "refractedAz": 250.071948,
+     "refractedEl": 14.089377
+    },
+    {
+     "t": 57600,
+     "airlessAz": 275.880408,
+     "airlessEl": -39.591211,
+     "refractedAz": 275.880408,
+     "refractedEl": -38.944599
+    },
+    {
+     "t": 72000,
+     "airlessAz": 32.55894,
+     "airlessEl": -74.176416,
+     "refractedAz": 32.55894,
+     "refractedEl": -73.529803
+    }
+   ]
+  },
+  {
+   "body": "venus",
+   "observer": "london",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     17507.3
+    ],
+    "transit": [
+     33457.5
+    ],
+    "set": [
+     49371.4
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     17520
+    ],
+    "transit": [
+     33480
+    ],
+    "set": [
+     49380
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 59.30817,
+     "airlessEl": -43.963088,
+     "refractedAz": 59.30817,
+     "refractedEl": -43.316475
+    },
+    {
+     "t": 14400,
+     "airlessAz": 109.669389,
+     "airlessEl": -7.884961,
+     "refractedAz": 109.669389,
+     "refractedEl": -7.238348
+    },
+    {
+     "t": 28800,
+     "airlessAz": 160.644176,
+     "airlessEl": 18.0874,
+     "refractedAz": 160.644176,
+     "refractedEl": 18.138147
+    },
+    {
+     "t": 43200,
+     "airlessAz": 219.033855,
+     "airlessEl": 11.610378,
+     "refractedAz": 219.033855,
+     "refractedEl": 11.688863
+    },
+    {
+     "t": 57600,
+     "airlessAz": 266.1903,
+     "airlessEl": -20.858289,
+     "refractedAz": 266.1903,
+     "refractedEl": -20.211676
+    },
+    {
+     "t": 72000,
+     "airlessAz": 327.695629,
+     "airlessEl": -53.644479,
+     "refractedAz": 327.695629,
+     "refractedEl": -52.997866
+    }
+   ]
+  },
+  {
+   "body": "venus",
+   "observer": "london",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     14472.4
+    ],
+    "transit": [
+     44526.0
+    ],
+    "set": [
+     74575.7
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     14520
+    ],
+    "transit": [
+     44580
+    ],
+    "set": [
+     74580
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 354.960805,
+     "airlessEl": -14.447979,
+     "refractedAz": 354.960805,
+     "refractedEl": -13.801366
+    },
+    {
+     "t": 14400,
+     "airlessAz": 48.168261,
+     "airlessEl": -0.714154,
+     "refractedAz": 48.168261,
+     "refractedEl": -0.116341
+    },
+    {
+     "t": 28800,
+     "airlessAz": 93.051773,
+     "airlessEl": 33.627143,
+     "refractedAz": 93.051773,
+     "refractedEl": 33.65248
+    },
+    {
+     "t": 43200,
+     "airlessAz": 169.159861,
+     "airlessEl": 62.130107,
+     "refractedAz": 169.159861,
+     "refractedEl": 62.13907
+    },
+    {
+     "t": 57600,
+     "airlessAz": 257.601457,
+     "airlessEl": 40.431412,
+     "refractedAz": 257.601457,
+     "refractedEl": 40.451238
+    },
+    {
+     "t": 72000,
+     "airlessAz": 303.328521,
+     "airlessEl": 4.725326,
+     "refractedAz": 303.328521,
+     "refractedEl": 4.893521
+    }
+   ]
+  },
+  {
+   "body": "venus",
+   "observer": "london",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     15930.3
+    ],
+    "transit": [
+     34693.8
+    ],
+    "set": [
+     53478.2
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     15960
+    ],
+    "transit": [
+     34740
+    ],
+    "set": [
+     53520
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 47.275595,
+     "airlessEl": -39.505613,
+     "refractedAz": 47.275595,
+     "refractedEl": -38.859
+    },
+    {
+     "t": 14400,
+     "airlessAz": 100.237829,
+     "airlessEl": -4.457533,
+     "refractedAz": 100.237829,
+     "refractedEl": -3.81092
+    },
+    {
+     "t": 28800,
+     "airlessAz": 153.050497,
+     "airlessEl": 25.112067,
+     "refractedAz": 153.050497,
+     "refractedEl": 25.147816
+    },
+    {
+     "t": 43200,
+     "airlessAz": 217.972828,
+     "airlessEl": 21.487985,
+     "refractedAz": 217.972828,
+     "refractedEl": 21.530358
+    },
+    {
+     "t": 57600,
+     "airlessAz": 268.254475,
+     "airlessEl": -11.149495,
+     "refractedAz": 268.254475,
+     "refractedEl": -10.502882
+    },
+    {
+     "t": 72000,
+     "airlessAz": 325.91626,
+     "airlessEl": -43.821045,
+     "refractedAz": 325.91626,
+     "refractedEl": -43.174432
+    }
+   ]
+  },
+  {
+   "body": "venus",
+   "observer": "wellington",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     52027.4
+    ],
+    "transit": [
+     77942.8
+    ],
+    "set": [
+     17369.6
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     52020
+    ],
+    "transit": [
+     78000
+    ],
+    "set": [
+     17460
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 296.449039,
+     "airlessEl": 52.0262,
+     "refractedAz": 296.449039,
+     "refractedEl": 52.039416
+    },
+    {
+     "t": 14400,
+     "airlessAz": 252.610547,
+     "airlessEl": 8.067115,
+     "refractedAz": 252.610547,
+     "refractedEl": 8.176345
+    },
+    {
+     "t": 28800,
+     "airlessAz": 206.109028,
+     "airlessEl": -26.098075,
+     "refractedAz": 206.109028,
+     "refractedEl": -25.451463
+    },
+    {
+     "t": 43200,
+     "airlessAz": 143.74952,
+     "airlessEl": -21.880133,
+     "refractedAz": 143.74952,
+     "refractedEl": -21.23352
+    },
+    {
+     "t": 57600,
+     "airlessAz": 100.824609,
+     "airlessEl": 15.96657,
+     "refractedAz": 100.824609,
+     "refractedEl": 16.024159
+    },
+    {
+     "t": 72000,
+     "airlessAz": 50.318465,
+     "airlessEl": 58.958373,
+     "refractedAz": 50.318465,
+     "refractedEl": 58.968572
+    }
+   ]
+  },
+  {
+   "body": "venus",
+   "observer": "wellington",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     72693.7
+    ],
+    "transit": [
+     2537.6
+    ],
+    "set": [
+     18865.6
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     72660
+    ],
+    "transit": [
+     2580
+    ],
+    "set": [
+     18960
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 10.572316,
+     "airlessEl": 24.046083,
+     "refractedAz": 10.572316,
+     "refractedEl": 24.083592
+    },
+    {
+     "t": 14400,
+     "airlessAz": 315.153494,
+     "airlessEl": 10.339328,
+     "refractedAz": 315.153494,
+     "refractedEl": 10.426768
+    },
+    {
+     "t": 28800,
+     "airlessAz": 276.95985,
+     "airlessEl": -29.661387,
+     "refractedAz": 276.95985,
+     "refractedEl": -29.014774
+    },
+    {
+     "t": 43200,
+     "airlessAz": 210.627911,
+     "airlessEl": -70.463821,
+     "refractedAz": 210.627911,
+     "refractedEl": -69.817208
+    },
+    {
+     "t": 57600,
+     "airlessAz": 97.358057,
+     "airlessEl": -45.761027,
+     "refractedAz": 97.358057,
+     "refractedEl": -45.114414
+    },
+    {
+     "t": 72000,
+     "airlessAz": 59.806984,
+     "airlessEl": -2.431322,
+     "refractedAz": 59.806984,
+     "refractedEl": -1.78471
+    }
+   ]
+  },
+  {
+   "body": "venus",
+   "observer": "wellington",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     55227.5
+    ],
+    "transit": [
+     79052.2
+    ],
+    "set": [
+     16676.6
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     55200
+    ],
+    "transit": [
+     79080
+    ],
+    "set": [
+     16740
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 311.505542,
+     "airlessEl": 49.012309,
+     "refractedAz": 311.505542,
+     "refractedEl": 49.027014
+    },
+    {
+     "t": 14400,
+     "airlessAz": 262.543408,
+     "airlessEl": 6.448146,
+     "refractedAz": 262.543408,
+     "refractedEl": 6.580166
+    },
+    {
+     "t": 28800,
+     "airlessAz": 215.304277,
+     "airlessEl": -31.989929,
+     "refractedAz": 215.304277,
+     "refractedEl": -31.343317
+    },
+    {
+     "t": 43200,
+     "airlessAz": 144.201718,
+     "airlessEl": -31.810135,
+     "refractedAz": 144.201718,
+     "refractedEl": -31.163522
+    },
+    {
+     "t": 57600,
+     "airlessAz": 97.101167,
+     "airlessEl": 6.742723,
+     "refractedAz": 97.101167,
+     "refractedEl": 6.869966
+    },
+    {
+     "t": 72000,
+     "airlessAz": 47.821379,
+     "airlessEl": 49.165926,
+     "refractedAz": 47.821379,
+     "refractedEl": 49.180551
+    }
+   ]
+  },
+  {
+   "body": "venus",
+   "observer": "riyadh",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     2597.9
+    ],
+    "transit": [
+     22241.3
+    ],
+    "set": [
+     41869.4
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     2400
+    ],
+    "transit": [
+     22260
+    ],
+    "set": [
+     42120
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 105.697614,
+     "airlessEl": -9.901756,
+     "refractedAz": 105.697614,
+     "refractedEl": -9.255143
+    },
+    {
+     "t": 14400,
+     "airlessAz": 140.592291,
+     "airlessEl": 36.237021,
+     "refractedAz": 140.592291,
+     "refractedEl": 36.260039
+    },
+    {
+     "t": 28800,
+     "airlessAz": 214.121167,
+     "airlessEl": 39.098957,
+     "refractedAz": 214.121167,
+     "refractedEl": 39.119736
+    },
+    {
+     "t": 43200,
+     "airlessAz": 252.105978,
+     "airlessEl": -5.322842,
+     "refractedAz": 252.105978,
+     "refractedEl": -4.67623
+    },
+    {
+     "t": 57600,
+     "airlessAz": 275.507232,
+     "airlessEl": -58.950583,
+     "refractedAz": 275.507232,
+     "refractedEl": -58.30397
+    },
+    {
+     "t": 72000,
+     "airlessAz": 81.03838,
+     "airlessEl": -63.996574,
+     "refractedAz": 81.03838,
+     "refractedEl": -63.349961
+    }
+   ]
+  },
+  {
+   "body": "venus",
+   "observer": "riyadh",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     8645.6
+    ],
+    "transit": [
+     33306.6
+    ],
+    "set": [
+     57966.8
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     8460
+    ],
+    "transit": [
+     33360
+    ],
+    "set": [
+     58260
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 42.566381,
+     "airlessEl": -26.764243,
+     "refractedAz": 42.566381,
+     "refractedEl": -26.11763
+    },
+    {
+     "t": 14400,
+     "airlessAz": 71.957705,
+     "airlessEl": 19.496694,
+     "refractedAz": 71.957705,
+     "refractedEl": 19.543649
+    },
+    {
+     "t": 28800,
+     "airlessAz": 89.636326,
+     "airlessEl": 72.905269,
+     "refractedAz": 89.636326,
+     "refractedEl": 72.910487
+    },
+    {
+     "t": 43200,
+     "airlessAz": 277.278836,
+     "airlessEl": 52.645066,
+     "refractedAz": 277.278836,
+     "refractedEl": 52.657991
+    },
+    {
+     "t": 57600,
+     "airlessAz": 296.239282,
+     "airlessEl": 0.663609,
+     "refractedAz": 296.239282,
+     "refractedEl": 1.061354
+    },
+    {
+     "t": 72000,
+     "airlessAz": 337.964093,
+     "airlessEl": -37.750389,
+     "refractedAz": 337.964093,
+     "refractedEl": -37.103776
+    }
+   ]
+  },
+  {
+   "body": "venus",
+   "observer": "riyadh",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     2919.3
+    ],
+    "transit": [
+     23510.0
+    ],
+    "set": [
+     44109.4
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     2760
+    ],
+    "transit": [
+     23520
+    ],
+    "set": [
+     44340
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 95.637629,
+     "airlessEl": -11.510122,
+     "refractedAz": 95.637629,
+     "refractedEl": -10.863509
+    },
+    {
+     "t": 14400,
+     "airlessAz": 128.502373,
+     "airlessEl": 39.115133,
+     "refractedAz": 128.502373,
+     "refractedEl": 39.1359
+    },
+    {
+     "t": 28800,
+     "airlessAz": 214.432492,
+     "airlessEl": 49.051012,
+     "refractedAz": 214.432492,
+     "refractedEl": 49.065697
+    },
+    {
+     "t": 43200,
+     "airlessAz": 257.825064,
+     "airlessEl": 2.799311,
+     "refractedAz": 257.825064,
+     "refractedEl": 3.036414
+    },
+    {
+     "t": 57600,
+     "airlessAz": 286.284779,
+     "airlessEl": -51.164982,
+     "refractedAz": 286.284779,
+     "refractedEl": -50.518369
+    },
+    {
+     "t": 72000,
+     "airlessAz": 58.450055,
+     "airlessEl": -63.762181,
+     "refractedAz": 58.450055,
+     "refractedEl": -63.115568
+    }
+   ]
+  },
+  {
+   "body": "mars",
+   "observer": "london",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     37493.6
+    ],
+    "transit": [
+     55206.1
+    ],
+    "set": [
+     72956.4
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     37500
+    ],
+    "transit": [
+     55260
+    ],
+    "set": [
+     72960
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 294.712899,
+     "airlessEl": -34.640654,
+     "refractedAz": 294.712899,
+     "refractedEl": -33.994041
+    },
+    {
+     "t": 14400,
+     "airlessAz": 15.350728,
+     "airlessEl": -50.981056,
+     "refractedAz": 15.350728,
+     "refractedEl": -50.334444
+    },
+    {
+     "t": 28800,
+     "airlessAz": 82.573213,
+     "airlessEl": -22.794182,
+     "refractedAz": 82.573213,
+     "refractedEl": -22.147569
+    },
+    {
+     "t": 43200,
+     "airlessAz": 130.20977,
+     "airlessEl": 12.176158,
+     "refractedAz": 130.20977,
+     "refractedEl": 12.251185
+    },
+    {
+     "t": 57600,
+     "airlessAz": 190.716975,
+     "airlessEl": 24.808852,
+     "refractedAz": 190.716975,
+     "refractedEl": 24.845088
+    },
+    {
+     "t": 72000,
+     "airlessAz": 246.322831,
+     "airlessEl": 1.72449,
+     "refractedAz": 246.322831,
+     "refractedEl": 2.025615
+    }
+   ]
+  },
+  {
+   "body": "mars",
+   "observer": "london",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     4445.4
+    ],
+    "transit": [
+     30452.6
+    ],
+    "set": [
+     56508.6
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     4500
+    ],
+    "transit": [
+     30480
+    ],
+    "set": [
+     56520
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 52.217809,
+     "airlessEl": -10.542428,
+     "refractedAz": 52.217809,
+     "refractedEl": -9.895816
+    },
+    {
+     "t": 14400,
+     "airlessAz": 99.70813,
+     "airlessEl": 24.794326,
+     "refractedAz": 99.70813,
+     "refractedEl": 24.830585
+    },
+    {
+     "t": 28800,
+     "airlessAz": 169.169282,
+     "airlessEl": 51.61864,
+     "refractedAz": 169.169282,
+     "refractedEl": 51.63205
+    },
+    {
+     "t": 43200,
+     "airlessAz": 248.258225,
+     "airlessEl": 33.110424,
+     "refractedAz": 248.258225,
+     "refractedEl": 33.136258
+    },
+    {
+     "t": 57600,
+     "airlessAz": 296.518985,
+     "airlessEl": -3.146258,
+     "refractedAz": 296.518985,
+     "refractedEl": -2.499646
+    },
+    {
+     "t": 72000,
+     "airlessAz": 352.776751,
+     "airlessEl": -24.644733,
+     "refractedAz": 352.776751,
+     "refractedEl": -23.99812
+    }
+   ]
+  },
+  {
+   "body": "mars",
+   "observer": "london",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     82222.1
+    ],
+    "transit": [
+     22303.4
+    ],
+    "set": [
+     48669.7
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     82260
+    ],
+    "transit": [
+     22320
+    ],
+    "set": [
+     48720
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 78.431794,
+     "airlessEl": 9.504094,
+     "refractedAz": 78.431794,
+     "refractedEl": 9.598524
+    },
+    {
+     "t": 14400,
+     "airlessAz": 132.225004,
+     "airlessEl": 44.651211,
+     "refractedAz": 132.225004,
+     "refractedEl": 44.668328
+    },
+    {
+     "t": 28800,
+     "airlessAz": 220.456506,
+     "airlessEl": 47.177899,
+     "refractedAz": 220.456506,
+     "refractedEl": 47.193577
+    },
+    {
+     "t": 43200,
+     "airlessAz": 277.051069,
+     "airlessEl": 13.061651,
+     "refractedAz": 277.051069,
+     "refractedEl": 13.131801
+    },
+    {
+     "t": 57600,
+     "airlessAz": 326.610186,
+     "airlessEl": -18.123182,
+     "refractedAz": 326.610186,
+     "refractedEl": -17.476569
+    },
+    {
+     "t": 72000,
+     "airlessAz": 28.255558,
+     "airlessEl": -19.841153,
+     "refractedAz": 28.255558,
+     "refractedEl": -19.19454
+    }
+   ]
+  },
+  {
+   "body": "mars",
+   "observer": "wellington",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     75029.0
+    ],
+    "transit": [
+     13287.8
+    ],
+    "set": [
+     37915.9
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     75000
+    ],
+    "transit": [
+     13320
+    ],
+    "set": [
+     37980
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 76.560312,
+     "airlessEl": 34.555226,
+     "refractedAz": 76.560312,
+     "refractedEl": 34.579705
+    },
+    {
+     "t": 14400,
+     "airlessAz": 350.446809,
+     "airlessEl": 61.698041,
+     "refractedAz": 350.446809,
+     "refractedEl": 61.707168
+    },
+    {
+     "t": 28800,
+     "airlessAz": 276.661286,
+     "airlessEl": 27.63534,
+     "refractedAz": 276.661286,
+     "refractedEl": 27.667412
+    },
+    {
+     "t": 43200,
+     "airlessAz": 236.125906,
+     "airlessEl": -15.440178,
+     "refractedAz": 236.125906,
+     "refractedEl": -14.793565
+    },
+    {
+     "t": 57600,
+     "airlessAz": 174.312029,
+     "airlessEl": -35.401378,
+     "refractedAz": 174.312029,
+     "refractedEl": -34.754765
+    },
+    {
+     "t": 72000,
+     "airlessAz": 116.729259,
+     "airlessEl": -9.336563,
+     "refractedAz": 116.729259,
+     "refractedEl": -8.689951
+    }
+   ]
+  },
+  {
+   "body": "mars",
+   "observer": "wellington",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     56032.0
+    ],
+    "transit": [
+     74872.1
+    ],
+    "set": [
+     7409.0
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     56040
+    ],
+    "transit": [
+     74880
+    ],
+    "set": [
+     7500
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 310.044754,
+     "airlessEl": 19.748136,
+     "refractedAz": 310.044754,
+     "refractedEl": 19.794466
+    },
+    {
+     "t": 14400,
+     "airlessAz": 268.656721,
+     "airlessEl": -22.177039,
+     "refractedAz": 268.656721,
+     "refractedEl": -21.530427
+    },
+    {
+     "t": 28800,
+     "airlessAz": 204.301284,
+     "airlessEl": -60.274795,
+     "refractedAz": 204.301284,
+     "refractedEl": -59.628182
+    },
+    {
+     "t": 43200,
+     "airlessAz": 109.381807,
+     "airlessEl": -40.086799,
+     "refractedAz": 109.381807,
+     "refractedEl": -39.440186
+    },
+    {
+     "t": 57600,
+     "airlessAz": 67.956425,
+     "airlessEl": 4.043326,
+     "refractedAz": 67.956425,
+     "refractedEl": 4.231298
+    },
+    {
+     "t": 72000,
+     "airlessAz": 14.077187,
+     "airlessEl": 33.988544,
+     "refractedAz": 14.077187,
+     "refractedEl": 34.013542
+    }
+   ]
+  },
+  {
+   "body": "mars",
+   "observer": "wellington",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     48085.2
+    ],
+    "transit": [
+     66689.0
+    ],
+    "set": [
+     85305.4
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     48060
+    ],
+    "transit": [
+     66720
+    ],
+    "set": [
+     85380
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 286.397698,
+     "airlessEl": -3.535593,
+     "refractedAz": 286.397698,
+     "refractedEl": -2.88898
+    },
+    {
+     "t": 14400,
+     "airlessAz": 242.437917,
+     "airlessEl": -47.538308,
+     "refractedAz": 242.437917,
+     "refractedEl": -46.891695
+    },
+    {
+     "t": 28800,
+     "airlessAz": 138.19444,
+     "airlessEl": -57.233126,
+     "refractedAz": 138.19444,
+     "refractedEl": -56.586514
+    },
+    {
+     "t": 43200,
+     "airlessAz": 84.059571,
+     "airlessEl": -15.505496,
+     "refractedAz": 84.059571,
+     "refractedEl": -14.858883
+    },
+    {
+     "t": 57600,
+     "airlessAz": 40.675492,
+     "airlessEl": 24.087094,
+     "refractedAz": 40.675492,
+     "refractedEl": 24.124533
+    },
+    {
+     "t": 72000,
+     "airlessAz": 334.906818,
+     "airlessEl": 30.552517,
+     "refractedAz": 334.906818,
+     "refractedEl": 30.58102
+    }
+   ]
+  },
+  {
+   "body": "mars",
+   "observer": "riyadh",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     23774.8
+    ],
+    "transit": [
+     44005.4
+    ],
+    "set": [
+     64251.5
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     23580
+    ],
+    "transit": [
+     44040
+    ],
+    "set": [
+     64500
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 343.676451,
+     "airlessEl": -77.871077,
+     "refractedAz": 343.676451,
+     "refractedEl": -77.224465
+    },
+    {
+     "t": 14400,
+     "airlessAz": 88.692509,
+     "airlessEl": -35.671584,
+     "refractedAz": 88.692509,
+     "refractedEl": -35.024971
+    },
+    {
+     "t": 28800,
+     "airlessAz": 114.22422,
+     "airlessEl": 17.356768,
+     "refractedAz": 114.22422,
+     "refractedEl": 17.409701
+    },
+    {
+     "t": 43200,
+     "airlessAz": 174.722442,
+     "airlessEl": 51.676468,
+     "refractedAz": 174.722442,
+     "refractedEl": 51.68985
+    },
+    {
+     "t": 57600,
+     "airlessAz": 242.036297,
+     "airlessEl": 22.875464,
+     "refractedAz": 242.036297,
+     "refractedEl": 22.915077
+    },
+    {
+     "t": 72000,
+     "airlessAz": 268.673716,
+     "airlessEl": -29.516961,
+     "refractedAz": 268.673716,
+     "refractedEl": -28.870348
+    }
+   ]
+  },
+  {
+   "body": "mars",
+   "observer": "riyadh",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     82287.4
+    ],
+    "transit": [
+     19253.0
+    ],
+    "set": [
+     42539.2
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     82080
+    ],
+    "transit": [
+     19260
+    ],
+    "set": [
+     42780
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 81.63792,
+     "airlessEl": 14.291219,
+     "refractedAz": 81.63792,
+     "refractedEl": 14.355493
+    },
+    {
+     "t": 14400,
+     "airlessAz": 117.445516,
+     "airlessEl": 67.724023,
+     "refractedAz": 117.445516,
+     "refractedEl": 67.73097
+    },
+    {
+     "t": 28800,
+     "airlessAz": 260.504539,
+     "airlessEl": 50.860341,
+     "refractedAz": 260.504539,
+     "refractedEl": 50.874118
+    },
+    {
+     "t": 43200,
+     "airlessAz": 286.431761,
+     "airlessEl": -2.97555,
+     "refractedAz": 286.431761,
+     "refractedEl": -2.328937
+    },
+    {
+     "t": 57600,
+     "airlessAz": 330.836595,
+     "airlessEl": -46.729054,
+     "refractedAz": 330.836595,
+     "refractedEl": -46.082442
+    },
+    {
+     "t": 72000,
+     "airlessAz": 49.750647,
+     "airlessEl": -35.154303,
+     "refractedAz": 49.750647,
+     "refractedEl": -34.50769
+    }
+   ]
+  },
+  {
+   "body": "mars",
+   "observer": "riyadh",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     73994.9
+    ],
+    "transit": [
+     11112.2
+    ],
+    "set": [
+     34504.9
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     73800
+    ],
+    "transit": [
+     11160
+    ],
+    "set": [
+     34740
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 94.360895,
+     "airlessEl": 45.376553,
+     "refractedAz": 94.360895,
+     "refractedEl": 45.393244
+    },
+    {
+     "t": 14400,
+     "airlessAz": 233.653086,
+     "airlessEl": 73.443022,
+     "refractedAz": 233.653086,
+     "refractedEl": 73.448066
+    },
+    {
+     "t": 28800,
+     "airlessAz": 276.996193,
+     "airlessEl": 20.540956,
+     "refractedAz": 276.996193,
+     "refractedEl": 20.585408
+    },
+    {
+     "t": 43200,
+     "airlessAz": 306.253901,
+     "airlessEl": -30.140244,
+     "refractedAz": 306.253901,
+     "refractedEl": -29.493631
+    },
+    {
+     "t": 57600,
+     "airlessAz": 20.552189,
+     "airlessEl": -48.178348,
+     "refractedAz": 20.552189,
+     "refractedEl": -47.531735
+    },
+    {
+     "t": 72000,
+     "airlessAz": 69.976464,
+     "airlessEl": -7.740842,
+     "refractedAz": 69.976464,
+     "refractedEl": -7.094229
+    }
+   ]
+  },
+  {
+   "body": "jupiter",
+   "observer": "london",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     43563.3
+    ],
+    "transit": [
+     67953.2
+    ],
+    "set": [
+     6167.6
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     43620
+    ],
+    "transit": [
+     67980
+    ],
+    "set": [
+     6180
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 264.486556,
+     "airlessEl": 15.341266,
+     "refractedAz": 264.486556,
+     "refractedEl": 15.401195
+    },
+    {
+     "t": 14400,
+     "airlessAz": 313.650765,
+     "airlessEl": -19.163458,
+     "refractedAz": 313.650765,
+     "refractedEl": -18.516845
+    },
+    {
+     "t": 28800,
+     "airlessAz": 18.519482,
+     "airlessEl": -28.286458,
+     "refractedAz": 18.519482,
+     "refractedEl": -27.639845
+    },
+    {
+     "t": 43200,
+     "airlessAz": 74.182848,
+     "airlessEl": -1.486253,
+     "refractedAz": 74.182848,
+     "refractedEl": -0.83964
+    },
+    {
+     "t": 57600,
+     "airlessAz": 124.765838,
+     "airlessEl": 34.438402,
+     "refractedAz": 124.765838,
+     "refractedEl": 34.462986
+    },
+    {
+     "t": 72000,
+     "airlessAz": 203.962968,
+     "airlessEl": 44.930557,
+     "refractedAz": 203.962968,
+     "refractedEl": 44.947508
+    }
+   ]
+  },
+  {
+   "body": "jupiter",
+   "observer": "london",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     8440.7
+    ],
+    "transit": [
+     37020.3
+    ],
+    "set": [
+     65610.2
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     8460
+    ],
+    "transit": [
+     37080
+    ],
+    "set": [
+     65640
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 24.529054,
+     "airlessEl": -14.537661,
+     "refractedAz": 24.529054,
+     "refractedEl": -13.891048
+    },
+    {
+     "t": 14400,
+     "airlessAz": 73.511154,
+     "airlessEl": 13.318611,
+     "refractedAz": 73.511154,
+     "refractedEl": 13.387453
+    },
+    {
+     "t": 28800,
+     "airlessAz": 126.126747,
+     "airlessEl": 49.208018,
+     "refractedAz": 126.126747,
+     "refractedEl": 49.222622
+    },
+    {
+     "t": 43200,
+     "airlessAz": 222.819992,
+     "airlessEl": 53.181076,
+     "refractedAz": 222.819992,
+     "refractedEl": 53.193753
+    },
+    {
+     "t": 57600,
+     "airlessAz": 280.18058,
+     "airlessEl": 18.494924,
+     "refractedAz": 280.18058,
+     "refractedEl": 18.544521
+    },
+    {
+     "t": 72000,
+     "airlessAz": 327.711204,
+     "airlessEl": -11.981723,
+     "refractedAz": 327.711204,
+     "refractedEl": -11.33511
+    }
+   ]
+  },
+  {
+   "body": "jupiter",
+   "observer": "london",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     82298.2
+    ],
+    "transit": [
+     22117.9
+    ],
+    "set": [
+     48123.1
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     82320
+    ],
+    "transit": [
+     22140
+    ],
+    "set": [
+     48180
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 79.621279,
+     "airlessEl": 9.109915,
+     "refractedAz": 79.621279,
+     "refractedEl": 9.208018
+    },
+    {
+     "t": 14400,
+     "airlessAz": 133.790274,
+     "airlessEl": 44.081156,
+     "refractedAz": 133.790274,
+     "refractedEl": 44.098615
+    },
+    {
+     "t": 28800,
+     "airlessAz": 220.867812,
+     "airlessEl": 45.934179,
+     "refractedAz": 220.867812,
+     "refractedEl": 45.95055
+    },
+    {
+     "t": 43200,
+     "airlessAz": 277.06139,
+     "airlessEl": 11.764027,
+     "refractedAz": 277.06139,
+     "refractedEl": 11.841545
+    },
+    {
+     "t": 57600,
+     "airlessAz": 327.131509,
+     "airlessEl": -19.35038,
+     "refractedAz": 327.131509,
+     "refractedEl": -18.703768
+    },
+    {
+     "t": 72000,
+     "airlessAz": 29.535937,
+     "airlessEl": -20.457059,
+     "refractedAz": 29.535937,
+     "refractedEl": -19.810446
+    }
+   ]
+  },
+  {
+   "body": "jupiter",
+   "observer": "wellington",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     6211.3
+    ],
+    "transit": [
+     26117.0
+    ],
+    "set": [
+     46020.7
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     6180
+    ],
+    "transit": [
+     26160
+    ],
+    "set": [
+     46080
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 96.194508,
+     "airlessEl": -19.981707,
+     "refractedAz": 96.194508,
+     "refractedEl": -19.335095
+    },
+    {
+     "t": 14400,
+     "airlessAz": 54.055221,
+     "airlessEl": 22.917575,
+     "refractedAz": 54.055221,
+     "refractedEl": 22.957109
+    },
+    {
+     "t": 28800,
+     "airlessAz": 345.666861,
+     "airlessEl": 39.068331,
+     "refractedAz": 345.666861,
+     "refractedEl": 39.089132
+    },
+    {
+     "t": 43200,
+     "airlessAz": 288.897353,
+     "airlessEl": 7.977014,
+     "refractedAz": 288.897353,
+     "refractedEl": 8.087317
+    },
+    {
+     "t": 57600,
+     "airlessAz": 246.609957,
+     "airlessEl": -36.242287,
+     "refractedAz": 246.609957,
+     "refractedEl": -35.595674
+    },
+    {
+     "t": 72000,
+     "airlessAz": 159.178937,
+     "airlessEl": -55.716102,
+     "refractedAz": 159.178937,
+     "refractedEl": -55.069489
+    }
+   ]
+  },
+  {
+   "body": "jupiter",
+   "observer": "wellington",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     64247.8
+    ],
+    "transit": [
+     81381.4
+    ],
+    "set": [
+     12300.5
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     64260
+    ],
+    "transit": [
+     81420
+    ],
+    "set": [
+     12360
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 339.047452,
+     "airlessEl": 25.318191,
+     "refractedAz": 339.047452,
+     "refractedEl": 25.353615
+    },
+    {
+     "t": 14400,
+     "airlessAz": 291.768777,
+     "airlessEl": -6.563341,
+     "refractedAz": 291.768777,
+     "refractedEl": -5.916728
+    },
+    {
+     "t": 28800,
+     "airlessAz": 250.46678,
+     "airlessEl": -50.784484,
+     "refractedAz": 250.46678,
+     "refractedEl": -50.137871
+    },
+    {
+     "t": 43200,
+     "airlessAz": 133.596957,
+     "airlessEl": -62.985756,
+     "refractedAz": 133.596957,
+     "refractedEl": -62.339144
+    },
+    {
+     "t": 57600,
+     "airlessAz": 79.857883,
+     "airlessEl": -20.256791,
+     "refractedAz": 79.857883,
+     "refractedEl": -19.610179
+    },
+    {
+     "t": 72000,
+     "airlessAz": 38.475965,
+     "airlessEl": 18.203975,
+     "refractedAz": 38.475965,
+     "refractedEl": 18.254388
+    }
+   ]
+  },
+  {
+   "body": "jupiter",
+   "observer": "wellington",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     47648.8
+    ],
+    "transit": [
+     66459.6
+    ],
+    "set": [
+     85272.5
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     47640
+    ],
+    "transit": [
+     66480
+    ],
+    "set": [
+     85320
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 285.173832,
+     "airlessEl": -3.329648,
+     "refractedAz": 285.173832,
+     "refractedEl": -2.683035
+    },
+    {
+     "t": 14400,
+     "airlessAz": 240.623157,
+     "airlessEl": -47.273536,
+     "refractedAz": 240.623157,
+     "refractedEl": -46.626923
+    },
+    {
+     "t": 28800,
+     "airlessAz": 137.937615,
+     "airlessEl": -55.963826,
+     "refractedAz": 137.937615,
+     "refractedEl": -55.317214
+    },
+    {
+     "t": 43200,
+     "airlessAz": 84.301709,
+     "airlessEl": -14.226347,
+     "refractedAz": 84.301709,
+     "refractedEl": -13.579734
+    },
+    {
+     "t": 57600,
+     "airlessAz": 40.366933,
+     "airlessEl": 25.382429,
+     "refractedAz": 40.366933,
+     "refractedEl": 25.417753
+    },
+    {
+     "t": 72000,
+     "airlessAz": 333.486886,
+     "airlessEl": 31.136584,
+     "refractedAz": 333.486886,
+     "refractedEl": 31.164443
+    }
+   ]
+  },
+  {
+   "body": "jupiter",
+   "observer": "riyadh",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     34110.5
+    ],
+    "transit": [
+     56774.5
+    ],
+    "set": [
+     79439.6
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     33900
+    ],
+    "transit": [
+     56820
+    ],
+    "set": [
+     79680
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 293.524482,
+     "airlessEl": -24.99792,
+     "refractedAz": 293.524482,
+     "refractedEl": -24.351307
+    },
+    {
+     "t": 14400,
+     "airlessAz": 5.303876,
+     "airlessEl": -56.287693,
+     "refractedAz": 5.303876,
+     "refractedEl": -55.64108
+    },
+    {
+     "t": 28800,
+     "airlessAz": 69.816891,
+     "airlessEl": -19.990714,
+     "refractedAz": 69.816891,
+     "refractedEl": -19.344101
+    },
+    {
+     "t": 43200,
+     "airlessAz": 96.483635,
+     "airlessEl": 33.712294,
+     "refractedAz": 96.483635,
+     "refractedEl": 33.737551
+    },
+    {
+     "t": 57600,
+     "airlessAz": 191.925891,
+     "airlessEl": 73.27126,
+     "refractedAz": 191.925891,
+     "refractedEl": 73.276359
+    },
+    {
+     "t": 72000,
+     "airlessAz": 266.755136,
+     "airlessEl": 27.486732,
+     "refractedAz": 266.755136,
+     "refractedEl": 27.519004
+    }
+   ]
+  },
+  {
+   "body": "jupiter",
+   "observer": "riyadh",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     1695.4
+    ],
+    "transit": [
+     25835.5
+    ],
+    "set": [
+     49978.3
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     1500
+    ],
+    "transit": [
+     25860
+    ],
+    "set": [
+     50220
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 63.684592,
+     "airlessEl": -6.401803,
+     "refractedAz": 63.684592,
+     "refractedEl": -5.755191
+    },
+    {
+     "t": 14400,
+     "airlessAz": 85.600257,
+     "airlessEl": 45.98954,
+     "refractedAz": 85.600257,
+     "refractedEl": 46.005879
+    },
+    {
+     "t": 28800,
+     "airlessAz": 251.540722,
+     "airlessEl": 77.790081,
+     "refractedAz": 251.540722,
+     "refractedEl": 77.793753
+    },
+    {
+     "t": 43200,
+     "airlessAz": 282.663561,
+     "airlessEl": 23.825644,
+     "refractedAz": 282.663561,
+     "refractedEl": 23.863536
+    },
+    {
+     "t": 57600,
+     "airlessAz": 310.467834,
+     "airlessEl": -25.173943,
+     "refractedAz": 310.467834,
+     "refractedEl": -24.52733
+    },
+    {
+     "t": 72000,
+     "airlessAz": 16.323063,
+     "airlessEl": -42.69537,
+     "refractedAz": 16.323063,
+     "refractedEl": -42.048758
+    }
+   ]
+  },
+  {
+   "body": "jupiter",
+   "observer": "riyadh",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     73872.9
+    ],
+    "transit": [
+     10937.9
+    ],
+    "set": [
+     34186.8
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     73680
+    ],
+    "transit": [
+     10980
+    ],
+    "set": [
+     34440
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 96.096625,
+     "airlessEl": 45.609908,
+     "refractedAz": 96.096625,
+     "refractedEl": 45.626465
+    },
+    {
+     "t": 14400,
+     "airlessAz": 232.663275,
+     "airlessEl": 72.221581,
+     "refractedAz": 232.663275,
+     "refractedEl": 72.22702
+    },
+    {
+     "t": 28800,
+     "airlessAz": 276.304796,
+     "airlessEl": 19.443614,
+     "refractedAz": 276.304796,
+     "refractedEl": 19.490703
+    },
+    {
+     "t": 43200,
+     "airlessAz": 306.01855,
+     "airlessEl": -31.422222,
+     "refractedAz": 306.01855,
+     "refractedEl": -30.77561
+    },
+    {
+     "t": 57600,
+     "airlessAz": 22.32247,
+     "airlessEl": -48.790851,
+     "refractedAz": 22.32247,
+     "refractedEl": -48.144238
+    },
+    {
+     "t": 72000,
+     "airlessAz": 71.28307,
+     "airlessEl": -7.354632,
+     "refractedAz": 71.28307,
+     "refractedEl": -6.708019
+    }
+   ]
+  },
+  {
+   "body": "saturn",
+   "observer": "london",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     45831.9
+    ],
+    "transit": [
+     71514.7
+    ],
+    "set": [
+     11038.6
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     45840
+    ],
+    "transit": [
+     71520
+    ],
+    "set": [
+     11040
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 254.827647,
+     "airlessEl": 27.632277,
+     "refractedAz": 254.827647,
+     "refractedEl": 27.664353
+    },
+    {
+     "t": 14400,
+     "airlessAz": 302.618024,
+     "airlessEl": -8.362959,
+     "refractedAz": 302.618024,
+     "refractedEl": -7.716346
+    },
+    {
+     "t": 28800,
+     "airlessAz": 1.654059,
+     "airlessEl": -25.898194,
+     "refractedAz": 1.654059,
+     "refractedEl": -25.251581
+    },
+    {
+     "t": 43200,
+     "airlessAz": 59.899134,
+     "airlessEl": -6.741639,
+     "refractedAz": 59.899134,
+     "refractedEl": -6.095026
+    },
+    {
+     "t": 57600,
+     "airlessAz": 107.852372,
+     "airlessEl": 29.4521,
+     "refractedAz": 107.852372,
+     "refractedEl": 29.481876
+    },
+    {
+     "t": 72000,
+     "airlessAz": 183.152611,
+     "airlessEl": 51.106012,
+     "refractedAz": 183.152611,
+     "refractedEl": 51.119669
+    }
+   ]
+  },
+  {
+   "body": "saturn",
+   "observer": "london",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     85676.8
+    ],
+    "transit": [
+     19460.9
+    ],
+    "set": [
+     39412.3
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     85680
+    ],
+    "transit": [
+     19500
+    ],
+    "set": [
+     39420
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 100.52579,
+     "airlessEl": 0.683412,
+     "refractedAz": 100.52579,
+     "refractedEl": 1.078939
+    },
+    {
+     "t": 14400,
+     "airlessAz": 155.59648,
+     "airlessEl": 29.739694,
+     "refractedAz": 155.59648,
+     "refractedEl": 29.769129
+    },
+    {
+     "t": 28800,
+     "airlessAz": 223.080212,
+     "airlessEl": 23.552932,
+     "refractedAz": 223.080212,
+     "refractedEl": 23.591304
+    },
+    {
+     "t": 43200,
+     "airlessAz": 273.443346,
+     "airlessEl": -10.400419,
+     "refractedAz": 273.443346,
+     "refractedEl": -9.753806
+    },
+    {
+     "t": 57600,
+     "airlessAz": 332.110633,
+     "airlessEl": -41.401988,
+     "refractedAz": 332.110633,
+     "refractedEl": -40.755375
+    },
+    {
+     "t": 72000,
+     "airlessAz": 49.76544,
+     "airlessEl": -34.033008,
+     "refractedAz": 49.76544,
+     "refractedEl": -33.386395
+    }
+   ]
+  },
+  {
+   "body": "saturn",
+   "observer": "london",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     52806.9
+    ],
+    "transit": [
+     74840.9
+    ],
+    "set": [
+     10721.9
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     52860
+    ],
+    "transit": [
+     74880
+    ],
+    "set": [
+     10740
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 234.667972,
+     "airlessEl": 25.793889,
+     "refractedAz": 234.667972,
+     "refractedEl": 25.828581
+    },
+    {
+     "t": 14400,
+     "airlessAz": 284.377614,
+     "airlessEl": -10.030439,
+     "refractedAz": 284.377614,
+     "refractedEl": -9.383826
+    },
+    {
+     "t": 28800,
+     "airlessAz": 344.516001,
+     "airlessEl": -36.568766,
+     "refractedAz": 344.516001,
+     "refractedEl": -35.922153
+    },
+    {
+     "t": 43200,
+     "airlessAz": 54.129304,
+     "airlessEl": -23.950749,
+     "refractedAz": 54.129304,
+     "refractedEl": -23.304137
+    },
+    {
+     "t": 57600,
+     "airlessAz": 103.665057,
+     "airlessEl": 11.799718,
+     "refractedAz": 103.665057,
+     "refractedEl": 11.877013
+    },
+    {
+     "t": 72000,
+     "airlessAz": 164.772338,
+     "airlessEl": 38.456337,
+     "refractedAz": 164.772338,
+     "refractedEl": 38.477594
+    }
+   ]
+  },
+  {
+   "body": "saturn",
+   "observer": "wellington",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     10667.2
+    ],
+    "transit": [
+     29685.1
+    ],
+    "set": [
+     48703.2
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     10680
+    ],
+    "transit": [
+     29700
+    ],
+    "set": [
+     48780
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 103.641164,
+     "airlessEl": -33.677681,
+     "refractedAz": 103.641164,
+     "refractedEl": -33.031068
+    },
+    {
+     "t": 14400,
+     "airlessAz": 62.93061,
+     "airlessEl": 10.304169,
+     "refractedAz": 62.93061,
+     "refractedEl": 10.391884
+    },
+    {
+     "t": 28800,
+     "airlessAz": 4.461944,
+     "airlessEl": 35.99005,
+     "refractedAz": 4.461944,
+     "refractedEl": 36.013275
+    },
+    {
+     "t": 43200,
+     "airlessAz": 302.577386,
+     "airlessEl": 15.126097,
+     "refractedAz": 302.577386,
+     "refractedEl": 15.186872
+    },
+    {
+     "t": 57600,
+     "airlessAz": 261.871845,
+     "airlessEl": -28.220291,
+     "refractedAz": 261.871845,
+     "refractedEl": -27.573678
+    },
+    {
+     "t": 72000,
+     "airlessAz": 186.4808,
+     "airlessEl": -61.192095,
+     "refractedAz": 186.4808,
+     "refractedEl": -60.545482
+    }
+   ]
+  },
+  {
+   "body": "saturn",
+   "observer": "wellington",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     40802.0
+    ],
+    "transit": [
+     63794.8
+    ],
+    "set": [
+     620.3
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     40800
+    ],
+    "transit": [
+     63840
+    ],
+    "set": [
+     660
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 263.209073,
+     "airlessEl": 1.355867,
+     "refractedAz": 263.209073,
+     "refractedEl": 1.685916
+    },
+    {
+     "t": 14400,
+     "airlessAz": 213.535357,
+     "airlessEl": -36.917079,
+     "refractedAz": 213.535357,
+     "refractedEl": -36.270466
+    },
+    {
+     "t": 28800,
+     "airlessAz": 138.434217,
+     "airlessEl": -33.513708,
+     "refractedAz": 138.434217,
+     "refractedEl": -32.867096
+    },
+    {
+     "t": 43200,
+     "airlessAz": 91.915936,
+     "airlessEl": 6.919018,
+     "refractedAz": 91.915936,
+     "refractedEl": 7.043553
+    },
+    {
+     "t": 57600,
+     "airlessAz": 40.298427,
+     "airlessEl": 47.838483,
+     "refractedAz": 40.298427,
+     "refractedEl": 47.853804
+    },
+    {
+     "t": 72000,
+     "airlessAz": 309.621433,
+     "airlessEl": 43.345333,
+     "refractedAz": 309.621433,
+     "refractedEl": 43.363243
+    }
+   ]
+  },
+  {
+   "body": "saturn",
+   "observer": "wellington",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     11485.3
+    ],
+    "transit": [
+     33013.4
+    ],
+    "set": [
+     54542.8
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     11460
+    ],
+    "transit": [
+     33060
+    ],
+    "set": [
+     54600
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 125.504292,
+     "airlessEl": -34.645602,
+     "refractedAz": 125.504292,
+     "refractedEl": -33.998989
+    },
+    {
+     "t": 14400,
+     "airlessAz": 81.173453,
+     "airlessEl": 8.538705,
+     "refractedAz": 81.173453,
+     "refractedEl": 8.642625
+    },
+    {
+     "t": 28800,
+     "airlessAz": 25.262855,
+     "airlessEl": 44.875077,
+     "refractedAz": 25.262855,
+     "refractedEl": 44.892061
+    },
+    {
+     "t": 43200,
+     "airlessAz": 306.359983,
+     "airlessEl": 32.875485,
+     "refractedAz": 306.359983,
+     "refractedEl": 32.901549
+    },
+    {
+     "t": 57600,
+     "airlessAz": 262.207533,
+     "airlessEl": -10.145734,
+     "refractedAz": 262.207533,
+     "refractedEl": -9.499121
+    },
+    {
+     "t": 72000,
+     "airlessAz": 205.410712,
+     "airlessEl": -46.771662,
+     "refractedAz": 205.410712,
+     "refractedEl": -46.125049
+    }
+   ]
+  },
+  {
+   "body": "saturn",
+   "observer": "riyadh",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     37208.1
+    ],
+    "transit": [
+     60337.7
+    ],
+    "set": [
+     83467.3
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     37020
+    ],
+    "transit": [
+     60360
+    ],
+    "set": [
+     83700
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 289.268023,
+     "airlessEl": -10.333872,
+     "refractedAz": 289.268023,
+     "refractedEl": -9.687259
+    },
+    {
+     "t": 14400,
+     "airlessAz": 341.440424,
+     "airlessEl": -50.622769,
+     "refractedAz": 341.440424,
+     "refractedEl": -49.976156
+    },
+    {
+     "t": 28800,
+     "airlessAz": 56.996096,
+     "airlessEl": -29.795892,
+     "refractedAz": 56.996096,
+     "refractedEl": -29.14928
+    },
+    {
+     "t": 43200,
+     "airlessAz": 85.812392,
+     "airlessEl": 21.799678,
+     "refractedAz": 85.812392,
+     "refractedEl": 21.841404
+    },
+    {
+     "t": 57600,
+     "airlessAz": 136.827321,
+     "airlessEl": 73.56832,
+     "refractedAz": 136.827321,
+     "refractedEl": 73.573323
+    },
+    {
+     "t": 72000,
+     "airlessAz": 264.229736,
+     "airlessEl": 42.507473,
+     "refractedAz": 264.229736,
+     "refractedEl": 42.525913
+    }
+   ]
+  },
+  {
+   "body": "saturn",
+   "observer": "riyadh",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     73427.7
+    ],
+    "transit": [
+     8282.9
+    ],
+    "set": [
+     29305.5
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     73260
+    ],
+    "transit": [
+     8340
+    ],
+    "set": [
+     29520
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 127.957631,
+     "airlessEl": 44.24652,
+     "refractedAz": 127.957631,
+     "refractedEl": 44.263878
+    },
+    {
+     "t": 14400,
+     "airlessAz": 222.159789,
+     "airlessEl": 50.266242,
+     "refractedAz": 222.159789,
+     "refractedEl": 50.280312
+    },
+    {
+     "t": 28800,
+     "airlessAz": 262.757936,
+     "airlessEl": 1.326605,
+     "refractedAz": 262.757936,
+     "refractedEl": 1.65914
+    },
+    {
+     "t": 43200,
+     "airlessAz": 294.422191,
+     "airlessEl": -52.217017,
+     "refractedAz": 294.422191,
+     "refractedEl": -51.570404
+    },
+    {
+     "t": 57600,
+     "airlessAz": 57.051826,
+     "airlessEl": -58.646272,
+     "refractedAz": 57.051826,
+     "refractedEl": -57.999659
+    },
+    {
+     "t": 72000,
+     "airlessAz": 93.851773,
+     "airlessEl": -5.958294,
+     "refractedAz": 93.851773,
+     "refractedEl": -5.311682
+    }
+   ]
+  },
+  {
+   "body": "saturn",
+   "observer": "riyadh",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     41872.1
+    ],
+    "transit": [
+     63664.5
+    ],
+    "set": [
+     85456.3
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     41700
+    ],
+    "transit": [
+     63720
+    ],
+    "set": [
+     85680
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 272.519098,
+     "airlessEl": -3.21278,
+     "refractedAz": 272.519098,
+     "refractedEl": -2.566167
+    },
+    {
+     "t": 14400,
+     "airlessAz": 312.162054,
+     "airlessEl": -53.970606,
+     "refractedAz": 312.162054,
+     "refractedEl": -53.323994
+    },
+    {
+     "t": 28800,
+     "airlessAz": 57.18354,
+     "airlessEl": -47.874572,
+     "refractedAz": 57.18354,
+     "refractedEl": -47.227959
+    },
+    {
+     "t": 43200,
+     "airlessAz": 91.068528,
+     "airlessEl": 4.454428,
+     "refractedAz": 91.068528,
+     "refractedEl": 4.630005
+    },
+    {
+     "t": 57600,
+     "airlessAz": 130.651334,
+     "airlessEl": 55.662728,
+     "refractedAz": 130.651334,
+     "refractedEl": 55.674299
+    },
+    {
+     "t": 72000,
+     "airlessAz": 239.793962,
+     "airlessEl": 48.639575,
+     "refractedAz": 239.793962,
+     "refractedEl": 48.654473
+    }
+   ]
+  },
+  {
+   "body": "uranus",
+   "observer": "london",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     35681.2
+    ],
+    "transit": [
+     52061.1
+    ],
+    "set": [
+     68442.9
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     35700
+    ],
+    "transit": [
+     52080
+    ],
+    "set": [
+     68460
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 305.246095,
+     "airlessEl": -44.562706,
+     "refractedAz": 305.246095,
+     "refractedEl": -43.916093
+    },
+    {
+     "t": 14400,
+     "airlessAz": 35.968282,
+     "airlessEl": -51.134503,
+     "refractedAz": 35.968282,
+     "refractedEl": -50.487891
+    },
+    {
+     "t": 28800,
+     "airlessAz": 95.356128,
+     "airlessEl": -17.661614,
+     "refractedAz": 95.356128,
+     "refractedEl": -17.015001
+    },
+    {
+     "t": 43200,
+     "airlessAz": 143.556999,
+     "airlessEl": 14.27429,
+     "refractedAz": 143.556999,
+     "refractedEl": 14.338638
+    },
+    {
+     "t": 57600,
+     "airlessAz": 203.355223,
+     "airlessEl": 18.586133,
+     "refractedAz": 203.355223,
+     "refractedEl": 18.635478
+    },
+    {
+     "t": 72000,
+     "airlessAz": 254.150662,
+     "airlessEl": -9.17123,
+     "refractedAz": 254.150662,
+     "refractedEl": -8.524618
+    }
+   ]
+  },
+  {
+   "body": "uranus",
+   "observer": "london",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     6428.2
+    ],
+    "transit": [
+     34298.8
+    ],
+    "set": [
+     62172.2
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     6480
+    ],
+    "transit": [
+     34320
+    ],
+    "set": [
+     62220
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 35.460839,
+     "airlessEl": -12.721793,
+     "refractedAz": 35.460839,
+     "refractedEl": -12.07518
+    },
+    {
+     "t": 14400,
+     "airlessAz": 83.182172,
+     "airlessEl": 18.842229,
+     "refractedAz": 83.182172,
+     "refractedEl": 18.890881
+    },
+    {
+     "t": 28800,
+     "airlessAz": 142.463615,
+     "airlessEl": 52.678379,
+     "refractedAz": 142.463615,
+     "refractedEl": 52.691288
+    },
+    {
+     "t": 43200,
+     "airlessAz": 235.790055,
+     "airlessEl": 46.232472,
+     "refractedAz": 235.790055,
+     "refractedEl": 46.248674
+    },
+    {
+     "t": 57600,
+     "airlessAz": 287.480823,
+     "airlessEl": 10.204387,
+     "refractedAz": 287.480823,
+     "refractedEl": 10.29289
+    },
+    {
+     "t": 72000,
+     "airlessAz": 337.74192,
+     "airlessEl": -16.986089,
+     "refractedAz": 337.74192,
+     "refractedEl": -16.339476
+    }
+   ]
+  },
+  {
+   "body": "uranus",
+   "observer": "london",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     58964.4
+    ],
+    "transit": [
+     1440.1
+    ],
+    "set": [
+     30070.4
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     58980
+    ],
+    "transit": [
+     1440
+    ],
+    "set": [
+     30120
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 169.039109,
+     "airlessEl": 58.97713,
+     "refractedAz": 169.039109,
+     "refractedEl": 58.987321
+    },
+    {
+     "t": 14400,
+     "airlessAz": 254.721611,
+     "airlessEl": 38.234155,
+     "refractedAz": 254.721611,
+     "refractedEl": 38.25558
+    },
+    {
+     "t": 28800,
+     "airlessAz": 301.525098,
+     "airlessEl": 2.180206,
+     "refractedAz": 301.525098,
+     "refractedEl": 2.450968
+    },
+    {
+     "t": 43200,
+     "airlessAz": 354.604912,
+     "airlessEl": -17.560237,
+     "refractedAz": 354.604912,
+     "refractedEl": -16.913625
+    },
+    {
+     "t": 57600,
+     "airlessAz": 49.814197,
+     "airlessEl": -3.375109,
+     "refractedAz": 49.814197,
+     "refractedEl": -2.728496
+    },
+    {
+     "t": 72000,
+     "airlessAz": 95.788779,
+     "airlessEl": 31.496442,
+     "refractedAz": 95.788779,
+     "refractedEl": 31.523916
+    }
+   ]
+  },
+  {
+   "body": "uranus",
+   "observer": "wellington",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     70925.0
+    ],
+    "transit": [
+     10223.3
+    ],
+    "set": [
+     35699.1
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     70920
+    ],
+    "transit": [
+     10260
+    ],
+    "set": [
+     35760
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 69.416122,
+     "airlessEl": 46.15154,
+     "refractedAz": 69.416122,
+     "refractedEl": 46.167788
+    },
+    {
+     "t": 14400,
+     "airlessAz": 323.101098,
+     "airlessEl": 61.476705,
+     "refractedAz": 323.101098,
+     "refractedEl": 61.485917
+    },
+    {
+     "t": 28800,
+     "airlessAz": 264.827154,
+     "airlessEl": 20.328377,
+     "refractedAz": 264.827154,
+     "refractedEl": 20.37332
+    },
+    {
+     "t": 43200,
+     "airlessAz": 223.094083,
+     "airlessEl": -19.803912,
+     "refractedAz": 223.094083,
+     "refractedEl": -19.157299
+    },
+    {
+     "t": 57600,
+     "airlessAz": 160.271588,
+     "airlessEl": -29.377892,
+     "refractedAz": 160.271588,
+     "refractedEl": -28.731279
+    },
+    {
+     "t": 72000,
+     "airlessAz": 110.526499,
+     "airlessEl": 2.554602,
+     "refractedAz": 110.526499,
+     "refractedEl": 2.804099
+    }
+   ]
+  },
+  {
+   "body": "uranus",
+   "observer": "wellington",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     61061.9
+    ],
+    "transit": [
+     78637.2
+    ],
+    "set": [
+     10037.8
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     61080
+    ],
+    "transit": [
+     78660
+    ],
+    "set": [
+     10080
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 327.458937,
+     "airlessEl": 23.178827,
+     "refractedAz": 327.458937,
+     "refractedEl": 23.217877
+    },
+    {
+     "t": 14400,
+     "airlessAz": 283.345826,
+     "airlessEl": -13.495738,
+     "refractedAz": 283.345826,
+     "refractedEl": -12.849125
+    },
+    {
+     "t": 28800,
+     "airlessAz": 235.445645,
+     "airlessEl": -57.113955,
+     "refractedAz": 235.445645,
+     "refractedEl": -56.467342
+    },
+    {
+     "t": 43200,
+     "airlessAz": 119.835354,
+     "airlessEl": -54.719004,
+     "refractedAz": 119.835354,
+     "refractedEl": -54.072391
+    },
+    {
+     "t": 57600,
+     "airlessAz": 74.31535,
+     "airlessEl": -10.758803,
+     "refractedAz": 74.31535,
+     "refractedEl": -10.11219
+    },
+    {
+     "t": 72000,
+     "airlessAz": 28.971805,
+     "airlessEl": 24.617773,
+     "refractedAz": 28.971805,
+     "refractedEl": 24.654321
+    }
+   ]
+  },
+  {
+   "body": "uranus",
+   "observer": "wellington",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     28686.3
+    ],
+    "transit": [
+     45766.9
+    ],
+    "set": [
+     62848.2
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     28680
+    ],
+    "transit": [
+     45780
+    ],
+    "set": [
+     62940
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 208.327771,
+     "airlessEl": -67.418923,
+     "refractedAz": 208.327771,
+     "refractedEl": -66.77231
+    },
+    {
+     "t": 14400,
+     "airlessAz": 101.101021,
+     "airlessEl": -44.095161,
+     "refractedAz": 101.101021,
+     "refractedEl": -43.448549
+    },
+    {
+     "t": 28800,
+     "airlessAz": 62.045418,
+     "airlessEl": -0.258217,
+     "refractedAz": 62.045418,
+     "refractedEl": 0.263978
+    },
+    {
+     "t": 43200,
+     "airlessAz": 11.271482,
+     "airlessEl": 27.115367,
+     "refractedAz": 11.271482,
+     "refractedEl": 27.148147
+    },
+    {
+     "t": 57600,
+     "airlessAz": 313.240261,
+     "airlessEl": 12.84672,
+     "refractedAz": 313.240261,
+     "refractedEl": 12.917998
+    },
+    {
+     "t": 72000,
+     "airlessAz": 273.884063,
+     "airlessEl": -28.045416,
+     "refractedAz": 273.884063,
+     "refractedEl": -27.398804
+    }
+   ]
+  },
+  {
+   "body": "uranus",
+   "observer": "riyadh",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     21142.8
+    ],
+    "transit": [
+     40881.9
+    ],
+    "set": [
+     60621.8
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     20940
+    ],
+    "transit": [
+     40920
+    ],
+    "set": [
+     60900
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 48.924306,
+     "airlessEl": -78.279216,
+     "refractedAz": 48.924306,
+     "refractedEl": -77.632603
+    },
+    {
+     "t": 14400,
+     "airlessAz": 97.826137,
+     "airlessEl": -25.406694,
+     "refractedAz": 97.826137,
+     "refractedEl": -24.760082
+    },
+    {
+     "t": 28800,
+     "airlessAz": 125.316582,
+     "airlessEl": 25.329689,
+     "refractedAz": 125.316582,
+     "refractedEl": 25.365095
+    },
+    {
+     "t": 43200,
+     "airlessAz": 193.623714,
+     "airlessEl": 46.933222,
+     "refractedAz": 193.623714,
+     "refractedEl": 46.949034
+    },
+    {
+     "t": 57600,
+     "airlessAz": 245.740763,
+     "airlessEl": 10.078163,
+     "refractedAz": 245.740763,
+     "refractedEl": 10.167683
+    },
+    {
+     "t": 72000,
+     "airlessAz": 269.572018,
+     "airlessEl": -42.896994,
+     "refractedAz": 269.572018,
+     "refractedEl": -42.250381
+    }
+   ]
+  },
+  {
+   "body": "uranus",
+   "observer": "riyadh",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     85398.8
+    ],
+    "transit": [
+     23119.6
+    ],
+    "set": [
+     47016.0
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     85200
+    ],
+    "transit": [
+     23160
+    ],
+    "set": [
+     47280
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 70.215782,
+     "airlessEl": 2.178443,
+     "refractedAz": 70.215782,
+     "refractedEl": 2.449313
+    },
+    {
+     "t": 14400,
+     "airlessAz": 92.999476,
+     "airlessEl": 55.750223,
+     "refractedAz": 92.999476,
+     "refractedEl": 55.761757
+    },
+    {
+     "t": 28800,
+     "airlessAz": 259.042012,
+     "airlessEl": 67.171691,
+     "refractedAz": 259.042012,
+     "refractedEl": 67.17883
+    },
+    {
+     "t": 43200,
+     "airlessAz": 284.869066,
+     "airlessEl": 13.164748,
+     "refractedAz": 284.869066,
+     "refractedEl": 13.234367
+    },
+    {
+     "t": 57600,
+     "airlessAz": 317.955095,
+     "airlessEl": -33.914164,
+     "refractedAz": 317.955095,
+     "refractedEl": -33.267552
+    },
+    {
+     "t": 72000,
+     "airlessAz": 30.545836,
+     "airlessEl": -40.242469,
+     "refractedAz": 30.545836,
+     "refractedEl": -39.595856
+    }
+   ]
+  },
+  {
+   "body": "uranus",
+   "observer": "riyadh",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     52271.9
+    ],
+    "transit": [
+     76417.6
+    ],
+    "set": [
+     14409.9
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     52080
+    ],
+    "transit": [
+     76440
+    ],
+    "set": [
+     14640
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 272.104631,
+     "airlessEl": 52.42732,
+     "refractedAz": 272.104631,
+     "refractedEl": 52.440347
+    },
+    {
+     "t": 14400,
+     "airlessAz": 293.351224,
+     "airlessEl": -0.5397,
+     "refractedAz": 293.351224,
+     "refractedEl": 0.028447
+    },
+    {
+     "t": 28800,
+     "airlessAz": 336.395824,
+     "airlessEl": -40.621208,
+     "refractedAz": 336.395824,
+     "refractedEl": -39.974595
+    },
+    {
+     "t": 43200,
+     "airlessAz": 44.839506,
+     "airlessEl": -29.167511,
+     "refractedAz": 44.839506,
+     "refractedEl": -28.520898
+    },
+    {
+     "t": 57600,
+     "airlessAz": 75.090425,
+     "airlessEl": 18.48855,
+     "refractedAz": 75.090425,
+     "refractedEl": 18.538165
+    },
+    {
+     "t": 72000,
+     "airlessAz": 100.126492,
+     "airlessEl": 72.50207,
+     "refractedAz": 100.126492,
+     "refractedEl": 72.507418
+    }
+   ]
+  },
+  {
+   "body": "neptune",
+   "observer": "london",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     33590.2
+    ],
+    "transit": [
+     49178.3
+    ],
+    "set": [
+     64767.4
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     33600
+    ],
+    "transit": [
+     49200
+    ],
+    "set": [
+     64800
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 318.708851,
+     "airlessEl": -52.05474,
+     "refractedAz": 318.708851,
+     "refractedEl": -51.408128
+    },
+    {
+     "t": 14400,
+     "airlessAz": 53.197562,
+     "airlessEl": -47.816486,
+     "refractedAz": 53.197562,
+     "refractedEl": -47.169873
+    },
+    {
+     "t": 28800,
+     "airlessAz": 105.880242,
+     "airlessEl": -11.979742,
+     "refractedAz": 105.880242,
+     "refractedEl": -11.333129
+    },
+    {
+     "t": 43200,
+     "airlessAz": 155.494181,
+     "airlessEl": 16.005808,
+     "refractedAz": 155.494181,
+     "refractedEl": 16.063254
+    },
+    {
+     "t": 57600,
+     "airlessAz": 213.931221,
+     "airlessEl": 12.903105,
+     "refractedAz": 213.931221,
+     "refractedEl": 12.974084
+    },
+    {
+     "t": 72000,
+     "airlessAz": 261.758437,
+     "airlessEl": -18.190072,
+     "refractedAz": 261.758437,
+     "refractedEl": -17.543459
+    }
+   ]
+  },
+  {
+   "body": "neptune",
+   "observer": "london",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     316.5
+    ],
+    "transit": [
+     21715.6
+    ],
+    "set": [
+     43115.0
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     360
+    ],
+    "transit": [
+     21720
+    ],
+    "set": [
+     43140
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 90.182257,
+     "airlessEl": -1.397557,
+     "refractedAz": 90.182257,
+     "refractedEl": -0.750945
+    },
+    {
+     "t": 14400,
+     "airlessAz": 143.480916,
+     "airlessEl": 31.314906,
+     "refractedAz": 143.480916,
+     "refractedEl": 31.342574
+    },
+    {
+     "t": 28800,
+     "airlessAz": 215.464942,
+     "airlessEl": 31.668863,
+     "refractedAz": 215.464942,
+     "refractedEl": 31.696155
+    },
+    {
+     "t": 43200,
+     "airlessAz": 269.062529,
+     "airlessEl": -0.795156,
+     "refractedAz": 269.062529,
+     "refractedEl": -0.183436
+    },
+    {
+     "t": 57600,
+     "airlessAz": 322.952985,
+     "airlessEl": -33.735853,
+     "refractedAz": 322.952985,
+     "refractedEl": -33.08924
+    },
+    {
+     "t": 72000,
+     "airlessAz": 37.062288,
+     "airlessEl": -33.730429,
+     "refractedAz": 37.062288,
+     "refractedEl": -33.083817
+    }
+   ]
+  },
+  {
+   "body": "neptune",
+   "observer": "london",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     51683.9
+    ],
+    "transit": [
+     73271.0
+    ],
+    "set": [
+     8697.8
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     51720
+    ],
+    "transit": [
+     73320
+    ],
+    "set": [
+     8700
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 239.924511,
+     "airlessEl": 21.069912,
+     "refractedAz": 239.924511,
+     "refractedEl": 21.113182
+    },
+    {
+     "t": 14400,
+     "airlessAz": 288.872895,
+     "airlessEl": -15.154985,
+     "refractedAz": 288.872895,
+     "refractedEl": -14.508372
+    },
+    {
+     "t": 28800,
+     "airlessAz": 352.530203,
+     "airlessEl": -38.867356,
+     "refractedAz": 352.530203,
+     "refractedEl": -38.220743
+    },
+    {
+     "t": 43200,
+     "airlessAz": 61.046067,
+     "airlessEl": -21.767433,
+     "refractedAz": 61.046067,
+     "refractedEl": -21.12082
+    },
+    {
+     "t": 57600,
+     "airlessAz": 109.991888,
+     "airlessEl": 14.51443,
+     "refractedAz": 109.991888,
+     "refractedEl": 14.577734
+    },
+    {
+     "t": 72000,
+     "airlessAz": 173.277748,
+     "airlessEl": 37.753734,
+     "refractedAz": 173.277748,
+     "refractedEl": 37.77553
+    }
+   ]
+  },
+  {
+   "body": "neptune",
+   "observer": "wellington",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     67503.0
+    ],
+    "transit": [
+     7342.1
+    ],
+    "set": [
+     33354.7
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     67500
+    ],
+    "transit": [
+     7380
+    ],
+    "set": [
+     33420
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 59.076798,
+     "airlessEl": 55.838898,
+     "refractedAz": 59.076798,
+     "refractedEl": 55.850393
+    },
+    {
+     "t": 14400,
+     "airlessAz": 302.40778,
+     "airlessEl": 56.597021,
+     "refractedAz": 302.40778,
+     "refractedEl": 56.608193
+    },
+    {
+     "t": 28800,
+     "airlessAz": 255.54442,
+     "airlessEl": 12.800782,
+     "refractedAz": 255.54442,
+     "refractedEl": 12.872306
+    },
+    {
+     "t": 43200,
+     "airlessAz": 211.150668,
+     "airlessEl": -23.336851,
+     "refractedAz": 211.150668,
+     "refractedEl": -22.690238
+    },
+    {
+     "t": 57600,
+     "airlessAz": 149.071695,
+     "airlessEl": -23.430165,
+     "refractedAz": 149.071695,
+     "refractedEl": -22.783552
+    },
+    {
+     "t": 72000,
+     "airlessAz": 104.599177,
+     "airlessEl": 12.625241,
+     "refractedAz": 104.599177,
+     "refractedEl": 12.697719
+    }
+   ]
+  },
+  {
+   "body": "neptune",
+   "observer": "wellington",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     44070.7
+    ],
+    "transit": [
+     66048.5
+    ],
+    "set": [
+     1860.9
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     44040
+    ],
+    "transit": [
+     66060
+    ],
+    "set": [
+     1920
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 273.026158,
+     "airlessEl": 5.266187,
+     "refractedAz": 273.026158,
+     "refractedEl": 5.421224
+    },
+    {
+     "t": 14400,
+     "airlessAz": 226.700219,
+     "airlessEl": -36.549522,
+     "refractedAz": 226.700219,
+     "refractedEl": -35.902909
+    },
+    {
+     "t": 28800,
+     "airlessAz": 146.213676,
+     "airlessEl": -42.09775,
+     "refractedAz": 146.213676,
+     "refractedEl": -41.451138
+    },
+    {
+     "t": 43200,
+     "airlessAz": 94.515367,
+     "airlessEl": -3.302743,
+     "refractedAz": 94.515367,
+     "refractedEl": -2.65613
+    },
+    {
+     "t": 57600,
+     "airlessAz": 47.867226,
+     "airlessEl": 38.830992,
+     "refractedAz": 47.867226,
+     "refractedEl": 38.851968
+    },
+    {
+     "t": 72000,
+     "airlessAz": 324.191752,
+     "airlessEl": 44.06631,
+     "refractedAz": 324.191752,
+     "refractedEl": 44.083778
+    }
+   ]
+  },
+  {
+   "body": "neptune",
+   "observer": "wellington",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     9596.6
+    ],
+    "transit": [
+     31440.6
+    ],
+    "set": [
+     53285.1
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     9600
+    ],
+    "transit": [
+     31500
+    ],
+    "set": [
+     53340
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 120.585385,
+     "airlessEl": -29.336818,
+     "refractedAz": 120.585385,
+     "refractedEl": -28.690205
+    },
+    {
+     "t": 14400,
+     "airlessAz": 77.775369,
+     "airlessEl": 14.40537,
+     "refractedAz": 77.775369,
+     "refractedEl": 14.469144
+    },
+    {
+     "t": 28800,
+     "airlessAz": 16.645955,
+     "airlessEl": 48.084595,
+     "refractedAz": 16.645955,
+     "refractedEl": 48.099785
+    },
+    {
+     "t": 43200,
+     "airlessAz": 299.286751,
+     "airlessEl": 29.885864,
+     "refractedAz": 299.286751,
+     "refractedEl": 29.915129
+    },
+    {
+     "t": 57600,
+     "airlessAz": 256.552971,
+     "airlessEl": -13.986172,
+     "refractedAz": 256.552971,
+     "refractedEl": -13.339559
+    },
+    {
+     "t": 72000,
+     "airlessAz": 195.565041,
+     "airlessEl": -47.058843,
+     "refractedAz": 195.565041,
+     "refractedEl": -46.41223
+    }
+   ]
+  },
+  {
+   "body": "neptune",
+   "observer": "riyadh",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     18532.8
+    ],
+    "transit": [
+     37999.5
+    ],
+    "set": [
+     57466.8
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     18360
+    ],
+    "transit": [
+     38040
+    ],
+    "set": [
+     57720
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 77.860678,
+     "airlessEl": -69.507155,
+     "refractedAz": 77.860678,
+     "refractedEl": -68.860542
+    },
+    {
+     "t": 14400,
+     "airlessAz": 104.33953,
+     "airlessEl": -15.481775,
+     "refractedAz": 104.33953,
+     "refractedEl": -14.835162
+    },
+    {
+     "t": 28800,
+     "airlessAz": 136.143957,
+     "airlessEl": 32.094118,
+     "refractedAz": 136.143957,
+     "refractedEl": 32.120967
+    },
+    {
+     "t": 43200,
+     "airlessAz": 207.587157,
+     "airlessEl": 40.992216,
+     "refractedAz": 207.587157,
+     "refractedEl": 41.011657
+    },
+    {
+     "t": 57600,
+     "airlessAz": 249.228991,
+     "airlessEl": -1.045322,
+     "refractedAz": 249.228991,
+     "refractedEl": -0.39871
+    },
+    {
+     "t": 72000,
+     "airlessAz": 271.622381,
+     "airlessEl": -54.474597,
+     "refractedAz": 271.622381,
+     "refractedEl": -53.827984
+    }
+   ]
+  },
+  {
+   "body": "neptune",
+   "observer": "riyadh",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     75144.9
+    ],
+    "transit": [
+     10537.9
+    ],
+    "set": [
+     32096.2
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     74940
+    ],
+    "transit": [
+     10560
+    ],
+    "set": [
+     32340
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 114.9236,
+     "airlessEl": 39.985737,
+     "refractedAz": 114.9236,
+     "refractedEl": 40.005876
+    },
+    {
+     "t": 14400,
+     "airlessAz": 213.178086,
+     "airlessEl": 59.486808,
+     "refractedAz": 213.178086,
+     "refractedEl": 59.496795
+    },
+    {
+     "t": 28800,
+     "airlessAz": 263.006452,
+     "airlessEl": 11.871324,
+     "refractedAz": 263.006452,
+     "refractedEl": 11.948178
+    },
+    {
+     "t": 43200,
+     "airlessAz": 292.63951,
+     "airlessEl": -41.740284,
+     "refractedAz": 292.63951,
+     "refractedEl": -41.093671
+    },
+    {
+     "t": 57600,
+     "airlessAz": 36.55655,
+     "airlessEl": -61.296653,
+     "refractedAz": 36.55655,
+     "refractedEl": -60.650041
+    },
+    {
+     "t": 72000,
+     "airlessAz": 85.447737,
+     "airlessEl": -12.472295,
+     "refractedAz": 85.447737,
+     "refractedEl": -11.825682
+    }
+   ]
+  },
+  {
+   "body": "neptune",
+   "observer": "riyadh",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     40466.4
+    ],
+    "transit": [
+     62093.8
+    ],
+    "set": [
+     83721.0
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     40260
+    ],
+    "transit": [
+     62100
+    ],
+    "set": [
+     83940
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 273.976954,
+     "airlessEl": -9.805047,
+     "refractedAz": 273.976954,
+     "refractedEl": -9.158434
+    },
+    {
+     "t": 14400,
+     "airlessAz": 319.741386,
+     "airlessEl": -59.283485,
+     "refractedAz": 319.741386,
+     "refractedEl": -58.636872
+    },
+    {
+     "t": 28800,
+     "airlessAz": 64.63389,
+     "airlessEl": -43.578432,
+     "refractedAz": 64.63389,
+     "refractedEl": -42.931819
+    },
+    {
+     "t": 43200,
+     "airlessAz": 95.25026,
+     "airlessEl": 9.76189,
+     "refractedAz": 95.25026,
+     "refractedEl": 9.854054
+    },
+    {
+     "t": 57600,
+     "airlessAz": 141.816537,
+     "airlessEl": 58.62394,
+     "refractedAz": 141.816537,
+     "refractedEl": 58.634273
+    },
+    {
+     "t": 72000,
+     "airlessAz": 243.739055,
+     "airlessEl": 42.503039,
+     "refractedAz": 243.739055,
+     "refractedEl": 42.521481
+    }
+   ]
+  },
+  {
+   "body": "pluto",
+   "observer": "london",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     17983.3
+    ],
+    "transit": [
+     36249.1
+    ],
+    "set": [
+     54514.5
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     18000
+    ],
+    "transit": [
+     36300
+    ],
+    "set": [
+     54540
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 40.410858,
+     "airlessEl": -43.695253,
+     "refractedAz": 40.410858,
+     "refractedEl": -43.04864
+    },
+    {
+     "t": 14400,
+     "airlessAz": 96.169406,
+     "airlessEl": -9.680981,
+     "refractedAz": 96.169406,
+     "refractedEl": -9.034368
+    },
+    {
+     "t": 28800,
+     "airlessAz": 146.980599,
+     "airlessEl": 21.60357,
+     "refractedAz": 146.980599,
+     "refractedEl": 21.645701
+    },
+    {
+     "t": 43200,
+     "airlessAz": 210.947944,
+     "airlessEl": 22.289721,
+     "refractedAz": 210.947944,
+     "refractedEl": 22.330461
+    },
+    {
+     "t": 57600,
+     "airlessAz": 262.226518,
+     "airlessEl": -8.395545,
+     "refractedAz": 262.226518,
+     "refractedEl": -7.748932
+    },
+    {
+     "t": 72000,
+     "airlessAz": 317.048485,
+     "airlessEl": -42.835592,
+     "refractedAz": 317.048485,
+     "refractedEl": -42.188979
+    }
+   ]
+  },
+  {
+   "body": "pluto",
+   "observer": "london",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     80360.2
+    ],
+    "transit": [
+     8354.1
+    ],
+    "set": [
+     22509.2
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     80400
+    ],
+    "transit": [
+     8400
+    ],
+    "set": [
+     22560
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 147.682173,
+     "airlessEl": 9.572436,
+     "refractedAz": 147.682173,
+     "refractedEl": 9.666256
+    },
+    {
+     "t": 14400,
+     "airlessAz": 203.73592,
+     "airlessEl": 12.394289,
+     "refractedAz": 203.73592,
+     "refractedEl": 12.468058
+    },
+    {
+     "t": 28800,
+     "airlessAz": 251.923252,
+     "airlessEl": -14.986752,
+     "refractedAz": 251.923252,
+     "refractedEl": -14.340139
+    },
+    {
+     "t": 43200,
+     "airlessAz": 304.09311,
+     "airlessEl": -51.05792,
+     "refractedAz": 304.09311,
+     "refractedEl": -50.411308
+    },
+    {
+     "t": 57600,
+     "airlessAz": 44.553331,
+     "airlessEl": -55.196936,
+     "refractedAz": 44.553331,
+     "refractedEl": -54.550323
+    },
+    {
+     "t": 72000,
+     "airlessAz": 101.754648,
+     "airlessEl": -20.186227,
+     "refractedAz": 101.754648,
+     "refractedEl": -19.539614
+    }
+   ]
+  },
+  {
+   "body": "pluto",
+   "observer": "london",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     46105.6
+    ],
+    "transit": [
+     59986.4
+    ],
+    "set": [
+     73867.7
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     46140
+    ],
+    "transit": [
+     60000
+    ],
+    "set": [
+     73920
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 269.274283,
+     "airlessEl": -30.144046,
+     "refractedAz": 269.274283,
+     "refractedEl": -29.497433
+    },
+    {
+     "t": 14400,
+     "airlessAz": 339.969879,
+     "airlessEl": -60.945576,
+     "refractedAz": 339.969879,
+     "refractedEl": -60.298963
+    },
+    {
+     "t": 28800,
+     "airlessAz": 72.920393,
+     "airlessEl": -42.993008,
+     "refractedAz": 72.920393,
+     "refractedEl": -42.346395
+    },
+    {
+     "t": 43200,
+     "airlessAz": 119.74606,
+     "airlessEl": -6.811515,
+     "refractedAz": 119.74606,
+     "refractedEl": -6.164902
+    },
+    {
+     "t": 57600,
+     "airlessAz": 170.566647,
+     "airlessEl": 14.460244,
+     "refractedAz": 170.566647,
+     "refractedEl": 14.523781
+    },
+    {
+     "t": 72000,
+     "airlessAz": 224.843215,
+     "airlessEl": 3.033357,
+     "refractedAz": 224.843215,
+     "refractedEl": 3.259577
+    }
+   ]
+  },
+  {
+   "body": "pluto",
+   "observer": "wellington",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     56412.7
+    ],
+    "transit": [
+     80585.5
+    ],
+    "set": [
+     18585.6
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     56400
+    ],
+    "transit": [
+     80640
+    ],
+    "set": [
+     18660
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 318.915625,
+     "airlessEl": 53.772026,
+     "refractedAz": 318.915625,
+     "refractedEl": 53.784434
+    },
+    {
+     "t": 14400,
+     "airlessAz": 265.584929,
+     "airlessEl": 12.341811,
+     "refractedAz": 265.584929,
+     "refractedEl": 12.415879
+    },
+    {
+     "t": 28800,
+     "airlessAz": 220.95076,
+     "airlessEl": -27.579793,
+     "refractedAz": 220.95076,
+     "refractedEl": -26.93318
+    },
+    {
+     "t": 43200,
+     "airlessAz": 151.863104,
+     "airlessEl": -32.924506,
+     "refractedAz": 151.863104,
+     "refractedEl": -32.277893
+    },
+    {
+     "t": 57600,
+     "airlessAz": 102.51309,
+     "airlessEl": 3.039889,
+     "refractedAz": 102.51309,
+     "refractedEl": 3.265818
+    },
+    {
+     "t": 72000,
+     "airlessAz": 56.810582,
+     "airlessEl": 46.659915,
+     "refractedAz": 56.810582,
+     "refractedEl": 46.675879
+    }
+   ]
+  },
+  {
+   "body": "pluto",
+   "observer": "wellington",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     25720.8
+    ],
+    "transit": [
+     52683.8
+    ],
+    "set": [
+     79647.9
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     25740
+    ],
+    "transit": [
+     52740
+    ],
+    "set": [
+     79740
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 218.107282,
+     "airlessEl": -15.821403,
+     "refractedAz": 218.107282,
+     "refractedEl": -15.174791
+    },
+    {
+     "t": 14400,
+     "airlessAz": 159.916085,
+     "airlessEl": -23.183313,
+     "refractedAz": 159.916085,
+     "refractedEl": -22.5367
+    },
+    {
+     "t": 28800,
+     "airlessAz": 113.551737,
+     "airlessEl": 7.985323,
+     "refractedAz": 113.551737,
+     "refractedEl": 8.095526
+    },
+    {
+     "t": 43200,
+     "airlessAz": 73.336686,
+     "airlessEl": 52.171853,
+     "refractedAz": 73.336686,
+     "refractedEl": 52.184999
+    },
+    {
+     "t": 57600,
+     "airlessAz": 310.581247,
+     "airlessEl": 64.811044,
+     "refractedAz": 310.581247,
+     "refractedEl": 64.819018
+    },
+    {
+     "t": 72000,
+     "airlessAz": 257.941681,
+     "airlessEl": 21.62105,
+     "refractedAz": 257.941681,
+     "refractedEl": 21.663145
+    }
+   ]
+  },
+  {
+   "body": "pluto",
+   "observer": "wellington",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     77174.6
+    ],
+    "transit": [
+     18152.6
+    ],
+    "set": [
+     45298.9
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     77160
+    ],
+    "transit": [
+     18180
+    ],
+    "set": [
+     45360
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 99.727552,
+     "airlessEl": 25.608692,
+     "refractedAz": 99.727552,
+     "refractedEl": 25.643666
+    },
+    {
+     "t": 14400,
+     "airlessAz": 41.295214,
+     "airlessEl": 67.953862,
+     "refractedAz": 41.295214,
+     "refractedEl": 67.96073
+    },
+    {
+     "t": 28800,
+     "airlessAz": 281.545225,
+     "airlessEl": 49.036681,
+     "refractedAz": 281.545225,
+     "refractedEl": 49.051374
+    },
+    {
+     "t": 43200,
+     "airlessAz": 242.931345,
+     "airlessEl": 5.137374,
+     "refractedAz": 242.931345,
+     "refractedEl": 5.29537
+    },
+    {
+     "t": 57600,
+     "airlessAz": 195.203375,
+     "airlessEl": -23.643294,
+     "refractedAz": 195.203375,
+     "refractedEl": -22.996681
+    },
+    {
+     "t": 72000,
+     "airlessAz": 138.343014,
+     "airlessEl": -12.923292,
+     "refractedAz": 138.343014,
+     "refractedEl": -12.27668
+    }
+   ]
+  },
+  {
+   "body": "pluto",
+   "observer": "riyadh",
+   "date": "2000-01-01",
+   "events": {
+    "rise": [
+     4662.6
+    ],
+    "transit": [
+     25070.4
+    ],
+    "set": [
+     45478.0
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     4500
+    ],
+    "transit": [
+     25080
+    ],
+    "set": [
+     45720
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 94.441876,
+     "airlessEl": -18.027323,
+     "refractedAz": 94.441876,
+     "refractedEl": -17.38071
+    },
+    {
+     "t": 14400,
+     "airlessAz": 124.570934,
+     "airlessEl": 33.322973,
+     "refractedAz": 124.570934,
+     "refractedEl": 33.348601
+    },
+    {
+     "t": 28800,
+     "airlessAz": 204.487441,
+     "airlessEl": 50.561704,
+     "refractedAz": 204.487441,
+     "refractedEl": 50.575628
+    },
+    {
+     "t": 43200,
+     "airlessAz": 253.518009,
+     "airlessEl": 7.779411,
+     "refractedAz": 253.518009,
+     "refractedEl": 7.892136
+    },
+    {
+     "t": 57600,
+     "airlessAz": 279.849158,
+     "airlessEl": -46.177518,
+     "refractedAz": 279.849158,
+     "refractedEl": -45.530905
+    },
+    {
+     "t": 72000,
+     "airlessAz": 51.063348,
+     "airlessEl": -69.600295,
+     "refractedAz": 51.063348,
+     "refractedEl": -68.953682
+    }
+   ]
+  },
+  {
+   "body": "pluto",
+   "observer": "riyadh",
+   "date": "2024-06-21",
+   "events": {
+    "rise": [
+     64347.3
+    ],
+    "transit": [
+     83336.5
+    ],
+    "set": [
+     16166.9
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     64140
+    ],
+    "transit": [
+     83340
+    ],
+    "set": [
+     16440
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 194.395551,
+     "airlessEl": 40.762421,
+     "refractedAz": 194.395551,
+     "refractedEl": 40.782018
+    },
+    {
+     "t": 14400,
+     "airlessAz": 241.627232,
+     "airlessEl": 5.401722,
+     "refractedAz": 241.627232,
+     "refractedEl": 5.553753
+    },
+    {
+     "t": 28800,
+     "airlessAz": 262.381259,
+     "airlessEl": -46.425468,
+     "refractedAz": 262.381259,
+     "refractedEl": -45.778855
+    },
+    {
+     "t": 43200,
+     "airlessAz": 81.929067,
+     "airlessEl": -78.56985,
+     "refractedAz": 81.929067,
+     "refractedEl": -77.923237
+    },
+    {
+     "t": 57600,
+     "airlessAz": 104.994997,
+     "airlessEl": -24.580007,
+     "refractedAz": 104.994997,
+     "refractedEl": -23.933394
+    },
+    {
+     "t": 72000,
+     "airlessAz": 132.280821,
+     "airlessEl": 23.644018,
+     "refractedAz": 132.280821,
+     "refractedEl": 23.682229
+    }
+   ]
+  },
+  {
+   "body": "pluto",
+   "observer": "riyadh",
+   "date": "2026-11-17",
+   "events": {
+    "rise": [
+     29905.4
+    ],
+    "transit": [
+     48808.3
+    ],
+    "set": [
+     67711.5
+    ]
+   },
+   "jplFlags": {
+    "rise": [
+     29700
+    ],
+    "transit": [
+     48840
+    ],
+    "set": [
+     67980
+    ]
+   },
+   "samples": [
+    {
+     "t": 0,
+     "airlessAz": 268.751026,
+     "airlessEl": -68.179886,
+     "refractedAz": 268.751026,
+     "refractedEl": -67.533273
+    },
+    {
+     "t": 14400,
+     "airlessAz": 95.249369,
+     "airlessEl": -57.026065,
+     "refractedAz": 95.249369,
+     "refractedEl": -56.379453
+    },
+    {
+     "t": 28800,
+     "airlessAz": 113.993291,
+     "airlessEl": -4.369715,
+     "refractedAz": 113.993291,
+     "refractedEl": -3.723102
+    },
+    {
+     "t": 43200,
+     "airlessAz": 153.073453,
+     "airlessEl": 36.396995,
+     "refractedAz": 153.073453,
+     "refractedEl": 36.41988
+    },
+    {
+     "t": 57600,
+     "airlessAz": 219.179183,
+     "airlessEl": 29.79804,
+     "refractedAz": 219.179183,
+     "refractedEl": 29.827407
+    },
+    {
+     "t": 72000,
+     "airlessAz": 250.868413,
+     "airlessEl": -15.580333,
+     "refractedAz": 250.868413,
+     "refractedEl": -14.93372
+    }
+   ]
+  }
+ ]
+}
