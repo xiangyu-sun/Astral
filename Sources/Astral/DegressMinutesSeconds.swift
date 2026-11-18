@@ -2,7 +2,7 @@ import Foundation
 
 private let dmsRegex: NSRegularExpression = {
   // Matches degrees°minutes′seconds″[N|S|E|W], case-insensitive
-  let pattern = #"(\d{1,3})°\s*(?:(\d{1,2})[′'])?\s*(?:(\d*\.?\d+)[″"])?\s*([NSEW])?"#
+  let pattern = #"(\d{1,3})°\s*(?:(\d{1,2})[′'](?!'))?\s*(?:(\d*\.?\d+)(?:[″"]|''))?\s*([NSEW])?"#
   return try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
 }()
 

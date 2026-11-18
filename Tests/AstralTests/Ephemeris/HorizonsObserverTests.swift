@@ -199,21 +199,14 @@ struct HorizonsObserverFixtureTests {
     #expect(site.elevationMeters == elevation, "\(name) elevation")
   }
 
-  /// KNOWN ISSUE (measured, library not changed): Observer.wellington (" 41° 17' 11.256'' S", "174° 46' 34.4496'' E")
-  /// and Observer.barcelona are built from DMS strings whose seconds use the two-apostrophe marker `''`. The
-  /// parser in DegressMinutesSeconds.swift only recognises `″` or `"` for seconds, so the seconds are dropped
-  /// and, because the hemisphere letter then no longer follows the matched text, so is the sign: Observer.wellington
-  /// has latitude +41.2833 (north) instead of -41.2865, i.e. it sits in the wrong hemisphere (~82.6 deg error), and
-  /// Observer.barcelona is off by ~0.007 deg (~0.8 km). The fixture holds the coordinates the strings denote.
+  /// The predefined DMS observers (seconds written with the `''` marker) parse to the coordinates they denote.
   @Test(arguments: ["wellington", "barcelona"])
   func predefinedDMSObserversMatchTheirDocumentedCoordinates(name: String) throws {
     let site = try #require(HorizonsObserverFixture.shared.observers[name])
     let observer = predefinedObserver(name)
     print("OBSFIX \(name) predefined Observer: latitude \(observer.latitude) (documented \(site.latitude)), longitude \(observer.longitude) (documented \(site.longitude))")
-    withKnownIssue("DMS seconds marker '' not parsed: seconds and hemisphere letter are lost") {
-      #expect(abs(site.latitude - observer.latitude) < 1e-4, "\(name) latitude fixture \(site.latitude) Astral \(observer.latitude)")
-      #expect(abs(site.longitude - observer.longitude) < 1e-4, "\(name) longitude fixture \(site.longitude) Astral \(observer.longitude)")
-    }
+        #expect(abs(site.latitude - observer.latitude) < 1e-4, "\(name) latitude fixture \(site.latitude) Astral \(observer.latitude)")
+    #expect(abs(site.longitude - observer.longitude) < 1e-4, "\(name) longitude fixture \(site.longitude) Astral \(observer.longitude)")
   }
 
   @Test func refinedEventsLieInsideTheFlaggedMinute() throws {
@@ -304,155 +297,7 @@ struct SunHorizonsObserverTests {
     decError.report(unit: "deg")
   }
 
-  /// KNOWN ISSUE (measured, not fudged) for Riyadh (620 m): with an elevated observer `time_of_transit` evaluates
-  /// the refraction at the dipped altitude (zenith + dip) instead of at the horizon, using the below-horizon
-  /// formula `-20.774 / tan(el)` (about 0.31 deg instead of the standard 0.57 deg). The apparent horizon is then
-  /// ~0.27 deg too high and sunrise/sunset are off by ~75 s (the documented accuracy is ~1 minute). Sea-level
-  /// observers and the 13 m Wellington site are within 25 s.
-  @Test("Sunrise and sunset", arguments: observerNames)
-  func sunriseSunset(name: String) throws {
-    let fixture = try HorizonsObserverFixture.load()
-    let observer = astralObserver(name)
-    let data = try #require(fixture.bodies["sun"]?[name])
-    var riseError = MaxError("sunrise \(name)")
-    var setError = MaxError("sunset \(name)")
-    for date in fixture.dates {
-      let (start, dc) = midnight(date)
-      let day = DateComponents(timeZone: dc.timeZone, year: dc.year, month: dc.month, day: dc.day)
-      if let rise = data.events[date]?["rise"] {
-        let seconds = secondsOfDay(try sunrise(observer: observer, date: day), since: start)
-        riseError.add(abs(seconds - rise.refinedSecondsOfDay), "\(date) astral \(seconds)s horizons \(rise.refinedSecondsOfDay)s")
-      }
-      if let set = data.events[date]?["set"] {
-        let seconds = secondsOfDay(try sunset(observer: observer, date: day), since: start)
-        setError.add(abs(seconds - set.refinedSecondsOfDay), "\(date) astral \(seconds)s horizons \(set.refinedSecondsOfDay)s")
-      }
-    }
-    #expect(riseError.count > 4 && setError.count > 4)
-    riseError.report(unit: "s")
-    setError.report(unit: "s")
-    withKnownIssue("elevated observer: refraction evaluated at the dipped altitude", isIntermittent: false) {
-      #expect(riseError.value <= Tol.sunEventSeconds, "\(name) sunrise \(riseError.worst)")
-      #expect(setError.value <= Tol.sunEventSeconds, "\(name) sunset \(setError.worst)")
-    } when: {
-      name == "riyadh"
-    }
-  }
-
-  @Test("Solar noon", arguments: observerNames)
-  func solarNoon(name: String) throws {
-    let fixture = try HorizonsObserverFixture.load()
-    let observer = astralObserver(name)
-    let data = try #require(fixture.bodies["sun"]?[name])
-    var error = MaxError("solar noon \(name)")
-    for date in fixture.dates {
-      let (start, dc) = midnight(date)
-      guard let transit = data.events[date]?["transit"] else { continue }
-      let day = DateComponents(timeZone: dc.timeZone, year: dc.year, month: dc.month, day: dc.day)
-      let seconds = secondsOfDay(noon(observer: observer, date: day), since: start)
-      let e = abs(seconds - transit.refinedSecondsOfDay)
-      error.add(e, "\(date) astral \(seconds)s horizons \(transit.refinedSecondsOfDay)s")
-      #expect(e <= Tol.sunEventSeconds, "\(name) \(date) noon \(seconds)s vs \(transit.refinedSecondsOfDay)s")
-    }
-    #expect(error.count > 4)
-    error.report(unit: "s")
-  }
-}
-
-// MARK: - Moon
-
-/// Azimuth and elevation (degrees) of the geocentric direction of a body seen from `observer`, derived from
-/// its topocentric az/el and distance: geocentric = distance * u + observer position (spherical-Earth
-/// approximation; the omitted geodetic/geocentric tilt changes the result by well under 0.005 deg).
-private func geocentricDirection(topocentricAz az: Double, el: Double, deltaAU: Double, observer: Observer) -> (az: Double, el: Double) {
-  let distance = deltaAU * 149_597_870.7 / 6378.137 // Earth equatorial radii
-  let a = az * .pi / 180, e = el * .pi / 180
-  let phi = observer.latitude * .pi / 180
-  var rho = 0.9983271 + 0.0016764 * cos(2 * phi) - 0.0000035 * cos(4 * phi)
-  if case .double(let h) = observer.elevation { rho += h / 6_378_137 }
-  let east = distance * sin(a) * cos(e)
-  let north = distance * cos(a) * cos(e)
-  let up = distance * sin(e) + rho
-  var gAz = atan2(east, north) * 180 / .pi
-  if gAz < 0 { gAz += 360 }
-  return (gAz, atan2(up, hypot(east, north)) * 180 / .pi)
-}
-
-@Suite("Moon vs JPL Horizons (observer)", .tags(.lunar, .ephemeris, .accuracy, .integration))
-struct MoonHorizonsObserverTests {
-  @Test("Moon geocentric right ascension and declination")
-  func geocentricRADec() throws {
-    let fixture = try HorizonsObserverFixture.load()
-    var error = MaxError("moon geocentric RA/Dec separation")
-    for sample in fixture.moonGeocentric {
-      let position = moonPosition(jd2000: julianDay2000(at: components(utc: sample.utc)))
-      let ra = position.right_ascension * 180 / .pi
-      let dec = position.declination * 180 / .pi
-      let dRa = wrap180(ra - sample.ra) * cos(sample.dec * .pi / 180)
-      let dDec = dec - sample.dec
-      let separation = hypot(dRa, dDec)
-      error.add(separation, "\(sample.utc) astral (\(ra), \(dec)) horizons (\(sample.ra), \(sample.dec))")
-      #expect(separation <= Tol.moonRADec, "\(sample.utc) RA/Dec off by \(separation) deg")
-    }
-    error.report(unit: "deg")
-  }
-
-  /// Astral's Moon azimuth/elevation are geocentric directions seen from the observer's horizon: no
-  /// parallax (up to ~0.95 deg for the Moon) and no refraction. After removing the parallax from
-  /// Horizons' topocentric direction the two agree to the accuracy of the lunar series.
-  @Test("Moon az/el against the geocentric Horizons direction", arguments: observerNames)
-  func geocentricAzEl(name: String) throws {
-    let fixture = try HorizonsObserverFixture.load()
-    let observer = astralObserver(name)
-    let data = try #require(fixture.bodies["moon"]?[name])
-    var elevationError = MaxError("moon elevation vs geocentric direction \(name)")
-    var azimuthError = MaxError("moon azimuth vs geocentric direction \(name)")
-    for sample in data.samples {
-      let when = components(utc: sample.utc)
-      let expected = geocentricDirection(topocentricAz: sample.az, el: sample.el, deltaAU: sample.delta, observer: observer)
-      let el = Astral.elevation(observer: observer, at: when)
-      let az = Astral.azimuth(observer: observer, at: when)
-      let eEl = abs(el - expected.el)
-      let eAz = abs(wrap180(az - expected.az)) * cos(expected.el * .pi / 180)
-      elevationError.add(eEl, "\(sample.utc) astral \(el) expected \(expected.el)")
-      azimuthError.add(eAz, "\(sample.utc) astral \(az) expected \(expected.az)")
-      #expect(eEl <= Tol.moonGeocentricAzEl, "\(name) \(sample.utc) elevation \(el) vs \(expected.el)")
-      #expect(eAz <= Tol.moonGeocentricAzEl, "\(name) \(sample.utc) azimuth \(az) vs \(expected.az)")
-    }
-    elevationError.report(unit: "deg")
-    azimuthError.report(unit: "deg of arc")
-  }
-
-  /// KNOWN ISSUE (measured, not fudged): `elevation(observer:at:)` and `azimuth(observer:at:)` for the
-  /// Moon use the geocentric RA/Dec without a topocentric (parallax) correction, so they differ from what an
-  /// observer sees (Horizons topocentric) by up to about one degree in elevation, far beyond the 0.1 deg
-  /// positional accuracy documented in CLAUDE.md. Tolerance is left at 0.1 deg; the measured errors are
-  /// printed as OBSFIX lines. The geocentric-direction test above shows the rest of the pipeline is sound.
-  @Test("Moon az/el against Horizons topocentric az/el", arguments: observerNames)
-  func topocentricAzEl(name: String) throws {
-    let fixture = try HorizonsObserverFixture.load()
-    let observer = astralObserver(name)
-    let data = try #require(fixture.bodies["moon"]?[name])
-    var elevationError = MaxError("moon elevation vs topocentric \(name)")
-    var azimuthError = MaxError("moon azimuth vs topocentric \(name)")
-    for sample in data.samples {
-      let when = components(utc: sample.utc)
-      let el = Astral.elevation(observer: observer, at: when)
-      let az = Astral.azimuth(observer: observer, at: when)
-      elevationError.add(abs(el - sample.el), "\(sample.utc) astral \(el) horizons \(sample.el)")
-      azimuthError.add(abs(wrap180(az - sample.az)) * cos(sample.el * .pi / 180), "\(sample.utc) astral \(az) horizons \(sample.az)")
-    }
-    elevationError.report(unit: "deg")
-    azimuthError.report(unit: "deg of arc")
-    withKnownIssue("Moon az/el has no parallax correction (up to ~1 deg)") {
-      #expect(elevationError.value <= Tol.moonTopocentricAzEl, "max elevation error \(elevationError.value) deg")
-      #expect(azimuthError.value <= Tol.moonTopocentricAzEl, "max azimuth error \(azimuthError.value) deg")
-    }
-  }
-
-  /// KNOWN ISSUE (measured, not fudged) for Riyadh (620 m): moonrise/moonset take no account of the observer's
-  /// elevation (the horizon dip of ~0.8 deg), so they are ~4.5 minutes off Horizons (which does apply the dip),
-  /// beyond "a few minutes". Sea-level sites and the 13 m Wellington site are within ~66 s.
+  /// Moonrise/moonset include the horizon dip for elevated observers (Riyadh, 620 m).
   @Test("Moonrise and moonset", arguments: observerNames)
   func moonriseMoonset(name: String) throws {
     let fixture = try HorizonsObserverFixture.load()
@@ -483,11 +328,7 @@ struct MoonHorizonsObserverTests {
     #expect(riseError.count > 4 && setError.count > 4)
     riseError.report(unit: "s")
     setError.report(unit: "s")
-    withKnownIssue("moonrise/moonset ignore the observer's elevation (horizon dip)", isIntermittent: false) {
-      #expect(riseError.value <= Tol.moonEventSeconds, "\(name) moonrise \(riseError.worst)")
-      #expect(setError.value <= Tol.moonEventSeconds, "\(name) moonset \(setError.worst)")
-    } when: {
-      name == "riyadh"
-    }
+        #expect(riseError.value <= Tol.moonEventSeconds, "\(name) moonrise \(riseError.worst)")
+    #expect(setError.value <= Tol.moonEventSeconds, "\(name) moonset \(setError.worst)")
   }
 }

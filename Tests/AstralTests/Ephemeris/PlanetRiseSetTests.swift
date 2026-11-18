@@ -156,12 +156,8 @@ struct PlanetRiseSetFixtureTests {
     #expect(abs(wellington.lat - -(41 + 17.0 / 60 + 11.256 / 3600)) < 1e-9)
     #expect(abs(wellington.lon - (174 + 46.0 / 60 + 34.4496 / 3600)) < 1e-9)
     #expect(wellington.elevation_m == 13)
-    // KNOWN ISSUE (not touched here): `Observer.wellington`'s DMS strings use '' for seconds, which the DMS parser
-    // does not understand: the seconds are dropped and the hemisphere letter is missed, so the latitude comes out
-    // +41.28 (north) instead of south.
-    withKnownIssue(isIntermittent: true) {
-      #expect(abs(Observer.wellington.latitude - wellington.lat) < 1e-4)
-    }
+    #expect(abs(Observer.wellington.latitude - wellington.lat) < 1e-4)
+    #expect(abs(Observer.wellington.longitude - wellington.lon) < 1e-4)
   }
 
   @Test("Rise, transit and set match the Horizons level-horizon events", arguments: BodyID.allCases.filter { bodyTolerances[$0] != nil })

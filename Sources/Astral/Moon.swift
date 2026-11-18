@@ -280,6 +280,7 @@ func moon_transit_event(
   lmst: Degrees,
   latitude: Degrees,
   distance: Double,
+  horizonDip: Degrees = 0,
   window: inout [AstralBodyPosition])
   -> Transit
 {
@@ -314,7 +315,7 @@ func moon_transit_event(
   let horizontalParallax = degrees(asin(1.0 / distance))
   let atmosphericRefraction = 0.5667 // 34 arcmin standard refraction at horizon
   let moonSemiDiameter = 0.2725 * horizontalParallax
-  let correctedAltitude = -(atmosphericRefraction - horizontalParallax + moonSemiDiameter)
+  let correctedAltitude = -(atmosphericRefraction - horizontalParallax + moonSemiDiameter) - horizonDip
   let z = sin(radians(correctedAltitude))
 
   if hour == 0 {
@@ -421,6 +422,17 @@ func riseset(
   var rise_time: DateComponents? = nil
   var set_time: DateComponents? = nil
 
+  // An elevated observer sees the horizon below the astronomical one.
+  var horizonDip = 0.0
+  switch observer.elevation {
+  case .double(let elev) where elev > 0:
+    horizonDip = adjust_to_horizon(elevation: elev)
+  case .tuple(let elev, let dist):
+    horizonDip = adjust_to_obscuring_feature(elevation: (elev, dist))
+  default:
+    break
+  }
+
   // Loop over each hour to detect transit events.
   for hour in 0..<24 {
     let ph: Double = (Double(hour) + 1) / 24
@@ -436,6 +448,7 @@ func riseset(
       lmst: t0,
       latitude: observer.latitude,
       distance: interpolatedDistance,
+      horizonDip: horizonDip,
       window: &moon_position_window)
 
     switch transit_info {
@@ -662,7 +675,9 @@ func elevation(
   let y = -sh * cd
   let z = ch * cd * cl + sd * sl
   let r = sqrt(x * x + y * y)
-  return degrees(atan2(z, r))
+  // Geocentric elevation, then diurnal parallax (distance is in Earth radii) to get the topocentric value.
+  let geocentric = atan2(z, r)
+  return degrees(atan2(sin(geocentric) - 1 / position.distance, cos(geocentric)))
 }
 
 /// Calculates the Moon's zenith angle (in degrees) for the specified time and observer.

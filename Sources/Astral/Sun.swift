@@ -319,9 +319,10 @@ func time_of_transit(
     break
   }
 
-  // Apply refraction correction if needed.
+  // Apply refraction correction if needed. Refraction is evaluated at the true horizon: the dip moves the
+  // horizon down, but the light still grazes the atmosphere along the observer's level line.
   let adjustedZenith: Double = with_refraction
-    ? zenith + horizonAdjustment + refractionAtZenith(zenith + horizonAdjustment)
+    ? zenith + horizonAdjustment + refractionAtZenith(zenith)
     : zenith + horizonAdjustment
 
   // Convert the date to Julian Day.
