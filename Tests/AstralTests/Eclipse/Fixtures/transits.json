@@ -1,0 +1,79 @@
+{
+ "description": "NASA GSFC transit catalogs: geocentric contact times (UT, to the minute) and minimum separation. The date is that of greatest transit; a time earlier than 'greatest' that is later in the day than it belongs to the previous day (and vice versa).",
+ "source": {
+  "mercury": "https://eclipse.gsfc.nasa.gov/transit/catalog/MercuryCatalog.html",
+  "venus": "https://eclipse.gsfc.nasa.gov/transit/catalog/VenusCatalog.html"
+ },
+ "transits": [
+  {
+   "planet": "mercury",
+   "date": "2003-05-07",
+   "I": "05:13",
+   "II": "05:17",
+   "greatest": "07:52",
+   "III": "10:27",
+   "IV": "10:32",
+   "minimumSeparationArcsec": 708.3
+  },
+  {
+   "planet": "mercury",
+   "date": "2006-11-08",
+   "I": "19:12",
+   "II": "19:14",
+   "greatest": "21:41",
+   "III": "00:08",
+   "IV": "00:10",
+   "minimumSeparationArcsec": 422.9
+  },
+  {
+   "planet": "mercury",
+   "date": "2016-05-09",
+   "I": "11:12",
+   "II": "11:15",
+   "greatest": "14:57",
+   "III": "18:39",
+   "IV": "18:42",
+   "minimumSeparationArcsec": 318.5
+  },
+  {
+   "planet": "mercury",
+   "date": "2019-11-11",
+   "I": "12:35",
+   "II": "12:37",
+   "greatest": "15:20",
+   "III": "18:02",
+   "IV": "18:04",
+   "minimumSeparationArcsec": 75.9
+  },
+  {
+   "planet": "mercury",
+   "date": "2032-11-13",
+   "I": "06:41",
+   "II": "06:43",
+   "greatest": "08:54",
+   "III": "11:05",
+   "IV": "11:07",
+   "minimumSeparationArcsec": 572.1
+  },
+  {
+   "planet": "venus",
+   "date": "2004-06-08",
+   "I": "05:13",
+   "II": "05:33",
+   "greatest": "08:20",
+   "III": "11:07",
+   "IV": "11:26",
+   "minimumSeparationArcsec": 626.9
+  },
+  {
+   "planet": "venus",
+   "date": "2012-06-06",
+   "I": "22:09",
+   "II": "22:27",
+   "greatest": "01:29",
+   "III": "04:32",
+   "IV": "04:49",
+   "minimumSeparationArcsec": 554.4
+  }
+ ]
+}

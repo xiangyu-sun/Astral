@@ -1,0 +1,58 @@
+# source: https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2025Sep21Pbeselm.html
+
+            Besselian Elements for the Partial Solar Eclipse of  2025 Sep 21
+            Non-Central Eclipse
+            Equatorial Conjunction:     20:51:38.2 TDT     J.D. = 2460940.369193
+              (Sun & Moon in R.A.)    (=20:50:27.1 UT)
+
+             Ecliptic Conjunction:      19:55:17.0 TDT     J.D. = 2460940.330057
+             (Sun & Moon in Ec. Lo.)  (=19:54:05.8 UT)
+
+                  Instant of            19:43:03.9 TDT     J.D. = 2460940.321573
+               Greatest Eclipse:      (=19:41:52.8 UT)
+
+
+            --------------------------------------------------------------------------- 
+                        Gamma = -1.0650            Ephemerides = VSOP87/ELP2000-85
+            Eclipse Magnitude =  0.8551           Lunation No. =     318
+                           ΔT =    71.1 s         Saros Series =  154 ( 7/71)
+
+            Lunar Radius   k1 = 0.272488 (Penumbra)        Shift in      Δb =  0.00"
+             Constants:    k2 = 0.272281 (Umbra)       Lunar Position:   Δl =  0.00"
+
+            --------------------------------------------------------------------------- 
+            Geocentric Coordinates of Sun & Moon at Greatest Eclipse (VSOP87/ELP2000-85):
+
+            Sun:       R.A. = 11h56m36.9s         Moon:      R.A. = 11h54m42.8s
+                       Dec. =+00°22'00.7"                    Dec. =-00°29'14.6"
+              Semi-Diameter =    15'55.9"           Semi-Diameter =    15'02.8"
+                Eq.Hor.Par. =       08.8"             Eq.Hor.Par. =  0°55'13.2"
+
+            --------------------------------------------------------------------------- 
+            Polynomial Besselian Elements for:   2025 Sep 21   20:00:00.0 TDT  (=t0)
+
+              n        x          y         d          l1         l2          μ
+
+              0  -0.390002  -1.001816    0.36472   0.562492   0.016273  121.78191
+              1   0.4531641 -0.2521622  -0.015600  0.0000909  0.0000905  15.004772
+              2   0.0000024  0.0000456  -0.000000 -0.0000102 -0.0000102
+              3  -0.0000064  0.0000032
+
+                             Tan ƒ1 = 0.0046583    Tan ƒ2 = 0.0046351
+
+            At time t1 (decimal hours), each Besselian element is evaluated by:
+
+               a = a0 + a1*t + a2*t^2 + a3*t^3    (or a = Σ [an*t^n]; n = 0 to 3)
+
+                  where:    a = x, y, d, l1, l2, or μ
+                            t = t1 - t0  (decimal hours) and t0 = 20.000 TDT
+
+
+            The Besselian elements were derived from a least-squares fit to elements
+            calculated at five uniformly spaced times over a six hour period centered at t0.
+            The Besselian elements are valid over the period 17.00 ≤ t0 ≤ 23.00 TDT.
+
+            Note that all times are expressed in Terrestrial Dynamical Time (TDT).
+
+                   Saros Series 154:  Member  7 of 71 eclipses in series.
+

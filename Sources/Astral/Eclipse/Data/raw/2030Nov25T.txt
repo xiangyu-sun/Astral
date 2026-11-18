@@ -1,0 +1,71 @@
+# source: https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2030Nov25Tbeselm.html
+
+            Besselian Elements for the Total Solar Eclipse of  2030 Nov 25
+            Equatorial Conjunction:     06:55:25.1 TDT     J.D. = 2462830.788485
+              (Sun & Moon in R.A.)    (=06:54:07.8 UT)
+
+             Ecliptic Conjunction:      06:47:39.0 TDT     J.D. = 2462830.783091
+             (Sun & Moon in Ec. Lo.)  (=06:46:21.8 UT)
+
+                  Instant of            06:51:36.5 TDT     J.D. = 2462830.785839
+               Greatest Eclipse:      (=06:50:19.2 UT)
+
+
+            --------------------------------------------------------------------------- 
+                        Gamma = -0.3868            Ephemerides = VSOP87/ELP2000-85
+            Eclipse Magnitude =  1.0468           Lunation No. =     382
+                           ΔT =    77.3 s         Saros Series =  133 (46/72)
+
+            Lunar Radius   k1 = 0.272488 (Penumbra)        Shift in      Δb =  0.00"
+             Constants:    k2 = 0.272281 (Umbra)       Lunar Position:   Δl =  0.00"
+
+            --------------------------------------------------------------------------- 
+            Geocentric Coordinates of Sun & Moon at Greatest Eclipse (VSOP87/ELP2000-85):
+
+            Sun:       R.A. = 16h03m58.7s         Moon:      R.A. = 16h03m49.1s
+                       Dec. =-20°45'39.0"                    Dec. =-21°09'10.9"
+              Semi-Diameter =    16'12.1"           Semi-Diameter =    16'41.7"
+                Eq.Hor.Par. =       08.9"             Eq.Hor.Par. =  1°01'16.4"
+
+            --------------------------------------------------------------------------- 
+            Polynomial Besselian Elements for:   2030 Nov 25   07:00:00.0 TDT  (=t0)
+
+              n        x          y         d          l1         l2          μ
+
+              0   0.044200  -0.392726  -20.76100   0.538213  -0.007886  288.27457
+              1   0.5787731 -0.0551896  -0.007989 -0.0000379 -0.0000377  14.998360
+              2   0.0000157  0.0001744   0.000005 -0.0000130 -0.0000130
+              3  -0.0000099  0.0000008
+
+                             Tan ƒ1 = 0.0047361    Tan ƒ2 = 0.0047125
+
+            At time t1 (decimal hours), each Besselian element is evaluated by:
+
+               a = a0 + a1*t + a2*t^2 + a3*t^3    (or a = Σ [an*t^n]; n = 0 to 3)
+
+                  where:    a = x, y, d, l1, l2, or μ
+                            t = t1 - t0  (decimal hours) and t0 =  7.000 TDT
+
+
+            The Besselian elements were derived from a least-squares fit to elements
+            calculated at five uniformly spaced times over a six hour period centered at t0.
+            The Besselian elements are valid over the period  4.00 ≤ t0 ≤ 10.00 TDT.
+
+            Note that all times are expressed in Terrestrial Dynamical Time (TDT).
+
+                   Saros Series 133:  Member 46 of 72 eclipses in series.
+
+
+
+
+   Instant of 
+Greatest Eclipse:       Time =  06:50:19.2 UT       Lat = 43°36.8'S      Long = 071°14.5'E
+      (GE)               Sun Altitude =  67.0°          Path Width = 169.3 km
+                          Sun Azimuth =   7.0°    Central Duration =   03m43.5s
+
+
+   Instant of 
+Greatest Duration:      Time =    06:51:53 UT       Lat =   43°43'S      Long =   072°02'E
+      (GD)               Sun Altitude =  67.0°          Path Width = 169.2 km
+                          Sun Azimuth =   4.1°    Central Duration =   03m43.6s
+
