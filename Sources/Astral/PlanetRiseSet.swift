@@ -78,9 +78,8 @@ public func planetRise(
   _ body: BodyID,
   observer: Observer,
   date: DateComponents = Date().components(),
-  tzinfo: TimeZone = .utc)
-  throws -> DateComponents
-{
+  tzinfo: TimeZone = .utc
+) throws -> DateComponents {
   try planetEvent(.rise, body, observer: observer, date: date, tzinfo: tzinfo)
 }
 
@@ -91,9 +90,8 @@ public func planetSet(
   _ body: BodyID,
   observer: Observer,
   date: DateComponents = Date().components(),
-  tzinfo: TimeZone = .utc)
-  throws -> DateComponents
-{
+  tzinfo: TimeZone = .utc
+) throws -> DateComponents {
   try planetEvent(.set, body, observer: observer, date: date, tzinfo: tzinfo)
 }
 
@@ -105,9 +103,8 @@ public func planetTransit(
   _ body: BodyID,
   observer: Observer,
   date: DateComponents = Date().components(),
-  tzinfo: TimeZone = .utc)
-  throws -> DateComponents
-{
+  tzinfo: TimeZone = .utc
+) throws -> DateComponents {
   try planetEvent(.transit, body, observer: observer, date: date, tzinfo: tzinfo)
 }
 
@@ -134,9 +131,8 @@ public func planetZenith(
   _ body: BodyID,
   observer: Observer,
   dateandtime: DateComponents = Date().components(),
-  with_refraction: Bool = true)
-  throws -> Double
-{
+  with_refraction: Bool = true
+) throws -> Double {
   try planetZenith(body, observer: observer, dateandtime: planetInstant(dateandtime), with_refraction: with_refraction)
 }
 
@@ -144,9 +140,8 @@ public func planetZenith(
 public func planetAzimuth(
   _ body: BodyID,
   observer: Observer,
-  dateandtime: DateComponents = Date().components())
-  throws -> Double
-{
+  dateandtime: DateComponents = Date().components()
+) throws -> Double {
   try planetAzimuth(body, observer: observer, dateandtime: planetInstant(dateandtime))
 }
 
@@ -155,9 +150,8 @@ public func planetElevation(
   _ body: BodyID,
   observer: Observer,
   dateandtime: DateComponents = Date().components(),
-  with_refraction: Bool = true)
-  throws -> Double
-{
+  with_refraction: Bool = true
+) throws -> Double {
   try planetElevation(body, observer: observer, dateandtime: planetInstant(dateandtime), with_refraction: with_refraction)
 }
 
@@ -173,7 +167,12 @@ public func planetAzimuth(_ body: BodyID, observer: Observer, dateandtime: Date)
 }
 
 /// `Date` flavour of ``planetElevation(_:observer:dateandtime:with_refraction:)``.
-public func planetElevation(_ body: BodyID, observer: Observer, dateandtime: Date, with_refraction: Bool = true) throws -> Double {
+public func planetElevation(
+  _ body: BodyID,
+  observer: Observer,
+  dateandtime: Date,
+  with_refraction: Bool = true
+) throws -> Double {
   let element = try planetBody(body)
   let geometric = observePlanet(element, observer: observer, jd: JulianDate(dateandtime).days).altitude
   return with_refraction ? geometric + refractionAtZenith(90.0 - geometric) : geometric
@@ -195,7 +194,7 @@ public func planetPosition(_ body: BodyID, dateandtime: Date) throws -> PlanetPo
   return PlanetPosition(rightAscension: ra, declination: degrees(place.declination), distance: place.distance)
 }
 
-// MARK: - Apparent place
+// MARK: - ApparentPlace
 
 private struct ApparentPlace {
   var rightAscension: Radians
@@ -232,12 +231,14 @@ func gmstDegrees(jd: Double) -> Degrees {
 }
 
 private func rotateX(_ v: SIMD3<Double>, _ angle: Double) -> SIMD3<Double> {
-  let c = cos(angle), s = sin(angle)
+  let c = cos(angle)
+  let s = sin(angle)
   return SIMD3(v.x, v.y * c - v.z * s, v.y * s + v.z * c)
 }
 
 private func rotateZ(_ v: SIMD3<Double>, _ angle: Double) -> SIMD3<Double> {
-  let c = cos(angle), s = sin(angle)
+  let c = cos(angle)
+  let s = sin(angle)
   return SIMD3(v.x * c - v.y * s, v.x * s + v.y * c, v.z)
 }
 
@@ -270,12 +271,18 @@ private func apparentGeocentric(_ body: Body, jd: Double) -> ApparentPlace {
   let zeta = (2306.2181 * T + 0.30188 * T * T + 0.017998 * T * T * T) * arcsec
   let z = (2306.2181 * T + 1.09468 * T * T + 0.018203 * T * T * T) * arcsec
   let theta = (2004.3109 * T - 0.42665 * T * T - 0.041833 * T * T * T) * arcsec
-  let cz = cos(zeta), sz = sin(zeta), cZ = cos(z), sZ = sin(z), ct = cos(theta), st = sin(theta)
+  let cz = cos(zeta)
+  let sz = sin(zeta)
+  let cZ = cos(z)
+  let sZ = sin(z)
+  let ct = cos(theta)
+  let st = sin(theta)
   let p = equatorialJ2000
   let mean = SIMD3(
     (cz * ct * cZ - sz * sZ) * p.x + (-sz * ct * cZ - cz * sZ) * p.y + (-st * cZ) * p.z,
     (cz * ct * sZ + sz * cZ) * p.x + (-sz * ct * sZ + cz * cZ) * p.y + (-st * sZ) * p.z,
-    (cz * st) * p.x + (-sz * st) * p.y + ct * p.z)
+    (cz * st) * p.x + (-sz * st) * p.y + ct * p.z
+  )
 
   // Nutation: mean equator -> ecliptic of date, longitude += Δψ, back to the true equator (ε + Δε).
   let nut = nutation(juliancentury: T)
@@ -290,10 +297,11 @@ private func apparentGeocentric(_ body: Body, jd: Double) -> ApparentPlace {
     rightAscension: atan2(trueEquatorial.y, trueEquatorial.x),
     declination: asin(max(-1, min(1, trueEquatorial.z))),
     distance: distance,
-    gast: gast)
+    gast: gast
+  )
 }
 
-// MARK: - Horizontal coordinates
+// MARK: - Observation
 
 private struct Observation {
   /// Geometric (airless) altitude in degrees, parallax included.
@@ -308,11 +316,11 @@ private func observePlanet(_ body: Body, observer: Observer, jd: Double) -> Obse
   let place = apparentGeocentric(body, jd: jd)
 
   let phi = radians(observer.latitude)
-  let height: Double
-  switch observer.elevation {
-  case .double(let metres): height = max(metres, 0)
-  case .tuple: height = 0
-  }
+  let height: Double =
+    switch observer.elevation {
+    case .double(let metres): max(metres, 0)
+    case .tuple: 0
+    }
 
   // Diurnal parallax (Meeus chapter 40).
   let hourAngle = radians(place.gast + observer.longitude) - place.rightAscension
@@ -324,12 +332,16 @@ private func observePlanet(_ body: Body, observer: Observer, jd: Double) -> Obse
   let deltaRA = atan2(-rhoCos * sinParallax * sin(hourAngle), cos(dec) - rhoCos * sinParallax * cos(hourAngle))
   let topoDec = atan2(
     (sin(dec) - rhoSin * sinParallax) * cos(deltaRA),
-    cos(dec) - rhoCos * sinParallax * cos(hourAngle))
+    cos(dec) - rhoCos * sinParallax * cos(hourAngle)
+  )
   let topoHour = hourAngle - deltaRA
 
-  let sh = sin(topoHour), ch = cos(topoHour)
-  let sd = sin(topoDec), cd = cos(topoDec)
-  let sl = sin(phi), cl = cos(phi)
+  let sh = sin(topoHour)
+  let ch = cos(topoHour)
+  let sd = sin(topoDec)
+  let cd = cos(topoDec)
+  let sl = sin(phi)
+  let cl = cos(phi)
   let x = -ch * cd * sl + sd * cl
   let y = -sh * cd
   let z = ch * cd * cl + sd * sl
@@ -338,13 +350,16 @@ private func observePlanet(_ body: Body, observer: Observer, jd: Double) -> Obse
   return Observation(
     altitude: degrees(atan2(z, (x * x + y * y).squareRoot())),
     azimuth: azimuth,
-    hourAngle: degrees(Kepler.wrapPi(topoHour)))
+    hourAngle: degrees(Kepler.wrapPi(topoHour))
+  )
 }
 
-// MARK: - Event search
+// MARK: - PlanetEventKind
 
 private enum PlanetEventKind {
-  case rise, set, transit
+  case rise
+  case set
+  case transit
 
   var name: String {
     switch self {
@@ -375,7 +390,8 @@ private func horizonAdjustment(for observer: Observer) -> Degrees {
 }
 
 private func bisect(_ a: Double, _ b: Double, _ f: (Double) -> Double) -> Double {
-  var lo = a, hi = b
+  var lo = a
+  var hi = b
   let negativeAtLo = f(lo) < 0
   for _ in 0..<50 {
     let mid = (lo + hi) / 2
@@ -390,9 +406,8 @@ private func planetEvent(
   _ id: BodyID,
   observer: Observer,
   date: DateComponents,
-  tzinfo: TimeZone)
-  throws -> DateComponents
-{
+  tzinfo: TimeZone
+) throws -> DateComponents {
   let body = try planetBody(id)
 
   // The local calendar day in tzinfo.

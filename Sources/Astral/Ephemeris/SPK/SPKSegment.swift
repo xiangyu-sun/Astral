@@ -28,7 +28,9 @@ public struct SPKSegment: Sendable, Hashable {
   public let stopET: Double
 
   /// The covered span, TDB seconds past J2000.
-  public var coverage: ClosedRange<Double> { startET...stopET }
+  public var coverage: ClosedRange<Double> {
+    startET...stopET
+  }
 
   /// Whether `et` (TDB seconds past J2000) lies inside the segment.
   public func contains(et: Double) -> Bool {

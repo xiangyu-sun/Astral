@@ -77,8 +77,8 @@ public struct BesselianElements: Sendable, Hashable {
     l2: [Double],
     tanF1: Double,
     tanF2: Double,
-    validHours: ClosedRange<Double> = -3...3)
-  {
+    validHours: ClosedRange<Double> = -3...3
+  ) {
     self.label = label
     self.publishedType = publishedType
     self.t0 = t0
@@ -111,8 +111,8 @@ public struct BesselianElements: Sendable, Hashable {
     l2: [Double],
     tanF1: Double,
     tanF2: Double,
-    validHours: ClosedRange<Double> = -3...3)
-  {
+    validHours: ClosedRange<Double> = -3...3
+  ) {
     let midnight = julianDay(at: DateComponents(year: t0Year, month: t0Month, day: t0Day))
     self.init(
       label: label,
@@ -127,7 +127,8 @@ public struct BesselianElements: Sendable, Hashable {
       l2: l2,
       tanF1: tanF1,
       tanF2: tanF2,
-      validHours: validHours)
+      validHours: validHours
+    )
   }
 
   // MARK: Public
@@ -172,17 +173,6 @@ public struct BesselianElements: Sendable, Hashable {
 
   // MARK: Internal
 
-  /// The elements at `t` hours after `t0`, with their hourly derivatives. Angles in radians.
-  func state(at t: Double) -> BesselianState {
-    let rad = Double.pi / 180
-    return BesselianState(
-      x: Self.poly(x, t), y: Self.poly(y, t),
-      d: Self.poly(d, t) * rad, mu: Self.poly(mu, t) * rad,
-      l1: Self.poly(l1, t), l2: Self.poly(l2, t),
-      dx: Self.derivative(x, t), dy: Self.derivative(y, t),
-      dd: Self.derivative(d, t) * rad, dmu: Self.derivative(mu, t) * rad)
-  }
-
   static func poly(_ c: [Double], _ t: Double) -> Double {
     var r = 0.0
     for coefficient in c.reversed() { r = r * t + coefficient }
@@ -194,6 +184,24 @@ public struct BesselianElements: Sendable, Hashable {
     for (n, coefficient) in c.enumerated().reversed() where n > 0 { r = r * t + Double(n) * coefficient }
     return r
   }
+
+  /// The elements at `t` hours after `t0`, with their hourly derivatives. Angles in radians.
+  func state(at t: Double) -> BesselianState {
+    let rad = Double.pi / 180
+    return BesselianState(
+      x: Self.poly(x, t),
+      y: Self.poly(y, t),
+      d: Self.poly(d, t) * rad,
+      mu: Self.poly(mu, t) * rad,
+      l1: Self.poly(l1, t),
+      l2: Self.poly(l2, t),
+      dx: Self.derivative(x, t),
+      dy: Self.derivative(y, t),
+      dd: Self.derivative(d, t) * rad,
+      dmu: Self.derivative(mu, t) * rad
+    )
+  }
+
 }
 
 // MARK: - BesselianState

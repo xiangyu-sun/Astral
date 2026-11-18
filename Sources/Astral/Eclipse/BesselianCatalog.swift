@@ -21,7 +21,10 @@ extension BesselianElements {
     BesselianElements(
       label: "2023-04-20",
       publishedType: .hybrid,
-      t0Year: 2023, t0Month: 4, t0Day: 20, t0Hours: 4.0,
+      t0Year: 2023,
+      t0Month: 4,
+      t0Day: 20,
+      t0Hours: 4.0,
       deltaT: 70.3,
       x: [0.026967, 0.4950173, 1.37e-05, -7.2e-06],
       y: [-0.427322, 0.2441985, -4.94e-05, -3.7e-06],
@@ -29,12 +32,17 @@ extension BesselianElements {
       mu: [240.24289, 15.003411],
       l1: [0.546803, 0.0001216, -1.16e-05],
       l2: [0.000662, 0.000121, -1.15e-05],
-      tanF1: 0.0046549, tanF2: 0.0046318),
+      tanF1: 0.0046549,
+      tanF2: 0.0046318
+    ),
     // 2023Oct14A  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2023Oct14Abeselm.html)  gamma 0.3754  magnitude 0.9520
     BesselianElements(
       label: "2023-10-14",
       publishedType: .annular,
-      t0Year: 2023, t0Month: 10, t0Day: 14, t0Hours: 18.0,
+      t0Year: 2023,
+      t0Month: 10,
+      t0Day: 14,
+      t0Hours: 18.0,
       deltaT: 70.5,
       x: [0.169751, 0.458548, 2.73e-05, -4.9e-06],
       y: [0.334837, -0.2413668, 2.4e-05, 3e-06],
@@ -42,12 +50,17 @@ extension BesselianElements {
       mu: [93.5017, 15.003533],
       l1: [0.564311, -8.91e-05, -1.03e-05],
       l2: [0.018083, -8.86e-05, -1.03e-05],
-      tanF1: 0.0046882, tanF2: 0.0046648),
+      tanF1: 0.0046882,
+      tanF2: 0.0046648
+    ),
     // 2024Apr08T  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2024Apr08Tbeselm.html)  gamma 0.3431  magnitude 1.0566
     BesselianElements(
       label: "2024-04-08",
       publishedType: .total,
-      t0Year: 2024, t0Month: 4, t0Day: 8, t0Hours: 18.0,
+      t0Year: 2024,
+      t0Month: 4,
+      t0Day: 8,
+      t0Hours: 18.0,
       deltaT: 70.6,
       x: [-0.318157, 0.5117105, 3.26e-05, -8.5e-06],
       y: [0.219747, 0.2709586, -5.94e-05, -4.7e-06],
@@ -55,12 +68,17 @@ extension BesselianElements {
       mu: [89.59122, 15.004084],
       l1: [0.535813, 6.18e-05, -1.28e-05],
       l2: [-0.010274, 6.15e-05, -1.27e-05],
-      tanF1: 0.0046683, tanF2: 0.004645),
+      tanF1: 0.0046683,
+      tanF2: 0.004645
+    ),
     // 2024Oct02A  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2024Oct02Abeselm.html)  gamma -0.3508  magnitude 0.9326
     BesselianElements(
       label: "2024-10-02",
       publishedType: .annular,
-      t0Year: 2024, t0Month: 10, t0Day: 2, t0Hours: 19.0,
+      t0Year: 2024,
+      t0Month: 10,
+      t0Day: 2,
+      t0Hours: 19.0,
       deltaT: 70.8,
       x: [-0.067968, 0.4416168, 1.42e-05, -4.9e-06],
       y: [-0.36318, -0.2435631, 3.39e-05, 2.9e-06],
@@ -68,12 +86,17 @@ extension BesselianElements {
       mu: [107.73106, 15.004331],
       l1: [0.570348, -2e-07, -9.8e-06],
       l2: [0.02409, -2e-07, -9.7e-06],
-      tanF1: 0.0046734, tanF2: 0.0046501),
+      tanF1: 0.0046734,
+      tanF2: 0.0046501
+    ),
     // 2025Mar29P  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2025Mar29Pbeselm.html)  gamma 1.0404  magnitude 0.9378
     BesselianElements(
       label: "2025-03-29",
       publishedType: .partial,
-      t0Year: 2025, t0Month: 3, t0Day: 29, t0Hours: 11.0,
+      t0Year: 2025,
+      t0Month: 3,
+      t0Day: 29,
+      t0Hours: 11.0,
       deltaT: 71.0,
       x: [-0.402783, 0.50941, 4.16e-05, -8.4e-06],
       y: [0.965641, 0.2788346, -7.23e-05, -4.8e-06],
@@ -81,12 +104,17 @@ extension BesselianElements {
       mu: [343.83157, 15.004364],
       l1: [0.535765, -5.33e-05, -1.29e-05],
       l2: [-0.010321, -5.3e-05, -1.28e-05],
-      tanF1: 0.0046823, tanF2: 0.004659),
+      tanF1: 0.0046823,
+      tanF2: 0.004659
+    ),
     // 2025Sep21P  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2025Sep21Pbeselm.html)  gamma -1.0650  magnitude 0.8551
     BesselianElements(
       label: "2025-09-21",
       publishedType: .partial,
-      t0Year: 2025, t0Month: 9, t0Day: 21, t0Hours: 20.0,
+      t0Year: 2025,
+      t0Month: 9,
+      t0Day: 21,
+      t0Hours: 20.0,
       deltaT: 71.1,
       x: [-0.390002, 0.4531641, 2.4e-06, -6.4e-06],
       y: [-1.001816, -0.2521622, 4.56e-05, 3.2e-06],
@@ -94,12 +122,17 @@ extension BesselianElements {
       mu: [121.78191, 15.004772],
       l1: [0.562492, 9.09e-05, -1.02e-05],
       l2: [0.016273, 9.05e-05, -1.02e-05],
-      tanF1: 0.0046583, tanF2: 0.0046351),
+      tanF1: 0.0046583,
+      tanF2: 0.0046351
+    ),
     // 2026Feb17A  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2026Feb17Abeselm.html)  gamma -0.9743  magnitude 0.9630
     BesselianElements(
       label: "2026-02-17",
       publishedType: .annular,
-      t0Year: 2026, t0Month: 2, t0Day: 17, t0Hours: 12.0,
+      t0Year: 2026,
+      t0Month: 2,
+      t0Day: 17,
+      t0Hours: 12.0,
       deltaT: 71.2,
       x: [0.322033, 0.4827116, -3.36e-05, -4.9e-06],
       y: [-0.926964, 0.2355386, 0.0001168, -3.3e-06],
@@ -107,12 +140,17 @@ extension BesselianElements {
       mu: [356.51443, 15.001985],
       l1: [0.557719, -0.0001181, -1.11e-05],
       l2: [0.011523, -0.0001175, -1.11e-05],
-      tanF1: 0.004732, tanF2: 0.0047085),
+      tanF1: 0.004732,
+      tanF2: 0.0047085
+    ),
     // 2026Aug12T  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2026Aug12Tbeselm.html)  gamma 0.8978  magnitude 1.0386
     BesselianElements(
       label: "2026-08-12",
       publishedType: .total,
-      t0Year: 2026, t0Month: 8, t0Day: 12, t0Hours: 18.0,
+      t0Year: 2026,
+      t0Month: 8,
+      t0Day: 12,
+      t0Hours: 18.0,
       deltaT: 71.4,
       x: [0.475593, 0.5189288, -7.73e-05, -8.8e-06],
       y: [0.771161, -0.2301664, -0.0001245, 3.7e-06],
@@ -120,12 +158,17 @@ extension BesselianElements {
       mu: [88.74776, 15.003093],
       l1: [0.537954, 9.4e-05, -1.21e-05],
       l2: [-0.008142, 9.35e-05, -1.21e-05],
-      tanF1: 0.0046141, tanF2: 0.0045911),
+      tanF1: 0.0046141,
+      tanF2: 0.0045911
+    ),
     // 2027Feb06A  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2027Feb06Abeselm.html)  gamma -0.2952  magnitude 0.9281
     BesselianElements(
       label: "2027-02-06",
       publishedType: .annular,
-      t0Year: 2027, t0Month: 2, t0Day: 6, t0Hours: 16.0,
+      t0Year: 2027,
+      t0Month: 2,
+      t0Day: 6,
+      t0Hours: 16.0,
       deltaT: 71.6,
       x: [0.111743, 0.4664823, -3.25e-05, -3.2e-06],
       y: [-0.273277, 0.203184, 0.0001025, -2.5e-06],
@@ -133,12 +176,17 @@ extension BesselianElements {
       mu: [56.49306, 15.000512],
       l1: [0.571927, -6.53e-05, -1.01e-05],
       l2: [0.025661, -6.5e-05, -1e-05],
-      tanF1: 0.0047426, tanF2: 0.004719),
+      tanF1: 0.0047426,
+      tanF2: 0.004719
+    ),
     // 2027Aug02T  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2027Aug02Tbeselm.html)  gamma 0.1421  magnitude 1.0790
     BesselianElements(
       label: "2027-08-02",
       publishedType: .total,
-      t0Year: 2027, t0Month: 8, t0Day: 2, t0Hours: 10.0,
+      t0Year: 2027,
+      t0Month: 8,
+      t0Day: 2,
+      t0Hours: 10.0,
       deltaT: 71.7,
       x: [-0.019645, 0.5447105, -4.44e-05, -9.1e-06],
       y: [0.160063, -0.2111569, -0.0001217, 3.7e-06],
@@ -146,12 +194,17 @@ extension BesselianElements {
       mu: [328.42249, 15.002093],
       l1: [0.530596, 1.38e-05, -1.28e-05],
       l2: [-0.015464, 1.37e-05, -1.28e-05],
-      tanF1: 0.0046064, tanF2: 0.0045834),
+      tanF1: 0.0046064,
+      tanF2: 0.0045834
+    ),
     // 2028Jan26A  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2028Jan26Abeselm.html)  gamma 0.3901  magnitude 0.9208
     BesselianElements(
       label: "2028-01-26",
       publishedType: .annular,
-      t0Year: 2028, t0Month: 1, t0Day: 26, t0Hours: 15.0,
+      t0Year: 2028,
+      t0Month: 1,
+      t0Day: 26,
+      t0Hours: 15.0,
       deltaT: 71.9,
       x: [-0.205226, 0.4742711, -3.77e-05, -7e-06],
       y: [0.340278, 0.1738579, 9.68e-05, -2e-06],
@@ -159,12 +212,17 @@ extension BesselianElements {
       mu: [41.8912, 14.998972],
       l1: [0.574116, 4.2e-05, -9.9e-06],
       l2: [0.027839, 4.18e-05, -9.9e-06],
-      tanF1: 0.0047501, tanF2: 0.0047264),
+      tanF1: 0.0047501,
+      tanF2: 0.0047264
+    ),
     // 2028Jul22T  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2028Jul22Tbeselm.html)  gamma -0.6055  magnitude 1.0560
     BesselianElements(
       label: "2028-07-22",
       publishedType: .total,
-      t0Year: 2028, t0Month: 7, t0Day: 22, t0Hours: 3.0,
+      t0Year: 2028,
+      t0Month: 7,
+      t0Day: 22,
+      t0Hours: 3.0,
       deltaT: 72.1,
       x: [-0.1543, 0.5449941, -2.26e-05, -9.5e-06],
       y: [-0.58638, -0.1746077, -0.0001022, 2.9e-06],
@@ -172,12 +230,17 @@ extension BesselianElements {
       mu: [223.37866, 15.001018],
       l1: [0.535236, -8.59e-05, -1.23e-05],
       l2: [-0.010847, -8.54e-05, -1.22e-05],
-      tanF1: 0.0046016, tanF2: 0.0045786),
+      tanF1: 0.0046016,
+      tanF2: 0.0045786
+    ),
     // 2029Jan14P  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2029Jan14Pbeselm.html)  gamma 1.0553  magnitude 0.8714
     BesselianElements(
       label: "2029-01-14",
       publishedType: .partial,
-      t0Year: 2029, t0Month: 1, t0Day: 14, t0Hours: 17.0,
+      t0Year: 2029,
+      t0Month: 1,
+      t0Day: 14,
+      t0Hours: 17.0,
       deltaT: 72.2,
       x: [-0.407345, 0.5081627, -3.96e-05, -7.7e-06],
       y: [0.981051, 0.1455276, 9.23e-05, -2e-06],
@@ -185,12 +248,17 @@ extension BesselianElements {
       mu: [72.69289, 14.997629],
       l1: [0.562665, 0.0001189, -1.08e-05],
       l2: [0.016445, 0.0001183, -1.08e-05],
-      tanF1: 0.0047541, tanF2: 0.0047304),
+      tanF1: 0.0047541,
+      tanF2: 0.0047304
+    ),
     // 2029Jun12P  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2029Jun12Pbeselm.html)  gamma 1.2943  magnitude 0.4576
     BesselianElements(
       label: "2029-06-12",
       publishedType: .partial,
-      t0Year: 2029, t0Month: 6, t0Day: 12, t0Hours: 4.0,
+      t0Year: 2029,
+      t0Month: 6,
+      t0Day: 12,
+      t0Hours: 4.0,
       deltaT: 72.3,
       x: [-0.010734, 0.5247594, 1.01e-05, -6.7e-06],
       y: [1.295406, -0.0176371, -0.0002058, 4e-07],
@@ -198,12 +266,17 @@ extension BesselianElements {
       mu: [240.03554, 14.999201],
       l1: [0.556661, -0.0001027, -1.04e-05],
       l2: [0.010471, -0.0001022, -1.03e-05],
-      tanF1: 0.0046048, tanF2: 0.0045819),
+      tanF1: 0.0046048,
+      tanF2: 0.0045819
+    ),
     // 2029Jul11P  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2029Jul11Pbeselm.html)  gamma -1.4190  magnitude 0.2304
     BesselianElements(
       label: "2029-07-11",
       publishedType: .partial,
-      t0Year: 2029, t0Month: 7, t0Day: 11, t0Hours: 16.0,
+      t0Year: 2029,
+      t0Month: 7,
+      t0Day: 11,
+      t0Hours: 16.0,
       deltaT: 72.4,
       x: [-0.137212, 0.525257, -9.2e-06, -6.6e-06],
       y: [-1.427119, -0.1280404, -7.67e-05, 1.9e-06],
@@ -211,12 +284,17 @@ extension BesselianElements {
       mu: [58.60257, 15.000009],
       l1: [0.548755, -0.0001269, -1.1e-05],
       l2: [0.002604, -0.0001263, -1.09e-05],
-      tanF1: 0.0045994, tanF2: 0.0045765),
+      tanF1: 0.0045994,
+      tanF2: 0.0045765
+    ),
     // 2029Dec05P  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2029Dec05Pbeselm.html)  gamma -1.0609  magnitude 0.8910
     BesselianElements(
       label: "2029-12-05",
       publishedType: .partial,
-      t0Year: 2029, t0Month: 12, t0Day: 5, t0Hours: 15.0,
+      t0Year: 2029,
+      t0Month: 12,
+      t0Day: 5,
+      t0Hours: 15.0,
       deltaT: 72.5,
       x: [-0.063748, 0.5766308, -3.6e-06, -9.2e-06],
       y: [-1.059709, -0.0140158, 0.0002296, 0.0],
@@ -224,12 +302,17 @@ extension BesselianElements {
       mu: [47.30986, 14.997174],
       l1: [0.540641, 6.99e-05, -1.29e-05],
       l2: [-0.005469, 6.95e-05, -1.28e-05],
-      tanF1: 0.0047446, tanF2: 0.0047209),
+      tanF1: 0.0047446,
+      tanF2: 0.0047209
+    ),
     // 2030Jun01A  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2030Jun01Abeselm.html)  gamma 0.5626  magnitude 0.9443
     BesselianElements(
       label: "2030-06-01",
       publishedType: .annular,
-      t0Year: 2030, t0Month: 6, t0Day: 1, t0Hours: 6.0,
+      t0Year: 2030,
+      t0Month: 6,
+      t0Day: 1,
+      t0Hours: 6.0,
       deltaT: 76.9,
       x: [-0.269346, 0.5056356, 1.91e-05, -5.8e-06],
       y: [0.551976, 0.0210146, -0.0001586, -1e-07],
@@ -237,12 +320,17 @@ extension BesselianElements {
       mu: [270.53992, 14.999707],
       l1: [0.566149, -1.3e-05, -9.7e-06],
       l2: [0.019911, -1.29e-05, -9.7e-06],
-      tanF1: 0.004612, tanF2: 0.004589),
+      tanF1: 0.004612,
+      tanF2: 0.004589
+    ),
     // 2030Nov25T  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2030Nov25Tbeselm.html)  gamma -0.3868  magnitude 1.0468
     BesselianElements(
       label: "2030-11-25",
       publishedType: .total,
-      t0Year: 2030, t0Month: 11, t0Day: 25, t0Hours: 7.0,
+      t0Year: 2030,
+      t0Month: 11,
+      t0Day: 25,
+      t0Hours: 7.0,
       deltaT: 77.3,
       x: [0.0442, 0.5787731, 1.57e-05, -9.9e-06],
       y: [-0.392726, -0.0551896, 0.0001744, 8e-07],
@@ -250,12 +338,17 @@ extension BesselianElements {
       mu: [288.27457, 14.99836],
       l1: [0.538213, -3.79e-05, -1.3e-05],
       l2: [-0.007886, -3.77e-05, -1.3e-05],
-      tanF1: 0.0047361, tanF2: 0.0047125),
+      tanF1: 0.0047361,
+      tanF2: 0.0047125
+    ),
     // 2031May21A  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2031May21Abeselm.html)  gamma -0.1970  magnitude 0.9589
     BesselianElements(
       label: "2031-05-21",
       publishedType: .annular,
-      t0Year: 2031, t0Month: 5, t0Day: 21, t0Hours: 7.0,
+      t0Year: 2031,
+      t0Month: 5,
+      t0Day: 21,
+      t0Hours: 7.0,
       deltaT: 77.6,
       x: [-0.114762, 0.5112374, 7.4e-06, -5.9e-06],
       y: [-0.211215, 0.0579329, -0.0001182, -6e-07],
@@ -263,12 +356,17 @@ extension BesselianElements {
       mu: [285.85107, 15.000616],
       l1: [0.562404, 8.07e-05, -1e-05],
       l2: [0.016185, 8.02e-05, -1e-05],
-      tanF1: 0.0046208, tanF2: 0.0045978),
+      tanF1: 0.0046208,
+      tanF2: 0.0045978
+    ),
     // 2031Nov14H  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2031Nov14Hbeselm.html)  gamma 0.3077  magnitude 1.0106
     BesselianElements(
       label: "2031-11-14",
       publishedType: .hybrid,
-      t0Year: 2031, t0Month: 11, t0Day: 14, t0Hours: 21.0,
+      t0Year: 2031,
+      t0Month: 11,
+      t0Day: 14,
+      t0Hours: 21.0,
       deltaT: 77.9,
       x: [-0.0198, 0.5509453, 3.38e-05, -8.7e-06],
       y: [0.314937, -0.0890646, 0.0001047, 1.2e-06],
@@ -276,12 +374,17 @@ extension BesselianElements {
       mu: [138.894, 14.999763],
       l1: [0.547773, -0.0001068, -1.2e-05],
       l2: [0.001627, -0.0001063, -1.19e-05],
-      tanF1: 0.004726, tanF2: 0.0047025),
+      tanF1: 0.004726,
+      tanF2: 0.0047025
+    ),
     // 2032May09A  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2032May09Abeselm.html)  gamma -0.9375  magnitude 0.9957
     BesselianElements(
       label: "2032-05-09",
       publishedType: .annular,
-      t0Year: 2032, t0Month: 5, t0Day: 9, t0Hours: 13.0,
+      t0Year: 2032,
+      t0Month: 5,
+      t0Day: 9,
+      t0Hours: 13.0,
       deltaT: 78.2,
       x: [-0.074307, 0.5359519, 5.2e-06, -7.3e-06],
       y: [-0.965423, 0.0954054, -7.01e-05, -1.2e-06],
@@ -289,12 +392,17 @@ extension BesselianElements {
       mu: [15.8891, 15.001745],
       l1: [0.548851, 0.0001272, -1.12e-05],
       l2: [0.0027, 0.0001266, -1.12e-05],
-      tanF1: 0.004631, tanF2: 0.0046079),
+      tanF1: 0.004631,
+      tanF2: 0.0046079
+    ),
     // 2032Nov03P  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2032Nov03Pbeselm.html)  gamma 1.0643  magnitude 0.8554
     BesselianElements(
       label: "2032-11-03",
       publishedType: .partial,
-      t0Year: 2032, t0Month: 11, t0Day: 3, t0Hours: 6.0,
+      t0Year: 2032,
+      t0Month: 11,
+      t0Day: 3,
+      t0Hours: 6.0,
       deltaT: 78.6,
       x: [0.449308, 0.5120148, 1.78e-05, -5.8e-06],
       y: [0.990812, -0.1128682, 4.51e-05, 1.3e-06],
@@ -302,12 +410,17 @@ extension BesselianElements {
       mu: [274.11911, 15.001218],
       l1: [0.562604, -0.0001127, -1.06e-05],
       l2: [0.016384, -0.0001121, -1.05e-05],
-      tanF1: 0.0047141, tanF2: 0.0046906),
+      tanF1: 0.0047141,
+      tanF2: 0.0046906
+    ),
     // 2033Mar30T  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2033Mar30Tbeselm.html)  gamma 0.9778  magnitude 1.0462
     BesselianElements(
       label: "2033-03-30",
       publishedType: .total,
-      t0Year: 2033, t0Month: 3, t0Day: 30, t0Hours: 18.0,
+      t0Year: 2033,
+      t0Month: 3,
+      t0Day: 30,
+      t0Hours: 18.0,
       deltaT: 78.9,
       x: [-0.318785, 0.5554225, 2.27e-05, -9.4e-06],
       y: [0.924678, 0.175661, -8e-05, -2.9e-06],
@@ -315,12 +428,17 @@ extension BesselianElements {
       mu: [88.92808, 15.004456],
       l1: [0.534941, 2.76e-05, -1.3e-05],
       l2: [-0.011141, 2.75e-05, -1.29e-05],
-      tanF1: 0.0046807, tanF2: 0.0046574),
+      tanF1: 0.0046807,
+      tanF2: 0.0046574
+    ),
     // 2033Sep23P  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2033Sep23Pbeselm.html)  gamma -1.1583  magnitude 0.6890
     BesselianElements(
       label: "2033-09-23",
       publishedType: .partial,
-      t0Year: 2033, t0Month: 9, t0Day: 23, t0Hours: 14.0,
+      t0Year: 2033,
+      t0Month: 9,
+      t0Day: 23,
+      t0Hours: 14.0,
       deltaT: 79.2,
       x: [-0.309952, 0.4815372, 8.6e-06, -4.8e-06],
       y: [-1.117031, -0.1545432, 4.78e-05, 1.6e-06],
@@ -328,12 +446,17 @@ extension BesselianElements {
       mu: [31.94244, 15.004807],
       l1: [0.568897, 3.18e-05, -9.8e-06],
       l2: [0.022646, 3.16e-05, -9.7e-06],
-      tanF1: 0.0046607, tanF2: 0.0046375),
+      tanF1: 0.0046607,
+      tanF2: 0.0046375
+    ),
     // 2034Mar20T  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2034Mar20Tbeselm.html)  gamma 0.2895  magnitude 1.0458
     BesselianElements(
       label: "2034-03-20",
       publishedType: .total,
-      t0Year: 2034, t0Month: 3, t0Day: 20, t0Hours: 10.0,
+      t0Year: 2034,
+      t0Month: 3,
+      t0Day: 20,
+      t0Hours: 10.0,
       deltaT: 79.5,
       x: [-0.259593, 0.5481665, 2.3e-05, -9.4e-06],
       y: [0.220828, 0.1755788, -8e-06, -2.8e-06],
@@ -341,12 +464,17 @@ extension BesselianElements {
       mu: [328.13922, 15.004398],
       l1: [0.53863, -6.65e-05, -1.27e-05],
       l2: [-0.00747, -6.62e-05, -1.26e-05],
-      tanF1: 0.0046951, tanF2: 0.0046718),
+      tanF1: 0.0046951,
+      tanF2: 0.0046718
+    ),
     // 2034Sep12A  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2034Sep12Abeselm.html)  gamma -0.3936  magnitude 0.9736
     BesselianElements(
       label: "2034-09-12",
       publishedType: .annular,
-      t0Year: 2034, t0Month: 9, t0Day: 12, t0Hours: 16.0,
+      t0Year: 2034,
+      t0Month: 9,
+      t0Day: 12,
+      t0Hours: 16.0,
       deltaT: 79.9,
       x: [-0.280883, 0.502828, -1.15e-05, -5.6e-06],
       y: [-0.324349, -0.1577848, -8e-07, 1.9e-06],
@@ -354,12 +482,17 @@ extension BesselianElements {
       mu: [60.9497, 15.004902],
       l1: [0.5578, 0.0001188, -1.06e-05],
       l2: [0.011604, 0.0001182, -1.05e-05],
-      tanF1: 0.0046461, tanF2: 0.004623),
+      tanF1: 0.0046461,
+      tanF2: 0.004623
+    ),
     // 2035Mar09A  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2035Mar09Abeselm.html)  gamma -0.4368  magnitude 0.9919
     BesselianElements(
       label: "2035-03-09",
       publishedType: .annular,
-      t0Year: 2035, t0Month: 3, t0Day: 9, t0Hours: 23.0,
+      t0Year: 2035,
+      t0Month: 3,
+      t0Day: 9,
+      t0Hours: 23.0,
       deltaT: 80.2,
       x: [0.079567, 0.5205592, 5.2e-06, -6.1e-06],
       y: [-0.432783, 0.1630946, 5.33e-05, -2.2e-06],
@@ -367,12 +500,17 @@ extension BesselianElements {
       mu: [162.39618, 15.003902],
       l1: [0.552622, -0.000122, -1.15e-05],
       l2: [0.006452, -0.0001214, -1.14e-05],
-      tanF1: 0.0047095, tanF2: 0.004686),
+      tanF1: 0.0047095,
+      tanF2: 0.004686
+    ),
     // 2035Sep02T  (https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2035Sep02Tbeselm.html)  gamma 0.3727  magnitude 1.0320
     BesselianElements(
       label: "2035-09-02",
       publishedType: .total,
-      t0Year: 2035, t0Month: 9, t0Day: 2, t0Hours: 2.0,
+      t0Year: 2035,
+      t0Month: 9,
+      t0Day: 2,
+      t0Hours: 2.0,
       deltaT: 80.6,
       x: [0.134339, 0.5377713, -3.58e-05, -8e-06],
       y: [0.348988, -0.1584657, -5.95e-05, 2.3e-06],
@@ -380,6 +518,8 @@ extension BesselianElements {
       mu: [210.02995, 15.004648],
       l1: [0.541919, 0.0001104, -1.19e-05],
       l2: [-0.004197, 0.0001098, -1.18e-05],
-      tanF1: 0.0046328, tanF2: 0.0046097),
+      tanF1: 0.0046328,
+      tanF2: 0.0046097
+    ),
   ]
 }

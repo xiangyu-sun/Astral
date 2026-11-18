@@ -1,8 +1,8 @@
+import Astral
 import Foundation
 import Testing
-import Astral
 
-// MARK: - NASA SVS fixture
+// MARK: - SVSLibrationFixture
 
 /// Sampled rows of NASA SVS "Moon Phase and Libration" (2025 and 2026, hourly, geocentric, JPL DE421),
 /// see Fixtures/make_svs_libration_fixture.py.
@@ -28,7 +28,8 @@ struct SVSLibrationFixture: Decodable {
     let url = try #require(
       Bundle.module.url(forResource: "svs_libration", withExtension: "json", subdirectory: "Fixtures")
         ?? Bundle.module.url(forResource: "svs_libration", withExtension: "json"),
-      "svs_libration.json missing from test bundle")
+      "svs_libration.json missing from test bundle"
+    )
     return try JSONDecoder().decode(SVSLibrationFixture.self, from: Data(contentsOf: url))
   }
 }
@@ -41,20 +42,22 @@ private func angleDifference(_ a: Double, _ b: Double) -> Double {
   return x
 }
 
-// MARK: - Tests
+// MARK: - MoonLibrationTests
 
 @Suite("Moon libration", .tags(.ephemeris, .lunar, .accuracy))
 struct MoonLibrationTests {
 
   /// Meeus, Astronomical Algorithms, examples 47.a, 48.a and 53.a: 1992 April 12, 0h TD.
-  @Test func meeusWorkedExample() {
+  @Test
+  func meeusWorkedExample() {
     let libration = MoonLibration(
       at: JulianDate(days: 2_448_724.5),
       moonLongitude: 133.167265, // example 47.a, apparent
       moonLatitude: -3.229126,
       moonDistanceKm: 368_409.7,
       sunLongitude: 22.339773, // from example 48.a: α0 = 20.6579°, δ0 = +8.6964°
-      sunDistanceAU: 149_971_520 / 149_597_870.7) // R = 149 971 520 km
+      sunDistanceAU: 149_971_520 / 149_597_870.7
+    ) // R = 149 971 520 km
 
     // Optical libration: l' = -1.206°, b' = +4.194°.
     #expect(abs(libration.opticalLongitude - -1.206) < 0.001)
@@ -78,11 +81,12 @@ struct MoonLibrationTests {
   /// Measured maxima over the 92 sampled rows: libration longitude 0.014°, latitude 0.039°, sub-solar longitude
   /// 0.018°, sub-solar latitude 0.027°, axis position angle 0.014° (J2000), illuminated fraction 0.026 percentage
   /// points, distance 71 km.
-  @Test func matchesNASASVSTable() throws {
+  @Test
+  func matchesNASASVSTable() throws {
     let rows = try SVSLibrationFixture.load().rows
     #expect(rows.count >= 50)
 
-    var maxima: [String: Double] = [:]
+    var maxima = [String: Double]()
     func record(_ name: String, _ error: Double) {
       maxima[name] = max(maxima[name] ?? 0, abs(error))
     }
@@ -115,7 +119,8 @@ struct MoonLibrationTests {
   }
 
   /// The axis angle of date differs from the J2000 one by the precession of the pole (about 0.14°·sin α/cos δ now).
-  @Test func axisAngleOfDateVersusJ2000() throws {
+  @Test
+  func axisAngleOfDateVersusJ2000() throws {
     let rows = try SVSLibrationFixture.load().rows
     for row in rows {
       let libration = MoonLibration(at: JulianDate(days: row.jd))
@@ -127,7 +132,8 @@ struct MoonLibrationTests {
     #expect(abs(angleDifference(atJ2000.positionAngleOfAxis, atJ2000.positionAngleOfAxisJ2000)) < 1e-9)
   }
 
-  @Test func brightLimbPointsTowardsTheSun() throws {
+  @Test
+  func brightLimbPointsTowardsTheSun() throws {
     // The Moon is east of the Sun when waxing, so its bright limb faces west (PA 180...360); the opposite when
     // waning. Skip the thin phases, where the right-ascension difference is near 0 or 180°.
     for row in try SVSLibrationFixture.load().rows where row.phasePercent > 3 && row.phasePercent < 97 {
@@ -138,7 +144,8 @@ struct MoonLibrationTests {
     }
   }
 
-  @Test func colongitudeIsNinetyMinusSubSolarLongitude() throws {
+  @Test
+  func colongitudeIsNinetyMinusSubSolarLongitude() throws {
     for row in try SVSLibrationFixture.load().rows {
       let libration = MoonLibration(at: JulianDate(days: row.jd))
       let expected = 90 - libration.subSolarLongitude
@@ -147,7 +154,8 @@ struct MoonLibrationTests {
     }
   }
 
-  @Test func newAndFullMoon() {
+  @Test
+  func newAndFullMoon() {
     // 2026-08-12 total solar eclipse: new moon, subsolar point on the far side.
     let new = MoonLibration(at: JulianDate(days: Epoch.solarFixture))
     #expect(new.illuminatedFraction < 0.001)
@@ -162,12 +170,14 @@ struct MoonLibrationTests {
     #expect(full.elongation > 179)
   }
 
-  @Test func dateInitialiserMatchesJulianDate() {
+  @Test
+  func dateInitialiserMatchesJulianDate() {
     let date = Date(timeIntervalSince1970: 1_700_000_000)
     #expect(MoonLibration(date: date) == MoonLibration(at: JulianDate(date)))
   }
 
-  @Test func librationStaysWithinPhysicalLimits() {
+  @Test
+  func librationStaysWithinPhysicalLimits() {
     // Libration never exceeds about ±8° in longitude and ±7° in latitude; scan two years.
     var maxLon = 0.0
     var maxLat = 0.0

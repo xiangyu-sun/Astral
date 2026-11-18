@@ -1,3 +1,4 @@
+// swiftlint:disable no_direct_standard_out_logs
 #!/usr/bin/env python3
 """Builds smallbodies.json: JPL SBDB osculating elements + JPL Horizons heliocentric state vectors.
 

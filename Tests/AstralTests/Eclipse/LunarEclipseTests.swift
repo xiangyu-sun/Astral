@@ -1,6 +1,9 @@
+// swiftlint:disable no_direct_standard_out_logs
+import Astral
 import Foundation
 import Testing
-import Astral
+
+// MARK: - LunarFixture
 
 struct LunarFixture: Decodable {
   struct Entry: Decodable, Sendable {
@@ -32,6 +35,8 @@ func lunarDates() -> [String] {
   (try? LunarFixture.load())?.eclipses.map(\.date) ?? []
 }
 
+// MARK: - LunarEclipseTests
+
 @Suite("Lunar eclipses vs NASA GSFC", .tags(.accuracy, .integration))
 struct LunarEclipseTests {
   @Test(arguments: lunarDates())
@@ -48,10 +53,12 @@ struct LunarEclipseTests {
       c.map { ($0.terrestrialTime.days - 2_440_587.5) * 86_400 }
     }
     var line = "LUNAR \(date) \(eclipse.type) (NASA \(ref.type)):"
-    var errors: [(String, Double)] = []
+    var errors = [(String, Double)]()
     func add(_ name: String, _ c: LunarEclipseContact?, _ refSeconds: Double?) {
       guard let refSeconds else { return }
-      guard let ours = tt(c) else { Issue.record("\(name) missing"); return }
+      guard let ours = tt(c) else { Issue.record("\(name) missing")
+        return
+      }
       let dt = ours - nasaTT(refSeconds)
       errors.append((name, dt))
       line += String(format: " %@ %+.1fs", name, dt)
@@ -79,7 +86,8 @@ struct LunarEclipseTests {
     #expect(eclipse.u2 != nil || ref.U2Seconds == nil)
   }
 
-  @Test func findsEveryEclipseOf2025And2026() {
+  @Test
+  func findsEveryEclipseOf2025And2026() {
     let range = utcMidnight("2025-01-01")...utcMidnight("2027-01-01")
     let found = LunarEclipse.eclipses(in: range)
     // NASA: 2025 Mar 14 (T), Sep 7 (T); 2026 Mar 3 (T), Aug 28 (P).
@@ -87,7 +95,8 @@ struct LunarEclipseTests {
     #expect(found.count == 4)
   }
 
-  @Test func nextEclipseAfterDate() throws {
+  @Test
+  func nextEclipseAfterDate() throws {
     let e = try #require(LunarEclipse.next(after: utcMidnight("2025-04-01")))
     #expect(e.type == .total)
     #expect(abs(e.greatest.date.timeIntervalSince(utcMidnight("2025-09-07")) - (18 * 3600 + 11 * 60 + 43)) < 150)

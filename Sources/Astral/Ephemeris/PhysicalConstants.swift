@@ -28,13 +28,19 @@ public struct TriaxialRadii: Sendable, Hashable {
   public let c: Double
 
   /// Mean of the two equatorial radii, km.
-  public var equatorialMean: Double { (a + b) / 2 }
+  public var equatorialMean: Double {
+    (a + b) / 2
+  }
 
   /// Volumetric mean radius `(a b c)^(1/3)`, km.
-  public var volumetricMean: Double { cbrt(a * b * c) }
+  public var volumetricMean: Double {
+    cbrt(a * b * c)
+  }
 
   /// Polar flattening `(a - c) / a`, using the larger equatorial radius.
-  public var flattening: Double { (a - c) / a }
+  public var flattening: Double {
+    (a - c) / a
+  }
 }
 
 // MARK: - PoleModel
@@ -78,7 +84,8 @@ public struct PoleModel: Sendable, Hashable {
     return SIMD3(
       equatorial.x,
       equatorial.y * cos(eps) + equatorial.z * sin(eps),
-      -equatorial.y * sin(eps) + equatorial.z * cos(eps))
+      -equatorial.y * sin(eps) + equatorial.z * cos(eps)
+    )
   }
 }
 

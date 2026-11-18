@@ -149,10 +149,14 @@ public enum LeapSeconds {
   public static let ttMinusTAI = 32.184
 
   /// The TAI − UTC value after the last known leap second (2017-01-01), in seconds.
-  public static var latestTAIMinusUTC: Double { Double(table[table.count - 1].taiMinusUTC) }
+  public static var latestTAIMinusUTC: Double {
+    Double(table[table.count - 1].taiMinusUTC)
+  }
 
   /// The Julian date (UTC) of the first leap-second-era epoch, 1972-01-01 00:00.
-  public static var firstEpoch: JulianDate { JulianDate(days: table[0].jd) }
+  public static var firstEpoch: JulianDate {
+    JulianDate(days: table[0].jd)
+  }
 
   /// TAI − UTC in seconds at a UTC Julian date, or `nil` before 1972-01-01.
   public static func taiMinusUTC(at utc: JulianDate) -> Double? {
@@ -224,6 +228,8 @@ public enum LeapSeconds {
 
 extension JulianDate {
 
+  // MARK: Lifecycle
+
   /// Creates a TT Julian date from a UTC one, adding `TT − UTC` (see ``LeapSeconds``).
   ///
   /// This is opt-in: Astral's ephemeris API treats the Julian date it is given as TT without converting, so pass
@@ -241,6 +247,8 @@ extension JulianDate {
     }
     self = utc
   }
+
+  // MARK: Public
 
   /// This UTC Julian date expressed as TT.
   public var terrestrialTime: JulianDate {

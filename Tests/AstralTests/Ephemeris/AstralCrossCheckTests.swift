@@ -1,7 +1,8 @@
+// swiftlint:disable no_direct_standard_out_logs
 import Astral
 import Foundation
-import Testing
 import simd
+import Testing
 
 /// Cross-checks the planetary ephemeris against Astral's own Meeus-based Moon and Sun code (independent code paths).
 @Suite("Cross-check against Astral's moon functions", .tags(.ephemeris, .lunar, .integration))
@@ -10,20 +11,24 @@ struct AstralCrossCheckTests {
   // MARK: Internal
 
   static let dates: [Date] = [
-    utcDate(1900, 1, 1, 12), utcDate(1969, 7, 20, 20), utcDate(2000, 1, 1, 12),
-    utcDate(2025, 9, 7, 18, 12), utcDate(2026, 8, 12, 17, 46), utcDate(2026, 11, 14, 12),
+    utcDate(1900, 1, 1, 12),
+    utcDate(1969, 7, 20, 20),
+    utcDate(2000, 1, 1, 12),
+    utcDate(2025, 9, 7, 18, 12),
+    utcDate(2026, 8, 12, 17, 46),
+    utcDate(2026, 11, 14, 12),
     utcDate(2040, 3, 3, 3),
   ]
 
   /// Geocentric ecliptic longitude of the Moon. Astral's is referred to the equinox of date, the ephemeris's to
   /// J2000, so general precession is added back before comparing.
   @Test(arguments: MoonModel.allCases)
-  func moonLongitudeAgrees(model: MoonModel) {
+  func moonLongitudeAgrees(model: MoonModel) throws {
     var worst = 0.0
     for date in Self.dates {
       let jd = JulianDate(date)
       let s = SolarSystem(moonModel: model).snapshot(at: jd)
-      let geo = s.states[.moon]!.position - s.states[.earth]!.position
+      let geo = try #require(s.states[.moon]?.position) - s.states[.earth]!.position
       let ours = atan2(geo.y, geo.x) * 180 / .pi + 1.3969713 * jd.centuriesSinceJ2000
       let theirs = Astral.moon_true_longitude(jd2000: jd.days - 2_451_545.0) * 360
       let diff = abs(Self.wrapDeg(ours - theirs))
@@ -52,19 +57,9 @@ struct AstralCrossCheckTests {
     }
   }
 
-  /// Age tolerance in days (1 d of age = about 12.2 deg of elongation): 0.1 d (1.2 deg) for the default model, as
-  /// for the original OrbitKit cross-check; 0.25 d (3 deg, the spec's Level A bound) for mean elements; 0.01 d for
-  /// the series, which is Astral's own lunar series.
-  private func ageTolerance(for model: MoonModel) -> Double {
-    switch model {
-    case .meanElements: 0.25
-    case .periodicTerms: 0.1
-    case .series: 0.01
-    }
-  }
-
   /// The default `MoonPhase(date:)` goes through the same snapshot route as `SolarSystem`.
-  @Test func moonPhaseDateMatchesSnapshotRoute() throws {
+  @Test
+  func moonPhaseDateMatchesSnapshotRoute() throws {
     for date in Self.dates {
       let direct = MoonPhase(date: date)
       let viaSnapshot = try #require(SolarSystem().snapshot(at: JulianDate(date)).moonPhase)
@@ -74,10 +69,11 @@ struct AstralCrossCheckTests {
   }
 
   /// `MoonPhase` (a type) and `moonPhase(date:)` (a free function) coexist without ambiguity at call sites.
-  @Test func typeAndFreeFunctionCoexist() {
+  @Test
+  func typeAndFreeFunctionCoexist() {
     let date = utcDate(2026, 8, 12, 17, 46)
     let age: Double = Astral.moonPhase(date: date.components())
-    let phase: MoonPhase = MoonPhase(date: date)
+    let phase = MoonPhase(date: date)
     #expect(age >= 0 && age < 29.6)
     #expect(phase.name == .new)
     // Both agree the Moon is within a day of new at this solar eclipse.
@@ -85,7 +81,8 @@ struct AstralCrossCheckTests {
   }
 
   /// Astral's lunar age and the ephemeris agree on illumination too: a full moon is almost fully lit, a new moon not.
-  @Test func illuminationAtSyzygy() {
+  @Test
+  func illuminationAtSyzygy() {
     #expect(MoonPhase(date: utcDate(2025, 9, 7, 18, 12)).illuminatedFraction > 0.99)
     #expect(MoonPhase(date: utcDate(2026, 8, 12, 17, 46)).illuminatedFraction < 0.01)
   }
@@ -98,4 +95,16 @@ struct AstralCrossCheckTests {
     if d < -180 { d += 360 }
     return d
   }
+
+  /// Age tolerance in days (1 d of age = about 12.2 deg of elongation): 0.1 d (1.2 deg) for the default model, as
+  /// for the original OrbitKit cross-check; 0.25 d (3 deg, the spec's Level A bound) for mean elements; 0.01 d for
+  /// the series, which is Astral's own lunar series.
+  private func ageTolerance(for model: MoonModel) -> Double {
+    switch model {
+    case .meanElements: 0.25
+    case .periodicTerms: 0.1
+    case .series: 0.01
+    }
+  }
+
 }

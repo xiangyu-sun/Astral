@@ -74,7 +74,7 @@ public struct JulianDate: Sendable, Hashable, Comparable {
     days >= 2_378_496.5 && days < 2_470_172.5
   }
 
-  public static func < (lhs: JulianDate, rhs: JulianDate) -> Bool {
+  public static func <(lhs: JulianDate, rhs: JulianDate) -> Bool {
     lhs.days < rhs.days
   }
 

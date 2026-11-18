@@ -1,3 +1,4 @@
+// swiftlint:disable no_direct_standard_out_logs
 #!/usr/bin/env python3
 """Parse raw JPL Horizons API responses in raw/*.txt into horizons.json.
 

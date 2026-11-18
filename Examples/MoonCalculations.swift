@@ -1,3 +1,4 @@
+// swiftlint:disable no_direct_standard_out_logs
 //
 //  MoonCalculations.swift
 //
@@ -55,24 +56,24 @@ func moonPhaseTrackingExample() {
       let components = date.components()
       let phase = moonPhase(date: components)
 
-      let phaseDescription: String
-      if phase < 1.85 {
-        phaseDescription = "New Moon"
-      } else if phase < 5.54 {
-        phaseDescription = "Waxing Crescent"
-      } else if phase < 9.23 {
-        phaseDescription = "First Quarter"
-      } else if phase < 12.92 {
-        phaseDescription = "Waxing Gibbous"
-      } else if phase < 16.61 {
-        phaseDescription = "Full Moon"
-      } else if phase < 20.30 {
-        phaseDescription = "Waning Gibbous"
-      } else if phase < 23.99 {
-        phaseDescription = "Last Quarter"
-      } else {
-        phaseDescription = "Waning Crescent"
-      }
+      let phaseDescription =
+        if phase < 1.85 {
+          "New Moon"
+        } else if phase < 5.54 {
+          "Waxing Crescent"
+        } else if phase < 9.23 {
+          "First Quarter"
+        } else if phase < 12.92 {
+          "Waxing Gibbous"
+        } else if phase < 16.61 {
+          "Full Moon"
+        } else if phase < 20.30 {
+          "Waning Gibbous"
+        } else if phase < 23.99 {
+          "Last Quarter"
+        } else {
+          "Waning Crescent"
+        }
 
       let dateFormatter = DateFormatter()
       dateFormatter.dateFormat = "MMM dd"

@@ -1,7 +1,8 @@
-import Foundation
-import Testing
-import simd
+// swiftlint:disable no_direct_standard_out_logs
 import Astral
+import Foundation
+import simd
+import Testing
 
 /// The three Moon models against the geocentric Moon from the Horizons fixture (Moon 301 minus Earth 399), at all
 /// five fixture epochs (the three main dates and the two eclipse epochs).
@@ -29,13 +30,14 @@ struct MoonModelAccuracyTests {
     for jd in Self.epochs {
       let ref = Spherical(try fixture.vector("moon", jd: jd) - fixture.vector("earth", jd: jd))
       let s = SolarSystem(moonModel: model).snapshot(at: JulianDate(days: jd))
-      let m = Spherical(s.states[.moon]!.position - s.states[.earth]!.position)
+      let m = Spherical(try #require(s.states[.moon]?.position) - s.states[.earth]!.position)
       let lon = abs(wrapPi(m.lon - ref.lon)) * arcsecPerRad
       let lat = abs(m.lat - ref.lat) * arcsecPerRad
       let dist = abs(m.r - ref.r) / ref.r
       print(
         "MOONACC \(model) JD \(jd): lon \(fmt(lon, 1))\" lat \(fmt(lat, 1))\" dist \(fmt(dist * 100, 4))% "
-          + "[\(fmt(ref.r * Units.kmPerAU, 0)) km ref]")
+          + "[\(fmt(ref.r * Units.kmPerAU, 0)) km ref]"
+      )
       let tol = Self.tolerance(for: model)
       #expect(lon <= tol.lonArcsec, "\(model) JD \(jd) lon \(lon)\"")
       #expect(lat <= tol.latArcsec, "\(model) JD \(jd) lat \(lat)\"")
@@ -44,7 +46,8 @@ struct MoonModelAccuracyTests {
   }
 
   /// The series is clearly more accurate than Level B in longitude, latitude and distance at every epoch.
-  @Test func seriesBeatsPeriodicTermsAtEveryEpoch() throws {
+  @Test
+  func seriesBeatsPeriodicTermsAtEveryEpoch() throws {
     let fixture = try HorizonsFixture.load()
     let elements = try #require(Catalog.moon.elements)
     for jd in Self.epochs {
@@ -58,11 +61,13 @@ struct MoonModelAccuracyTests {
     }
   }
 
-  @Test func seriesAtJulianDateMatchesSeriesAtCenturies() {
+  @Test
+  func seriesAtJulianDateMatchesSeriesAtCenturies() {
     let jd = JulianDate(days: Epoch.jd2026)
     #expect(
       MoonEphemeris.geocentricPositionSeries(at: jd)
-        == MoonEphemeris.geocentricPositionSeries(T: jd.centuriesSinceJ2000))
+        == MoonEphemeris.geocentricPositionSeries(T: jd.centuriesSinceJ2000)
+    )
   }
 
   // MARK: Private

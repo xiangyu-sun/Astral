@@ -1,6 +1,9 @@
+// swiftlint:disable no_direct_standard_out_logs
 import Foundation
 import Testing
 @testable import Astral
+
+// MARK: - RTSFixture
 
 // Planet rise / transit / set and az/el against JPL Horizons (Fixtures/horizons_rts.json, regenerate with
 // Fixtures/make_rts_fixture.py). Tests run offline.
@@ -15,8 +18,6 @@ import Testing
 //
 // Tolerances are per body: the fixture tests of the underlying elements allow up to 600" (Saturn) of heliocentric
 // longitude error, which is about 0.17° or 40 s of rise time; see `bodyTolerances`.
-
-// MARK: - Fixture
 
 struct RTSFixture: Decodable {
   struct Site: Decodable {
@@ -46,9 +47,14 @@ struct RTSFixture: Decodable {
     let events: Events
     let jplFlags: Events
     let samples: [Sample]
-    var testDescription: String { "\(body) \(observer) \(date)" }
 
-    var bodyID: BodyID { BodyID(rawValue: body)! }
+    var testDescription: String {
+      "\(body) \(observer) \(date)"
+    }
+
+    var bodyID: BodyID {
+      BodyID(rawValue: body)!
+    }
 
     var midnight: Date {
       let formatter = ISO8601DateFormatter()
@@ -70,19 +76,22 @@ struct RTSFixture: Decodable {
     let url = try #require(
       Bundle.module.url(forResource: "horizons_rts", withExtension: "json", subdirectory: "Fixtures")
         ?? Bundle.module.url(forResource: "horizons_rts", withExtension: "json"),
-      "horizons_rts.json missing from test bundle")
+      "horizons_rts.json missing from test bundle"
+    )
     return try JSONDecoder().decode(RTSFixture.self, from: Data(contentsOf: url))
   }
 
   func observer(_ key: String, levelHorizon: Bool) -> Observer {
     let site = observers[key]!
     return Observer(
-      latitude: site.lat, longitude: site.lon,
-      elevation: .double(levelHorizon ? 0 : site.elevation_m))
+      latitude: site.lat,
+      longitude: site.lon,
+      elevation: .double(levelHorizon ? 0 : site.elevation_m)
+    )
   }
 }
 
-// MARK: - Tolerances
+// MARK: - BodyTolerance
 
 struct BodyTolerance: Sendable {
   /// Rise / set / transit versus the level-horizon reference, seconds.
@@ -118,19 +127,21 @@ private func seconds(_ components: DateComponents, since midnight: Date) -> Doub
 }
 
 private func unitVector(az: Double, el: Double) -> SIMD3<Double> {
-  let a = az * .pi / 180, e = el * .pi / 180
+  let a = az * .pi / 180
+  let e = el * .pi / 180
   return SIMD3(cos(e) * sin(a), cos(e) * cos(a), sin(e))
 }
 
 /// Angle between two (az, el) directions, degrees.
 private func separation(az1: Double, el1: Double, az2: Double, el2: Double) -> Double {
-  let a = unitVector(az: az1, el: el1), b = unitVector(az: az2, el: el2)
+  let a = unitVector(az: az1, el: el1)
+  let b = unitVector(az: az2, el: el2)
   let cross = SIMD3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x)
   let crossLength = (cross.x * cross.x + cross.y * cross.y + cross.z * cross.z).squareRoot()
   return atan2(crossLength, a.x * b.x + a.y * b.y + a.z * b.z) * 180 / .pi
 }
 
-// MARK: - Tests
+// MARK: - PlanetRiseSetFixtureTests
 
 @Suite("Planet rise/transit/set vs JPL Horizons", .tags(.ephemeris, .accuracy, .transit, .integration))
 struct PlanetRiseSetFixtureTests {
@@ -143,11 +154,11 @@ struct PlanetRiseSetFixtureTests {
       let site = try #require(fixture.observers[key])
       #expect(abs(site.lat - observer.latitude) < 1e-9, "\(key) latitude")
       #expect(abs(site.lon - observer.longitude) < 1e-9, "\(key) longitude")
-      let elevation: Double
-      switch observer.elevation {
-      case .double(let metres): elevation = metres
-      case .tuple(let metres, _): elevation = metres
-      }
+      let elevation: Double =
+        switch observer.elevation {
+        case .double(let metres): metres
+        case .tuple(let metres, _): metres
+        }
       #expect(abs(site.elevation_m - elevation) < 1e-9, "\(key) elevation")
     }
 
@@ -160,7 +171,10 @@ struct PlanetRiseSetFixtureTests {
     #expect(abs(Observer.wellington.longitude - wellington.lon) < 1e-4)
   }
 
-  @Test("Rise, transit and set match the Horizons level-horizon events", arguments: BodyID.allCases.filter { bodyTolerances[$0] != nil })
+  @Test(
+    "Rise, transit and set match the Horizons level-horizon events",
+    arguments: BodyID.allCases.filter { bodyTolerances[$0] != nil }
+  )
   func eventsMatchHorizons(body: BodyID) throws {
     let fixture = try RTSFixture.load()
     let tolerance = try #require(bodyTolerances[body])
@@ -189,7 +203,10 @@ struct PlanetRiseSetFixtureTests {
     print("PLANET-RTS \(body.rawValue) max event error (level horizon) \(worstSeconds) s")
   }
 
-  @Test("With the site's elevation Astral is within 2 minutes of JPL's own flags", arguments: BodyID.allCases.filter { bodyTolerances[$0] != nil })
+  @Test(
+    "With the site's elevation Astral is within 2 minutes of JPL's own flags",
+    arguments: BodyID.allCases.filter { bodyTolerances[$0] != nil }
+  )
   func eventsMatchJPLFlags(body: BodyID) throws {
     let fixture = try RTSFixture.load()
     var worstSeconds = 0.0
@@ -245,7 +262,7 @@ struct PlanetRiseSetFixtureTests {
   }
 }
 
-// MARK: - Behaviour
+// MARK: - PlanetRiseSetBehaviourTests
 
 @Suite("Planet rise/set behaviour", .tags(.ephemeris, .transit, .unit))
 struct PlanetRiseSetBehaviourTests {

@@ -48,8 +48,8 @@ public struct MoonLibration: Sendable, Hashable {
     moonLatitude: Double,
     moonDistanceKm: Double,
     sunLongitude: Double,
-    sunDistanceAU: Double)
-  {
+    sunDistanceAU: Double
+  ) {
     let T = time.centuriesSinceJ2000
     let jd2000 = time.days - JulianDate.j2000.days
     let d2r = Units.degToRad
@@ -131,7 +131,8 @@ public struct MoonLibration: Sendable, Hashable {
     let dRA = sunEquatorial.ra - moonEquatorial.ra
     let chi = atan2(
       cos(sunEquatorial.dec) * sin(dRA),
-      sin(sunEquatorial.dec) * cos(moonEquatorial.dec) - cos(sunEquatorial.dec) * sin(moonEquatorial.dec) * cos(dRA))
+      sin(sunEquatorial.dec) * cos(moonEquatorial.dec) - cos(sunEquatorial.dec) * sin(moonEquatorial.dec) * cos(dRA)
+    )
     brightLimbPositionAngle = Self.wrapPositive(chi * r2d)
     distanceKm = moonDistanceKm
   }
@@ -159,7 +160,8 @@ public struct MoonLibration: Sendable, Hashable {
       moonLatitude: latRad / Units.degToRad,
       moonDistanceKm: position.distance * MoonEphemeris.earthEquatorialRadiusKm,
       sunLongitude: sun_apparent_long(juliancentury: T),
-      sunDistanceAU: sun_rad_vector(juliancentury: T))
+      sunDistanceAU: sun_rad_vector(juliancentury: T)
+    )
   }
 
   /// Creates the libration at a date from Astral's lunar series and solar position.
@@ -225,9 +227,8 @@ public struct MoonLibration: Sendable, Hashable {
     Mp: Double,
     F: Double,
     D: Double,
-    Om: Double)
-    -> (rho: Double, sigma: Double, tau: Double)
-  {
+    Om: Double
+  ) -> (rho: Double, sigma: Double, tau: Double) {
     let d = Units.degToRad
     let K1 = (119.75 + 131.849 * T) * d
     let K2 = (72.56 + 20.186 * T) * d

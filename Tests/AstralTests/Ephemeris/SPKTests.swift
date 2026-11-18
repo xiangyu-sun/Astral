@@ -1,7 +1,8 @@
+// swiftlint:disable no_direct_standard_out_logs
 import Astral
 import Foundation
-import Testing
 import simd
+import Testing
 
 // MARK: - Fixtures
 
@@ -10,13 +11,16 @@ func loadTinyKernelData() throws -> Data {
   let url = try #require(
     Bundle.module.url(forResource: "tiny", withExtension: "bsp", subdirectory: "Fixtures/SPK")
       ?? Bundle.module.url(forResource: "tiny", withExtension: "bsp"),
-    "tiny.bsp missing from test bundle")
+    "tiny.bsp missing from test bundle"
+  )
   return try Data(contentsOf: url)
 }
 
 func loadTinyKernel() throws -> SPKFile {
   try SPKFile(data: loadTinyKernelData())
 }
+
+// MARK: - SPKHorizonsFixture
 
 /// JPL Horizons vector tables in km and km/s, see Fixtures/SPK/make_spk_fixture.py.
 struct SPKHorizonsFixture: Decodable {
@@ -25,8 +29,14 @@ struct SPKHorizonsFixture: Decodable {
     let date: String
     let p: [Double]
     let v: [Double]
-    var position: SIMD3<Double> { SIMD3(p[0], p[1], p[2]) }
-    var velocity: SIMD3<Double> { SIMD3(v[0], v[1], v[2]) }
+
+    var position: SIMD3<Double> {
+      SIMD3(p[0], p[1], p[2])
+    }
+
+    var velocity: SIMD3<Double> {
+      SIMD3(v[0], v[1], v[2])
+    }
   }
 
   struct Case: Decodable {
@@ -43,7 +53,8 @@ struct SPKHorizonsFixture: Decodable {
     let url = try #require(
       Bundle.module.url(forResource: "horizons_spk", withExtension: "json", subdirectory: "Fixtures/SPK")
         ?? Bundle.module.url(forResource: "horizons_spk", withExtension: "json"),
-      "horizons_spk.json missing from test bundle")
+      "horizons_spk.json missing from test bundle"
+    )
     return try JSONDecoder().decode(SPKHorizonsFixture.self, from: Data(contentsOf: url))
   }
 
@@ -53,9 +64,11 @@ struct SPKHorizonsFixture: Decodable {
 }
 
 /// ET seconds for a TDB Julian date.
-func et(_ jd: Double) -> Double { (jd - 2_451_545.0) * 86_400 }
+func et(_ jd: Double) -> Double {
+  (jd - 2_451_545.0) * 86_400
+}
 
-// MARK: - Synthetic kernels
+// MARK: - SyntheticSegment
 
 /// Writes a small DAF/SPK with exactly known Chebyshev coefficients, in either byte order.
 struct SyntheticSegment {
@@ -81,9 +94,9 @@ func makeSyntheticKernel(_ segments: [SyntheticSegment], bigEndian: Bool) -> Dat
   }
 
   var next = 3 * 128 + 1 // first data word: record 4
-  var summaries: [UInt8] = []
-  var names: [UInt8] = []
-  var data: [UInt8] = []
+  var summaries = [UInt8]()
+  var names = [UInt8]()
+  var data = [UInt8]()
   for (i, seg) in segments.enumerated() {
     let rsize = seg.records[0].count
     let words = seg.records.flatMap { $0 }
@@ -122,11 +135,12 @@ func chebyshevReference(_ coefficients: [Double], s: Double) -> (value: Double, 
   return (value, derivative)
 }
 
-// MARK: - DAF parsing
+// MARK: - SPKParsingTests
 
 @Suite("SPK: DAF parsing", .tags(.ephemeris, .integration))
 struct SPKParsingTests {
-  @Test func readsTinyKernelStructure() throws {
+  @Test
+  func readsTinyKernelStructure() throws {
     let kernel = try loadTinyKernel()
     #expect(kernel.segments.count == 14)
     #expect(Set(kernel.segments.map(\.target)) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 199, 299, 301, 399])
@@ -147,15 +161,18 @@ struct SPKParsingTests {
     }
   }
 
-  @Test func readsFromDisk() throws {
+  @Test
+  func readsFromDisk() throws {
     let url = try #require(
       Bundle.module.url(forResource: "tiny", withExtension: "bsp", subdirectory: "Fixtures/SPK")
-        ?? Bundle.module.url(forResource: "tiny", withExtension: "bsp"))
+        ?? Bundle.module.url(forResource: "tiny", withExtension: "bsp")
+    )
     let fromDisk = try SPKFile(contentsOf: url)
     #expect(fromDisk.segments == (try loadTinyKernel()).segments)
   }
 
-  @Test func acceptsASliceOfLargerData() throws {
+  @Test
+  func acceptsASliceOfLargerData() throws {
     let data = try loadTinyKernelData()
     let padded = Data(repeating: 0xAB, count: 77) + data
     let kernel = try SPKFile(data: padded[77...])
@@ -166,7 +183,8 @@ struct SPKParsingTests {
     #expect(a == b)
   }
 
-  @Test func rejectsBadInput() throws {
+  @Test
+  func rejectsBadInput() throws {
     #expect(throws: SPKError.truncated) { try SPKFile(data: Data()) }
     #expect(throws: SPKError.notAnSPKFile) { try SPKFile(data: Data(repeating: 0, count: 2048)) }
 
@@ -180,8 +198,13 @@ struct SPKParsingTests {
   @Test(arguments: [false, true])
   func synthKernelParsesInEitherByteOrder(bigEndian: Bool) throws {
     let segment = SyntheticSegment(
-      target: 1000, center: 0, dataType: 2, initialEpoch: 0, intervalLength: 100,
-      records: [[50, 50, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], [150, 50, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]])
+      target: 1000,
+      center: 0,
+      dataType: 2,
+      initialEpoch: 0,
+      intervalLength: 100,
+      records: [[50, 50, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], [150, 50, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]]
+    )
     let kernel = try SPKFile(data: makeSyntheticKernel([segment], bigEndian: bigEndian))
     #expect(kernel.segments.count == 1)
     #expect(kernel.segments[0].target == 1000)
@@ -190,7 +213,7 @@ struct SPKParsingTests {
   }
 }
 
-// MARK: - Evaluation against exact polynomials
+// MARK: - SPKEvaluationTests
 
 @Suite("SPK: Chebyshev evaluation", .tags(.ephemeris, .accuracy))
 struct SPKEvaluationTests {
@@ -203,15 +226,31 @@ struct SPKEvaluationTests {
 
   static func type2() -> SyntheticSegment {
     // Second record has the same coefficients but a different midpoint.
-    SyntheticSegment(
-      target: 1000, center: 0, dataType: 2, initialEpoch: 0, intervalLength: 100,
-      records: [[50, 50] + cx + cy + cz, [150, 50] + cx + cy + cz])
+    let coefficients: [Double] = [cx, cy, cz].flatMap { $0 }
+    let first: [Double] = [50, 50] + coefficients
+    let second: [Double] = [150, 50] + coefficients
+    return SyntheticSegment(
+      target: 1000,
+      center: 0,
+      dataType: 2,
+      initialEpoch: 0,
+      intervalLength: 100,
+      records: [first, second]
+    )
   }
 
   static func type3() -> SyntheticSegment {
-    SyntheticSegment(
-      target: 1001, center: 1000, dataType: 3, initialEpoch: 0, intervalLength: 100,
-      records: [[50, 50] + cx + cy + cz + vx + vy + vz, [150, 50] + cx + cy + cz + vx + vy + vz])
+    let coefficients: [Double] = [cx, cy, cz, vx, vy, vz].flatMap { $0 }
+    let first: [Double] = [50, 50] + coefficients
+    let second: [Double] = [150, 50] + coefficients
+    return SyntheticSegment(
+      target: 1001,
+      center: 1000,
+      dataType: 3,
+      initialEpoch: 0,
+      intervalLength: 100,
+      records: [first, second]
+    )
   }
 
   @Test(arguments: [false, true])
@@ -247,7 +286,8 @@ struct SPKEvaluationTests {
     #expect(abs(state.velocity.z - chebyshevReference(Self.vz, s: s).value) < 1e-9)
   }
 
-  @Test func chainingAddsSegmentsAndSubtractsCommonAncestors() throws {
+  @Test
+  func chainingAddsSegmentsAndSubtractsCommonAncestors() throws {
     let kernel = try SPKFile(data: makeSyntheticKernel([Self.type2(), Self.type3()], bigEndian: false))
     let t = 61.0
     let a = try kernel.state(target: 1000, center: 0, at: t)
@@ -261,13 +301,25 @@ struct SPKEvaluationTests {
     #expect(try kernel.state(target: 1000, center: 1000, at: t) == SPKState.zero(frame: 1))
   }
 
-  @Test func reportsCoverageAndPathErrors() throws {
+  @Test
+  func reportsCoverageAndPathErrors() throws {
     let other = SyntheticSegment(
-      target: 2000, center: 0, frame: 17, dataType: 2, initialEpoch: 0, intervalLength: 100,
-      records: [[50, 50] + Self.cx + Self.cy + Self.cz, [150, 50] + Self.cx + Self.cy + Self.cz])
+      target: 2000,
+      center: 0,
+      frame: 17,
+      dataType: 2,
+      initialEpoch: 0,
+      intervalLength: 100,
+      records: [[50, 50] + Self.cx + Self.cy + Self.cz, [150, 50] + Self.cx + Self.cy + Self.cz]
+    )
     let island = SyntheticSegment(
-      target: 3001, center: 3000, dataType: 2, initialEpoch: 0, intervalLength: 100,
-      records: [[50, 50] + Self.cx + Self.cy + Self.cz, [150, 50] + Self.cx + Self.cy + Self.cz])
+      target: 3001,
+      center: 3000,
+      dataType: 2,
+      initialEpoch: 0,
+      intervalLength: 100,
+      records: [[50, 50] + Self.cx + Self.cy + Self.cz, [150, 50] + Self.cx + Self.cy + Self.cz]
+    )
     let kernel = try SPKFile(data: makeSyntheticKernel([Self.type2(), other, island], bigEndian: false))
     #expect(throws: SPKError.noCoverage(target: 1000, et: 200.5)) { try kernel.state(target: 1000, center: 0, at: 200.5) }
     #expect(throws: SPKError.noCoverage(target: 1000, et: -1)) { try kernel.state(target: 1000, center: 0, at: -1) }
@@ -279,7 +331,8 @@ struct SPKEvaluationTests {
     #expect(throws: SPKError.noPath(target: 42, center: 0)) { try kernel.state(target: 42, center: 0, at: 10) }
   }
 
-  @Test func unsupportedSegmentTypesAreListedButNotEvaluated() throws {
+  @Test
+  func unsupportedSegmentTypesAreListedButNotEvaluated() throws {
     var type5 = Self.type2()
     type5.dataType = 5
     let kernel = try SPKFile(data: makeSyntheticKernel([type5], bigEndian: false))
@@ -288,7 +341,7 @@ struct SPKEvaluationTests {
   }
 }
 
-// MARK: - Real DE440s data
+// MARK: - SPKHorizonsTests
 
 @Suite("SPK: DE440s excerpt vs JPL Horizons", .tags(.ephemeris, .accuracy, .integration))
 struct SPKHorizonsTests {
@@ -300,8 +353,16 @@ struct SPKHorizonsTests {
 
   /// Bodies whose Horizons target maps straight onto an Astral body (Mars..Pluto are system barycentres).
   static let bodies: [(name: String, id: BodyID)] = [
-    ("mercury", .mercury), ("venus", .venus), ("earth", .earth), ("moon", .moon), ("mars", .mars),
-    ("jupiter", .jupiter), ("saturn", .saturn), ("uranus", .uranus), ("neptune", .neptune), ("pluto", .pluto),
+    ("mercury", .mercury),
+    ("venus", .venus),
+    ("earth", .earth),
+    ("moon", .moon),
+    ("mars", .mars),
+    ("jupiter", .jupiter),
+    ("saturn", .saturn),
+    ("uranus", .uranus),
+    ("neptune", .neptune),
+    ("pluto", .pluto),
   ]
 
   @Test(arguments: SPKHorizonsTests.bodies.map(\.name))
@@ -324,7 +385,8 @@ struct SPKHorizonsTests {
     print("SPK vs Horizons (helio ecliptic) \(name): worst position \(worstP * 1000) m, velocity \(worstV * 1e6) mm/s")
   }
 
-  @Test func heliocentricPositionInAUMatchesHorizons() throws {
+  @Test
+  func heliocentricPositionInAUMatchesHorizons() throws {
     let kernel = try loadTinyKernel()
     let fixture = try SPKHorizonsFixture.load()
     for row in try fixture.rows("helio_ecl_earth") {
@@ -353,7 +415,8 @@ struct SPKHorizonsTests {
   }
 
   /// Moon relative to Earth, and the JulianDate overload, which treats the date as TDB.
-  @Test func geocentricMoonMatchesHorizons() throws {
+  @Test
+  func geocentricMoonMatchesHorizons() throws {
     let kernel = try loadTinyKernel()
     let fixture = try SPKHorizonsFixture.load()
     for row in try fixture.rows("geo_ecl_moon") {
@@ -363,7 +426,8 @@ struct SPKHorizonsTests {
     }
   }
 
-  @Test func julianDateOverloadIsTDBSecondsPastJ2000() throws {
+  @Test
+  func julianDateOverloadIsTDBSecondsPastJ2000() throws {
     let kernel = try loadTinyKernel()
     let jd = JulianDate(days: 2_461_300.25)
     let a = try kernel.state(target: 399, center: 10, at: jd)
@@ -373,10 +437,13 @@ struct SPKHorizonsTests {
   }
 
   /// The Moon relative to the Sun goes Moon -> EMB -> SSB and Sun -> SSB; check against explicit segment arithmetic.
-  @Test func chainingMatchesManualSegmentArithmetic() throws {
+  @Test
+  func chainingMatchesManualSegmentArithmetic() throws {
     let kernel = try loadTinyKernel()
     let t = et(2_461_333.123456)
-    func segment(_ target: Int) throws -> SPKSegment { try #require(kernel.segments(targeting: target).first) }
+    func segment(_ target: Int) throws -> SPKSegment {
+      try #require(kernel.segments(targeting: target).first)
+    }
     let moonEMB = try kernel.state(of: segment(301), at: t)
     let embSSB = try kernel.state(of: segment(3), at: t)
     let sunSSB = try kernel.state(of: segment(10), at: t)
@@ -406,7 +473,8 @@ struct SPKHorizonsTests {
     }
   }
 
-  @Test func continuousAcrossRecordBoundaries() throws {
+  @Test
+  func continuousAcrossRecordBoundaries() throws {
     let kernel = try loadTinyKernel()
     let moon = try #require(kernel.segments(targeting: 301).first)
     let layoutStart = moon.startET
@@ -423,7 +491,8 @@ struct SPKHorizonsTests {
     #expect(checked > 30)
   }
 
-  @Test func coverageEdgesAndErrors() throws {
+  @Test
+  func coverageEdgesAndErrors() throws {
     let kernel = try loadTinyKernel()
     // Inclusive at both ends, an error one second outside.
     _ = try kernel.state(target: 399, center: 10, at: et(2_461_222.5))
@@ -438,14 +507,20 @@ struct SPKHorizonsTests {
     #expect(throws: SPKError.bodyNotInKernel(.mars)) {
       // A kernel with only the Earth-Moon pair.
       let moonOnly = SyntheticSegment(
-        target: 301, center: 399, dataType: 2, initialEpoch: 0, intervalLength: 100,
-        records: [[50, 50] + SPKEvaluationTests.cx + SPKEvaluationTests.cy + SPKEvaluationTests.cz])
+        target: 301,
+        center: 399,
+        dataType: 2,
+        initialEpoch: 0,
+        intervalLength: 100,
+        records: [[50, 50] + SPKEvaluationTests.cx + SPKEvaluationTests.cy + SPKEvaluationTests.cz]
+      )
       let small = try SPKFile(data: makeSyntheticKernel([moonOnly], bigEndian: false))
       _ = try small.heliocentricEclipticPosition(of: .mars, at: JulianDate(days: 2_451_545.0))
     }
   }
 
-  @Test func bodyIDMapping() throws {
+  @Test
+  func bodyIDMapping() throws {
     let kernel = try loadTinyKernel()
     // de440s has body centres for Mercury, Venus, Earth, Moon, Sun and barycentres for the rest.
     #expect(kernel.naifID(for: .sun) == 10)
@@ -460,7 +535,7 @@ struct SPKHorizonsTests {
   }
 }
 
-// MARK: - Against Astral's closed-form model
+// MARK: - SPKSolarSystemComparisonTests
 
 /// SPK positions against ``SolarSystem``. The tolerances are the documented accuracy of the closed-form model:
 /// twice JPL's nominal errors for the planets (the same table as the Horizons fixture tests) and the Moon model
@@ -474,7 +549,10 @@ struct SPKSolarSystemComparisonTests {
     let lonArcsec: Double
     let latArcsec: Double
     let distKkm: Double
-    var testDescription: String { name }
+
+    var testDescription: String {
+      name
+    }
   }
 
   /// JPL nominal errors 1800-2050 (arcsec, arcsec, thousand km); the tolerance is twice these.
@@ -499,7 +577,9 @@ struct SPKSolarSystemComparisonTests {
       let spk = try kernel.heliocentricEclipticPosition(of: row.id, at: time)
       let model = try #require(system.snapshot(at: time).position(of: row.id))
       let err = PositionError(model: model, reference: spk)
-      print("SPK vs SolarSystem \(row.name) JD \(jd): lon \(fmt(err.lonArcsec))\" lat \(fmt(err.latArcsec))\" dist \(fmt(err.distKkm)) x1000km")
+      print(
+        "SPK vs SolarSystem \(row.name) JD \(jd): lon \(fmt(err.lonArcsec))\" lat \(fmt(err.latArcsec))\" dist \(fmt(err.distKkm)) x1000km"
+      )
       // KNOWN ISSUE, as in PlanetFixtureTests: Neptune's JPL row reproduces its position relative to the
       // solar-system barycentre, not the Sun. Constants are left as published.
       withKnownIssue(isIntermittent: true) {
@@ -514,16 +594,18 @@ struct SPKSolarSystemComparisonTests {
   func moonAgreesWithEachMoonModel(model: MoonModel) throws {
     let kernel = try loadTinyKernel()
     let system = SolarSystem(moonModel: model)
-    let (lonTol, latTol, distTol): (Double, Double, Double) = switch model {
-    case .meanElements, .periodicTerms: (3 * 3600, 1 * 3600, 0.06)
-    case .series: (90, 130, 0.0002)
-    }
+    let (lonTol, latTol, distTol): (Double, Double, Double) =
+      switch model {
+      case .meanElements, .periodicTerms: (3 * 3600, 1 * 3600, 0.06)
+      case .series: (90, 130, 0.0002)
+      }
     for jd in Self.epochs {
       let time = JulianDate(days: jd)
       let ref = try kernel.eclipticState(of: .moon, relativeTo: .earth, at: time).position / Units.kmPerAU
       let snapshot = system.snapshot(at: time)
       let geo = try #require(snapshot.position(of: .moon)) - #require(snapshot.position(of: .earth))
-      let m = Spherical(geo), r = Spherical(ref)
+      let m = Spherical(geo)
+      let r = Spherical(ref)
       let lon = abs(wrapPi(m.lon - r.lon)) * arcsecPerRad
       let lat = abs(m.lat - r.lat) * arcsecPerRad
       let dist = abs(m.r - r.r) / r.r
@@ -532,7 +614,8 @@ struct SPKSolarSystemComparisonTests {
     }
   }
 
-  @Test func earthAgreesWithClosedFormModel() throws {
+  @Test
+  func earthAgreesWithClosedFormModel() throws {
     let kernel = try loadTinyKernel()
     let system = SolarSystem(moonModel: .series)
     // The EM barycentre row's tolerance (x2): 20", 8", 6000 km thousand-km units; Earth's own centre inherits it.
@@ -541,13 +624,16 @@ struct SPKSolarSystemComparisonTests {
       let spk = try kernel.heliocentricEclipticPosition(of: .earth, at: time)
       let model = try #require(system.snapshot(at: time).position(of: .earth))
       let err = PositionError(model: model, reference: spk)
-      print("SPK vs SolarSystem Earth JD \(jd): lon \(fmt(err.lonArcsec))\" lat \(fmt(err.latArcsec))\" dist \(fmt(err.distKkm)) x1000km")
+      print(
+        "SPK vs SolarSystem Earth JD \(jd): lon \(fmt(err.lonArcsec))\" lat \(fmt(err.latArcsec))\" dist \(fmt(err.distKkm)) x1000km"
+      )
       #expect(err.lonArcsec <= 40 && err.latArcsec <= 16 && err.distKkm <= 12, "JD \(jd)")
     }
   }
 
   /// The snapshot built from the kernel has the same shape as the closed-form one and its positions are the kernel's.
-  @Test func snapshotFromKernel() throws {
+  @Test
+  func snapshotFromKernel() throws {
     let kernel = try loadTinyKernel()
     let time = JulianDate(days: 2_461_359.0)
     let system = SolarSystem(bodies: Catalog.allWithPluto)
@@ -566,10 +652,16 @@ struct SPKSolarSystemComparisonTests {
     #expect(moon.orientation == BodyOrientation.tidallyLocked(toParent: earth.position - moon.position))
   }
 
-  @Test func snapshotSkipsBodiesTheKernelLacks() throws {
+  @Test
+  func snapshotSkipsBodiesTheKernelLacks() throws {
     let moonOnly = SyntheticSegment(
-      target: 10, center: 0, dataType: 2, initialEpoch: 0, intervalLength: 1e12,
-      records: [[5e11, 5e11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]])
+      target: 10,
+      center: 0,
+      dataType: 2,
+      initialEpoch: 0,
+      intervalLength: 1e12,
+      records: [[5e11, 5e11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+    )
     let kernel = try SPKFile(data: makeSyntheticKernel([moonOnly], bigEndian: false))
     let snapshot = try SolarSystem().snapshot(at: JulianDate(days: 2_451_545.0), kernel: kernel)
     #expect(Set(snapshot.states.keys) == [.sun])

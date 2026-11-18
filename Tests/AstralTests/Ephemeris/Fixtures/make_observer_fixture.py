@@ -1,3 +1,4 @@
+// swiftlint:disable no_direct_standard_out_logs
 #!/usr/bin/env python3
 """Build horizons_observer.json: topocentric Sun/Moon data from NASA/JPL Horizons.
 

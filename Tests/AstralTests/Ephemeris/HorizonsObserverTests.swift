@@ -1,6 +1,9 @@
+// swiftlint:disable no_direct_standard_out_logs
 import Foundation
 import Testing
 @testable import Astral
+
+// MARK: - Tol
 
 // Observer-based Sun and Moon functions against NASA/JPL Horizons (topocentric OBSERVER ephemerides).
 //
@@ -23,8 +26,6 @@ import Testing
 // Documented accuracy used for the tolerances (CLAUDE.md "Numerical Precision"): solar event times ~1 minute,
 // positions 0.01 to 0.1 deg, lunar rise/set a few minutes.
 
-// MARK: - Tolerances
-
 private enum Tol {
   /// Sun airless elevation, degrees.
   static let sunElevation = 0.02
@@ -46,7 +47,7 @@ private enum Tol {
   static let moonEventSeconds = 120.0
 }
 
-// MARK: - Fixture
+// MARK: - HorizonsObserverFixture
 
 struct HorizonsObserverFixture: Decodable, Sendable {
   struct Site: Decodable, Sendable {
@@ -86,18 +87,19 @@ struct HorizonsObserverFixture: Decodable, Sendable {
     let delta: Double
   }
 
+  static let shared: HorizonsObserverFixture = try! load()
+
   let dates: [String]
   let observers: [String: Site]
   let bodies: [String: [String: BodyData]]
   let moonGeocentric: [Geocentric]
 
-  static let shared: HorizonsObserverFixture = try! load()
-
   static func load() throws -> HorizonsObserverFixture {
     let url = try #require(
       Bundle.module.url(forResource: "horizons_observer", withExtension: "json", subdirectory: "Fixtures")
         ?? Bundle.module.url(forResource: "horizons_observer", withExtension: "json"),
-      "horizons_observer.json missing from test bundle")
+      "horizons_observer.json missing from test bundle"
+    )
     return try JSONDecoder().decode(HorizonsObserverFixture.self, from: Data(contentsOf: url))
   }
 }
@@ -133,13 +135,29 @@ private var utcCalendar: Calendar {
 /// "2025-03-20T04:00:00Z" -> UTC DateComponents.
 private func components(utc string: String) -> DateComponents {
   let d = string.dropLast().split(whereSeparator: { "-T:".contains($0) }).map { Int($0)! }
-  return DateComponents(timeZone: TimeZone(secondsFromGMT: 0), year: d[0], month: d[1], day: d[2], hour: d[3], minute: d[4], second: d[5])
+  return DateComponents(
+    timeZone: TimeZone(secondsFromGMT: 0),
+    year: d[0],
+    month: d[1],
+    day: d[2],
+    hour: d[3],
+    minute: d[4],
+    second: d[5]
+  )
 }
 
 /// "2025-03-20" -> (UTC midnight Date, midnight-with-hour-and-minute DateComponents as moonrise() needs them).
 private func midnight(_ date: String) -> (Date, DateComponents) {
   let d = date.split(separator: "-").map { Int($0)! }
-  let dc = DateComponents(timeZone: TimeZone(secondsFromGMT: 0), year: d[0], month: d[1], day: d[2], hour: 0, minute: 0, second: 0)
+  let dc = DateComponents(
+    timeZone: TimeZone(secondsFromGMT: 0),
+    year: d[0],
+    month: d[1],
+    day: d[2],
+    hour: 0,
+    minute: 0,
+    second: 0
+  )
   return (utcCalendar.date(from: dc)!, dc)
 }
 
@@ -156,13 +174,24 @@ private func wrap180(_ x: Double) -> Double {
   return d
 }
 
+// MARK: - MaxError
+
 /// Running maximum with a label, printed at the end so the measured accuracy is visible in the test log.
 private struct MaxError {
+
+  // MARK: Lifecycle
+
+  init(_ label: String) {
+    self.label = label
+  }
+
+  // MARK: Internal
+
   let label: String
   var value = 0.0
   var worst = ""
   var count = 0
-  init(_ label: String) { self.label = label }
+
   mutating func add(_ error: Double, _ context: @autoclosure () -> String) {
     count += 1
     if error > value {
@@ -176,11 +205,12 @@ private struct MaxError {
   }
 }
 
-// MARK: - Fixture consistency
+// MARK: - HorizonsObserverFixtureTests
 
 @Suite("Horizons observer fixture", .tags(.ephemeris, .accuracy, .integration))
 struct HorizonsObserverFixtureTests {
-  @Test func fixtureContainsAllObservers() throws {
+  @Test
+  func fixtureContainsAllObservers() throws {
     let fixture = try HorizonsObserverFixture.load()
     #expect(Set(fixture.observers.keys) == Set(observerNames))
   }
@@ -190,8 +220,14 @@ struct HorizonsObserverFixtureTests {
   func predefinedObserversMatchFixture(name: String) throws {
     let site = try #require(HorizonsObserverFixture.shared.observers[name])
     let observer = predefinedObserver(name)
-    #expect(abs(site.latitude - observer.latitude) < 1e-9, "\(name) latitude fixture \(site.latitude) Astral \(observer.latitude)")
-    #expect(abs(site.longitude - observer.longitude) < 1e-9, "\(name) longitude fixture \(site.longitude) Astral \(observer.longitude)")
+    #expect(
+      abs(site.latitude - observer.latitude) < 1e-9,
+      "\(name) latitude fixture \(site.latitude) Astral \(observer.latitude)"
+    )
+    #expect(
+      abs(site.longitude - observer.longitude) < 1e-9,
+      "\(name) longitude fixture \(site.longitude) Astral \(observer.longitude)"
+    )
     guard case .double(let elevation) = observer.elevation else {
       Issue.record("\(name): expected a plain elevation")
       return
@@ -204,12 +240,21 @@ struct HorizonsObserverFixtureTests {
   func predefinedDMSObserversMatchTheirDocumentedCoordinates(name: String) throws {
     let site = try #require(HorizonsObserverFixture.shared.observers[name])
     let observer = predefinedObserver(name)
-    print("OBSFIX \(name) predefined Observer: latitude \(observer.latitude) (documented \(site.latitude)), longitude \(observer.longitude) (documented \(site.longitude))")
-        #expect(abs(site.latitude - observer.latitude) < 1e-4, "\(name) latitude fixture \(site.latitude) Astral \(observer.latitude)")
-    #expect(abs(site.longitude - observer.longitude) < 1e-4, "\(name) longitude fixture \(site.longitude) Astral \(observer.longitude)")
+    print(
+      "OBSFIX \(name) predefined Observer: latitude \(observer.latitude) (documented \(site.latitude)), longitude \(observer.longitude) (documented \(site.longitude))"
+    )
+    #expect(
+      abs(site.latitude - observer.latitude) < 1e-4,
+      "\(name) latitude fixture \(site.latitude) Astral \(observer.latitude)"
+    )
+    #expect(
+      abs(site.longitude - observer.longitude) < 1e-4,
+      "\(name) longitude fixture \(site.longitude) Astral \(observer.longitude)"
+    )
   }
 
-  @Test func refinedEventsLieInsideTheFlaggedMinute() throws {
+  @Test
+  func refinedEventsLieInsideTheFlaggedMinute() throws {
     let fixture = try HorizonsObserverFixture.load()
     var checked = 0
     for (_, byObserver) in fixture.bodies {
@@ -233,7 +278,7 @@ struct HorizonsObserverFixtureTests {
   }
 }
 
-// MARK: - Sun
+// MARK: - SunHorizonsObserverTests
 
 @Suite("Sun vs JPL Horizons (observer)", .tags(.solar, .ephemeris, .accuracy, .integration))
 struct SunHorizonsObserverTests {
@@ -311,7 +356,10 @@ struct SunHorizonsObserverTests {
       if let rise = data.events[date]?["rise"] {
         if let time = try? moonrise(observer: observer, dateComponents: day) {
           let seconds = secondsOfDay(time, since: start)
-          riseError.add(abs(seconds - rise.refinedSecondsOfDay), "\(date) astral \(seconds)s horizons \(rise.refinedSecondsOfDay)s")
+          riseError.add(
+            abs(seconds - rise.refinedSecondsOfDay),
+            "\(date) astral \(seconds)s horizons \(rise.refinedSecondsOfDay)s"
+          )
         } else {
           Issue.record("\(name) \(date): Horizons has a moonrise at \(rise.flagUTC) but Astral returned none")
         }
@@ -328,7 +376,7 @@ struct SunHorizonsObserverTests {
     #expect(riseError.count > 4 && setError.count > 4)
     riseError.report(unit: "s")
     setError.report(unit: "s")
-        #expect(riseError.value <= Tol.moonEventSeconds, "\(name) moonrise \(riseError.worst)")
+    #expect(riseError.value <= Tol.moonEventSeconds, "\(name) moonrise \(riseError.worst)")
     #expect(setError.value <= Tol.moonEventSeconds, "\(name) moonset \(setError.worst)")
   }
 }

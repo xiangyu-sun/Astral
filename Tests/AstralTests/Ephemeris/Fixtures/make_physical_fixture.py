@@ -1,3 +1,4 @@
+// swiftlint:disable no_direct_standard_out_logs
 #!/usr/bin/env python3
 """Fetch JPL Horizons OBSERVER-table quantities and write physical.json (committed; tests run offline).
 

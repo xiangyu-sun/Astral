@@ -55,7 +55,17 @@ public struct LunarEclipseContact: Sendable, Hashable {
 /// rest is the Danjon edge definition. The Earth's shadow edge is itself uncertain at that level.
 public struct LunarEclipse: Sendable, Hashable {
 
-  // MARK: Public
+  /// Shadow geometry constants (NASA conventions).
+  public enum Constants {
+    /// Earth's equatorial radius in km.
+    public static let earthRadiusKm = 6378.14
+    /// Danjon's enlargement of the Earth's radius for the atmosphere: 1/85.
+    public static let danjonEnlargement = 1.0 / 85.0
+    /// The Sun's radius in km (959.63″ at 1 AU).
+    public static let sunRadiusKm = 695_990.0
+    /// The Moon's radius as a fraction of the Earth's equatorial radius (0.2725076, IAU).
+    public static let moonRadiusInEarthRadii = 0.2725076
+  }
 
   /// The eclipse type.
   public let type: LunarEclipseType
@@ -83,7 +93,10 @@ public struct LunarEclipse: Sendable, Hashable {
   public let p4: LunarEclipseContact
 
   /// Duration of the penumbral phase (P1 to P4) in seconds.
-  public var penumbralDuration: TimeInterval { p4.date.timeIntervalSince(p1.date) }
+  public var penumbralDuration: TimeInterval {
+    p4.date.timeIntervalSince(p1.date)
+  }
+
   /// Duration of the umbral phase (U1 to U4) in seconds, `nil` for a penumbral eclipse.
   public var partialDuration: TimeInterval? {
     guard let u1, let u4 else { return nil }
@@ -129,14 +142,15 @@ public struct LunarEclipse: Sendable, Hashable {
   /// All lunar eclipses (including penumbral ones) whose greatest eclipse lies in `range`.
   public static func eclipses(in range: ClosedRange<Date>, moonModel: MoonModel = .series) -> [LunarEclipse] {
     let geometry = ShadowGeometry(model: moonModel)
-    var result: [LunarEclipse] = []
+    var result = [LunarEclipse]()
     let start = JulianDate(range.lowerBound).terrestrialTime
     let end = JulianDate(range.upperBound).terrestrialTime
     var from = JulianDate(days: start.days - 1)
     while from.days < end.days + 1 {
       let opposition = geometry.opposition(after: from)
-      if let eclipse = geometry.eclipse(aroundOpposition: opposition),
-         range.contains(eclipse.greatest.date)
+      if
+        let eclipse = geometry.eclipse(aroundOpposition: opposition),
+        range.contains(eclipse.greatest.date)
       {
         result.append(eclipse)
       }
@@ -145,20 +159,9 @@ public struct LunarEclipse: Sendable, Hashable {
     return result
   }
 
-  /// Shadow geometry constants (NASA conventions).
-  public enum Constants {
-    /// Earth's equatorial radius in km.
-    public static let earthRadiusKm = 6378.14
-    /// Danjon's enlargement of the Earth's radius for the atmosphere: 1/85.
-    public static let danjonEnlargement = 1.0 / 85.0
-    /// The Sun's radius in km (959.63″ at 1 AU).
-    public static let sunRadiusKm = 695_990.0
-    /// The Moon's radius as a fraction of the Earth's equatorial radius (0.2725076, IAU).
-    public static let moonRadiusInEarthRadii = 0.2725076
-  }
 }
 
-// MARK: - Shadow geometry
+// MARK: - ShadowState
 
 /// Earth shadow geometry at an instant.
 struct ShadowState {
@@ -170,6 +173,8 @@ struct ShadowState {
   /// Moon's radius, km.
   var moonKm: Double
 }
+
+// MARK: - ShadowGeometry
 
 struct ShadowGeometry {
   let model: MoonModel
@@ -192,7 +197,8 @@ struct ShadowGeometry {
       separationKm: simd_length(perpendicular),
       umbraKm: R - along * tanU,
       penumbraKm: R + along * tanP,
-      moonKm: LunarEclipse.Constants.moonRadiusInEarthRadii * LunarEclipse.Constants.earthRadiusKm)
+      moonKm: LunarEclipse.Constants.moonRadiusInEarthRadii * LunarEclipse.Constants.earthRadiusKm
+    )
   }
 
   /// Moon − Sun ecliptic longitude minus 180°, in (-π, π].
@@ -217,11 +223,18 @@ struct ShadowGeometry {
       let value = oppositionOffset(atTT: next)
       if previous < 0, value >= 0, abs(value - previous) < 1 {
         // Bisect/secant.
-        var a = t, b = next, fa = previous, fb = value
+        var a = t
+        var b = next
+        var fa = previous
+        var fb = value
         for _ in 0..<60 {
           let m = b - (b - a) * fb / (fb - fa)
           let fm = oppositionOffset(atTT: m)
-          if fm < 0 { a = m; fa = fm } else { b = m; fb = fm }
+          if fm < 0 { a = m
+            fa = fm
+          } else { b = m
+            fb = fm
+          }
           if abs(b - a) < 1e-9 { break }
         }
         return JulianDate(days: (a + b) / 2)
@@ -234,14 +247,28 @@ struct ShadowGeometry {
   /// Builds the eclipse around an opposition, or `nil` when the Moon misses the penumbra.
   func eclipse(aroundOpposition opposition: JulianDate) -> LunarEclipse? {
     // Greatest eclipse: minimise the separation within a few hours of opposition (golden section).
-    func separation(_ t: Double) -> Double { state(atTT: t).separationKm }
-    var lo = opposition.days - 0.25, hi = opposition.days + 0.25
+    func separation(_ t: Double) -> Double {
+      state(atTT: t).separationKm
+    }
+    var lo = opposition.days - 0.25
+    var hi = opposition.days + 0.25
     let phi = (sqrt(5.0) - 1) / 2
-    var c = hi - phi * (hi - lo), d = lo + phi * (hi - lo)
-    var fc = separation(c), fd = separation(d)
+    var c = hi - phi * (hi - lo)
+    var d = lo + phi * (hi - lo)
+    var fc = separation(c)
+    var fd = separation(d)
     for _ in 0..<80 {
-      if fc < fd { hi = d; d = c; fd = fc; c = hi - phi * (hi - lo); fc = separation(c) }
-      else { lo = c; c = d; fc = fd; d = lo + phi * (hi - lo); fd = separation(d) }
+      if fc < fd { hi = d
+        d = c
+        fd = fc
+        c = hi - phi * (hi - lo)
+        fc = separation(c)
+      } else { lo = c
+        c = d
+        fc = fd
+        d = lo + phi * (hi - lo)
+        fd = separation(d)
+      }
       if hi - lo < 1e-9 { break }
     }
     let tg = (lo + hi) / 2
@@ -252,7 +279,10 @@ struct ShadowGeometry {
 
     func contact(_ radius: (ShadowState) -> Double, sign: Double) -> Double {
       // Root of f(t) = separation - radius(t); f < 0 at greatest, > 0 outside.
-      func f(_ t: Double) -> Double { let s = state(atTT: t); return s.separationKm - radius(s) }
+      func f(_ t: Double) -> Double {
+        let s = state(atTT: t)
+        return s.separationKm - radius(s)
+      }
       var inside = tg
       var outside = tg + sign * 0.3
       for _ in 0..<80 {
@@ -270,7 +300,10 @@ struct ShadowGeometry {
 
     let p1 = make(contact({ $0.penumbraKm + $0.moonKm }, sign: -1))
     let p4 = make(contact({ $0.penumbraKm + $0.moonKm }, sign: 1))
-    var u1: LunarEclipseContact?, u4: LunarEclipseContact?, u2: LunarEclipseContact?, u3: LunarEclipseContact?
+    var u1: LunarEclipseContact?
+    var u4: LunarEclipseContact?
+    var u2: LunarEclipseContact?
+    var u3: LunarEclipseContact?
     var type = LunarEclipseType.penumbral
     if umbralMagnitude > 0 {
       type = .partial
@@ -288,6 +321,12 @@ struct ShadowGeometry {
       penumbralMagnitude: penumbralMagnitude,
       umbralMagnitude: umbralMagnitude,
       gamma: g.separationKm / LunarEclipse.Constants.earthRadiusKm,
-      p1: p1, u1: u1, u2: u2, u3: u3, u4: u4, p4: p4)
+      p1: p1,
+      u1: u1,
+      u2: u2,
+      u3: u3,
+      u4: u4,
+      p4: p4
+    )
   }
 }

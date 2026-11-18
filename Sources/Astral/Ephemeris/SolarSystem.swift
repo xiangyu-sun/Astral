@@ -112,12 +112,14 @@ public struct SolarSystem: Sendable {
     set { moonModel = newValue ? .periodicTerms : .meanElements }
   }
 
-  public func body(_ id: BodyID) -> Body? { byID[id] }
+  public func body(_ id: BodyID) -> Body? {
+    byID[id]
+  }
 
   /// The state of every body at `time`.
   public func snapshot(at time: JulianDate) -> SystemSnapshot {
     let T = time.centuriesSinceJ2000
-    var positions: [BodyID: SIMD3<Double>] = [:]
+    var positions = [BodyID: SIMD3<Double>]()
 
     // Heliocentric bodies first (Earth's row is the Earth–Moon barycentre).
     for body in bodies where body.id != .moon {
@@ -129,27 +131,31 @@ public struct SolarSystem: Sendable {
     }
 
     // Moon, and the barycentre correction for Earth.
-    if let moon = byID[.moon], let emb = positions[.earth],
-       let geo = Self.moonGeocentric(moon, T: T, model: moonModel)
+    if
+      let moon = byID[.moon], let emb = positions[.earth],
+      let geo = Self.moonGeocentric(moon, T: T, model: moonModel)
     {
       let earth = emb - geo / Self.earthMoonBarycentreDivisor
       positions[.earth] = earth
       positions[.moon] = earth + geo
     }
 
-    var states: [BodyID: BodyState] = [:]
+    var states = [BodyID: BodyState]()
     for body in bodies {
       guard let position = positions[body.id] else { continue }
-      let orientation: simd_quatd
-      switch body.id {
-      case .earth:
-        orientation = BodyOrientation.earth(at: time)
-      case .moon:
-        orientation = BodyOrientation.tidallyLocked(
-          toParent: (positions[.earth] ?? .zero) - position)
-      default:
-        orientation = BodyOrientation.generic(body: body, at: time)
-      }
+      let orientation: simd_quatd =
+        switch body.id {
+        case .earth:
+          BodyOrientation.earth(at: time)
+
+        case .moon:
+          BodyOrientation.tidallyLocked(
+            toParent: (positions[.earth] ?? .zero) - position
+          )
+
+        default:
+          BodyOrientation.generic(body: body, at: time)
+        }
       states[body.id] = BodyState(id: body.id, position: position, orientation: orientation)
     }
     return SystemSnapshot(time: time, states: states)

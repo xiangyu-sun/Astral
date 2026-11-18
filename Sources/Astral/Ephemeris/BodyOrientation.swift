@@ -10,6 +10,8 @@ import simd
 /// The body frame has +z at the north pole and +x through the prime meridian at the equator.
 public enum BodyOrientation {
 
+  // MARK: Public
+
   /// Mean obliquity of the ecliptic at J2000, degrees.
   public static let earthObliquityDeg = 23.4393
 
@@ -45,6 +47,8 @@ public enum BodyOrientation {
     let spin = 2 * .pi * (turns - turns.rounded(.down))
     return tilt(deg: body.axialTiltDeg) * simd_quatd(angle: spin, axis: zAxis)
   }
+
+  // MARK: Internal
 
   static let xAxis = SIMD3<Double>(1, 0, 0)
   static let zAxis = SIMD3<Double>(0, 0, 1)

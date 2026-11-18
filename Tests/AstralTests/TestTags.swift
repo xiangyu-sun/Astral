@@ -14,8 +14,6 @@
 import Testing
 
 extension Tag {
-  // MARK: - Functional Area Tags
-
   /// Tests related to solar (sun) calculations
   @Tag static var solar: Self
 
@@ -34,8 +32,6 @@ extension Tag {
   /// Tests related to the planetary ephemeris (planets, Moon model, orientation)
   @Tag static var ephemeris: Self
 
-  // MARK: - Calculation Type Tags
-
   /// Tests for position calculations (azimuth, elevation, zenith)
   @Tag static var position: Self
 
@@ -48,23 +44,17 @@ extension Tag {
   /// Tests verifying numerical accuracy and precision
   @Tag static var accuracy: Self
 
-  // MARK: - Performance Tags
-
   /// Quick unit tests (< 1 second)
   @Tag static var fast: Self
 
   /// Complex calculations that take longer to run
   @Tag static var slow: Self
 
-  // MARK: - Scope Tags
-
   /// Tests that combine multiple components
   @Tag static var integration: Self
 
   /// Isolated unit tests for individual functions
   @Tag static var unit: Self
-
-  // MARK: - Quality Tags
 
   /// Tests for edge cases and boundary conditions
   @Tag static var edge: Self

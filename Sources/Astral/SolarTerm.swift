@@ -62,12 +62,12 @@ public func daysUntilNextSolarTerm(from date: Date = Date()) -> Double {
 
   // Determine the next term index.
   // If the remainder is nearly 0, we’re exactly at a boundary.
-  let nextTermIndex: Double
-  if abs(remainder) < epsilon {
-    nextTermIndex = currentTermValue + 1.0
-  } else {
-    nextTermIndex = ceil(currentTermValue)
-  }
+  let nextTermIndex: Double =
+    if abs(remainder) < epsilon {
+      currentTermValue + 1.0
+    } else {
+      ceil(currentTermValue)
+    }
 
   // Compute the next boundary in degrees.
   let nextBoundary = 15.0 * nextTermIndex - 7.5
@@ -151,9 +151,30 @@ public func monthOfCurrentSolarTerm(for date: Date = Date()) -> Int {
 
   // Map each solar term index to its Gregorian month.
   let mapping: [Int] = [
-    3, 4, 4, 5, 5, 6, 6, 7,
-    7, 8, 8, 9, 9, 10, 10, 11,
-    11, 12, 12, 1, 1, 2, 2, 3,
+    3,
+    4,
+    4,
+    5,
+    5,
+    6,
+    6,
+    7,
+    7,
+    8,
+    8,
+    9,
+    9,
+    10,
+    10,
+    11,
+    11,
+    12,
+    12,
+    1,
+    1,
+    2,
+    2,
+    3,
   ]
 
   return mapping[termIndex]

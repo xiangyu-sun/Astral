@@ -1,18 +1,20 @@
-import Foundation
-import Testing
-import simd
 import Astral
+import Foundation
+import simd
+import Testing
 
 @Suite("SolarSystem Moon model and Sendable API", .tags(.ephemeris, .unit))
 struct SolarSystemModelTests {
 
-  @Test func defaultModelIsPeriodicTerms() {
+  @Test
+  func defaultModelIsPeriodicTerms() {
     #expect(SolarSystem().moonModel == .periodicTerms)
     #expect(SolarSystem(bodies: Catalog.allWithPluto).moonModel == .periodicTerms)
     #expect(SolarSystem().moonPeriodicTerms)
   }
 
-  @Test func booleanConvenienceInitMapsToModels() {
+  @Test
+  func booleanConvenienceInitMapsToModels() {
     #expect(SolarSystem(moonPeriodicTerms: true).moonModel == .periodicTerms)
     #expect(SolarSystem(moonPeriodicTerms: false).moonModel == .meanElements)
     #expect(SolarSystem(bodies: Catalog.all, moonPeriodicTerms: false).moonModel == .meanElements)
@@ -49,7 +51,8 @@ struct SolarSystemModelTests {
     #expect(r > 355_000 && r < 407_000, "\(model) distance \(r) km")
   }
 
-  @Test func seriesModelUsesTheSeriesPosition() throws {
+  @Test
+  func seriesModelUsesTheSeriesPosition() throws {
     let time = JulianDate(days: Epoch.jd2000)
     let s = SolarSystem(moonModel: .series).snapshot(at: time)
     let geo = try #require(s.states[.moon]).position - (try #require(s.states[.earth]).position)
@@ -57,35 +60,49 @@ struct SolarSystemModelTests {
     #expect(simd_length(geo - series) < 1e-12)
   }
 
-  @Test func seriesModelDoesNotNeedMoonElements() {
+  @Test
+  func seriesModelDoesNotNeedMoonElements() {
     let moonWithoutElements = Body(
-      id: .moon, parent: .earth, elements: nil, radiusKm: 1_737.4, axialTiltDeg: 0, rotationPeriodHours: 655.72)
+      id: .moon,
+      parent: .earth,
+      elements: nil,
+      radiusKm: 1_737.4,
+      axialTiltDeg: 0,
+      rotationPeriodHours: 655.72
+    )
     let bodies = [Catalog.sun, Catalog.earth, moonWithoutElements]
     #expect(SolarSystem(bodies: bodies, moonModel: .series).snapshot(at: .j2000).states[.moon] != nil)
     // The mean-element models cannot place a Moon without elements; it is skipped, as before.
     #expect(SolarSystem(bodies: bodies, moonModel: .periodicTerms).snapshot(at: .j2000).states[.moon] == nil)
   }
 
-  @Test func syzygyWithSeriesModel() {
+  @Test
+  func syzygyWithSeriesModel() throws {
     let solar = snapshot(Epoch.solarFixture, model: .series)
     let lunar = snapshot(Epoch.lunarFixture, model: .series)
-    let solarAngle = sunEarthMoonAngleDeg(earth: solar.states[.earth]!.position, moon: solar.states[.moon]!.position)
-    let lunarAngle = sunEarthMoonAngleDeg(earth: lunar.states[.earth]!.position, moon: lunar.states[.moon]!.position)
+    let solarAngle = sunEarthMoonAngleDeg(
+      earth: try #require(solar.states[.earth]?.position),
+      moon: try #require(solar.states[.moon]?.position)
+    )
+    let lunarAngle = sunEarthMoonAngleDeg(
+      earth: try #require(lunar.states[.earth]?.position),
+      moon: try #require(lunar.states[.moon]?.position)
+    )
     #expect(solarAngle < 3, "solar eclipse angle \(solarAngle)")
     #expect(lunarAngle > 177, "lunar eclipse angle \(lunarAngle)")
   }
 
-  @Test func orbitPathUnaffectedByMoonModel() {
+  @Test
+  func orbitPathUnaffectedByMoonModel() {
     let time = JulianDate(days: Epoch.jd2026)
     let a = SolarSystem(moonModel: .meanElements).orbitPath(of: .moon, at: time, samples: 32)
     let b = SolarSystem(moonModel: .series).orbitPath(of: .moon, at: time, samples: 32)
     #expect(a == b)
   }
 
-  // MARK: Sendable / Hashable public API
-
-  @Test func publicValueTypesAreSendable() {
-    func requireSendable<T: Sendable>(_: T.Type) {}
+  @Test
+  func publicValueTypesAreSendable() {
+    func requireSendable(_: (some Sendable).Type) { }
     requireSendable(JulianDate.self)
     requireSendable(OrbitalElements.self)
     requireSendable(Body.self)
@@ -105,7 +122,8 @@ struct SolarSystemModelTests {
     requireSendable(MoonError.self)
   }
 
-  @Test func existingValueTypesAreHashable() {
+  @Test
+  func existingValueTypesAreHashable() {
     #expect(Set([Observer.london, Observer.london, Observer.newDelhi]).count == 2)
     #expect(Set([Elevation.double(1), .double(1), .tuple(1, 2)]).count == 2)
     #expect(Set([Depression.civil, .nautical, .other(3), .other(3)]).count == 3)
@@ -117,7 +135,8 @@ struct SolarSystemModelTests {
     #expect(Set(locations).count == 1)
   }
 
-  @Test func catalogContents() {
+  @Test
+  func catalogContents() {
     #expect(Catalog.all.map(\.id) == [.sun, .mercury, .venus, .earth, .moon, .mars, .jupiter, .saturn, .uranus, .neptune])
     #expect(Catalog.allWithPluto.last?.id == .pluto)
     #expect(Catalog.all.allSatisfy { $0.id != .pluto })

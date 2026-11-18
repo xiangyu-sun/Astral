@@ -1,31 +1,30 @@
-import Foundation
-import Testing
-import simd
 import Astral
+import Foundation
+import simd
+import Testing
 
 @Suite("Kepler conics: parabolic, hyperbolic, universal", .tags(.ephemeris, .unit, .fast))
 struct KeplerConicsTests {
   static let k = Kepler.gaussianGravitationalConstant
 
-  // MARK: Constant
-
-  @Test func gaussianConstantIsTheSolarGravitationalParameter() {
+  @Test
+  func gaussianConstantIsTheSolarGravitationalParameter() {
     // GM_sun = k^2 = 2.959122082855911e-4 AU^3/day^2 (JPL SBDB/Horizons).
     #expect(abs(Self.k * Self.k - 2.959122082855911e-4) < 1e-18)
   }
 
-  // MARK: Parabolic (Meeus chapter 34)
-
   /// Meeus, Astronomical Algorithms, example 34.a: q = 1.487469 AU, perihelion 1998 Apr 14.4358, on 1998 Aug 5.0
   /// (t − T = 112.5642 d): ν = 66.78862°, r = 2.133911 AU. (Values as published in the example, which the
   /// github.com/soniakeys/meeus Go port reproduces; not independently re-derived from the book.)
-  @Test func meeusExample34a() {
+  @Test
+  func meeusExample34a() {
     let result = Kepler.parabolicOrbit(perihelionDistance: 1.487469, daysSincePerihelion: 112.5642)
     #expect(abs(result.trueAnomaly / Units.degToRad - 66.78862) < 2e-5)
     #expect(abs(result.radius - 2.133911) < 2e-6)
   }
 
-  @Test func parabolicOrbitSatisfiesBarkersEquationAndIsOddInTime() {
+  @Test
+  func parabolicOrbitSatisfiesBarkersEquationAndIsOddInTime() {
     for q in [0.1, 0.9, 5.0] {
       for dt in [1e-6, 0.01, 1, 40, 500, 1e4, 1e6] {
         let after = Kepler.parabolicOrbit(perihelionDistance: q, daysSincePerihelion: dt)
@@ -43,7 +42,8 @@ struct KeplerConicsTests {
     #expect(Kepler.parabolicOrbit(perihelionDistance: 1, daysSincePerihelion: 0).trueAnomaly == 0)
   }
 
-  @Test func universalPropagatorAgreesWithBarkerForE1() {
+  @Test
+  func universalPropagatorAgreesWithBarkerForE1() {
     for q in [0.3, 1.0, 4.0] {
       for dt in [-3000.0, -50, -0.5, 0, 0.5, 50, 3000] {
         let parabola = Kepler.parabolicOrbit(perihelionDistance: q, daysSincePerihelion: dt)
@@ -53,8 +53,6 @@ struct KeplerConicsTests {
       }
     }
   }
-
-  // MARK: Hyperbolic
 
   @Test(arguments: [1.0000001, 1.001, 1.2, 3.0, 25.0])
   func hyperbolicAnomalyResidual(e: Double) {
@@ -67,7 +65,8 @@ struct KeplerConicsTests {
   }
 
   /// A known solution: H = 1 for e = 2 gives M = 2 sinh 1 − 1.
-  @Test func hyperbolicAnomalyKnownValue() {
+  @Test
+  func hyperbolicAnomalyKnownValue() {
     let M = 2 * sinh(1.0) - 1
     #expect(abs(Kepler.hyperbolicAnomaly(meanAnomaly: M, eccentricity: 2) - 1) < 1e-14)
   }
@@ -86,8 +85,6 @@ struct KeplerConicsTests {
       #expect(simd_length(state.position - expected) < 1e-10 * max(1, simd_length(expected)), "e=\(e) dt=\(dt)")
     }
   }
-
-  // MARK: Elliptic
 
   @Test(arguments: [0.0, 0.0167, 0.2, 0.5, 0.9, 0.99])
   func universalPropagatorAgreesWithClassicalKepler(e: Double) {
@@ -115,7 +112,8 @@ struct KeplerConicsTests {
     let n = Self.k / (a * a.squareRoot())
     func eMinusSin(_ x: Double) -> Double {
       if abs(x) < 0.5 {
-        var term = x * x * x / 6, sum = 0.0
+        var term = x * x * x / 6
+        var sum = 0.0
         for k in 1..<14 {
           sum += term
           term *= -x * x / Double((2 * k + 2) * (2 * k + 3))
@@ -125,7 +123,8 @@ struct KeplerConicsTests {
       return x - sin(x)
     }
     func reference(M: Double) -> SIMD2<Double> {
-      var lo = 0.0, hi = Double.pi
+      var lo = 0.0
+      var hi = Double.pi
       for _ in 0..<200 {
         let mid = 0.5 * (lo + hi)
         if (1 - e) * mid + e * eMinusSin(mid) < M { lo = mid } else { hi = mid }
@@ -145,9 +144,8 @@ struct KeplerConicsTests {
     }
   }
 
-  // MARK: Continuity across e = 1
-
-  @Test func positionIsContinuousThroughParabolicEccentricity() {
+  @Test
+  func positionIsContinuousThroughParabolicEccentricity() {
     let q = 0.4
     for dt in [-400.0, -20, 3, 90, 700] {
       let ref = Kepler.perifocalState(perihelionDistance: q, eccentricity: 1, daysSincePerihelion: dt)
@@ -161,8 +159,6 @@ struct KeplerConicsTests {
       }
     }
   }
-
-  // MARK: Invariants for every conic
 
   /// Vis-viva, constant angular momentum, and velocity = d(position)/dt.
   @Test(arguments: [0.0, 0.3, 0.97, 1.0, 1.0004, 1.8, 6.0])
@@ -189,7 +185,8 @@ struct KeplerConicsTests {
     }
   }
 
-  @Test func stumpffFunctionsMatchTheirDefinitionsAndAreContinuous() {
+  @Test
+  func stumpffFunctionsMatchTheirDefinitionsAndAreContinuous() {
     for z in [-30.0, -4.0, -0.6, -0.5001, -0.4999, -1e-8, 0, 1e-8, 0.4999, 0.5001, 2, 9.8] {
       let (c, s) = Kepler.stumpff(z)
       if z > 1e-3 {

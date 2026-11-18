@@ -20,7 +20,9 @@ public struct SolarEclipseContact: Sendable, Hashable {
   public let sunAzimuth: Degrees
 
   /// Whether the Sun's centre is above the geometric horizon.
-  public var isSunAboveHorizon: Bool { sunAltitude > 0 }
+  public var isSunAboveHorizon: Bool {
+    sunAltitude > 0
+  }
 }
 
 // MARK: - SolarEclipseLocalType
@@ -99,12 +101,7 @@ public struct SolarEclipseGreatest: Sendable, Hashable {
 
 extension BesselianElements {
 
-  /// The geodetic flattening factor `b/a` of the reference ellipsoid used by NASA (1 - 1/298.257).
-  static let earthPolarRatio = 0.99664719
-  /// Earth's equatorial radius in metres (the unit of the elements is this radius).
-  static let earthRadiusMetres = 6_378_140.0
-  /// Radians per second of the Earth's rotation, `1 / 13713.44`.
-  static let earthRotationRadPerSecond = 1.0 / 13_713.44
+  // MARK: Public
 
   /// The eclipse type, from the geometry of the shadow over the Earth.
   ///
@@ -132,7 +129,7 @@ extension BesselianElements {
       }
       t += step
     }
-    if sawTotal && sawAnnular { return .hybrid }
+    if sawTotal, sawAnnular { return .hybrid }
     if sawTotal { return .total }
     if sawAnnular { return .annular }
     if minLimbDistance < abs(limbSign) { return limbSign < 0 ? .total : .annular }
@@ -155,7 +152,9 @@ extension BesselianElements {
 
     // The point of the Earth closest to the axis, and the shadow there.
     let b = Self.earthPolarRatio
-    var xi: Double, eta: Double, zeta: Double
+    var xi: Double
+    var eta: Double
+    var zeta: Double
     var central = true
     if let z = axisSurfaceZeta(s) {
       xi = s.x
@@ -171,7 +170,8 @@ extension BesselianElements {
       zeta = 0
     }
     // Invert xi/eta/zeta to the geocentric position; see `fundamentalToGeographic`.
-    let sinD = sin(s.d), cosD = cos(s.d)
+    let sinD = sin(s.d)
+    let cosD = cos(s.d)
     let p = eta * cosD + zeta * sinD // rho sin(phi')
     let q = zeta * cosD - eta * sinD // rho cos(phi') cos H
     let r = xi // rho cos(phi') sin H
@@ -208,7 +208,8 @@ extension BesselianElements {
       longitude: lonEast * 180 / .pi,
       sunAltitude: altitude * 180 / .pi,
       isCentral: central,
-      centralDuration: duration)
+      centralDuration: duration
+    )
   }
 
   /// Local circumstances for an observer.
@@ -271,31 +272,42 @@ extension BesselianElements {
       c4: makeContact(c4),
       magnitude: magnitude,
       obscuration: obscuration(mid: mid, magnitude: magnitude, central: isCentral),
-      moonSunRatio: (mid.l1p - mid.l2p) / (mid.l1p + mid.l2p))
+      moonSunRatio: (mid.l1p - mid.l2p) / (mid.l1p + mid.l2p)
+    )
   }
+
+  // MARK: Internal
+
+  /// The geodetic flattening factor `b/a` of the reference ellipsoid used by NASA (1 - 1/298.257).
+  static let earthPolarRatio = 0.99664719
+  /// Earth's equatorial radius in metres (the unit of the elements is this radius).
+  static let earthRadiusMetres = 6_378_140.0
+  /// Radians per second of the Earth's rotation, `1 / 13713.44`.
+  static let earthRotationRadPerSecond = 1.0 / 13_713.44
 
   // MARK: Private
 
   /// Observer constants.
   private struct LocalSite {
+    init(observer: Observer) {
+      let rad = Double.pi / 180
+      latitude = observer.latitude * rad
+      lonWest = -observer.longitude * rad
+      let height: Double =
+        switch observer.elevation {
+        case .double(let h): h
+        case .tuple(let h, _): h
+        }
+      let u = atan(BesselianElements.earthPolarRatio * tan(latitude))
+      rhoSin = BesselianElements.earthPolarRatio * sin(u) + height / BesselianElements.earthRadiusMetres * sin(latitude)
+      rhoCos = cos(u) + height / BesselianElements.earthRadiusMetres * cos(latitude)
+    }
+
     let latitude: Double // geodetic, radians
     let lonWest: Double // radians
     let rhoSin: Double
     let rhoCos: Double
 
-    init(observer: Observer) {
-      let rad = Double.pi / 180
-      latitude = observer.latitude * rad
-      lonWest = -observer.longitude * rad
-      let height: Double
-      switch observer.elevation {
-      case .double(let h): height = h
-      case .tuple(let h, _): height = h
-      }
-      let u = atan(BesselianElements.earthPolarRatio * tan(latitude))
-      rhoSin = BesselianElements.earthPolarRatio * sin(u) + height / BesselianElements.earthRadiusMetres * sin(latitude)
-      rhoCos = cos(u) + height / BesselianElements.earthRadiusMetres * cos(latitude)
-    }
   }
 
   /// Time and place dependent quantities (Meeus ch. 54 / Explanatory Supplement).
@@ -312,11 +324,22 @@ extension BesselianElements {
     var azimuth: Double // radians
   }
 
+  /// Distance of the shadow axis from the Earth's projected limb (positive if outside), in Earth radii.
+  private static func limbDistance(_ s: BesselianState) -> Double {
+    let b = earthPolarRatio
+    let e = sqrt(b * b * cos(s.d) * cos(s.d) + sin(s.d) * sin(s.d))
+    let r = sqrt(s.x * s.x + (s.y / e) * (s.y / e))
+    let scale = 1 / r
+    return hypot(s.x - s.x * scale, s.y - s.y * scale)
+  }
+
   private func locate(at t: Double, site: LocalSite) -> Local {
     let s = state(at: t)
     let h = s.mu - site.lonWest - Self.earthRotationRadPerSecond * deltaT
-    let sinH = sin(h), cosH = cos(h)
-    let sinD = sin(s.d), cosD = cos(s.d)
+    let sinH = sin(h)
+    let cosH = cos(h)
+    let sinD = sin(s.d)
+    let cosD = cos(s.d)
     let xi = site.rhoCos * sinH
     let eta = site.rhoSin * cosD - site.rhoCos * cosH * sinD
     let zeta = site.rhoSin * sinD + site.rhoCos * cosH * cosD
@@ -326,16 +349,22 @@ extension BesselianElements {
     let v = s.y - eta
     let a = s.dx - dxi
     let b = s.dy - deta
-    let sinLat = sin(site.latitude), cosLat = cos(site.latitude)
+    let sinLat = sin(site.latitude)
+    let cosLat = cos(site.latitude)
     let altitude = asin(sinD * sinLat + cosD * cosLat * cosH)
     let azimuth = atan2(-sinH * cosD, sinD * cosLat - cosH * sinLat * cosD)
     return Local(
-      t: t, u: u, v: v, a: a, b: b,
+      t: t,
+      u: u,
+      v: v,
+      a: a,
+      b: b,
       l1p: s.l1 - zeta * tanF1,
       l2p: s.l2 - zeta * tanF2,
       n2: a * a + b * b,
       altitude: altitude,
-      azimuth: azimuth)
+      azimuth: azimuth
+    )
   }
 
   /// Iterates a contact with the circle of radius `|radius(local)|` around the shadow axis.
@@ -344,9 +373,8 @@ extension BesselianElements {
     from mid: Local,
     radius: (Local) -> Double,
     sign: Double,
-    site: LocalSite)
-    -> Local
-  {
+    site: LocalSite
+  ) -> Local {
     var n = sqrt(mid.n2)
     let r0 = abs(radius(mid))
     var q = (mid.a * mid.v - mid.u * mid.b) / n / r0
@@ -375,7 +403,8 @@ extension BesselianElements {
       julianDate: ut,
       hoursFromT0: l.t,
       sunAltitude: l.altitude * 180 / .pi,
-      sunAzimuth: azimuth)
+      sunAzimuth: azimuth
+    )
   }
 
   /// Fraction of the Sun's disk covered at maximum.
@@ -385,19 +414,23 @@ extension BesselianElements {
     let ratio = (mid.l1p - mid.l2p) / (mid.l1p + mid.l2p)
     if central { return ratio * ratio } // annular: the Moon's disk lies fully inside the Sun's
     let m = hypot(mid.u, mid.v)
-    let l1 = mid.l1p, l2 = mid.l2p
+    let l1 = mid.l1p
+    let l2 = mid.l2p
     let c = acos(clamp((l1 * l1 + l2 * l2 - 2 * m * m) / (l1 * l1 - l2 * l2)))
     let bb = acos(clamp((l1 * l2 + m * m) / m / (l1 + l2)))
     let a = Double.pi - bb - c
     return ((ratio * ratio * a + bb) - ratio * sin(c)) / Double.pi
   }
 
-  private func clamp(_ v: Double) -> Double { min(1, max(-1, v)) }
+  private func clamp(_ v: Double) -> Double {
+    min(1, max(-1, v))
+  }
 
   /// `zeta` of the point where the shadow axis meets the near side of the Earth's ellipsoid; `nil` if it misses.
   private func axisSurfaceZeta(_ s: BesselianState) -> Double? {
     let b = Self.earthPolarRatio
-    let sinD = sin(s.d), cosD = cos(s.d)
+    let sinD = sin(s.d)
+    let cosD = cos(s.d)
     // (eta cosD + z sinD)² / b² + (z cosD - eta sinD)² + x² = 1, a quadratic in z.
     let A = sinD * sinD / (b * b) + cosD * cosD
     let B = 2 * s.y * cosD * sinD / (b * b) - 2 * s.y * sinD * cosD
@@ -407,14 +440,6 @@ extension BesselianElements {
     return (-B + sqrt(disc)) / (2 * A)
   }
 
-  /// Distance of the shadow axis from the Earth's projected limb (positive if outside), in Earth radii.
-  private static func limbDistance(_ s: BesselianState) -> Double {
-    let b = earthPolarRatio
-    let e = sqrt(b * b * cos(s.d) * cos(s.d) + sin(s.d) * sin(s.d))
-    let r = sqrt(s.x * s.x + (s.y / e) * (s.y / e))
-    let scale = 1 / r
-    return hypot(s.x - s.x * scale, s.y - s.y * scale)
-  }
 }
 
 // MARK: - SolarEclipseCatalog
@@ -423,7 +448,9 @@ extension BesselianElements {
 public enum SolarEclipseCatalog {
 
   /// All built-in eclipses in chronological order (2023 to 2035).
-  public static var all: [BesselianElements] { BesselianElements.catalog }
+  public static var all: [BesselianElements] {
+    BesselianElements.catalog
+  }
 
   /// The first built-in eclipse whose greatest eclipse (UT) is after `date`.
   public static func next(after date: Date) -> BesselianElements? {

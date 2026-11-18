@@ -1,3 +1,4 @@
+// swiftlint:disable no_direct_standard_out_logs
 #!/usr/bin/env python3
 """Fetch JPL Horizons vectors for the SPK tests and write horizons_spk.json.
 

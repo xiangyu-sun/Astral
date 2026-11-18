@@ -1,7 +1,7 @@
-import Foundation
-import Testing
-import simd
 import Astral
+import Foundation
+import simd
+import Testing
 
 // MARK: - Helpers
 
@@ -16,7 +16,8 @@ private func moonGeocentric(_ jd: Double, moonTerms: Bool) -> SIMD3<Double> {
 
 /// Finds x in [lo, hi] where f changes sign (f must be continuous there), by bisection.
 private func bisect(_ lo: Double, _ hi: Double, _ f: (Double) -> Double) -> Double {
-  var (a, b) = (lo, hi)
+  var a = lo
+  var b = hi
   let fa = f(a)
   for _ in 0..<60 {
     let m = 0.5 * (a + b)
@@ -25,12 +26,13 @@ private func bisect(_ lo: Double, _ hi: Double, _ f: (Double) -> Double) -> Doub
   return 0.5 * (a + b)
 }
 
-// MARK: - Earth
+// MARK: - EarthOrbitTests
 
 @Suite("Earth orbit", .tags(.ephemeris, .accuracy))
 struct EarthOrbitTests {
-  @Test func atJ2000LongitudeAndDistance_barycentre() {
-    let p = Kepler.position(elements: Catalog.earth.elements!, T: 0)
+  @Test
+  func atJ2000LongitudeAndDistance_barycentre() throws {
+    let p = Kepler.position(elements: try #require(Catalog.earth.elements), T: 0)
     let s = Spherical(p)
     #expect(abs(s.lon * degPerRad - 100.38) <= 0.1, "lon \(s.lon * degPerRad)")
     #expect(abs(s.r - 0.9833) <= 0.0005, "r \(s.r)")
@@ -49,20 +51,28 @@ struct EarthOrbitTests {
   /// month, which is comparable to the distance change over several days near perihelion, so the
   /// centre's minimum can fall a few days either side of the barycentre's (e.g. 31 Dec).
   @Test(arguments: [1950, 2000, 2026])
-  func perihelionAndAphelionOverOneYear(year: Int) {
+  func perihelionAndAphelionOverOneYear(year: Int) throws {
     let start = JulianDate(utcDate(year, 1, 1)).days
     let end = JulianDate(utcDate(year + 1, 1, 1)).days
-    let emb = Catalog.earth.elements!
-    var minR = Double.infinity, maxR = 0.0
-    var minEmb = Double.infinity, maxEmb = 0.0
-    var minAt = 0.0, maxAt = 0.0
+    let emb = try #require(Catalog.earth.elements)
+    var minR = Double.infinity
+    var maxR = 0.0
+    var minEmb = Double.infinity
+    var maxEmb = 0.0
+    var minAt = 0.0
+    var maxAt = 0.0
     var jd = start
     while jd <= end {
       let r = simd_length(earthPosition(jd))
-      minR = min(minR, r); maxR = max(maxR, r)
+      minR = min(minR, r)
+      maxR = max(maxR, r)
       let rb = simd_length(Kepler.position(elements: emb, T: JulianDate(days: jd).centuriesSinceJ2000))
-      if rb < minEmb { minEmb = rb; minAt = jd }
-      if rb > maxEmb { maxEmb = rb; maxAt = jd }
+      if rb < minEmb { minEmb = rb
+        minAt = jd
+      }
+      if rb > maxEmb { maxEmb = rb
+        maxAt = jd
+      }
       jd += 0.05
     }
     #expect(abs(minR - 0.9833) <= 0.0005, "min \(minR)")
@@ -70,7 +80,7 @@ struct EarthOrbitTests {
     #expect(abs(minEmb - 0.9833) <= 0.0005, "barycentre min \(minEmb)")
     #expect(abs(maxEmb - 1.0167) <= 0.0005, "barycentre max \(maxEmb)")
     var cal = Calendar(identifier: .gregorian)
-    cal.timeZone = TimeZone(identifier: "UTC")!
+    cal.timeZone = try #require(TimeZone(identifier: "UTC"))
     let minParts = cal.dateComponents([.month, .day], from: JulianDate(days: minAt).date)
     let maxParts = cal.dateComponents([.month, .day], from: JulianDate(days: maxAt).date)
     #expect(minParts.month == 1 && minParts.day! <= 10, "perihelion on \(minParts)")
@@ -87,7 +97,7 @@ struct EarthOrbitTests {
   }
 }
 
-// MARK: - Moon
+// MARK: - MoonOrbitTests
 
 @Suite("Moon orbit", .tags(.ephemeris, .lunar, .slow))
 struct MoonOrbitTests {
@@ -102,7 +112,9 @@ struct MoonOrbitTests {
       return Spherical(s.states[.moon]!.position - s.states[.earth]!.position).lon
     }
     let span = 3_278.0
-    var prev = lon(start), total = 0.0, t = 0.0
+    var prev = lon(start)
+    var total = 0.0
+    var t = 0.0
     let step = 0.5
     while t < span {
       let cur = lon(start + t + step)
@@ -126,7 +138,7 @@ struct MoonOrbitTests {
       return wrapPi(moon - sun)
     }
     // New moons: elongation crosses 0 going upward.
-    var newMoons: [Double] = []
+    var newMoons = [Double]()
     var t = start
     var prev = elongation(t)
     while newMoons.count < 13 {
@@ -144,12 +156,14 @@ struct MoonOrbitTests {
 
   @Test(arguments: [false, true])
   func distanceAlwaysBetween355000And407000km(moonTerms: Bool) {
-    var lo = Double.infinity, hi = 0.0
+    var lo = Double.infinity
+    var hi = 0.0
     for start in [Epoch.jd1900, Epoch.jd2000, Epoch.jd2026] {
       var d = 0.0
-      while d < 6_800 {   // ~ 18.6 years, one full node cycle, plus margin
+      while d < 6_800 { // ~ 18.6 years, one full node cycle, plus margin
         let r = simd_length(moonGeocentric(start + d, moonTerms: moonTerms)) * Units.kmPerAU
-        lo = min(lo, r); hi = max(hi, r)
+        lo = min(lo, r)
+        hi = max(hi, r)
         d += 0.37
       }
     }
@@ -158,11 +172,12 @@ struct MoonOrbitTests {
   }
 }
 
-// MARK: - Orientation and snapshot structure
+// MARK: - OrientationTests
 
 @Suite("Orientation and snapshot", .tags(.ephemeris, .unit))
 struct OrientationTests {
-  @Test func subSolarLongitudeAtJ2000WithinTwoDegrees() throws {
+  @Test
+  func subSolarLongitudeAtJ2000WithinTwoDegrees() throws {
     let s = snapshot(Epoch.jd2000)
     let earth = try #require(s.states[.earth])
     let sunDirEcliptic = simd_normalize(-earth.position)
@@ -171,20 +186,23 @@ struct OrientationTests {
     #expect(abs(lonDeg) <= 2, "sub-solar longitude \(lonDeg) deg")
   }
 
-  @Test func earthPoleIsTiltedByObliquity() throws {
+  @Test
+  func earthPoleIsTiltedByObliquity() throws {
     let earth = try #require(snapshot(Epoch.jd2026).states[.earth])
     let pole = earth.orientation.act(SIMD3(0, 0, 1))
     let eps = 23.4393 * Units.degToRad
     #expect(simd_length(pole - SIMD3(0, sin(eps), cos(eps))) < 1e-12)
   }
 
-  @Test func earthSpinsEastwardOncePerSiderealDay() throws {
+  @Test
+  func earthSpinsEastwardOncePerSiderealDay() {
     let t0 = JulianDate(days: Epoch.jd2000)
     let q0 = BodyOrientation.earth(at: t0)
     let t1 = JulianDate(days: Epoch.jd2000 + 1 / 1.00273781191135448)
     let q1 = BodyOrientation.earth(at: t1)
-    let x0 = q0.act(SIMD3(1, 0, 0)), x1 = q1.act(SIMD3(1, 0, 0))
-    #expect(simd_length(x0 - x1) < 1e-7)  // double rounding of JD ~2.4e6 is ~3e-9 rad
+    let x0 = q0.act(SIMD3(1, 0, 0))
+    let x1 = q1.act(SIMD3(1, 0, 0))
+    #expect(simd_length(x0 - x1) < 1e-7) // double rounding of JD ~2.4e6 is ~3e-9 rad
     // Quarter sidereal day later the prime meridian has moved counter-clockwise about the pole.
     let tq = JulianDate(days: Epoch.jd2000 + 0.25 / 1.00273781191135448)
     let xq = BodyOrientation.earth(at: tq).act(SIMD3(1, 0, 0))
@@ -192,9 +210,11 @@ struct OrientationTests {
     #expect(simd_dot(simd_cross(x0, xq), pole) > 0)
   }
 
-  @Test func moonIsTidallyLockedToEarth() throws {
+  @Test
+  func moonIsTidallyLockedToEarth() throws {
     let s = snapshot(Epoch.jd2026)
-    let earth = try #require(s.states[.earth]), moon = try #require(s.states[.moon])
+    let earth = try #require(s.states[.earth])
+    let moon = try #require(s.states[.moon])
     let towardEarth = simd_normalize(earth.position - moon.position)
     let bodyX = moon.orientation.act(SIMD3(1, 0, 0))
     #expect(simd_length(bodyX - towardEarth) < 1e-9)
@@ -203,7 +223,8 @@ struct OrientationTests {
     #expect(abs(simd_length(moon.orientation.vector) - 1) < 1e-9)
   }
 
-  @Test func snapshotContainsEveryCatalogBodyWithSunAtOrigin() throws {
+  @Test
+  func snapshotContainsEveryCatalogBodyWithSunAtOrigin() throws {
     let s = snapshot(Epoch.jd2000)
     for body in Catalog.all {
       #expect(s.states[body.id] != nil, "missing \(body.id)")
@@ -213,23 +234,31 @@ struct OrientationTests {
     #expect(SolarSystem(bodies: Catalog.allWithPluto).snapshot(at: .j2000).states[.pluto] != nil)
   }
 
-  @Test func earthIsBarycentreMinusMoonOver82() throws {
+  @Test
+  func earthIsBarycentreMinusMoonOver82() throws {
     let s = snapshot(Epoch.jd2026, moonTerms: false)
-    let emb = Kepler.position(elements: Catalog.earth.elements!, T: JulianDate(days: Epoch.jd2026).centuriesSinceJ2000)
-    let earth = try #require(s.states[.earth]).position, moon = try #require(s.states[.moon]).position
+    let emb = Kepler.position(
+      elements: try #require(Catalog.earth.elements),
+      T: JulianDate(days: Epoch.jd2026).centuriesSinceJ2000
+    )
+    let earth = try #require(s.states[.earth]).position
+    let moon = try #require(s.states[.moon]).position
     let geo = moon - earth
     #expect(simd_length(earth - (emb - geo / 82.30057)) < 1e-12)
     // barycentre sits on the line, 1/82.3 of the way from Earth to the Moon
     #expect(simd_length((earth + geo / 82.30057) - emb) < 1e-12)
   }
 
-  @Test func orbitPathIsClosedLoopOnTheOrbit() {
+  @Test
+  func orbitPathIsClosedLoopOnTheOrbit() throws {
     let system = SolarSystem()
     let time = JulianDate(days: Epoch.jd2026)
     let path = system.orbitPath(of: .mars, at: time, samples: 256)
     #expect(path.count == 256)
-    let el = Catalog.mars.elements!, T = time.centuriesSinceJ2000
-    let a = el.a + el.aRate * T, e = el.e + el.eRate * T
+    let el = try #require(Catalog.mars.elements)
+    let T = time.centuriesSinceJ2000
+    let a = el.a + el.aRate * T
+    let e = el.e + el.eRate * T
     for p in path {
       let r = simd_length(p)
       #expect(r >= a * (1 - e) - 1e-9 && r <= a * (1 + e) + 1e-9)

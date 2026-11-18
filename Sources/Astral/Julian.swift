@@ -27,7 +27,8 @@ func datFractionToTime(_ fraction: Double) -> DateComponents {
   return DateComponents(
     hour: Int(floor(hours)),
     minute: Int(floor(minutes)),
-    second: Int(floor(seconds)))
+    second: Int(floor(seconds))
+  )
 }
 
 // MARK: - Julian Day Calculations
@@ -43,8 +44,8 @@ func julianDay(at: DateComponents, calendar: Calendar = .init(identifier: .grego
   guard
     var year = at.year?.double,
     var month = at.month?.double,
-    let day = at.day?.double else
-  {
+    let day = at.day?.double
+  else {
     fatalError("Invalid date components provided to julianDay(at:)")
   }
 
@@ -60,18 +61,17 @@ func julianDay(at: DateComponents, calendar: Calendar = .init(identifier: .grego
 
   // Calculate the terms for the Gregorian calendar correction.
   let A = floor(year / 100)
-  let B: Double
-  if calendar.identifier == .gregorian {
-    B = 2 - A + floor(A / 4)
-  } else {
-    B = 0
-  }
+  let B: Double =
+    if calendar.identifier == .gregorian {
+      2 - A + floor(A / 4)
+    } else {
+      0
+    }
 
   // Compute the Julian Day using floor (which is equivalent to the mathematical "floor" function).
-  let jd = floor(365.25 * (year + 4716))
+  return floor(365.25 * (year + 4716))
     + floor(30.6001 * (month + 1))
     + day + dayFraction + B - 1524.5
-  return jd
 }
 
 /// Calculate the Modified Julian Date (MJD) for the specified date/time.
@@ -112,19 +112,19 @@ func julianDayToComponent(jd: Double) -> DateComponents {
   let minute = Int((totalSeconds.truncatingRemainder(dividingBy: 3600)) / 60)
   let second = Int(totalSeconds.truncatingRemainder(dividingBy: 60))
 
-  let month: Int
-  if E < 14 {
-    month = E - 1
-  } else {
-    month = E - 13
-  }
+  let month: Int =
+    if E < 14 {
+      E - 1
+    } else {
+      E - 13
+    }
 
-  let year: Int
-  if month > 2 {
-    year = C - 4716
-  } else {
-    year = C - 4715
-  }
+  let year: Int =
+    if month > 2 {
+      C - 4716
+    } else {
+      C - 4715
+    }
 
   return DateComponents(
     timeZone: TimeZone(secondsFromGMT: 0),
@@ -133,7 +133,8 @@ func julianDayToComponent(jd: Double) -> DateComponents {
     day: day,
     hour: hour,
     minute: minute,
-    second: second)
+    second: second
+  )
 }
 
 /// Convert a Julian Day to a Julian Century.

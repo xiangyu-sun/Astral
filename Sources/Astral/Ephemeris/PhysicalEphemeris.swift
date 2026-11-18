@@ -28,8 +28,8 @@ public struct ApparentPhysical: Sendable, Hashable {
     elongationDeg: Double,
     visualMagnitude: Double?,
     subObserverLatitudeDeg: Double?,
-    subSolarLatitudeDeg: Double?)
-  {
+    subSolarLatitudeDeg: Double?
+  ) {
     self.body = body
     self.distanceAU = distanceAU
     self.sunDistanceAU = sunDistanceAU
@@ -74,6 +74,8 @@ public struct ApparentPhysical: Sendable, Hashable {
 
 extension SolarSystem {
 
+  // MARK: Public
+
   /// The geocentric physical observing quantities of `id` at `time`.
   ///
   /// ```swift
@@ -88,8 +90,9 @@ extension SolarSystem {
   ///
   /// - Returns: `nil` for the Earth, or when the system lacks the Earth or the body.
   public func physical(of id: BodyID, at time: JulianDate) -> ApparentPhysical? {
-    guard id != .earth, body(id) != nil, let radii = PhysicalConstants.radii(of: id),
-          let earth = snapshot(at: time).position(of: .earth)
+    guard
+      id != .earth, body(id) != nil, let radii = PhysicalConstants.radii(of: id),
+      let earth = snapshot(at: time).position(of: .earth)
     else { return nil }
 
     // Light-time: place the body where it was `tau` ago.
@@ -134,8 +137,14 @@ extension SolarSystem {
 
     let year = 2000 + (time.days - JulianDate.j2000.days) / 365.25
     let magnitude = PlanetaryMagnitude.visualMagnitude(
-      of: id, sunDistanceAU: id == .sun ? 1 : sunDistance, earthDistanceAU: distance, phaseAngleDeg: phase,
-      subObserverLatitudeDeg: subObserver, subSolarLatitudeDeg: subSolar, year: year)
+      of: id,
+      sunDistanceAU: id == .sun ? 1 : sunDistance,
+      earthDistanceAU: distance,
+      phaseAngleDeg: phase,
+      subObserverLatitudeDeg: subObserver,
+      subSolarLatitudeDeg: subSolar,
+      year: year
+    )
 
     return ApparentPhysical(
       body: id,
@@ -148,7 +157,8 @@ extension SolarSystem {
       elongationDeg: elongation,
       visualMagnitude: magnitude,
       subObserverLatitudeDeg: subObserver,
-      subSolarLatitudeDeg: subSolar)
+      subSolarLatitudeDeg: subSolar
+    )
   }
 
   // MARK: Internal

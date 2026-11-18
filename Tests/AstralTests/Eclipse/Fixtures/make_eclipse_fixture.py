@@ -1,3 +1,4 @@
+// swiftlint:disable no_direct_standard_out_logs
 #!/usr/bin/env python3
 """Regenerates solar_local.json, lunar_eclipses.json and transits.json from NASA GSFC data.
 

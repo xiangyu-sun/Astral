@@ -30,6 +30,8 @@ import Foundation
 /// implementation, so that the values agree with Horizons.
 public enum PlanetaryMagnitude {
 
+  // MARK: Public
+
   /// The apparent visual magnitude of a body, or `nil` when the formula is not defined for it or the phase
   /// angle is outside the range of the fit.
   ///
@@ -50,40 +52,55 @@ public enum PlanetaryMagnitude {
     phaseAngleDeg a: Double,
     subObserverLatitudeDeg: Double? = nil,
     subSolarLatitudeDeg: Double? = nil,
-    year: Double = 2000) -> Double?
-  {
+    year: Double = 2000
+  ) -> Double? {
     guard r > 0, d > 0, a >= 0 else { return nil }
     let distanceTerm = 5 * log10(r * d)
     switch id {
     case .sun:
       return -26.74 + 5 * log10(d)
+
     case .mercury:
       guard a <= 180 else { return nil }
       return distanceTerm + mercury(a)
+
     case .venus:
       if a <= 163.7 { return distanceTerm + venusLow(a) }
       return a < 179 ? distanceTerm + venusHigh(a) : nil
+
     case .mars:
       return distanceTerm + (a <= 50 ? marsLow(a) : marsHigh(a))
+
     case .jupiter:
       if a <= 12 { return distanceTerm + jupiterLow(a) }
       return a < 130 ? distanceTerm + jupiterHigh(a) : nil
+
     case .saturn:
       return saturn(
-        distanceTerm: distanceTerm, phaseAngleDeg: a,
-        subObserverLatitudeDeg: subObserverLatitudeDeg, subSolarLatitudeDeg: subSolarLatitudeDeg)
+        distanceTerm: distanceTerm,
+        phaseAngleDeg: a,
+        subObserverLatitudeDeg: subObserverLatitudeDeg,
+        subSolarLatitudeDeg: subSolarLatitudeDeg
+      )
+
     case .uranus:
       guard let e = subObserverLatitudeDeg, let s = subSolarLatitudeDeg else { return nil }
       return distanceTerm + uranus(subObserverLatitudeDeg: e, subSolarLatitudeDeg: s)
+
     case .neptune:
       return distanceTerm + neptune(year: year)
+
     case .earth, .moon, .pluto:
       return nil
     }
   }
 
   /// Saturn's magnitude without the rings (Eq. 11 for α ≤ 6°, Eq. 12 up to 150°), or `nil` outside that range.
-  public static func saturnGlobeMagnitude(sunDistanceAU r: Double, earthDistanceAU d: Double, phaseAngleDeg a: Double) -> Double? {
+  public static func saturnGlobeMagnitude(
+    sunDistanceAU r: Double,
+    earthDistanceAU d: Double,
+    phaseAngleDeg a: Double
+  ) -> Double? {
     guard r > 0, d > 0, a >= 0 else { return nil }
     return saturnGlobe(distanceTerm: 5 * log10(r * d), phaseAngleDeg: a)
   }
@@ -95,6 +112,9 @@ public enum PlanetaryMagnitude {
   }
 
   // MARK: Private
+
+  /// Uranus flattening from the `pck00011` radii.
+  private static let uranusFlattening = 1 - 24_973.0 / 25_559.0
 
   /// Eq. 2.
   private static func mercury(_ a: Double) -> Double {
@@ -138,8 +158,8 @@ public enum PlanetaryMagnitude {
     distanceTerm: Double,
     phaseAngleDeg a: Double,
     subObserverLatitudeDeg: Double?,
-    subSolarLatitudeDeg: Double?) -> Double?
-  {
+    subSolarLatitudeDeg: Double?
+  ) -> Double? {
     if let e = subObserverLatitudeDeg, let s = subSolarLatitudeDeg, a < 6.5 {
       // The effective inclination is the geometric mean of the two latitudes when they have the same sign;
       // when they differ the rings are lit from one side and seen from the other (backlit, very faint) and the
@@ -178,6 +198,4 @@ public enum PlanetaryMagnitude {
     return -7.00
   }
 
-  /// Uranus flattening from the `pck00011` radii.
-  private static let uranusFlattening = 1 - 24_973.0 / 25_559.0
 }

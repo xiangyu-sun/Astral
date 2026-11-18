@@ -45,6 +45,8 @@ extension SPKFile {
 
 extension SPKFile {
 
+  // MARK: Public
+
   /// State of `body` relative to `center` in the frame of the ecliptic and equinox of J2000, kilometres and
   /// kilometres per second.
   ///
@@ -62,9 +64,12 @@ extension SPKFile {
       return SPKState(
         position: Self.rotateToEcliptic(state.position),
         velocity: Self.rotateToEcliptic(state.velocity),
-        frame: Self.eclipticJ2000FrameCode)
+        frame: Self.eclipticJ2000FrameCode
+      )
+
     case Self.eclipticJ2000FrameCode:
       return state
+
     default:
       throw SPKError.unsupportedFrame(state.frame)
     }
@@ -106,23 +111,23 @@ extension SolarSystem {
   ///
   /// - Throws: ``SPKError/noCoverage(target:et:)`` if `time` is outside the kernel's span for a body.
   public func snapshot(at time: JulianDate, kernel: SPKFile) throws -> SystemSnapshot {
-    var positions: [BodyID: SIMD3<Double>] = [:]
+    var positions = [BodyID: SIMD3<Double>]()
     for body in bodies where kernel.naifID(for: body.id) != nil {
       positions[body.id] = try kernel.heliocentricEclipticPosition(of: body.id, at: time)
     }
 
-    var states: [BodyID: BodyState] = [:]
+    var states = [BodyID: BodyState]()
     for body in bodies {
       guard let position = positions[body.id] else { continue }
-      let orientation: simd_quatd
-      switch body.id {
-      case .earth:
-        orientation = BodyOrientation.earth(at: time)
-      case .moon:
-        orientation = BodyOrientation.tidallyLocked(toParent: (positions[.earth] ?? .zero) - position)
-      default:
-        orientation = BodyOrientation.generic(body: body, at: time)
-      }
+      let orientation: simd_quatd =
+        switch body.id {
+        case .earth:
+          BodyOrientation.earth(at: time)
+        case .moon:
+          BodyOrientation.tidallyLocked(toParent: (positions[.earth] ?? .zero) - position)
+        default:
+          BodyOrientation.generic(body: body, at: time)
+        }
       states[body.id] = BodyState(id: body.id, position: position, orientation: orientation)
     }
     return SystemSnapshot(time: time, states: states)

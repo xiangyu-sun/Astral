@@ -1,9 +1,9 @@
-import Foundation
-import Testing
-import simd
 import Astral
+import Foundation
+import simd
+import Testing
 
-// MARK: - Fixture loading
+// MARK: - HorizonsFixture
 
 /// JPL Horizons vectors (heliocentric, ecliptic J2000, AU), see Fixtures/make_fixture.py.
 struct HorizonsFixture: Decodable {
@@ -13,7 +13,10 @@ struct HorizonsFixture: Decodable {
     let x: Double
     let y: Double
     let z: Double
-    var vector: SIMD3<Double> { SIMD3(x, y, z) }
+
+    var vector: SIMD3<Double> {
+      SIMD3(x, y, z)
+    }
   }
 
   let bodies: [String: [Row]]
@@ -22,7 +25,8 @@ struct HorizonsFixture: Decodable {
     let url = try #require(
       Bundle.module.url(forResource: "horizons", withExtension: "json", subdirectory: "Fixtures")
         ?? Bundle.module.url(forResource: "horizons", withExtension: "json"),
-      "horizons.json missing from test bundle")
+      "horizons.json missing from test bundle"
+    )
     return try JSONDecoder().decode(HorizonsFixture.self, from: Data(contentsOf: url))
   }
 
@@ -32,6 +36,8 @@ struct HorizonsFixture: Decodable {
     return row.vector
   }
 }
+
+// MARK: - Epoch
 
 enum Epoch {
   static let jd1900 = 2_415_021.0
@@ -50,18 +56,23 @@ enum Epoch {
 let arcsecPerRad = 180.0 / .pi * 3600
 let degPerRad = 180.0 / .pi
 
+// MARK: - Spherical
+
 struct Spherical {
-  let lon: Double   // radians, (-pi, pi]
-  let lat: Double   // radians
-  let r: Double
   init(_ v: SIMD3<Double>) {
     r = simd_length(v)
     lon = atan2(v.y, v.x)
     lat = asin(v.z / r)
   }
+
+  let lon: Double // radians, (-pi, pi]
+  let lat: Double // radians
+  let r: Double
 }
 
-func wrapPi(_ x: Double) -> Double { x.remainder(dividingBy: 2 * .pi) }
+func wrapPi(_ x: Double) -> Double {
+  x.remainder(dividingBy: 2 * .pi)
+}
 
 /// Angle in degrees between two vectors.
 func angleDeg(_ a: SIMD3<Double>, _ b: SIMD3<Double>) -> Double {
@@ -88,4 +99,6 @@ func snapshot(_ jd: Double, model: MoonModel) -> SystemSnapshot {
   SolarSystem(bodies: Catalog.all, moonModel: model).snapshot(at: JulianDate(days: jd))
 }
 
-func fmt(_ x: Double, _ digits: Int = 3) -> String { String(format: "%.\(digits)f", x) }
+func fmt(_ x: Double, _ digits: Int = 3) -> String {
+  String(format: "%.\(digits)f", x)
+}

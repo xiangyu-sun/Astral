@@ -1,6 +1,7 @@
+// swiftlint:disable no_direct_standard_out_logs
+import Astral
 import Foundation
 import Testing
-import Astral
 
 @Suite("Solar eclipses: local circumstances vs NASA calculator", .tags(.solar, .accuracy, .integration))
 struct SolarLocalCircumstancesTests {
@@ -16,11 +17,16 @@ struct SolarLocalCircumstancesTests {
       return
     }
     let local = try #require(result)
-    func seconds(_ d: Date) -> Double { d.timeIntervalSince(eclipse.midnightUT) }
+    func seconds(_ d: Date) -> Double {
+      d.timeIntervalSince(eclipse.midnightUT)
+    }
     var line = "SOLAR \(testCase.testDescription): type \(local.type) (NASA \(site.type))"
     func check(_ name: String, _ c: SolarEclipseContact?, _ ref: SolarFixture.Snapshot?) {
       guard let ref else { return }
-      guard let c else { line += " \(name) MISSING"; Issue.record("\(name) missing"); return }
+      guard let c else { line += " \(name) MISSING"
+        Issue.record("\(name) missing")
+        return
+      }
       let dt = seconds(c.date) - ref.utSeconds
       let dalt = c.sunAltitude - ref.altitudeDeg
       var daz = c.sunAzimuth - ref.azimuthDeg
@@ -48,9 +54,10 @@ struct SolarLocalCircumstancesTests {
   }
 
   /// Secondary, independent cross-check: published local times (timeanddate.com, to the minute) converted to UT.
-  @Test func agreesWithPublishedLocalTimes() throws {
+  @Test
+  func agreesWithPublishedLocalTimes() throws {
     let catalog = BesselianElements.catalog
-    func minutes(_ local: SolarEclipseLocalCircumstances, _ c: SolarEclipseContact, _ midnight: Date) -> Double {
+    func minutes(_: SolarEclipseLocalCircumstances, _ c: SolarEclipseContact, _ midnight: Date) -> Double {
       c.date.timeIntervalSince(midnight) / 60
     }
     // Dallas 2024-04-08, CDT = UT-5: partial 12:23-15:02, maximum 13:42, magnitude 1.015, totality 3m52s.

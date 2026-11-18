@@ -50,12 +50,13 @@ struct SolarTermTests {
     components.timeZone = TimeZone(secondsFromGMT: 0)
 
     var calendar = Calendar(identifier: .gregorian)
-    calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+    calendar.timeZone = try #require(TimeZone(secondsFromGMT: 0))
 
     let date = try #require(calendar.date(from: components))
     let result = calendar.dateComponents(
       [.year, .month, .day, .hour],
-      from: preciseNextSolarTermDate(from: date))
+      from: preciseNextSolarTermDate(from: date)
+    )
 
     var componentsXiazhi = DateComponents()
     componentsXiazhi.year = 2025
@@ -139,7 +140,7 @@ struct SolarTermTests {
   }
 
   @Test("Solar term increases monotonically with time", .tags(.validation, .unit))
-  func monotonicity() {
+  func monotonicity() throws {
     var components1 = DateComponents()
     components1.year = 2020
     components1.month = 3
@@ -152,8 +153,8 @@ struct SolarTermTests {
     var components2 = components1
     components2.day = 21
 
-    let date1 = Calendar(identifier: .gregorian).date(from: components1)!
-    let date2 = Calendar(identifier: .gregorian).date(from: components2)!
+    let date1 = try #require(Calendar(identifier: .gregorian).date(from: components1))
+    let date2 = try #require(Calendar(identifier: .gregorian).date(from: components2))
 
     let term1 = currentSolarTerm(for: date1)
     let term2 = currentSolarTerm(for: date2)
@@ -222,13 +223,15 @@ struct SolarTermTests {
     .tags(.conversion, .integration),
     arguments: zip(
       ["2021-12-21", "2022-01-05", "2022-03-20", "2022-06-21", "2022-09-23", "2022-11-07"],
-      [12, 1, 3, 6, 9, 11]))
-  func monthOfCurrentSolarTermKnownDates(dateString: String, expectedMonth: Int) {
+      [12, 1, 3, 6, 9, 11]
+    )
+  )
+  func monthOfCurrentSolarTermKnownDates(dateString: String, expectedMonth: Int) throws {
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd"
     formatter.timeZone = TimeZone(abbreviation: "UTC")
 
-    let date = formatter.date(from: dateString)!
+    let date = try #require(formatter.date(from: dateString))
     let month = monthOfCurrentSolarTerm(for: date)
 
     #expect(month == expectedMonth)

@@ -12,7 +12,9 @@ public enum TransitPlanet: String, Sendable, Hashable, CaseIterable {
   case mercury
   case venus
 
-  var bodyID: BodyID { self == .mercury ? .mercury : .venus }
+  var bodyID: BodyID {
+    self == .mercury ? .mercury : .venus
+  }
 }
 
 // MARK: - PlanetaryTransit
@@ -37,6 +39,9 @@ public struct PlanetaryTransit: Sendable, Hashable {
 
   // MARK: Public
 
+  /// The Sun's semi-diameter at 1 AU in arcseconds (the IAU 1976 value 959.63″ used by NASA).
+  public static let sunSemiDiameterAt1AU = 959.63
+
   public let planet: TransitPlanet
   /// Contact I: the planet's disk touches the Sun's limb from outside.
   public let contact1: LunarEclipseContact
@@ -56,15 +61,19 @@ public struct PlanetaryTransit: Sendable, Hashable {
   public let planetSemiDiameterArcseconds: Double
 
   /// Duration from contact I to contact IV in seconds.
-  public var duration: TimeInterval { contact4.date.timeIntervalSince(contact1.date) }
-
-  /// The Sun's semi-diameter at 1 AU in arcseconds (the IAU 1976 value 959.63″ used by NASA).
-  public static let sunSemiDiameterAt1AU = 959.63
+  public var duration: TimeInterval {
+    contact4.date.timeIntervalSince(contact1.date)
+  }
 
   /// The transits of `planet` whose greatest transit lies in `range`, using the closed-form planetary model.
   public static func transits(of planet: TransitPlanet, in range: ClosedRange<Date>) -> [PlanetaryTransit] {
-    search(planet: planet, from: JulianDate(range.lowerBound).terrestrialTime.days,
-           to: JulianDate(range.upperBound).terrestrialTime.days, limit: .max, positions: closedForm(planet))
+    search(
+      planet: planet,
+      from: JulianDate(range.lowerBound).terrestrialTime.days,
+      to: JulianDate(range.upperBound).terrestrialTime.days,
+      limit: .max,
+      positions: closedForm(planet)
+    )
   }
 
   /// The next transit of `planet` after `date`, searching up to `years` years ahead (Mercury transits are 3 to 13
@@ -79,33 +88,71 @@ public struct PlanetaryTransit: Sendable, Hashable {
   public static func transits(
     of planet: TransitPlanet,
     in range: ClosedRange<Date>,
-    kernel: SPKFile) throws -> [PlanetaryTransit]
-  {
-    let box = ErrorBox()
+    kernel: SPKFile
+  ) throws -> [PlanetaryTransit] {
+    var firstError: Error?
     let positions: (Double) -> (earth: SIMD3<Double>, planet: SIMD3<Double>) = { jd in
       do {
         let earth = try kernel.heliocentricEclipticPosition(of: .earth, at: JulianDate(days: jd))
         let p = try kernel.heliocentricEclipticPosition(of: planet.bodyID, at: JulianDate(days: jd))
         return (earth, p)
       } catch {
-        box.set(error)
+        firstError = firstError ?? error
         return (SIMD3(1, 0, 0), SIMD3(-1, 0, 0))
       }
     }
     let result = search(
-      planet: planet, from: JulianDate(range.lowerBound).terrestrialTime.days,
-      to: JulianDate(range.upperBound).terrestrialTime.days, limit: .max, positions: positions)
-    if let error = box.error { throw error }
+      planet: planet,
+      from: JulianDate(range.lowerBound).terrestrialTime.days,
+      to: JulianDate(range.upperBound).terrestrialTime.days,
+      limit: .max,
+      positions: positions
+    )
+    if let firstError { throw firstError }
+    return result
+  }
+
+  // MARK: Fileprivate
+
+  fileprivate static func search(
+    planet: TransitPlanet,
+    from start: Double,
+    to end: Double,
+    limit: Int,
+    positions: (Double) -> (earth: SIMD3<Double>, planet: SIMD3<Double>)
+  ) -> [PlanetaryTransit] {
+    var result = [PlanetaryTransit]()
+    let step = 0.5
+    var t = start - step
+    var s0 = geometry(at: t, planet: planet, positions: positions)
+    t += step
+    var s1 = geometry(at: t, planet: planet, positions: positions)
+    while t < end + step, result.count < limit {
+      let t2 = t + step
+      let s2 = geometry(at: t2, planet: planet, positions: positions)
+      if s1.separation <= s0.separation, s1.separation < s2.separation, s1.separation < 7200, s1.planetIsNearer {
+        if
+          let transit = refine(planet: planet, around: t, positions: positions),
+          transit.greatest.terrestrialTime.days >= start, transit.greatest.terrestrialTime.days <= end
+        {
+          result.append(transit)
+        }
+      }
+      s0 = s1
+      s1 = s2
+      t = t2
+    }
     return result
   }
 
   // MARK: Private
 
-  private final class ErrorBox: @unchecked Sendable {
-    private let lock = NSLock()
-    private var stored: Error?
-    var error: Error? { lock.lock(); defer { lock.unlock() }; return stored }
-    func set(_ error: Error) { lock.lock(); stored = stored ?? error; lock.unlock() }
+  /// Angular quantities at one TT instant (days).
+  private struct Geometry {
+    var separation: Double // arcsec
+    var sunSD: Double
+    var planetSD: Double
+    var planetIsNearer: Bool
   }
 
   private static let lightDaysPerAU = 149_597_870.7 / 299_792.458 / 86_400
@@ -121,19 +168,11 @@ public struct PlanetaryTransit: Sendable, Hashable {
     }
   }
 
-  /// Angular quantities at one TT instant (days).
-  private struct Geometry {
-    var separation: Double // arcsec
-    var sunSD: Double
-    var planetSD: Double
-    var planetIsNearer: Bool
-  }
-
   private static func geometry(
     at jd: Double,
     planet: TransitPlanet,
-    positions: (Double) -> (earth: SIMD3<Double>, planet: SIMD3<Double>)) -> Geometry
-  {
+    positions: (Double) -> (earth: SIMD3<Double>, planet: SIMD3<Double>)
+  ) -> Geometry {
     let (earth, p0) = positions(jd)
     let sunDistance = simd_length(earth)
     // Planet position at the time its light left it.
@@ -154,52 +193,37 @@ public struct PlanetaryTransit: Sendable, Hashable {
       separation: angle * 180 / .pi * 3600,
       sunSD: sunSemiDiameterAt1AU / sunDistance,
       planetSD: atan(radius / (planetDistance * Units.kmPerAU)) * 180 / .pi * 3600,
-      planetIsNearer: planetDistance < sunDistance)
-  }
-
-  fileprivate static func search(
-    planet: TransitPlanet,
-    from start: Double,
-    to end: Double,
-    limit: Int,
-    positions: (Double) -> (earth: SIMD3<Double>, planet: SIMD3<Double>)) -> [PlanetaryTransit]
-  {
-    var result: [PlanetaryTransit] = []
-    let step = 0.5
-    var t = start - step
-    var s0 = geometry(at: t, planet: planet, positions: positions)
-    t += step
-    var s1 = geometry(at: t, planet: planet, positions: positions)
-    while t < end + step, result.count < limit {
-      let t2 = t + step
-      let s2 = geometry(at: t2, planet: planet, positions: positions)
-      if s1.separation <= s0.separation, s1.separation < s2.separation, s1.separation < 7200, s1.planetIsNearer {
-        if let transit = refine(planet: planet, around: t, positions: positions),
-           transit.greatest.terrestrialTime.days >= start, transit.greatest.terrestrialTime.days <= end
-        {
-          result.append(transit)
-        }
-      }
-      s0 = s1
-      s1 = s2
-      t = t2
-    }
-    return result
+      planetIsNearer: planetDistance < sunDistance
+    )
   }
 
   private static func refine(
     planet: TransitPlanet,
     around centre: Double,
-    positions: (Double) -> (earth: SIMD3<Double>, planet: SIMD3<Double>)) -> PlanetaryTransit?
-  {
-    func sep(_ t: Double) -> Double { geometry(at: t, planet: planet, positions: positions).separation }
-    var lo = centre - 0.5, hi = centre + 0.5
+    positions: (Double) -> (earth: SIMD3<Double>, planet: SIMD3<Double>)
+  ) -> PlanetaryTransit? {
+    func sep(_ t: Double) -> Double {
+      geometry(at: t, planet: planet, positions: positions).separation
+    }
+    var lo = centre - 0.5
+    var hi = centre + 0.5
     let phi = (sqrt(5.0) - 1) / 2
-    var c = hi - phi * (hi - lo), d = lo + phi * (hi - lo)
-    var fc = sep(c), fd = sep(d)
+    var c = hi - phi * (hi - lo)
+    var d = lo + phi * (hi - lo)
+    var fc = sep(c)
+    var fd = sep(d)
     for _ in 0..<80 {
-      if fc < fd { hi = d; d = c; fd = fc; c = hi - phi * (hi - lo); fc = sep(c) }
-      else { lo = c; c = d; fc = fd; d = lo + phi * (hi - lo); fd = sep(d) }
+      if fc < fd { hi = d
+        d = c
+        fd = fc
+        c = hi - phi * (hi - lo)
+        fc = sep(c)
+      } else { lo = c
+        c = d
+        fc = fd
+        d = lo + phi * (hi - lo)
+        fd = sep(d)
+      }
       if hi - lo < 1e-9 { break }
     }
     let tg = (lo + hi) / 2
@@ -238,6 +262,7 @@ public struct PlanetaryTransit: Sendable, Hashable {
       contact4: make(root(outer, sign: 1)),
       minimumSeparationArcseconds: g.separation,
       sunSemiDiameterArcseconds: g.sunSD,
-      planetSemiDiameterArcseconds: g.planetSD)
+      planetSemiDiameterArcseconds: g.planetSD
+    )
   }
 }

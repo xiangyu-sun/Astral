@@ -27,7 +27,9 @@ public enum SmallBodyError: Error, Sendable, Hashable {
 
 /// The shape of a conic orbit.
 public enum OrbitKind: Sendable, Hashable {
-  case elliptic, parabolic, hyperbolic
+  case elliptic
+  case parabolic
+  case hyperbolic
 }
 
 // MARK: - SmallBody
@@ -76,11 +78,15 @@ public struct SmallBody: Sendable, Hashable {
     inclination: Double,
     longitudeOfAscendingNode: Double,
     argumentOfPerihelion: Double,
-    timeOfPerihelion: JulianDate)
-    throws
-  {
+    timeOfPerihelion: JulianDate
+  ) throws {
     let values = [
-      epoch.days, eccentricity, perihelionDistance, inclination, longitudeOfAscendingNode, argumentOfPerihelion,
+      epoch.days,
+      eccentricity,
+      perihelionDistance,
+      inclination,
+      longitudeOfAscendingNode,
+      argumentOfPerihelion,
       timeOfPerihelion.days,
     ]
     guard values.allSatisfy(\.isFinite) else { throw SmallBodyError.invalidElement("non-finite value") }
@@ -114,9 +120,8 @@ public struct SmallBody: Sendable, Hashable {
     inclination: Double,
     longitudeOfAscendingNode: Double,
     argumentOfPerihelion: Double,
-    meanAnomaly: Double)
-    throws
-  {
+    meanAnomaly: Double
+  ) throws {
     guard semiMajorAxis.isFinite, meanAnomaly.isFinite, eccentricity.isFinite else {
       throw SmallBodyError.invalidElement("non-finite value")
     }
@@ -135,7 +140,8 @@ public struct SmallBody: Sendable, Hashable {
       inclination: inclination,
       longitudeOfAscendingNode: longitudeOfAscendingNode,
       argumentOfPerihelion: argumentOfPerihelion,
-      timeOfPerihelion: JulianDate(days: epoch.days - M / n))
+      timeOfPerihelion: JulianDate(days: epoch.days - M / n)
+    )
   }
 
   /// Creates a body from the response of the SBDB API, `https://ssd-api.jpl.nasa.gov/sbdb.api?sstr=<id>`.
@@ -163,7 +169,7 @@ public struct SmallBody: Sendable, Hashable {
       throw SmallBodyError.unsupportedEquinox(equinox)
     }
     guard let epoch = orbit.epoch else { throw SmallBodyError.missingElement("epoch") }
-    var elements: [String: Double] = [:]
+    var elements = [String: Double]()
     for element in orbit.elements ?? [] {
       if let value = element.value { elements[element.name] = value }
     }
@@ -178,12 +184,26 @@ public struct SmallBody: Sendable, Hashable {
     let peri = try required("w")
     if let q = elements["q"], let tp = elements["tp"] {
       try self.init(
-        name: name, epoch: JulianDate(days: epoch), eccentricity: e, perihelionDistance: q, inclination: i,
-        longitudeOfAscendingNode: node, argumentOfPerihelion: peri, timeOfPerihelion: JulianDate(days: tp))
+        name: name,
+        epoch: JulianDate(days: epoch),
+        eccentricity: e,
+        perihelionDistance: q,
+        inclination: i,
+        longitudeOfAscendingNode: node,
+        argumentOfPerihelion: peri,
+        timeOfPerihelion: JulianDate(days: tp)
+      )
     } else if let a = elements["a"], let ma = elements["ma"] {
       try self.init(
-        name: name, epoch: JulianDate(days: epoch), eccentricity: e, semiMajorAxis: a, inclination: i,
-        longitudeOfAscendingNode: node, argumentOfPerihelion: peri, meanAnomaly: ma)
+        name: name,
+        epoch: JulianDate(days: epoch),
+        eccentricity: e,
+        semiMajorAxis: a,
+        inclination: i,
+        longitudeOfAscendingNode: node,
+        argumentOfPerihelion: peri,
+        meanAnomaly: ma
+      )
     } else {
       throw SmallBodyError.missingElement("q and tp (or a and ma)")
     }
@@ -253,7 +273,8 @@ public struct SmallBody: Sendable, Hashable {
     let pf = Kepler.perifocalState(
       perihelionDistance: perihelionDistance,
       eccentricity: eccentricity,
-      daysSincePerihelion: time.days - timeOfPerihelion.days)
+      daysSincePerihelion: time.days - timeOfPerihelion.days
+    )
     return (rotateToEcliptic(pf.position), rotateToEcliptic(pf.velocity))
   }
 
@@ -272,7 +293,7 @@ public struct SmallBody: Sendable, Hashable {
     let p = perihelionDistance * (1 + e)
     let point = { (v: Double) -> SIMD3<Double> in
       let r = p / (1 + e * cos(v))
-      return self.rotateToEcliptic(SIMD2(r * cos(v), r * sin(v)))
+      return rotateToEcliptic(SIMD2(r * cos(v), r * sin(v)))
     }
     if e < 1 {
       return (0..<samples).map { point(2 * .pi * Double($0) / Double(samples)) }
@@ -288,13 +309,17 @@ public struct SmallBody: Sendable, Hashable {
   /// Rotates a vector from the orbital plane (x toward perihelion) into the J2000 ecliptic frame.
   private func rotateToEcliptic(_ v: SIMD2<Double>) -> SIMD3<Double> {
     let d = Units.degToRad
-    let (cw, sw) = (cos(argumentOfPerihelion * d), sin(argumentOfPerihelion * d))
-    let (cO, sO) = (cos(longitudeOfAscendingNode * d), sin(longitudeOfAscendingNode * d))
-    let (cI, sI) = (cos(inclination * d), sin(inclination * d))
+    let cw = cos(argumentOfPerihelion * d)
+    let sw = sin(argumentOfPerihelion * d)
+    let cO = cos(longitudeOfAscendingNode * d)
+    let sO = sin(longitudeOfAscendingNode * d)
+    let cI = cos(inclination * d)
+    let sI = sin(inclination * d)
     return SIMD3(
       (cw * cO - sw * sO * cI) * v.x + (-sw * cO - cw * sO * cI) * v.y,
       (cw * sO + sw * cO * cI) * v.x + (-sw * sO + cw * cO * cI) * v.y,
-      (sw * sI) * v.x + (cw * sI) * v.y)
+      (sw * sI) * v.x + (cw * sI) * v.y
+    )
   }
 }
 
@@ -309,29 +334,29 @@ private struct SBDBResponse: Decodable {
   }
 
   struct Element: Decodable {
-    var name: String
-    var value: Double?
-
     init(from decoder: Decoder) throws {
       let container = try decoder.container(keyedBy: CodingKeys.self)
       name = try container.decode(String.self, forKey: .name)
       value = try? container.decode(LenientDouble.self, forKey: .value).value
     }
 
+    var name: String
+    var value: Double?
+
     private enum CodingKeys: String, CodingKey { case name, value }
   }
 
   struct Orbit: Decodable {
-    var equinox: String?
-    var epoch: Double?
-    var elements: [Element]?
-
     init(from decoder: Decoder) throws {
       let container = try decoder.container(keyedBy: CodingKeys.self)
       equinox = try? container.decode(String.self, forKey: .equinox)
       epoch = try? container.decode(LenientDouble.self, forKey: .epoch).value
       elements = try? container.decode([Element].self, forKey: .elements)
     }
+
+    var equinox: String?
+    var epoch: Double?
+    var elements: [Element]?
 
     private enum CodingKeys: String, CodingKey { case equinox, epoch, elements }
   }
@@ -341,10 +366,10 @@ private struct SBDBResponse: Decodable {
   var message: String?
 }
 
+// MARK: - LenientDouble
+
 /// A number that arrives either as a JSON number or as a string.
 private struct LenientDouble: Decodable {
-  let value: Double
-
   init(from decoder: Decoder) throws {
     let container = try decoder.singleValueContainer()
     if let number = try? container.decode(Double.self) {
@@ -357,4 +382,7 @@ private struct LenientDouble: Decodable {
       value = number
     }
   }
+
+  let value: Double
+
 }

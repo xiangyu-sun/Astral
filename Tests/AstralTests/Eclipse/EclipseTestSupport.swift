@@ -1,8 +1,8 @@
+import Astral
 import Foundation
 import Testing
-import Astral
 
-// MARK: - Fixture loading
+// MARK: - EclipseFixture
 
 enum EclipseFixture {
   static func data(_ name: String) throws -> Data {
@@ -10,7 +10,8 @@ enum EclipseFixture {
       Bundle.module.url(forResource: name, withExtension: "json", subdirectory: "Fixtures")
         ?? Bundle.module.url(forResource: name, withExtension: "json", subdirectory: "Eclipse/Fixtures")
         ?? Bundle.module.url(forResource: name, withExtension: "json"),
-      "\(name).json missing from test bundle")
+      "\(name).json missing from test bundle"
+    )
     return try Data(contentsOf: url)
   }
 }
@@ -23,7 +24,7 @@ func utcMidnight(_ iso: String) -> Date {
   return calendar.date(from: DateComponents(year: p[0], month: p[1], day: p[2]))!
 }
 
-// MARK: - Solar fixture (NASA SEcirc.js output)
+// MARK: - SolarFixture
 
 struct SolarFixture: Decodable {
   struct Elements: Decodable {
@@ -69,17 +70,29 @@ struct SolarFixture: Decodable {
     let elements: Elements
     let sites: [Site]
 
-    var midnightUT: Date { utcMidnight(label) }
+    var midnightUT: Date {
+      utcMidnight(label)
+    }
 
     var besselian: BesselianElements {
       let p = label.split(separator: "-").map { Int($0)! }
       return BesselianElements(
         label: label,
-        t0Year: p[0], t0Month: p[1], t0Day: p[2], t0Hours: elements.t0,
+        t0Year: p[0],
+        t0Month: p[1],
+        t0Day: p[2],
+        t0Hours: elements.t0,
         deltaT: elements.deltaT,
-        x: elements.x, y: elements.y, d: elements.d, mu: elements.mu, l1: elements.l1, l2: elements.l2,
-        tanF1: elements.tanF1, tanF2: elements.tanF2,
-        validHours: elements.tmin...elements.tmax)
+        x: elements.x,
+        y: elements.y,
+        d: elements.d,
+        mu: elements.mu,
+        l1: elements.l1,
+        l2: elements.l2,
+        tanF1: elements.tanF1,
+        tanF2: elements.tanF2,
+        validHours: elements.tmin...elements.tmax
+      )
     }
   }
 
@@ -90,10 +103,15 @@ struct SolarFixture: Decodable {
   }
 }
 
+// MARK: - SolarCase
+
 struct SolarCase: Sendable, CustomTestStringConvertible, Hashable {
   let eclipse: String
   let site: String
-  var testDescription: String { "\(eclipse) \(site)" }
+
+  var testDescription: String {
+    "\(eclipse) \(site)"
+  }
 }
 
 func solarCases() -> [SolarCase] {

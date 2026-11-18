@@ -103,6 +103,11 @@ public struct SPKFile: Sendable {
   /// Every segment in file order. When two segments describe the same target and epoch, the later one wins.
   public let segments: [SPKSegment]
 
+  /// TDB seconds past J2000 for a Julian date taken as TDB.
+  public static func ephemerisTime(of time: JulianDate) -> Double {
+    (time.days - JulianDate.j2000.days) * 86_400
+  }
+
   /// The segments describing `target`, in file order.
   public func segments(targeting target: Int) -> [SPKSegment] {
     segments.filter { $0.target == target }
@@ -140,8 +145,10 @@ public struct SPKFile: Sendable {
       // Chebyshev polynomials T_k(s) and their derivatives dT_k/ds, accumulated against the coefficients.
       var position = SIMD3<Double>.zero
       var velocity = SIMD3<Double>.zero
-      var tPrev2 = 0.0, tPrev = 1.0 // T_{k-2}, T_{k-1} (T_0 = 1)
-      var dPrev2 = 0.0, dPrev = 0.0 // derivatives
+      var tPrev2 = 0.0
+      var tPrev = 1.0 // T_{k-2}, T_{k-1} (T_0 = 1)
+      var dPrev2 = 0.0
+      var dPrev = 0.0 // derivatives
       for k in 0..<n {
         let t: Double
         let d: Double
@@ -149,9 +156,11 @@ public struct SPKFile: Sendable {
         case 0:
           t = 1
           d = 0
+
         case 1:
           t = s
           d = 1
+
         default:
           t = 2 * s * tPrev - tPrev2
           d = 2 * tPrev + 2 * s * dPrev - dPrev2
@@ -199,7 +208,8 @@ public struct SPKFile: Sendable {
       return SPKState(
         position: node.state.position - match.state.position,
         velocity: node.state.velocity - match.state.velocity,
-        frame: a.frame ?? b.frame ?? 1)
+        frame: a.frame ?? b.frame ?? 1
+      )
     }
     throw SPKError.noPath(target: target, center: center)
   }
@@ -210,11 +220,6 @@ public struct SPKFile: Sendable {
   /// which moves the Moon by roughly 70 km.
   public func state(target: Int, center: Int, at time: JulianDate) throws -> SPKState {
     try state(target: target, center: center, at: Self.ephemerisTime(of: time))
-  }
-
-  /// TDB seconds past J2000 for a Julian date taken as TDB.
-  public static func ephemerisTime(of time: JulianDate) -> Double {
-    (time.days - JulianDate.j2000.days) * 86_400
   }
 
   // MARK: Internal
@@ -236,37 +241,6 @@ public struct SPKFile: Sendable {
 
   private let bytes: DAFBytes
 
-  /// The body's states relative to each of its ancestors, from itself up to the root.
-  private func chain(from start: Int, at et: Double) throws -> Chain {
-    var nodes = [ChainNode(id: start, state: .zero(frame: 1))]
-    var frame: Int?
-    var current = start
-    var accumulated = SPKState.zero(frame: 1)
-    // A solar system has few levels; the limit also guards against a cyclic file.
-    for _ in 0..<16 {
-      guard let segment = segment(for: current, at: et) else {
-        if segments.contains(where: { $0.target == current }) {
-          throw SPKError.noCoverage(target: current, et: et)
-        }
-        break
-      }
-      if let known = frame, known != segment.frame { throw SPKError.unsupportedFrame(segment.frame) }
-      frame = segment.frame
-      let relative = try state(of: segment, at: et)
-      accumulated.position += relative.position
-      accumulated.velocity += relative.velocity
-      accumulated.frame = segment.frame
-      current = segment.center
-      nodes.append(ChainNode(id: current, state: accumulated))
-      if current == 0 { break }
-    }
-    return Chain(nodes: nodes, frame: frame)
-  }
-
-  private func segment(for target: Int, at et: Double) -> SPKSegment? {
-    segments.last { $0.target == target && $0.contains(et: et) }
-  }
-
   private static func ascii(_ data: Data, _ offset: Int, _ length: Int) -> String {
     let slice = data[(data.startIndex + offset)..<(data.startIndex + offset + length)]
     let trimmed = slice.prefix { $0 != 0 }
@@ -280,7 +254,7 @@ public struct SPKFile: Sendable {
     let start = recordLength
     let end = min(max(forward - 1, 1) * recordLength, data.count)
     guard end > start else { return "" }
-    var text: [UInt8] = []
+    var text = [UInt8]()
     for byte in data[(data.startIndex + start)..<(data.startIndex + end)] {
       if byte == 4 { break }
       text.append(byte == 0 ? 10 : byte)
@@ -292,7 +266,7 @@ public struct SPKFile: Sendable {
   private static func readSegments(_ bytes: DAFBytes, firstSummaryRecord: Int) throws -> [SPKSegment] {
     let summarySize = 5 // ND + (NI + 1) / 2 doubles
     let maxRecords = bytes.data.count / recordLength
-    var segments: [SPKSegment] = []
+    var segments = [SPKSegment]()
     var record = firstSummaryRecord
     var visited = 0
 
@@ -334,8 +308,17 @@ public struct SPKFile: Sendable {
           layout = try chebyshevLayout(bytes, dataType: dataType, begin: begin, end: end)
         }
         segments.append(SPKSegment(
-          name: name, target: target, center: center, frame: frame, dataType: dataType,
-          startET: start, stopET: stop, beginAddress: begin, endAddress: end, layout: layout))
+          name: name,
+          target: target,
+          center: center,
+          frame: frame,
+          dataType: dataType,
+          startET: start,
+          stopET: stop,
+          beginAddress: begin,
+          endAddress: end,
+          layout: layout
+        ))
       }
       record = Int(next)
     }
@@ -347,16 +330,17 @@ public struct SPKFile: Sendable {
     _ bytes: DAFBytes,
     dataType: Int,
     begin: Int,
-    end: Int) throws -> SPKSegment.Layout
-  {
+    end: Int
+  ) throws -> SPKSegment.Layout {
     guard end - begin + 1 >= 4 else { throw SPKError.malformed("segment too short for a trailer") }
     let trailer = (end - 4) * 8
     let initialEpoch = bytes.double(at: trailer)
     let intervalLength = bytes.double(at: trailer + 8)
     let rsize = bytes.double(at: trailer + 16)
     let n = bytes.double(at: trailer + 24)
-    guard initialEpoch.isFinite, intervalLength.isFinite, intervalLength > 0,
-          rsize.isFinite, rsize == rsize.rounded(), n.isFinite, n == n.rounded(), n >= 1
+    guard
+      initialEpoch.isFinite, intervalLength.isFinite, intervalLength > 0,
+      rsize.isFinite, rsize == rsize.rounded(), n.isFinite, n == n.rounded(), n >= 1
     else {
       throw SPKError.malformed("bad segment trailer")
     }
@@ -374,8 +358,41 @@ public struct SPKFile: Sendable {
       intervalLength: intervalLength,
       recordSize: recordSize,
       recordCount: recordCount,
-      coefficientCount: (recordSize - 2) / components)
+      coefficientCount: (recordSize - 2) / components
+    )
   }
+
+  /// The body's states relative to each of its ancestors, from itself up to the root.
+  private func chain(from start: Int, at et: Double) throws -> Chain {
+    var nodes = [ChainNode(id: start, state: .zero(frame: 1))]
+    var frame: Int?
+    var current = start
+    var accumulated = SPKState.zero(frame: 1)
+    // A solar system has few levels; the limit also guards against a cyclic file.
+    for _ in 0..<16 {
+      guard let segment = segment(for: current, at: et) else {
+        if segments.contains(where: { $0.target == current }) {
+          throw SPKError.noCoverage(target: current, et: et)
+        }
+        break
+      }
+      if let known = frame, known != segment.frame { throw SPKError.unsupportedFrame(segment.frame) }
+      frame = segment.frame
+      let relative = try state(of: segment, at: et)
+      accumulated.position += relative.position
+      accumulated.velocity += relative.velocity
+      accumulated.frame = segment.frame
+      current = segment.center
+      nodes.append(ChainNode(id: current, state: accumulated))
+      if current == 0 { break }
+    }
+    return Chain(nodes: nodes, frame: frame)
+  }
+
+  private func segment(for target: Int, at et: Double) -> SPKSegment? {
+    segments.last { $0.target == target && $0.contains(et: et) }
+  }
+
 }
 
 // MARK: - DAFBytes

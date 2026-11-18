@@ -55,9 +55,8 @@ extension Kepler {
   /// - Returns: The true anomaly in radians, in `(−π, π)`, and the radius in AU.
   public static func parabolicOrbit(
     perihelionDistance q: Double,
-    daysSincePerihelion dt: Double)
-    -> (trueAnomaly: Double, radius: Double)
-  {
+    daysSincePerihelion dt: Double
+  ) -> (trueAnomaly: Double, radius: Double) {
     // With s = tan(v/2):  s³ + 3s = W,  W = 3k(t − T) / (√2 q^1.5)  (0.03649116245 · (t − T) / q^1.5).
     let W = 3 * gaussianGravitationalConstant * abs(dt) / (2.0.squareRoot() * q * q.squareRoot())
     let Y = cbrt(W / 2 + (W * W / 4 + 1).squareRoot())
@@ -91,9 +90,8 @@ extension Kepler {
   public static func universalAnomaly(
     perihelionDistance q: Double,
     eccentricity e: Double,
-    scaledTime: Double)
-    -> Double
-  {
+    scaledTime: Double
+  ) -> Double {
     if scaledTime == 0 { return 0 }
     let s = abs(scaledTime)
     let alpha = (1 - e) / q
@@ -134,9 +132,8 @@ extension Kepler {
   public static func perifocalState(
     perihelionDistance q: Double,
     eccentricity e: Double,
-    daysSincePerihelion: Double)
-    -> (position: SIMD2<Double>, velocity: SIMD2<Double>)
-  {
+    daysSincePerihelion: Double
+  ) -> (position: SIMD2<Double>, velocity: SIMD2<Double>) {
     let k = gaussianGravitationalConstant
     var dt = daysSincePerihelion
     if e < 1 {

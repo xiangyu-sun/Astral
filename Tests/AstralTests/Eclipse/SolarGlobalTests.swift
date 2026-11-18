@@ -1,6 +1,9 @@
+// swiftlint:disable no_direct_standard_out_logs
+import Astral
 import Foundation
 import Testing
-import Astral
+
+// MARK: - SolarGlobalFixture
 
 struct SolarGlobalFixture: Decodable {
   struct Entry: Decodable, Sendable {
@@ -30,9 +33,12 @@ func solarGlobalLabels() -> [String] {
   (try? SolarGlobalFixture.load())?.eclipses.map(\.label) ?? []
 }
 
+// MARK: - SolarGlobalTests
+
 @Suite("Solar eclipses: Besselian elements and global circumstances", .tags(.solar, .accuracy))
 struct SolarGlobalTests {
-  @Test func catalogCoversTwentyThreeToThirtyFive() {
+  @Test
+  func catalogCoversTwentyThreeToThirtyFive() {
     let catalog = BesselianElements.catalog
     #expect(catalog.count == 28)
     #expect(catalog.map(\.label) == catalog.map(\.label).sorted())
@@ -87,7 +93,8 @@ struct SolarGlobalTests {
     print(line)
   }
 
-  @Test func localFixtureElementsAgreeWithCatalog() throws {
+  @Test
+  func localFixtureElementsAgreeWithCatalog() throws {
     // The 8-digit elements of NASA's Google-map pages and the 6/7-digit elements of the Besselian pages describe the same fit.
     let fixture = try SolarFixture.load()
     for f in fixture.eclipses {
@@ -105,7 +112,8 @@ struct SolarGlobalTests {
     }
   }
 
-  @Test func catalogLocalCircumstancesAgreeWithFixtureElements() throws {
+  @Test
+  func catalogLocalCircumstancesAgreeWithFixtureElements() throws {
     // Same sites computed with the (rounded) catalog elements: shows what the built-in table costs in accuracy.
     let fixture = try SolarFixture.load()
     var worst = 0.0
@@ -114,7 +122,13 @@ struct SolarGlobalTests {
       for site in f.sites where site.type != "none" {
         let observer = Observer(latitude: site.lat, longitude: site.lon, elevation: .double(0))
         let local = try #require(c.localCircumstances(observer: observer), "\(f.label) \(site.name)")
-        for (ours, ref) in [(local.c1, site.c1), (local.maximum, site.mid), (local.c4, site.c4), (local.c2, site.c2), (local.c3, site.c3)] {
+        for (ours, ref) in [
+          (local.c1, site.c1),
+          (local.maximum, site.mid),
+          (local.c4, site.c4),
+          (local.c2, site.c2),
+          (local.c3, site.c3),
+        ] {
           guard let ref, let ours else { continue }
           let dt = abs(ours.date.timeIntervalSince(f.midnightUT) - ref.utSeconds)
           worst = max(worst, dt)
@@ -126,7 +140,8 @@ struct SolarGlobalTests {
     print("CATALOG-vs-8-digit worst contact error \(worst) s")
   }
 
-  @Test func universalTimeIsTerrestrialTimeMinusDeltaT() throws {
+  @Test
+  func universalTimeIsTerrestrialTimeMinusDeltaT() throws {
     let e = try #require(BesselianElements.catalog.first { $0.label == "2024-04-08" })
     let observer = Observer(latitude: 32.7767, longitude: -96.797, elevation: .double(0))
     for variant in [e, e.withDeltaT(e.deltaT + 10)] {
@@ -140,16 +155,22 @@ struct SolarGlobalTests {
     #expect(abs(b.maximum.date.timeIntervalSince(a.maximum.date)) < 30)
   }
 
-  @Test func elevationShiftsContactsSlightly() throws {
+  @Test
+  func elevationShiftsContactsSlightly() throws {
     let e = try #require(BesselianElements.catalog.first { $0.label == "2024-04-08" })
     let sea = try #require(e.localCircumstances(observer: Observer(latitude: 32.7767, longitude: -96.797, elevation: .double(0))))
-    let high = try #require(e.localCircumstances(observer: Observer(latitude: 32.7767, longitude: -96.797, elevation: .double(3000))))
+    let high = try #require(e.localCircumstances(observer: Observer(
+      latitude: 32.7767,
+      longitude: -96.797,
+      elevation: .double(3000)
+    )))
     let d = abs(high.maximum.date.timeIntervalSince(sea.maximum.date))
     #expect(d > 0.01 && d < 5)
-    #expect(abs(high.centralDuration! - sea.centralDuration!) < 5)
+    #expect(abs(try #require(high.centralDuration) - sea.centralDuration!) < 5)
   }
 
-  @Test func customElementsAndNoEclipse() throws {
+  @Test
+  func customElementsAndNoEclipse() throws {
     // User supplied elements: a copy of the 2024 eclipse under another label behaves identically.
     var e = try #require(BesselianElements.catalog.first { $0.label == "2024-04-08" })
     e.label = "my-eclipse"
@@ -159,7 +180,8 @@ struct SolarGlobalTests {
     #expect(e.localCircumstances(observer: sydney) == nil)
   }
 
-  @Test func catalogLookup() throws {
+  @Test
+  func catalogLookup() {
     let date = utcMidnight("2024-04-08").addingTimeInterval(18 * 3600)
     #expect(SolarEclipseCatalog.eclipse(near: date)?.label == "2024-04-08")
     #expect(SolarEclipseCatalog.next(after: date.addingTimeInterval(3600))?.label == "2024-10-02")

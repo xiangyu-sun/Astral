@@ -49,7 +49,7 @@ func convertDegreesMinutesSecondsToDouble(value: String, limit: Double?) throws 
     var result = deg
     result += min / 60
     result += sec / 3600
-    if ["S","W"].contains(dir.uppercased()) {
+    if ["S", "W"].contains(dir.uppercased()) {
       result = -result
     }
     return result.cap(limit: limit)
@@ -63,16 +63,14 @@ extension Double {
   func cap(limit: Double?) -> Double {
     if let limit {
       if self > limit {
-        return limit
-      }
-      else if self < -limit {
-        return -limit
-      }
-      else {
-        return self
+        limit
+      } else if self < -limit {
+        -limit
+      } else {
+        self
       }
     } else {
-      return self
+      self
     }
   }
 

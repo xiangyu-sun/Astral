@@ -32,9 +32,7 @@ func _phase_asfloat(date: DateComponents) -> Double {
   // elongation = 270 -> last quarter (age ~ 22.15)
   // elongation = 360 -> new moon (age ~ 29.53)
   let synodicMonth = 29.53058867
-  let moonAge = synodicMonth * elongation / 360.0
-
-  return moonAge
+  return synodicMonth * elongation / 360.0
 }
 
 /// Calculates the phase of the Moon on the specified date.

@@ -1,3 +1,4 @@
+// swiftlint:disable no_direct_standard_out_logs
 #!/usr/bin/env python3
 """Cut a tiny, valid NAIF DAF/SPK kernel out of de440s.bsp.
 

@@ -1,3 +1,4 @@
+// swiftlint:disable no_direct_standard_out_logs
 #!/usr/bin/env python3
 """Fetch planet rise / transit / set times and az/el samples from JPL Horizons into horizons_rts.json.
 
