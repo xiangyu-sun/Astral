@@ -91,7 +91,9 @@ struct LunarEclipseTests {
     let range = utcMidnight("2025-01-01")...utcMidnight("2027-01-01")
     let found = LunarEclipse.eclipses(in: range)
     // NASA: 2025 Mar 14 (T), Sep 7 (T); 2026 Mar 3 (T), Aug 28 (P).
-    #expect(found.map(\.type) == [.total, .total, .total, .partial])
+    let types: [LunarEclipseType] = found.map(\.type)
+    let expected: [LunarEclipseType] = [.total, .total, .total, .partial]
+    #expect(types == expected)
     #expect(found.count == 4)
   }
 
@@ -99,7 +101,10 @@ struct LunarEclipseTests {
   func nextEclipseAfterDate() throws {
     let e = try #require(LunarEclipse.next(after: utcMidnight("2025-04-01")))
     #expect(e.type == .total)
-    #expect(abs(e.greatest.date.timeIntervalSince(utcMidnight("2025-09-07")) - (18 * 3600 + 11 * 60 + 43)) < 150)
+    let reference: Date = utcMidnight("2025-09-07")
+    let expectedOffset: Double = 18 * 3600 + 11 * 60 + 43
+    let offset: Double = e.greatest.date.timeIntervalSince(reference)
+    #expect(abs(offset - expectedOffset) < 150)
     #expect(try #require(e.totalityDuration) > 4_000)
   }
 }
