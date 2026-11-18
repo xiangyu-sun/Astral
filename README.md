@@ -27,6 +27,13 @@ This project is inspired by the original Python package: [Astral](https://sffjun
   - Heliocentric positions of Mercury–Neptune, Earth and the Moon (JPL element tables, 1800–2050)  
   - Geocentric Moon from mean elements, periodic terms, or Astral's lunar series  
   - Moon phase geometry, body orientation (Earth rotation, tidal lock)  
+  - Rise, set and transit of Mercury–Neptune, validated against JPL Horizons  
+  - JPL SPK (DE440) kernel reader in pure Swift, ΔT, small bodies, Moon libration, planetary magnitudes  
+
+- **Eclipses & Transits** 🌘  
+  - Solar eclipses 2023–2035 from NASA GSFC Besselian elements, with local circumstances (C1–C4, magnitude, obscuration)  
+  - Lunar eclipse contacts (P1–P4) and magnitudes  
+  - Mercury and Venus transits (contacts I–IV)  
 
 - **Other Astronomical Calculations** 🔭  
   - Time at a Specific Solar Elevation  
@@ -42,7 +49,7 @@ Add **Astral** to your `Package.swift` dependencies:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/sunxiangyu/astral.git", from: "1.0.0")
+    .package(url: "https://github.com/sunxiangyu/astral.git", from: "1.4.0")
 ]
 ```
 
@@ -159,6 +166,37 @@ let moonFromEarth = MoonEphemeris.geocentricPositionSeries(at: JulianDate(Date()
 `JulianDate` is also a bridge to the rest of Astral: `JulianDate(Date)`, `JulianDate(DateComponents)`, and
 `centuriesSinceJ2000`. Note that `MoonPhase` (a type) coexists with the existing `moonPhase(date:)` function, which
 returns the Moon's age in days.
+
+```swift
+// Planet rise/set for an observer
+let marsRise = try planetRise(.mars, observer: Observer.london, date: Date())
+
+// Exact positions from a JPL kernel (not bundled; download de440s.bsp from NAIF)
+let kernel = try SPKFile(contentsOf: URL(fileURLWithPath: "de440s.bsp"))
+let earth = try kernel.heliocentricEclipticPosition(of: .earth, at: JulianDate(Date()))
+```
+
+---
+
+## 🌘 Eclipses and transits
+
+```swift
+// Next solar eclipse, and what it looks like from an observer
+if let eclipse = BesselianElements.next(after: Date()),
+   let local = eclipse.localCircumstances(observer: Observer.barcelona) {
+    print(local.type, local.maximum.date, local.magnitude, local.obscuration)
+}
+
+// Lunar eclipses in a range
+let range = Date()...Date().addingTimeInterval(2 * 365 * 86_400)
+for e in LunarEclipse.eclipses(in: range) { print(e.type, e.greatest.date) }
+
+// Next transit of Mercury
+let transit = PlanetaryTransit.next(of: .mercury, after: Date())
+```
+
+Accuracy is measured against NASA GSFC in `Tests/AstralTests/Eclipse/`. Transit contacts from the closed-form model
+are off by a few minutes; pass an SPK kernel to `PlanetaryTransit.transits(of:in:kernel:)` for second-level accuracy.
 
 ---
 
