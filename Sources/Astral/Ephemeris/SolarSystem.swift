@@ -123,7 +123,9 @@ public struct SolarSystem: Sendable {
 
     // Heliocentric bodies first (Earth's row is the Earth–Moon barycentre).
     for body in bodies where body.id != .moon {
-      if let elements = body.elements {
+      if let smallBody = body.smallBody {
+        positions[body.id] = smallBody.position(at: time)
+      } else if let elements = body.elements {
         positions[body.id] = Kepler.position(elements: elements, T: T)
       } else {
         positions[body.id] = .zero
@@ -165,6 +167,14 @@ public struct SolarSystem: Sendable {
   ///
   /// Returns `samples` points (the caller closes the loop). Empty for the Sun.
   public func orbitPath(of id: BodyID, at time: JulianDate, samples: Int) -> [SIMD3<Double>] {
+    if let smallBody = byID[id]?.smallBody {
+      // Same sampling as below: uniform in mean anomaly over [-pi, pi). Small bodies have no secular rates.
+      guard samples > 0, let period = smallBody.period else { return [] }
+      let tp = smallBody.timeOfPerihelion.days
+      return (0..<samples).map { k in
+        smallBody.position(at: JulianDate(days: tp + period * (Double(k) / Double(samples) - 0.5)))
+      }
+    }
     guard let el = byID[id]?.elements, samples > 0 else { return [] }
     let T = time.centuriesSinceJ2000
     let d = Units.degToRad

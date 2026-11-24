@@ -43,7 +43,8 @@ struct SmallBodyFixture {
     }
   }
 
-  static let keys = ["ceres", "vesta", "eros", "apophis", "halley", "encke", "neowise", "oumuamua"]
+  static let keys = ["ceres", "vesta", "eros", "apophis", "halley", "encke", "neowise", "oumuamua", "eris", "haumea",
+    "makemake"]
 
   let entries: [Entry]
 

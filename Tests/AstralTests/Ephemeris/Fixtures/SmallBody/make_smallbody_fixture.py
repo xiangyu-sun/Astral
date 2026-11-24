@@ -1,4 +1,3 @@
-// swiftlint:disable no_direct_standard_out_logs
 #!/usr/bin/env python3
 """Builds smallbodies.json: JPL SBDB osculating elements + JPL Horizons heliocentric state vectors.
 
@@ -6,6 +5,7 @@ Standard library only; run it isolated:
 
     python3 -I make_smallbody_fixture.py            # fetch (network) and rebuild
     python3 -I make_smallbody_fixture.py --offline  # rebuild smallbodies.json from raw/ only
+    python3 -I make_smallbody_fixture.py --only eris,haumea  # fetch just these keys, rebuild from raw/
 
 Sources
   * SBDB API  https://ssd-api.jpl.nasa.gov/sbdb.api?sstr=<id>&full-prec=1   -> raw/<key>.sbdb.json (verbatim)
@@ -44,6 +44,9 @@ TARGETS = [
     ("encke", "2P", "DES=2P;CAP"),
     ("neowise", "C/2020 F3", "DES=1003667;"),
     ("oumuamua", "1I", "DES=2017 U1;"),
+    ("eris", "136199", "DES=2136199;"),
+    ("haumea", "136108", "DES=2136108;"),
+    ("makemake", "136472", "DES=2136472;"),
 ]
 
 MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -131,8 +134,13 @@ def build():
 
 if __name__ == "__main__":
     RAW.mkdir(exist_ok=True)
+    only = None
+    if "--only" in sys.argv:
+        only = set(sys.argv[sys.argv.index("--only") + 1].split(","))
     if "--offline" not in sys.argv:
         for key, sstr, command in TARGETS:
+            if only is not None and key not in only:
+                continue
             print("fetching", key)
             fetch(key, sstr, command)
     build()

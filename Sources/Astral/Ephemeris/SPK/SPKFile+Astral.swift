@@ -32,6 +32,10 @@ extension SPKFile {
     case .uranus: [799, 7]
     case .neptune: [899, 8]
     case .pluto: [999, 9]
+    case .ceres: [2_000_001]
+    case .eris: [2_136_199]
+    case .haumea: [2_136_108]
+    case .makemake: [2_136_472]
     }
   }
 

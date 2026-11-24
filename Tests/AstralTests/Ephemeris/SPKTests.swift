@@ -642,7 +642,7 @@ struct SPKSolarSystemComparisonTests {
     #expect(Set(fromKernel.states.keys) == Set(closedForm.states.keys))
     #expect(fromKernel.time == time)
     #expect(fromKernel.position(of: .sun) == .zero)
-    for id in BodyID.allCases {
+    for id in system.bodies.map(\.id) {
       let expected = try kernel.heliocentricEclipticPosition(of: id, at: time)
       #expect(fromKernel.position(of: id) == expected)
     }

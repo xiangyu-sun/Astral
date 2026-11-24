@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-11-24
+
+### Added
+- Dwarf planets: `BodyID.ceres`, `.eris`, `.haumea`, `.makemake` (and `BodyID.dwarfPlanets`), with `Catalog.ceres`,
+  `.eris`, `.haumea`, `.makemake` and `Catalog.dwarfPlanets`. They are not part of `Catalog.all` or
+  `Catalog.allWithPluto`, so existing systems are unchanged; add them with `SolarSystem(bodies: Catalog.allWithPluto +
+  Catalog.dwarfPlanets)`.
+- `Body.smallBody`: JPL SBDB osculating elements for a body with no JPL Table 1 row. `SolarSystem.snapshot(at:)` and
+  `orbitPath(of:at:samples:)` propagate them (two-body); the dwarf-planet rows use the SBDB elements verbatim.
+  Against JPL Horizons the error is about 2e-5 AU two months from the 2026-06-09 epoch and 7e-4 AU a year away.
+- Small-body fixture: Eris, Haumea and Makemake (SBDB + Horizons); `make_smallbody_fixture.py --only <keys>`.
+
+### Changed
+- `PlanetRiseSet` throws `PlanetError.unsupportedBody` for the dwarf planets; `PhysicalConstants.radii(of:)`,
+  `pole(of:)` and `PlanetaryMagnitude` return `nil` for them. `SPKFile.naifIDs(for:)` gives their NAIF small-body IDs.
+
+### Fixed
+- `make_smallbody_fixture.py` started with a Swift lint comment and could not run.
+
 ## [1.3.0] - Unreleased
 
 ### Added

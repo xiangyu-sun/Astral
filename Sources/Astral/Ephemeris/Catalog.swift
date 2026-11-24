@@ -27,6 +27,15 @@ public enum Catalog {
   /// `all` plus Pluto, whose elements are unverified.
   public static let allWithPluto: [Body] = all + [pluto]
 
+  /// Ceres, Eris, Haumea and Makemake. Not part of ``all`` or ``allWithPluto``: add them explicitly.
+  ///
+  /// Their orbits are JPL Small-Body Database osculating elements (``Body/smallBody``), copied verbatim from the
+  /// SBDB API responses in `Tests/AstralTests/Ephemeris/Fixtures/SmallBody/raw/` (epoch 2026-06-09.0 TDB,
+  /// JD 2461200.5) and propagated as a two-body orbit about the Sun. Against JPL Horizons this is within
+  /// about 1e-3 AU a year from the epoch and degrades slowly beyond: fine for display, not for astrometry.
+  /// Physical data is display-only and unverified; axial tilt is unknown for Eris, Haumea and Makemake (0 here).
+  public static let dwarfPlanets: [Body] = [ceres, eris, haumea, makemake]
+
   public static let sun = Body(
     id: .sun,
     parent: nil,
@@ -147,6 +156,83 @@ public enum Catalog {
     rotationPeriodHours: -153.29
   )
 
+  /// 1 Ceres (A801 AA). Mean radius and rotation from Dawn; obliquity about 4 degrees.
+  public static let ceres = Body(
+    id: .ceres,
+    parent: .sun,
+    elements: nil,
+    radiusKm: 469.7,
+    axialTiltDeg: 4,
+    rotationPeriodHours: 9.074170,
+    smallBody: sbdb(
+      name: "1 Ceres (A801 AA)",
+      e: 0.07969229514816586,
+      q: 2.545159361382861,
+      tp: 2_461_599.841466614066,
+      i: 10.58802780183462,
+      om: 80.24862682043221,
+      w: 73.29421453021587
+    )
+  )
+
+  /// 136199 Eris (2003 UB313). Radius from the 2010 stellar occultation; rotation synchronous with Dysnomia.
+  public static let eris = Body(
+    id: .eris,
+    parent: .sun,
+    elements: nil,
+    radiusKm: 1_163,
+    axialTiltDeg: 0,
+    rotationPeriodHours: 378.87,
+    smallBody: sbdb(
+      name: "136199 Eris (2003 UB313)",
+      e: 0.4382385347971672,
+      q: 38.16267353549761,
+      tp: 2_545_407.716847013144,
+      i: 43.9258279471791,
+      om: 36.00477044417249,
+      w: 150.7949235840312
+    )
+  )
+
+  /// 136108 Haumea (2003 EL61). A triaxial ellipsoid (about 1161 x 852 x 513 km); `radiusKm` is the
+  /// volume-equivalent radius.
+  public static let haumea = Body(
+    id: .haumea,
+    parent: .sun,
+    elements: nil,
+    radiusKm: 798,
+    axialTiltDeg: 0,
+    rotationPeriodHours: 3.915341,
+    smallBody: sbdb(
+      name: "136108 Haumea (2003 EL61)",
+      e: 0.1944430148898797,
+      q: 34.68751758088936,
+      tp: 2_500_416.599615282750,
+      i: 28.20847393040364,
+      om: 121.7860561329425,
+      w: 240.6905472508661
+    )
+  )
+
+  /// 136472 Makemake (2005 FY9).
+  public static let makemake = Body(
+    id: .makemake,
+    parent: .sun,
+    elements: nil,
+    radiusKm: 715,
+    axialTiltDeg: 0,
+    rotationPeriodHours: 22.8266,
+    smallBody: sbdb(
+      name: "136472 Makemake (2005 FY9)",
+      e: 0.1588889953992523,
+      q: 38.33021338173601,
+      tp: 2_408_158.694098616288,
+      i: 29.02785603743067,
+      om: 79.2948338209406,
+      w: 297.0922733397207
+    )
+  )
+
   public static let moon = Body(
     id: .moon,
     parent: .earth,
@@ -165,4 +251,33 @@ public enum Catalog {
     axialTiltDeg: 0,
     rotationPeriodHours: 655.72
   )
+
+  // MARK: Private
+
+  /// The common SBDB epoch of the dwarf-planet rows, JD TDB.
+  private static let dwarfPlanetEpoch = JulianDate(days: 2_461_200.5)
+
+  /// A small body from verbatim SBDB `q`/`tp` elements. The values are constants checked by the tests, so the
+  /// initializer cannot throw here.
+  private static func sbdb(
+    name: String,
+    e: Double,
+    q: Double,
+    tp: Double,
+    i: Double,
+    om: Double,
+    w: Double
+  ) -> SmallBody {
+    // swiftlint:disable:next force_try
+    try! SmallBody(
+      name: name,
+      epoch: dwarfPlanetEpoch,
+      eccentricity: e,
+      perihelionDistance: q,
+      inclination: i,
+      longitudeOfAscendingNode: om,
+      argumentOfPerihelion: w,
+      timeOfPerihelion: JulianDate(days: tp)
+    )
+  }
 }

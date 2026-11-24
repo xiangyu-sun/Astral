@@ -216,7 +216,7 @@ private func planetBody(_ id: BodyID) throws -> Body {
   case .uranus: return Catalog.uranus
   case .neptune: return Catalog.neptune
   case .pluto: return Catalog.pluto
-  case .sun, .earth, .moon: throw PlanetError.unsupportedBody(id)
+  case .sun, .earth, .moon, .ceres, .eris, .haumea, .makemake: throw PlanetError.unsupportedBody(id)
   }
 }
 

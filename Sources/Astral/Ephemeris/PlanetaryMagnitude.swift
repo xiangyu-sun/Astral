@@ -90,7 +90,7 @@ public enum PlanetaryMagnitude {
     case .neptune:
       return distanceTerm + neptune(year: year)
 
-    case .earth, .moon, .pluto:
+    case .earth, .moon, .pluto, .ceres, .eris, .haumea, .makemake:
       return nil
     }
   }

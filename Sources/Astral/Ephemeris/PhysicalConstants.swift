@@ -123,6 +123,7 @@ public enum PhysicalConstants {
     case .uranus: TriaxialRadii(a: 25_559, b: 25_559, c: 24_973) // BODY799_RADII
     case .neptune: TriaxialRadii(a: 24_764, b: 24_764, c: 24_341) // BODY899_RADII
     case .pluto: TriaxialRadii(a: 1_188.3, b: 1_188.3, c: 1_188.3) // BODY999_RADII
+    case .ceres, .eris, .haumea, .makemake: nil
     }
   }
 
@@ -142,6 +143,7 @@ public enum PhysicalConstants {
     case .uranus: PoleModel(ra: 257.311, raRate: 0, dec: -15.175, decRate: 0)
     case .neptune: PoleModel(ra: 299.36, raRate: 0, dec: 43.46, decRate: 0)
     case .pluto: PoleModel(ra: 132.993, raRate: 0, dec: -6.163, decRate: 0)
+    case .ceres, .eris, .haumea, .makemake: nil
     }
   }
 }
