@@ -10,6 +10,9 @@ import Foundation
 /// and Meeus chapter 47 for the Moon). Never adjust them to make a test pass: compare against JPL Horizons and
 /// report the discrepancy instead. Physical data (radius, axial tilt, rotation) is display-only and unverified.
 public enum Catalog {
+
+  // MARK: Public
+
   /// Sun, Mercury–Neptune and the Moon. Pluto is excluded (unverified elements).
   public static let all: [Body] = [
     sun,

@@ -26,6 +26,8 @@ public enum BodyID: String, Sendable, CaseIterable, Identifiable {
   case haumea
   case makemake
 
+  // MARK: Public
+
   /// Ceres, Eris, Haumea and Makemake (Pluto, whose row predates them, is not included).
   public static let dwarfPlanets: [BodyID] = [.ceres, .eris, .haumea, .makemake]
 
