@@ -30,6 +30,8 @@ struct SmallBodyHorizonsTests {
   ///   eros 2.8e-7 / 9.9e-6 / 2.8e-4       apophis 1.9e-7 / 7.8e-6 / 3.1e-4
   ///   halley 5.4e-7 / 2.0e-5 / 6.6e-4     encke 3.1e-7 / 1.3e-5 / 4.0e-4
   ///   neowise 1.0e-7 / 5.2e-6 / 2.9e-4    oumuamua 3.4e-6 / 2.7e-4 / 6.3e-3
+  ///   eris 5.2e-7 / 1.9e-5 / 7.0e-4       haumea 5.2e-7 / 1.9e-5 / 6.9e-4
+  ///   makemake 5.2e-7 / 1.9e-5 / 7.0e-4   (2026-11-24 build; the three TNOs share the indirect-term error)
   static let tolerances = [
     Tolerance(key: "ceres", at10: 6e-7, at60: 2e-5, at365: 1.4e-3),
     Tolerance(key: "vesta", at10: 6e-7, at60: 2e-5, at365: 1.1e-3),
@@ -39,6 +41,9 @@ struct SmallBodyHorizonsTests {
     Tolerance(key: "encke", at10: 6.5e-7, at60: 2.5e-5, at365: 8e-4),
     Tolerance(key: "neowise", at10: 2.2e-7, at60: 1e-5, at365: 6e-4),
     Tolerance(key: "oumuamua", at10: 7e-6, at60: 6e-4, at365: 1.3e-2),
+    Tolerance(key: "eris", at10: 1.1e-6, at60: 4e-5, at365: 1.4e-3),
+    Tolerance(key: "haumea", at10: 1.1e-6, at60: 4e-5, at365: 1.4e-3),
+    Tolerance(key: "makemake", at10: 1.1e-6, at60: 4e-5, at365: 1.4e-3),
   ]
 
   /// At the epoch the states agree to 1e-7 AU (worst measured: 2.7e-8 AU for Ceres; the rest is below 5e-9) and

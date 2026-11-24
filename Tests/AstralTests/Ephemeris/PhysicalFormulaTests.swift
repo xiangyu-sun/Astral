@@ -246,7 +246,8 @@ struct PhysicalConstantsTests {
       (.neptune, 24_764, 24_764, 24_341),
       (.pluto, 1188.3, 1188.3, 1188.3),
     ]
-    #expect(expected.count == BodyID.allCases.count)
+    #expect(expected.count == BodyID.allCases.count - BodyID.dwarfPlanets.count)
+    for id in BodyID.dwarfPlanets { #expect(PhysicalConstants.radii(of: id) == nil, "\(id)") }
     for (id, a, b, c) in expected {
       let r = try #require(PhysicalConstants.radii(of: id))
       #expect(r.a == a && r.b == b && r.c == c, "\(id)")
